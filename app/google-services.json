@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "75071470284",
+    "project_id": "sigmo-testapp",
+    "storage_bucket": "sigmo-testapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75071470284:android:5f1239dbf831d2c0bb2069",
+        "android_client_info": {
+          "package_name": "com.bitpolarity.spotifytestapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "75071470284-vhagplvs7b1lc16h4a2uo4oos732m1t7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHEBWCJbjQ1YiVfdGwKebp5mUSZnQVuSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "75071470284-vhagplvs7b1lc16h4a2uo4oos732m1t7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
