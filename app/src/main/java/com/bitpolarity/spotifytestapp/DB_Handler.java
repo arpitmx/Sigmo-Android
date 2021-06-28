@@ -105,14 +105,12 @@ public class DB_Handler {
     /////////////////////////////////////////------SONG DETAIL SECTION---------/////////////////////////////////
 
 
-     void setSong_Details(String trackID , String artistName, String albumName, String trackName, String trackLength ){
-        fbase_bundle bundle = new fbase_bundle(trackID,artistName,albumName,trackName,trackLength);
+     void setSong_Details(String posterURL, String artistName, String albumName, String trackName, String trackLength ){
+        fbase_bundle bundle = new fbase_bundle(posterURL,artistName,albumName,trackName,trackLength);
          ROOTPATH.child("SD").setValue(bundle);
 
      }
 
-     void fetchSong_Details_From_DB() {
 
-    }
 
 }

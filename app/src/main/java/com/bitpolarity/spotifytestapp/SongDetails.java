@@ -7,9 +7,21 @@ import android.content.IntentFilter;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.common.util.IOUtils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 public class SongDetails {
@@ -18,6 +30,8 @@ public class SongDetails {
     Context context;
     Set<String> details;
     DB_Handler db_handler;
+    String requestURL = "https://embed.spotify.com/oembed/?url=";
+    String arl = "";
 
 
     static final class BroadcastTypes {
@@ -50,8 +64,55 @@ public class SongDetails {
                         String albumName = intent.getStringExtra("album");
                         String trackName = intent.getStringExtra("track");
                         String trackLengthInSec = String.valueOf(intent.getIntExtra("length", 0));
+                        String arl = requestURL+trackId;
 
-                        db_handler.setSong_Details(trackId,artistName,albumName,trackName, trackLengthInSec);
+
+
+
+                        new Thread(new Runnable()
+                        {
+                            public void run()
+                            {
+
+                                URL url = null;
+                                try {
+                                    url = new URL(arl);
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
+                                Scanner sc = null;
+                                try {
+                                    sc = new Scanner(url.openStream());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                StringBuffer sb = new StringBuffer();
+                                while(sc.hasNext()) {
+                                    sb.append(sc.next());
+                                    //System.out.println(sc.next());
+                                }
+                                String result = sb.toString();
+                                //System.out.println(result);
+                                //Removing the HTML tags
+                                result = result.replaceAll("<[^>]*>", "");
+
+                                Log.d("urllll", result);
+                                String brl = result.split(",")[8].replace("\"thumbnail_url\":","").replace("\"","");
+                               // tempDataHolder.setArtUrl(url);
+
+                                Log.d("urlll", brl);
+                                String posterUrl = brl;
+                                db_handler.setSong_Details(posterUrl,artistName,albumName,trackName, trackLengthInSec);
+
+                                Log.d("SongDetails", "Poster URL: "+posterUrl);
+                            }
+
+                        }).start();
+
+
+
+
+
 
                         Log.d("Broadcast", trackId);
                         Log.d("Broadcast", artistName);
@@ -83,18 +144,87 @@ public class SongDetails {
     }
 
 
+
+
+
+
+
+
     void setContext(Context context){
         this.context= context;
     }
 
+    String getUrl()
+    {
+       return arl;
+    }
+    void setUrl(String url){
+        arl = url;
+    }
 
 
-//    String[] setSong_Details(String trackID , String artistName, String albumName, String trackName, String trackLength ){
-//
-//
-//    }
 
 
+    public List<String> getTextFromWeb(String urlString)
+    {
+        URLConnection feedUrl;
+        List<String> placeAddress = new ArrayList<>();
+
+        try
+        {
+            feedUrl = new URL(urlString).openConnection();
+            InputStream is = feedUrl.getInputStream();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            String line = null;
+
+            while ((line = reader.readLine()) != null) // read line by line
+
+            {
+                placeAddress.add(line); // add line to list
+            }
+            is.close(); // close input stream
+
+            return placeAddress; // return whatever you need
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    void readToString(String arl){
+        URL url = null;
+        try {
+            url = new URL(arl);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            Scanner s = new Scanner(url.openStream());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    String setDetails (String urll){
+
+
+
+        //String addressList = readToString(urll);
+                   // Log.d("Song Url ",addressList);
+
+                //String url = addressList.get(0).split(",")[8].replace("\"thumbnail_url\":","").replace("\"","");
+                //setUrl(url);
+
+        return urll;
+
+    }
 
 
 }

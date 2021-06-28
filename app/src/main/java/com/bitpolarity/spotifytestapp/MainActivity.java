@@ -2,21 +2,30 @@ package com.bitpolarity.spotifytestapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     BroadcastReceiver receiver;
-    TextView t1,t2,t3,t4,t5;
+    TextView t1,t2,t3,t4,t5,t6,t7,t8;
     SharedPreferences prefs;
+    AudioManager mAudio;
+    int trackLengthInSec = 0;
 
     static final class BroadcastTypes {
         static final String SPOTIFY_PACKAGE = "com.spotify.music";
@@ -32,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAudio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+
+
 
 //        Intent i= new Intent(MainActivity.this, MyService.class);
 //        i.putExtra("KEY1", "Value to be used by the service");
@@ -42,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         t3 = findViewById(R.id.s3);
         t4 = findViewById(R.id.s4);
         t5 = findViewById(R.id.s5);
+        t6 = findViewById(R.id.s6);
+        t7 = findViewById(R.id.s7);
+        t8 = findViewById(R.id.s8);
         prefs = getSharedPreferences("com.bitpolarity.spotifytestapp",MODE_PRIVATE);
 
         Toast.makeText(MainActivity.this , "Welcome, "+prefs.getString("Username", "Error No user found, clear cache!") ,Toast.LENGTH_LONG).show();
@@ -68,9 +83,12 @@ public class MainActivity extends AppCompatActivity {
         filter.addAction("com.spotify.music.queuechanged");
 
 
+
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+
+                ArrayList<String> songs = new ArrayList<>();
 
                 long timeSentInMs = intent.getLongExtra("timeSent", 0L);
 
@@ -78,11 +96,17 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (action) {
                     case broadcaster.BroadcastTypes.METADATA_CHANGED:
+
+
                         String trackId = intent.getStringExtra("id");
                         String artistName = intent.getStringExtra("artist");
                         String albumName = intent.getStringExtra("album");
                         String trackName = intent.getStringExtra("track");
-                        int trackLengthInSec = intent.getIntExtra("length", 0);
+                        trackLengthInSec = intent.getIntExtra("length", 0);
+                        Long timeSent = intent.getLongExtra("timeSent",0);
+
+                        songs.add(trackName);
+
 
                         Log.d("Broadcast", trackId);
                         Log.d("Broadcast", artistName);
@@ -94,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
                         t3.setText("Album :"+albumName);
                         t4.setText("Total Time: "+(trackLengthInSec));
                         t5.setText("Track ID : "+trackId);
+                        t6.setText("Artist Name:"+artistName);
+                        t8.setText("Time sent :"+timeSent);
+
 
 
                       //  Toast.makeText(context, trackName, Toast.LENGTH_LONG).show();
@@ -101,13 +128,29 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case broadcaster.BroadcastTypes.PLAYBACK_STATE_CHANGED:
-                        boolean playing = intent.getBooleanExtra("playing", false);
-                        int positionInMs = intent.getIntExtra("playbackPosition", 0);
 
+//
+//                        Handler handler = new Handler();
+//                        handler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//
+//                                        Log.d("run", "run: "+positionInMs);
+//                                    }
+//                                });
+//                            }
+//                        },100);
+
+
+                        boolean playing = intent.getBooleanExtra("playing", false);
                         Log.d("Broadcast", "Playing : " + playing);
                         t1.setText(""+playing);
 
-
+                        int positionInMs = intent.getIntExtra("playbackPosition", 0);
+                    t7.setText("Position :"+positionInMs);
 
                         // Do something with extracted information
                         break;
@@ -131,5 +174,17 @@ public class MainActivity extends AppCompatActivity {
             receiver = null;
         }
         super.onDestroy();
+    }
+
+
+    void mute(ArrayList<String> a){
+        int size = a.size();
+        if (a.get(size - 1).equals(a.get(size - 2))){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                mAudio.adjustStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_MUTE,0);
+                Log.d("Main", "muted ");
+            }
+        }
+
     }
 }

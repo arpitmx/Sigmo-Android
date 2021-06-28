@@ -36,7 +36,7 @@ public class OnClearFromRecentService extends Service {
 
         Log.d(LOG, "Service Started");
         dbHolder.setStatus(1);
-        dbHolder.fetchSong_Details_From_DB();
+        //dbHolder.fetchSong_Details_From_DB();
 
         return START_NOT_STICKY;
     }

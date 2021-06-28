@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.service.notification.NotificationListenerService;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,8 +41,8 @@ public class Login extends AppCompatActivity {
                 public void onClick(View view) {
                    prefs.edit().putString("Username", name.getText().toString()).apply();
 
-                    Intent i = new Intent(Login.this,OnClearFromRecentService.class);
-                    startActivity(i);
+                   startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+                    startActivity(new Intent(Login.this , StatusActivity.class));
 
                 }
             });
@@ -50,7 +51,7 @@ public class Login extends AppCompatActivity {
         else{
 
             startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
-            startActivity(new Intent(this , StatusActivity.class));
+            startActivity(new Intent(this ,StatusActivity.class));
 
         }
             prefs.edit().putBoolean("firstrun", false).apply();

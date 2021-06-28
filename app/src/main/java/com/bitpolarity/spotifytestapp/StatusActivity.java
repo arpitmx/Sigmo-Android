@@ -3,15 +3,18 @@ package com.bitpolarity.spotifytestapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +45,11 @@ public class StatusActivity extends AppCompatActivity {
     ImageView imageView;
     DB_Handler db_handler;
     String requestURL = "https://embed.spotify.com/oembed/?url=";
+    SharedPreferences sharedPreferences;
+    String arl;
+    ListView listView;
+    TempDataHolder tempDataHolder = new TempDataHolder();
+    ShimmerFrameLayout shimmerFrameLayout;
     ////// Firebase specific
 
 
@@ -50,14 +58,16 @@ public class StatusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
 
+        shimmerFrameLayout = findViewById(R.id.shimmerFrameLayout);
+        shimmerFrameLayout.startShimmerAnimation();
         cache_friends = new HashSet<String>();
         final ListView lv = (ListView) findViewById(R.id.listview);
-        final int ONLINE = R.drawable.online;
-        final int OFFLINE = R.drawable.offline;
+        final int ONLINE = R.drawable.ongreen;
+        final int OFFLINE = R.drawable.ored;
         imageView = findViewById(R.id.icon);
-        TextView songname = findViewById(R.id.songname);
-        FirebaseDatabase firebaseDatabase;
         DatabaseReference ref;
+        listView = findViewById(R.id.listview);
+
 
         ref =FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -105,33 +115,49 @@ public class StatusActivity extends AppCompatActivity {
                 Integer[] status = new Integer[size];
                 String[] songDetail = new String[size];
                 String[] poster = new String[size];
-                TempDataHolder tempDataHolder = new TempDataHolder();
+
+                sharedPreferences= getSharedPreferences("com.bitpolarity.spotifytestapp",MODE_PRIVATE);
+                ArrayList<String> e = new ArrayList<>();
+
+
+
 
                 for (int i = 0 ; i < size ; i ++) {
 
-                    if (Integer.valueOf(metaList.get(i)[5].trim())==1) {
+                    if (Integer.parseInt(metaList.get(i)[5].trim())==1) {
                     status[i] = ONLINE;
                     }else{
                         status[i] = OFFLINE;
                     }
 
                     songDetail[i] = metaList.get(i)[4]+"-"+metaList.get(i)[3];
-                    String urr = requestURL+metaList.get(i)[2].trim();
-                    setDetails(urr) ;
-                    String artUrl = tempDataHolder.getArtUrl() ;
-                    poster[i] = "https://i.scdn.co/image/ab67616d00001e024c27d14a19e67dac23661031";
+                    String url = metaList.get(i)[2].trim();
+                    poster[i] = url;
+                    Log.d(TAG, "Arturl: "+url);
 
-                    Log.d(TAG, "artURL: "+artUrl);
-                   // Log.d(TAG, "URLLL: "+urr);
-                    }
+                }
 
-                Log.d(TAG, "POSTER  : "+Arrays.toString(poster));
                // requestURL+metaList.get(0)[2].trim();
+
 
 
 
                 CustomAdapter customAdapter = new CustomAdapter(StatusActivity.this, users,poster,status,songDetail);
                 lv.setAdapter(customAdapter);
+
+                shimmerFrameLayout.stopShimmerAnimation();
+                shimmerFrameLayout.setVisibility(View.GONE);
+                listView.setVisibility(View.VISIBLE);
+
+
+
+
+
+
+
+
+
+
             }
 
             @Override
@@ -207,9 +233,9 @@ public class StatusActivity extends AppCompatActivity {
 
 
 
-  String setDetails (String url){
+ void  setDetails (String url){
 
-        TempDataHolder tempDataHolder = new TempDataHolder();
+
         new Thread(new Runnable()
         {
             public void run()
@@ -223,6 +249,6 @@ public class StatusActivity extends AppCompatActivity {
         }
 
     }).start();
-      return url;
+
   }
 }
