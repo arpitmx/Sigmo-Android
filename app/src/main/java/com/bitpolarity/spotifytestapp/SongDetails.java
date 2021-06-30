@@ -31,7 +31,7 @@ public class SongDetails {
     Set<String> details;
     DB_Handler db_handler;
     String requestURL = "https://embed.spotify.com/oembed/?url=";
-    String arl = "";
+
 
 
     static final class BroadcastTypes {
@@ -49,6 +49,7 @@ public class SongDetails {
         filter.addAction("com.spotify.music.metadatachanged");
         filter.addAction("com.spotify.music.queuechanged");
 
+
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -56,6 +57,9 @@ public class SongDetails {
                 String action = intent.getAction();
 
                 switch (action) {
+
+
+
                     case broadcaster.BroadcastTypes.METADATA_CHANGED:
                         String trackId = intent.getStringExtra("id");
                         String artistName = intent.getStringExtra("artist");
@@ -63,8 +67,6 @@ public class SongDetails {
                         String trackName = intent.getStringExtra("track");
                         String trackLengthInSec = String.valueOf(intent.getIntExtra("length", 0));
                         String arl = requestURL+trackId;
-
-
 
 
                         new Thread(new Runnable()
@@ -87,29 +89,27 @@ public class SongDetails {
                                 StringBuffer sb = new StringBuffer();
                                 while(sc.hasNext()) {
                                     sb.append(sc.next());
-                                    //System.out.println(sc.next());
                                 }
                                 String result = sb.toString();
-                                //System.out.println(result);
-                                //Removing the HTML tags
+
                                 result = result.replaceAll("<[^>]*>", "");
 
                                 Log.d("urllll", result);
                                 String brl = result.split(",")[8].replace("\"thumbnail_url\":","").replace("\"","");
-                               // tempDataHolder.setArtUrl(url);
 
                                 Log.d("urlll", brl);
                                 String posterUrl = brl;
-                                db_handler.setSong_Details(posterUrl,artistName,albumName,trackName, trackLengthInSec);
 
+                                if (posterUrl.length()==0){
+                                    posterUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQpnVsnrM_RRT2ty6uAXPwoQMQIIQNb7V8cQ&usqp=CAU";
+                                }
+
+
+                                db_handler.setSong_Details(posterUrl,artistName,albumName,trackName, trackLengthInSec);
                                 Log.d("SongDetails", "Poster URL: "+posterUrl);
                             }
 
                         }).start();
-
-
-
-
 
 
                         Log.d("Broadcast", trackId);

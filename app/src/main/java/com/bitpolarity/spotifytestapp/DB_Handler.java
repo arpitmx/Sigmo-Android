@@ -108,7 +108,13 @@ public class DB_Handler {
 
 
      void setSong_Details(String posterURL, String artistName, String albumName, String trackName, String trackLength ){
-        fbase_bundle bundle = new fbase_bundle(posterURL,artistName.replace(",",""),albumName.replace(",",""),trackName.replace(",",""),trackLength);
+
+         if (artistName == null) artistName = "Loading";
+         else if (albumName==null) albumName = "Loading";
+         else if (trackName==null) trackName = "Loading";
+         else if (trackLength == null) trackLength = "0";
+
+         fbase_bundle bundle = new fbase_bundle(posterURL,artistName.replace(",",""),albumName.replace(",",""),trackName.replace(",",""),trackLength);
          ROOTPATH.child("SD").setValue(bundle);
 
      }
