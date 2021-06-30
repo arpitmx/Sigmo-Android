@@ -62,6 +62,5 @@ public class Login extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-
     }
 }

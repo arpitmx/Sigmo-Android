@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,27 +11,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import static android.content.ContentValues.TAG;
@@ -43,13 +31,15 @@ public class StatusActivity extends AppCompatActivity {
     final String LOG = "StatusActivity";
     Set<String> cache_friends;
     ImageView imageView;
-    DB_Handler db_handler;
-    String requestURL = "https://embed.spotify.com/oembed/?url=";
     SharedPreferences sharedPreferences;
-    String arl;
     ListView listView;
-    TempDataHolder tempDataHolder = new TempDataHolder();
     ShimmerFrameLayout shimmerFrameLayout;
+    TextView isPlayingTV ;
+    ;
+
+
+
+
     ////// Firebase specific
 
 
@@ -60,12 +50,15 @@ public class StatusActivity extends AppCompatActivity {
 
         shimmerFrameLayout = findViewById(R.id.shimmerFrameLayout);
         shimmerFrameLayout.startShimmerAnimation();
-        cache_friends = new HashSet<String>();
+        isPlayingTV = findViewById(R.id.isPlayingg);
+
         final ListView lv = (ListView) findViewById(R.id.listview);
         final int ONLINE = R.drawable.ongreen;
         final int OFFLINE = R.drawable.ored;
-        imageView = findViewById(R.id.icon);
+
+        imageView = findViewById(R.id.online_status);
         DatabaseReference ref;
+
         listView = findViewById(R.id.listview);
 
 
@@ -76,85 +69,107 @@ public class StatusActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
+                Map<String, Object> map1 = (Map<String, Object>) snapshot.getValue();
+                Log.d(TAG, "HASSSHH:" + Arrays.toString(recArrayList(snapshot).get(0).get("SD").toString().replace("{","").replace("}","").split(",")));
 
-                Log.d(TAG, "Value is: " + map);
-                assert map != null;
-                Log.d(TAG, "Value is: " + map.keySet());
+                assert map1 != null;
+                Log.d(TAG, "Value is: " + map1.keySet());
 
-                Set keys = map.keySet();
+                Set keys = map1.keySet();
                 int size = keys.size();
-                String metaData[] = new String[size];
+                String metaData[];
                 ArrayList<String[]> metaList = new ArrayList<>();
 
                 ////////////////////////////// GETTING SONG META DATA ////////////////////////////////////////////////////////////
 
 
                 for(Object key: keys){
+                    Log.d(TAG, "onDataChange: "+key + ": " + map1);
+                    String meta = map1.get(key).toString();
 
-                    Log.d(TAG, "onDataChange: "+key + ": " + map.get(key));
-                    String meta = map.get(key).toString();
-
-                    String[] purge = {"{", "}", "=", "SD","albumName","trackLength","trackID","artistName","trackName", "STATUS","LA"};
+                    String[] purge = {"{", "}", "=", "SD","albumName","isPlaying","trackLength","trackID","artistName","trackName", "STATUS","LA"};
                     String result = meta;
+
+
                     for (String s : purge) {
                         result = result.replace(s, "");
                     }
                      metaData = result.split(",");
                     metaList.add(metaData);
-                    Log.d(TAG, "onDataChange: "+Arrays.toString(metaData));
+                    Log.d(TAG, "metaList: "+ Arrays.toString(metaList.get(0)));
+                }
 
+                Map<String, Object> map = new HashMap<>();
+
+                for (int i = 0 ; i < size ; i ++){
+
+                        map.put("albumName"+i,metaList.get(i)[0]);
+                        map.put("trackLength"+i,metaList.get(i)[1]);
+                        map.put("isPlaying"+i,metaList.get(i)[6]);
+                        map.put("trackID"+i,metaList.get(i)[2]);
+                        map.put("artistName"+i,metaList.get(i)[3]);
+                        map.put("trackName"+i,metaList.get(i)[4]);
+                        map.put("STATUS"+i,metaList.get(i)[5]);
+                        map.put("LA"+i,metaList.get(i)[7]);
 
                 }
 
+                Log.d(TAG, "HASH MAP: " + map);
 
                 //////////////////////////////////  GETTING SONG META DATA //////////////////////////////////////////////
+
+                isPlayingTV = (TextView) findViewById(R.id.isPlayingg);
+
+
+
+
 
                 String[] users = (String[]) keys.toArray(new String[size]);
                 Log.d(TAG, "onDataChange: "+Arrays.toString(users));
                 Integer[] status = new Integer[size];
                 String[] songDetail = new String[size];
                 String[] poster = new String[size];
+                String[] isPlaying  = new String[size];
 
-                sharedPreferences= getSharedPreferences("com.bitpolarity.spotifytestapp",MODE_PRIVATE);
                 ArrayList<String> e = new ArrayList<>();
-
-
 
 
                 for (int i = 0 ; i < size ; i ++) {
 
-                    if (Integer.parseInt(metaList.get(i)[5].trim())==1) {
+                    Log.d(TAG, "Online Status : "+map.get("STATUS"+i));
+                    if (Integer.parseInt(map.get("STATUS"+i).toString().trim())==1) {
                     status[i] = ONLINE;
                     }else{
                         status[i] = OFFLINE;
                     }
 
-                    songDetail[i] = metaList.get(i)[4]+"-"+metaList.get(i)[3];
-                    String url = metaList.get(i)[2].trim();
+                    if(map.get("isPlaying"+i).toString().trim().equals("true")){
+                        isPlaying[i] = "Playing";
+                    }else{
+                        isPlaying[i] = "Paused";
+
+                    }
+
+                    songDetail[i] = map.get("trackName"+i)+"-"+map.get("artistName"+i);
+
+                    String url = String.valueOf(map.get("trackID"+i)).trim();
+
                     poster[i] = url;
-                    Log.d(TAG, "Arturl: "+url);
+
+
 
                 }
 
-               // requestURL+metaList.get(0)[2].trim();
+                Log.d(TAG, "Poster array: "+ Arrays.toString(poster));
+                Log.d(TAG, "isPlaying array : "+ Arrays.toString(isPlaying));
+                Log.d(TAG, "songDetail array : "+ Arrays.toString(songDetail));
 
-
-
-
-                CustomAdapter customAdapter = new CustomAdapter(StatusActivity.this, users,poster,status,songDetail);
+                CustomAdapter customAdapter = new CustomAdapter(StatusActivity.this,isPlaying,users,poster,status,songDetail);
                 lv.setAdapter(customAdapter);
 
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
-
-
-
-
-
-
-
 
 
 
@@ -167,20 +182,6 @@ public class StatusActivity extends AppCompatActivity {
                 Toast.makeText(StatusActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
-
-
-
-
-
-
-        //cache_friends.add(Arrays.toString(people));
-        //prefs.edit().putStringSet("friends", cache_friends).apply();
-
-
 
 
 
@@ -201,54 +202,41 @@ public class StatusActivity extends AppCompatActivity {
 
     }
 
-    public List<String> getTextFromWeb(String urlString)
-    {
-        URLConnection feedUrl;
-        List<String> placeAddress = new ArrayList<>();
+    public ArrayList<HashMap<String, Object>> recArrayList(DataSnapshot snapshot){
 
-        try
-        {
-            feedUrl = new URL(urlString).openConnection();
-            InputStream is = feedUrl.getInputStream();
+        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            String line = null;
+        if (snapshot == null){
 
-            while ((line = reader.readLine()) != null) // read line by line
+            return list;
+        }
 
-            {
-                placeAddress.add(line); // add line to list
+        // This is awesome! You don't have to know the data structure of the database.
+        Object fieldsObj = new Object();
+
+        HashMap fldObj;
+
+        for (DataSnapshot shot : snapshot.getChildren()){
+
+            try{
+
+                fldObj = (HashMap)shot.getValue(fieldsObj.getClass());
+
+            }catch (Exception ex){
+
+                Log.d(TAG, "recArrayList: "+ Arrays.toString(ex.getStackTrace()));
+
+                continue;
             }
-            is.close(); // close input stream
 
-            return placeAddress; // return whatever you need
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
+            // Include the primary key of this Firebase data record. Named it 'recKeyID'
+            fldObj.put("recKeyID", shot.getKey());
+
+            list.add(fldObj);
         }
 
-        return null;
+        return list;
     }
 
 
-
- void  setDetails (String url){
-
-
-        new Thread(new Runnable()
-        {
-            public void run()
-            {
-
-                List<String> addressList = getTextFromWeb(url); // format your URL
-                //Log.d(LOG, String.valueOf(addressList));
-                String url = addressList.get(0).split(",")[8].replace("\"thumbnail_url\":","").replace("\"","");
-                tempDataHolder.setArtUrl(url);
-                Log.d(LOG, url);
-        }
-
-    }).start();
-
-  }
 }

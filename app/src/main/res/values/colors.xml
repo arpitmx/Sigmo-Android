@@ -10,4 +10,8 @@
     <color name="s_blue">#007BFF</color>
     <color name="s_green">#69DB22</color>
     <color name="s_grey">#dddddd</color>
+    <color name="s_red">#E53935</color>
+    <color name="s_grey_Dark">#D36E93</color>
+
+
 </resources>

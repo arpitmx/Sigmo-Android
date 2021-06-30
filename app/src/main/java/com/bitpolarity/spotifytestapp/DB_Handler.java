@@ -102,12 +102,20 @@ public class DB_Handler {
 
 
 
+
+
     /////////////////////////////////////////------SONG DETAIL SECTION---------/////////////////////////////////
 
 
      void setSong_Details(String posterURL, String artistName, String albumName, String trackName, String trackLength ){
-        fbase_bundle bundle = new fbase_bundle(posterURL,artistName,albumName,trackName,trackLength);
+        fbase_bundle bundle = new fbase_bundle(posterURL,artistName.replace(",",""),albumName.replace(",",""),trackName.replace(",",""),trackLength);
          ROOTPATH.child("SD").setValue(bundle);
+
+     }
+
+     void setSong_PlaybackDetails(boolean isplaying){
+        if (isplaying) ROOTPATH.child("isPlaying").setValue(isplaying);
+        else ROOTPATH.child("isPlaying").setValue(isplaying);
 
      }
 

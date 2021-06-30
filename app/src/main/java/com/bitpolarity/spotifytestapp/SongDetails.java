@@ -53,8 +53,6 @@ public class SongDetails {
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                long timeSentInMs = intent.getLongExtra("timeSent", 0L);
-
                 String action = intent.getAction();
 
                 switch (action) {
@@ -122,14 +120,21 @@ public class SongDetails {
                         Toast.makeText(context, trackName, Toast.LENGTH_SHORT).show();
 
                         break;
-                    case broadcaster.BroadcastTypes.PLAYBACK_STATE_CHANGED:
-                        boolean playing = intent.getBooleanExtra("playing", false);
-                        int positionInMs = intent.getIntExtra("playbackPosition", 0);
 
+
+                    case broadcaster.BroadcastTypes.PLAYBACK_STATE_CHANGED:
+
+                        boolean playing = intent.getBooleanExtra("playing", false);
+                        Toast.makeText(context, ""+playing,Toast.LENGTH_SHORT).show();
+
+                        db_handler.setSong_PlaybackDetails(playing);
                         Log.d("Broadcast", "Playing : " + playing);
 
-                        // Do something with extracted information
+
+
                         break;
+
+
                     case broadcaster.BroadcastTypes.QUEUE_CHANGED:
                         // Sent only as a notification, your app may want to respond accordingly.
                         break;
@@ -145,86 +150,16 @@ public class SongDetails {
 
 
 
-
-
-
-
-
     void setContext(Context context){
         this.context= context;
     }
 
-    String getUrl()
-    {
-       return arl;
-    }
-    void setUrl(String url){
-        arl = url;
-    }
 
 
 
 
-    public List<String> getTextFromWeb(String urlString)
-    {
-        URLConnection feedUrl;
-        List<String> placeAddress = new ArrayList<>();
-
-        try
-        {
-            feedUrl = new URL(urlString).openConnection();
-            InputStream is = feedUrl.getInputStream();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            String line = null;
-
-            while ((line = reader.readLine()) != null) // read line by line
-
-            {
-                placeAddress.add(line); // add line to list
-            }
-            is.close(); // close input stream
-
-            return placeAddress; // return whatever you need
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
 
-    void readToString(String arl){
-        URL url = null;
-        try {
-            url = new URL(arl);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        try {
-            Scanner s = new Scanner(url.openStream());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    String setDetails (String urll){
-
-
-
-        //String addressList = readToString(urll);
-                   // Log.d("Song Url ",addressList);
-
-                //String url = addressList.get(0).split(",")[8].replace("\"thumbnail_url\":","").replace("\"","");
-                //setUrl(url);
-
-        return urll;
-
-    }
 
 
 }

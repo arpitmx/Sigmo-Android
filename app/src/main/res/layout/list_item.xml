@@ -49,7 +49,7 @@
 
 
             <TextView
-                android:id="@+id/status"
+                android:id="@+id/last_active"
                 android:layout_width="0dp"
                 android:layout_weight="3.4"
                 android:layout_height="match_parent"
@@ -68,25 +68,25 @@
 
 
             <TextView
-                android:id="@+id/last_active"
+                android:id="@+id/isPlayingg"
                 android:layout_width="0dp"
-                android:layout_weight="2.8"
+                android:layout_weight="2"
 
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:foregroundTint="@color/purple_200"
-                android:textColor="#69DB22"
+                android:textColor="@color/s_green"
                 android:textSize="12sp"
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:paddingStart="?android:attr/listPreferredItemPaddingStart"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-                android:text="Playing now"
+                android:text="Paused"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
 
             <ImageView
-                android:id="@+id/icon"
+                android:id="@+id/online_status"
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="match_parent"
