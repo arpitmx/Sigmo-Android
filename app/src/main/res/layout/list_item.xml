@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="1dp"
     android:orientation="vertical"
-
 
     >
 
@@ -29,29 +30,58 @@
 
             >
 
-
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:textColor="@color/s_blue"
-                android:textSize="18sp"
-                android:gravity="center_vertical"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:paddingStart="9dp"
-                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-                android:text="Shaurya007"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+               >
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:gravity="center_vertical"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                    android:text="Shaurya007"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    android:textColor="@color/s_blue"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                </TextView>
+
+                <ImageView
+                    android:id="@+id/online_status"
+                    android:layout_width="30dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="end"
+                    android:padding="4dp"
+                    android:scaleType="centerInside"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:src="@drawable/ongreen"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/username"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                </ImageView>
 
 
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
                 android:id="@+id/last_active"
                 android:layout_width="0dp"
-                android:layout_weight="3.4"
+                android:layout_weight="6"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:foregroundTint="@color/purple_200"
@@ -70,7 +100,7 @@
             <TextView
                 android:id="@+id/isPlayingg"
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="3"
 
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif-condensed-medium"
@@ -85,19 +115,7 @@
                 android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
 
-            <ImageView
-                android:id="@+id/online_status"
-                android:layout_width="0dp"
-                android:layout_weight="0.5"
-                android:layout_height="match_parent"
-                android:padding="4dp"
-                android:layout_gravity="end"
-                android:scaleType="centerInside"
-                android:scaleY="1"
-                android:scaleX="1"
-                android:src="@drawable/ongreen">
 
-            </ImageView>
 
 
         </LinearLayout>
@@ -114,13 +132,12 @@
 
             <ImageView
                 android:id="@+id/artwork"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="80dp"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:scaleType="fitCenter"
-                android:layout_margin="10dp"
-                android:background="@color/s_grey"
+
+                android:background="@drawable/gradient_overlay"
                 android:scaleX="1"
                 android:scaleY="1"
                 />
@@ -130,23 +147,22 @@
                 android:id="@+id/songname"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="4.5"
+                android:layout_weight="5.5"
                 android:fontFamily="sans-serif-medium"
-                android:gravity="center_vertical"
-                android:textColor="@color/black"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:paddingStart="?android:attr/listPreferredItemPaddingStart"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                android:paddingStart="5dp"
+                android:gravity="center"
+
                 android:text="Higher Power - Coldplay"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:textSize="13sp" />
-
-
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/songlength"
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="2.5"
                 android:layout_height="match_parent"
                 android:fontFamily= "sans-serif-condensed-medium"
                 android:textSize="13dp"
@@ -162,12 +178,12 @@
             <ImageView
                 android:id="@+id/play"
                 android:layout_width="0dp"
-                android:layout_weight="1.5"
+                android:layout_weight="2"
                 android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
                 android:scaleType= "centerInside"
-                android:scaleX="1.5"
-                android:scaleY="1.5"
+                android:scaleX="1.6"
+                android:scaleY="1.6"
 
                 android:elevation="10dp"
                 android:src="@drawable/ic_baseline_play_circle_filled_24" />

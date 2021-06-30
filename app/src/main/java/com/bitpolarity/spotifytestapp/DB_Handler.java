@@ -47,9 +47,6 @@ public class DB_Handler {
         formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         firebaseDatabase = FirebaseDatabase.getInstance();
         ref = firebaseDatabase.getReference();
-
-
-
     }
 
 
