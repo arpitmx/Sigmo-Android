@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,7 +37,7 @@ public class StatusActivity extends AppCompatActivity {
     ListView listView;
     ShimmerFrameLayout shimmerFrameLayout;
     TextView isPlayingTV ;
-    ;
+
 
 
 
@@ -47,6 +49,9 @@ public class StatusActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
+
+
+
 
         shimmerFrameLayout = findViewById(R.id.shimmerFrameLayout);
         shimmerFrameLayout.startShimmerAnimation();
