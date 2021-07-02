@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
 
+
     >
 
 
@@ -32,6 +33,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+
                 >
 
                 <TextView
@@ -45,6 +47,7 @@
                     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                     android:text="Shaurya007"
                     android:textStyle="normal"
+
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
                     android:textColor="@color/s_blue"
                     android:textSize="17sp"
@@ -132,6 +135,8 @@
                 android:background="@drawable/borders_post"
                 android:orientation="horizontal"
                 android:clickable="true"
+                android:foreground="@drawable/ripple_effect"
+
                 android:focusable="true"
 
                 android:weightSum="10"
