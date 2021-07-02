@@ -5,10 +5,14 @@
         <shape
             android:shape="rectangle">
 
-            <corners android:topLeftRadius="30dp"
+            <corners android:topLeftRadius="0dp"
                 android:topRightRadius="30dp"/>
-            <stroke android:color="@color/black"></stroke>
-            <solid android:color="#FFFFFF" />
+            <gradient android:startColor="#FAFAFA"
+                android:centerColor="#FAFAFA"
+                android:gradientRadius="3dp"
+                android:endColor="#fff"
+                android:angle="0"
+                />
 
         </shape>
     </item>

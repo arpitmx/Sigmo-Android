@@ -87,7 +87,7 @@ public class CustomAdapter extends ArrayAdapter {
 
         Picasso.with(context)
                 .load(poster[position])
-                .resize(150, 150) // here you resize your image to whatever width and height you like
+                .resize(120, 120) // here you resize your image to whatever width and height you like
                 .into(posterr);
 
 
