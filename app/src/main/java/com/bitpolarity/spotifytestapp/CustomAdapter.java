@@ -85,10 +85,12 @@ public class CustomAdapter extends ArrayAdapter {
             view.setVisibility(View.GONE);
         }
 
-        Picasso.with(context)
+        Glide.with(context)
                 .load(poster[position])
-                .resize(120, 120) // here you resize your image to whatever width and height you like
+                .placeholder(R.drawable.eq)// here you resize your image to whatever width and height you like
                 .into(posterr);
+
+
 
 
         songName.setText(SongDetail[position]);

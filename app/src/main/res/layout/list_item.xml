@@ -38,15 +38,16 @@
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:fontFamily="sans-serif-condensed-medium"
+                    android:fontFamily="@font/hb"
                     android:gravity="center_vertical"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
                     android:paddingStart="10dp"
                     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                     android:text="Shaurya007"
+                    android:textStyle="normal"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
                     android:textColor="@color/s_blue"
-                    android:textSize="16sp"
+                    android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -82,11 +83,12 @@
                 android:layout_width="0dp"
                 android:layout_weight="6"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif-condensed-medium"
+                android:fontFamily="@font/hb"
                 android:foregroundTint="@color/purple_200"
                 android:textColor="@color/s_blue"
                 android:textSize="11sp"
-                android:gravity="center_vertical"
+
+                android:gravity="center"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:paddingStart="?android:attr/listPreferredItemPaddingStart"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
@@ -102,7 +104,7 @@
                 android:layout_weight="3"
 
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif-condensed-medium"
+                android:fontFamily="@font/hb"
                 android:foregroundTint="@color/purple_200"
                 android:textColor="@color/s_green"
                 android:textSize="12sp"
@@ -126,7 +128,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="100dp"
                 android:background="@drawable/borders_post"
                 android:orientation="horizontal"
                 android:clickable="true"
@@ -145,7 +147,7 @@
 
                     <ImageView
                         android:id="@+id/artwork"
-                        android:layout_width="110dp"
+                        android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:background="@color/s_grey"
@@ -167,12 +169,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/hmed"
                     android:gravity="center"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                    android:paddingStart="5dp"
+                    android:padding="10dp"
                     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-
                     android:text="Higher Power - Coldplay"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
                     android:textColor="@color/black"
@@ -183,13 +184,13 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2.0"
-                    android:fontFamily="sans-serif-condensed-medium"
+                    android:fontFamily="@font/hb"
                     android:gravity="center"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
                     android:text="3:40"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
                     android:textColor="@color/black"
-                    android:textSize="13dp" />
+                    android:textSize="11dp" />
 
             <LinearLayout
     android:layout_width="0dp"
@@ -201,7 +202,7 @@
 
                 <ImageView
                     android:id="@+id/view2"
-                    android:layout_width="30dp"
+                    android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:background="@color/black"
@@ -211,7 +212,7 @@
                     android:scaleY="1"
                     android:src="@drawable/eq"
 
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </LinearLayout>
             </LinearLayout>
 
