@@ -7,7 +7,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
 
-
     >
 
 
@@ -22,19 +21,34 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
+            android:background="@drawable/borders"
+            android:elevation="2dp"
             android:orientation="horizontal"
             android:weightSum="10"
-            android:elevation="2dp"
-            android:background="@drawable/borders"
 
             >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_weight="0.7"
+                android:padding="3dp"
+                android:scaleX="1.6"
+                android:scaleY="1.6"
+                android:outlineAmbientShadowColor="@color/s_grey"
+                android:src="@drawable/poster"
+                app:civ_border_color="@color/s_grey"
+                app:civ_border_width="1.2dp" />
 
-                >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3.7"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/username"
@@ -44,28 +58,18 @@
                     android:gravity="center_vertical"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
                     android:paddingStart="10dp"
-                    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                     android:text="Shaurya007"
-                    android:textStyle="normal"
-
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
                     android:textColor="@color/s_blue"
-                    android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0">
-
-                </TextView>
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
 
                 <ImageView
                     android:id="@+id/online_status"
                     android:layout_width="30dp"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="end"
-                    android:padding="4dp"
+                    android:padding="6dp"
                     android:scaleType="centerInside"
                     android:scaleX="0.5"
                     android:scaleY="0.5"
@@ -80,46 +84,44 @@
                 </ImageView>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+
+
+
             <TextView
                 android:id="@+id/last_active"
                 android:layout_width="0dp"
-                android:layout_weight="6"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/hb"
                 android:foregroundTint="@color/purple_200"
-                android:textColor="@color/s_blue"
-                android:textSize="11sp"
-
                 android:gravity="center"
+                android:layout_weight="3.5"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
+
                 android:paddingStart="?android:attr/listPreferredItemPaddingStart"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-                android:text="28/06/2021 15:11:59"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall" />
-
-
+                android:text="Sunday 28th, 2020"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textColor="@color/s_blue"
+                android:textSize="10sp" />
 
 
             <TextView
                 android:id="@+id/isPlayingg"
                 android:layout_width="0dp"
-                android:layout_weight="3"
-
                 android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:fontFamily="@font/hb"
                 android:foregroundTint="@color/purple_200"
-                android:textColor="@color/s_green"
-                android:textSize="12sp"
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:paddingStart="?android:attr/listPreferredItemPaddingStart"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                 android:text="Paused"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall" />
-
-
-
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textColor="@color/s_green"
+                android:textSize="11sp" />
 
 
         </LinearLayout>
@@ -131,7 +133,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="115dp"
                 android:background="@drawable/borders_post"
                 android:orientation="horizontal"
                 android:clickable="true"
@@ -152,11 +154,11 @@
 
                     <ImageView
                         android:id="@+id/artwork"
-                        android:layout_width="100dp"
+                        android:layout_width="115dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:background="@color/s_grey"
-                        android:elevation="10dp"
+                        android:elevation="15dp"
                         android:scaleType="fitCenter"
                         android:scaleX="1"
                         android:scaleY="1"
@@ -210,7 +212,6 @@
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
-                    android:background="@color/black"
                     android:scaleType="centerCrop"
                     android:elevation="5dp"
                     android:scaleX="1"

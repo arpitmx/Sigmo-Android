@@ -2,13 +2,14 @@ package com.bitpolarity.spotifytestapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,8 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 import static android.content.ContentValues.TAG;
@@ -34,9 +36,12 @@ public class StatusActivity extends AppCompatActivity {
     Set<String> cache_friends;
     ImageView imageView;
     SharedPreferences sharedPreferences;
-    ListView listView;
+    RecyclerView listView;
     ShimmerFrameLayout shimmerFrameLayout;
     TextView isPlayingTV ;
+    RecyclerView userRecyclerView;
+    UserListAdapter userListAdapter;
+
 
 
 
@@ -50,6 +55,8 @@ public class StatusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
 
+        userRecyclerView = findViewById(R.id.listview);
+
 
 
 
@@ -57,7 +64,6 @@ public class StatusActivity extends AppCompatActivity {
         shimmerFrameLayout.startShimmerAnimation();
         isPlayingTV = findViewById(R.id.isPlayingg);
 
-        final ListView lv = (ListView) findViewById(R.id.listview);
         final int ONLINE = R.drawable.ongreen;
         final int OFFLINE = R.drawable.ored;
 
@@ -126,17 +132,13 @@ public class StatusActivity extends AppCompatActivity {
                 isPlayingTV = (TextView) findViewById(R.id.isPlayingg);
 
 
-
-
-
                 String[] users = (String[]) keys.toArray(new String[size]);
                 Log.d(TAG, "onDataChange: "+Arrays.toString(users));
                 Integer[] status = new Integer[size];
                 String[] songDetail = new String[size];
                 String[] poster = new String[size];
                 String[] isPlaying  = new String[size];
-
-                ArrayList<String> e = new ArrayList<>();
+                String[] dateTime = new String[size];
 
 
                 for (int i = 0 ; i < size ; i ++) {
@@ -161,6 +163,7 @@ public class StatusActivity extends AppCompatActivity {
 
                     poster[i] = url;
 
+                    dateTime[i] = String.valueOf(map.get("LA"+i));
 
 
                 }
@@ -169,12 +172,40 @@ public class StatusActivity extends AppCompatActivity {
                 Log.d(TAG, "isPlaying array : "+ Arrays.toString(isPlaying));
                 Log.d(TAG, "songDetail array : "+ Arrays.toString(songDetail));
 
-                CustomAdapter customAdapter = new CustomAdapter(StatusActivity.this,isPlaying,users,poster,status,songDetail);
-                lv.setAdapter(customAdapter);
+
+
+
+
+                ////////////////////////// SETTING DATA TO ADAPTER
+
+                LinearLayoutManager layoutManager = new LinearLayoutManager(StatusActivity.this);
+                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                userRecyclerView.setLayoutManager(layoutManager);
+
+                List<UserListModel> modelList = new ArrayList<>();
+
+                for (int i=0;i<size;i++) {
+                    modelList.add(new UserListModel(StatusActivity.this, dateTime[i],isPlaying[i], users[i], poster[i], status[i], songDetail[i]));
+                }
+                userListAdapter = new UserListAdapter(modelList);
+                userRecyclerView.setAdapter(userListAdapter);
+                userListAdapter.notifyDataSetChanged();
+
+
+
+
+
+                ////////////////////////// SETTING DATA TO ADAPTER
+
+
+
+                //// SHIMMERS ///////////////////////////////////////////////////////////////
 
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
+
+                //// SHIMMERS ///////////////////////////////////////////////////////////////
 
 
 
@@ -187,6 +218,7 @@ public class StatusActivity extends AppCompatActivity {
                 Toast.makeText(StatusActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
 
