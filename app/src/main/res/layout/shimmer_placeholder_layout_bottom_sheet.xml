@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:elevation="1dp"
+    android:orientation="vertical"
+
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:weightSum="10"
+        >
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:padding="10dp"
+            android:background="@drawable/borders_post"
+
+            >
+
+
+            <ImageView
+                android:id="@+id/artwork"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:scaleType="fitCenter"
+                android:scaleX="1"
+                android:scaleY="1"
+                android:src="@color/s_grey" />
+
+            <TextView
+                android:id="@+id/songlength"
+                android:layout_width="0dp"
+                android:layout_weight="8"
+                android:layout_height="40dp"
+                android:fontFamily= "sans-serif-condensed-medium"
+                android:textSize="13dp"
+                android:textColor="@color/black"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                android:background="@color/s_grey"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

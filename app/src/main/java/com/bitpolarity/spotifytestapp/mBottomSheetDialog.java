@@ -38,11 +38,9 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
 
         View v = inflater.inflate(R.layout.song_detail_bottom_sheet,container, false);
 
-        shimmerFrameLayout = v.findViewById(R.id.shimmerFrameLayout);
-        shimmerFrameLayout.startShimmerAnimation();
         Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.slidein_left_to_right);
-
         spotifyWebView = v.findViewById(R.id.spotifyWebView);
+
 
         WebSettings webViewSettings = spotifyWebView.getSettings();
         webViewSettings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -55,19 +53,10 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
                 " width=\"320\" height=\""+height+"\" frameborder=\"0\" allowtransparency=\"true\" allow=\"encrypted-media\"></iframe>";
         spotifyWebView.loadData(data,"text/html","UTF-8");
 
-        final int interval = 800; // 1 Second
-        Handler handler = new Handler();
-        Runnable runnable = new Runnable(){
-            public void run() {
 
                 spotifyWebView.setVisibility(View.VISIBLE);
                 spotifyWebView.setAnimation(anim);
-
-                shimmerFrameLayout.setVisibility(View.GONE);
-            }
-        };
-        handler.postAtTime(runnable, System.currentTimeMillis()+interval);
-        handler.postDelayed(runnable, interval);
+                //shimmerFrameLayout.setVisibility(View.GONE);
 
 
 

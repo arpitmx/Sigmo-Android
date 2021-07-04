@@ -199,6 +199,7 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 userRecyclerView.setLayoutManager(layoutManager);
                 dataHolder.setSongDetails(songDetail);
+                dataHolder.setTrackID(son);
                 List<UserListModel> modelList = new ArrayList<>();
 
                 for (int i=0;i<size;i++) {
@@ -285,6 +286,7 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
     public void onClick(int position) {
 
         String details = dataHolder.getSongDetails()[position];
+        String trackID = dataHolder.getTrackID()[position];
        // Toast.makeText(StatusActivity.this ,details, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onClick: POS:"+position+"  Details : "+details);
 
