@@ -3,16 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#EFEFEF"
     android:layout_height="match_parent"
+    android:background="#EFEFEF"
     tools:context=".StatusActivity">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerFrameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- Adding 15 rows of placeholders -->
         <LinearLayout
@@ -26,7 +30,6 @@
 
             <include layout="@layout/shimmer_placeholder_layout" />
 
-            <include layout="@layout/shimmer_placeholder_layout" />
 
             <include layout="@layout/shimmer_placeholder_layout" />
 
@@ -34,7 +37,7 @@
 
             <include layout="@layout/shimmer_placeholder_layout" />
 
-
+            <include layout="@layout/shimmer_placeholder_layout" />
 
 
         </LinearLayout>
@@ -55,4 +58,6 @@
         app:layout_constraintVertical_bias="0.265">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

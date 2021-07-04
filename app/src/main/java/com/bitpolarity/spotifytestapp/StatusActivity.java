@@ -9,12 +9,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,22 +25,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 
 import static android.content.ContentValues.TAG;
 
-public class StatusActivity extends AppCompatActivity {
+public class StatusActivity extends AppCompatActivity  implements UserListAdapter.ULEventListner {
 
     final String LOG = "StatusActivity";
     Set<String> cache_friends;
     ImageView imageView;
     SharedPreferences sharedPreferences;
-    RecyclerView listView;
     ShimmerFrameLayout shimmerFrameLayout;
     TextView isPlayingTV ;
     RecyclerView userRecyclerView;
     UserListAdapter userListAdapter;
+    DatabaseReference ref;
+    TempDataHolder dataHolder;
+
+
 
 
 
@@ -56,24 +58,39 @@ public class StatusActivity extends AppCompatActivity {
         setContentView(R.layout.activity_status);
 
         userRecyclerView = findViewById(R.id.listview);
-
-
-
-
         shimmerFrameLayout = findViewById(R.id.shimmerFrameLayout);
         shimmerFrameLayout.startShimmerAnimation();
         isPlayingTV = findViewById(R.id.isPlayingg);
+        imageView = findViewById(R.id.online_status);
+        dataHolder = new TempDataHolder();
+
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //setStatus(0);
+        //Log.v(LOG, "Activity status  : destroyed");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.v(LOG, "Status : Background");
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
 
         final int ONLINE = R.drawable.ongreen;
         final int OFFLINE = R.drawable.ored;
-
-        imageView = findViewById(R.id.online_status);
-        DatabaseReference ref;
-
-        listView = findViewById(R.id.listview);
-
-
         ref =FirebaseDatabase.getInstance().getReference().child("Users");
+
 
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -86,7 +103,7 @@ public class StatusActivity extends AppCompatActivity {
                 assert map1 != null;
                 Log.d(TAG, "Value is: " + map1.keySet());
 
-                Set keys = map1.keySet();
+                Set<String> keys = map1.keySet();
                 int size = keys.size();
                 String metaData[];
                 ArrayList<String[]> metaList = new ArrayList<>();
@@ -94,7 +111,7 @@ public class StatusActivity extends AppCompatActivity {
                 ////////////////////////////// GETTING SONG META DATA ////////////////////////////////////////////////////////////
 
 
-                for(Object key: keys){
+                for(String key: keys){
                     Log.d(TAG, "onDataChange: "+key + ": " + map1);
                     String meta = map1.get(key).toString();
 
@@ -105,7 +122,7 @@ public class StatusActivity extends AppCompatActivity {
                     for (String s : purge) {
                         result = result.replace(s, "");
                     }
-                     metaData = result.split(",");
+                    metaData = result.split(",");
                     metaList.add(metaData);
                     Log.d(TAG, "metaList: "+ Arrays.toString(metaList.get(0)));
                 }
@@ -114,14 +131,14 @@ public class StatusActivity extends AppCompatActivity {
 
                 for (int i = 0 ; i < size ; i ++){
 
-                        map.put("albumName"+i,metaList.get(i)[0]);
-                        map.put("trackLength"+i,metaList.get(i)[1]);
-                        map.put("isPlaying"+i,metaList.get(i)[6]);
-                        map.put("trackID"+i,metaList.get(i)[2]);
-                        map.put("artistName"+i,metaList.get(i)[3]);
-                        map.put("trackName"+i,metaList.get(i)[4]);
-                        map.put("STATUS"+i,metaList.get(i)[5]);
-                        map.put("LA"+i,metaList.get(i)[7]);
+                    map.put("albumName"+i,metaList.get(i)[0]);
+                    map.put("trackLength"+i,metaList.get(i)[1]);
+                    map.put("isPlaying"+i,metaList.get(i)[6]);
+                    map.put("trackID"+i,metaList.get(i)[2]);
+                    map.put("artistName"+i,metaList.get(i)[3]);
+                    map.put("trackName"+i,metaList.get(i)[4]);
+                    map.put("STATUS"+i,metaList.get(i)[5]);
+                    map.put("LA"+i,metaList.get(i)[7]);
 
                 }
 
@@ -145,7 +162,7 @@ public class StatusActivity extends AppCompatActivity {
 
                     Log.d(TAG, "Online Status : "+map.get("STATUS"+i));
                     if (Integer.parseInt(map.get("STATUS"+i).toString().trim())==1) {
-                    status[i] = ONLINE;
+                        status[i] = ONLINE;
                     }else{
                         status[i] = OFFLINE;
                     }
@@ -181,17 +198,15 @@ public class StatusActivity extends AppCompatActivity {
                 LinearLayoutManager layoutManager = new LinearLayoutManager(StatusActivity.this);
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 userRecyclerView.setLayoutManager(layoutManager);
-
+                dataHolder.setSongDetails(songDetail);
                 List<UserListModel> modelList = new ArrayList<>();
 
                 for (int i=0;i<size;i++) {
                     modelList.add(new UserListModel(StatusActivity.this, dateTime[i],isPlaying[i], users[i], poster[i], status[i], songDetail[i]));
                 }
-                userListAdapter = new UserListAdapter(modelList);
+                userListAdapter = new UserListAdapter(modelList, StatusActivity.this);
                 userRecyclerView.setAdapter(userListAdapter);
                 userListAdapter.notifyDataSetChanged();
-
-
 
 
 
@@ -203,9 +218,16 @@ public class StatusActivity extends AppCompatActivity {
 
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
-                listView.setVisibility(View.VISIBLE);
+                userRecyclerView.setVisibility(View.VISIBLE);
 
                 //// SHIMMERS ///////////////////////////////////////////////////////////////
+
+
+
+                ///////////////////// SETTING ONCLICK LISTNER ON ELEMENTS OF RECYCLER VIEW
+
+
+
 
 
 
@@ -219,23 +241,6 @@ public class StatusActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //setStatus(0);
-        //Log.v(LOG, "Activity status  : destroyed");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.v(LOG, "Status : Background");
 
     }
 
@@ -251,13 +256,13 @@ public class StatusActivity extends AppCompatActivity {
         // This is awesome! You don't have to know the data structure of the database.
         Object fieldsObj = new Object();
 
-        HashMap fldObj;
+        HashMap<String, Object> fldObj;
 
         for (DataSnapshot shot : snapshot.getChildren()){
 
             try{
 
-                fldObj = (HashMap)shot.getValue(fieldsObj.getClass());
+                fldObj = (HashMap<String, Object>)shot.getValue(fieldsObj.getClass());
 
             }catch (Exception ex){
 
@@ -273,6 +278,23 @@ public class StatusActivity extends AppCompatActivity {
         }
 
         return list;
+    }
+
+
+    @Override
+    public void onClick(int position) {
+
+        String details = dataHolder.getSongDetails()[position];
+       // Toast.makeText(StatusActivity.this ,details, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onClick: POS:"+position+"  Details : "+details);
+
+        mBottomSheetDialog bottomSheet = new mBottomSheetDialog(details);
+        bottomSheet.show(getSupportFragmentManager(),"ModalBottomSheet");
+
+    }
+
+    private void showBottomSheet(int pos) {
+
     }
 
 

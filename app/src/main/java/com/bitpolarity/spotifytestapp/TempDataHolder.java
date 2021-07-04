@@ -5,27 +5,13 @@ import android.util.Log;
 
 public class TempDataHolder {
 
-    String artUrl;
-    Activity context;
+    String[] songDetails;
 
-    TempDataHolder(Activity context){
-        this.context = context;
-
+    public String[] getSongDetails() {
+        return songDetails;
     }
 
-    Activity getContext(){
-        return this.context;
-    }
-
-    public String getArtUrl() {
-        Log.d("Temp", "getArtUrl: "+artUrl);
-        return this.artUrl;
-
-    }
-
-    public void setArtUrl(String artUrl) {
-
-        this.artUrl = artUrl;
-        Log.d("Temp", "setArtUrl: "+artUrl);
+    public void setSongDetails(String[] songDetails) {
+        this.songDetails = songDetails;
     }
 }

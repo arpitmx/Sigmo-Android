@@ -17,6 +17,7 @@
         android:background="#FFFFFF"
         android:orientation="vertical"
         android:weightSum="10"
+
         >
 
         <LinearLayout
@@ -27,6 +28,8 @@
             android:orientation="horizontal"
             android:weightSum="10"
 
+            android:clickable="true"
+            android:focusable="true"
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -128,18 +131,18 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:foreground="@drawable/ripple_effect"
+
+            >
 
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="115dp"
+                android:layout_height="112dp"
                 android:background="@drawable/borders_post"
                 android:orientation="horizontal"
-                android:clickable="true"
-                android:foreground="@drawable/ripple_effect"
 
-                android:focusable="true"
 
                 android:weightSum="10"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -154,7 +157,7 @@
 
                     <ImageView
                         android:id="@+id/artwork"
-                        android:layout_width="115dp"
+                        android:layout_width="112dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:background="@color/s_grey"

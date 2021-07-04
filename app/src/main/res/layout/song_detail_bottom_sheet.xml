@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:elevation="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/songD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/hb"
+        android:text="Song Detail"
+        android:gravity="center"
+        android:elevation="5dp"
+        android:layout_margin="10dp"
+        android:textColor="@color/s_blue"
+        android:textSize="25sp" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        >
+        <!-- Adding 15 rows of placeholders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/shimmer_placeholder_layout" />
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <WebView
+        android:id="@+id/spotifyWebView"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:background="@drawable/round_dialog_bottomsheet"
+        android:layout_height="wrap_content"
+        />
+
+</LinearLayout>

@@ -10,7 +10,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SpotifyTestApp">
+        android:theme="@style/Theme.SpotifyTestApp"
+        android:hardwareAccelerated="true"
+        >
         <activity android:name=".StatusActivity" />
         <activity android:name=".Login">
             <intent-filter>
