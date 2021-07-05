@@ -9,12 +9,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bitpolarity.spotifytestapp.database_related.TempDataHolder;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -115,7 +115,7 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
                     Log.d(TAG, "onDataChange: "+key + ": " + map1);
                     String meta = map1.get(key).toString();
 
-                    String[] purge = {"{", "}", "=", "SD","albumName","isPlaying","trackLength","trackID","artistName","trackName", "STATUS","LA"};
+                    String[] purge = {"{", "}", "=", "SD","albumName","isPlaying","trackLength","posterURL","trackID","artistName","trackName", "STATUS","LA"};
                     String result = meta;
 
 
@@ -132,13 +132,14 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
                 for (int i = 0 ; i < size ; i ++){
 
                     map.put("albumName"+i,metaList.get(i)[0]);
-                    map.put("trackLength"+i,metaList.get(i)[1]);
-                    map.put("isPlaying"+i,metaList.get(i)[6]);
-                    map.put("trackID"+i,metaList.get(i)[2]);
-                    map.put("artistName"+i,metaList.get(i)[3]);
-                    map.put("trackName"+i,metaList.get(i)[4]);
-                    map.put("STATUS"+i,metaList.get(i)[5]);
-                    map.put("LA"+i,metaList.get(i)[7]);
+                    map.put("trackLength"+i,metaList.get(i)[2]);
+                    map.put("isPlaying"+i,metaList.get(i)[7]);
+                    map.put("trackID"+i,metaList.get(i)[3]);
+                    map.put("artistName"+i,metaList.get(i)[4]);
+                    map.put("trackName"+i,metaList.get(i)[5]);
+                    map.put("STATUS"+i,metaList.get(i)[6]);
+                    map.put("LA"+i,metaList.get(i)[8]);
+                    map.put("posterURL"+i,metaList.get(i)[1]);
 
                 }
 
@@ -153,9 +154,10 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
                 Log.d(TAG, "onDataChange: "+Arrays.toString(users));
                 Integer[] status = new Integer[size];
                 String[] songDetail = new String[size];
-                String[] poster = new String[size];
+                String[] posterURL = new String[size];
                 String[] isPlaying  = new String[size];
                 String[] dateTime = new String[size];
+                String[] trackID = new String[size];
 
 
                 for (int i = 0 ; i < size ; i ++) {
@@ -175,19 +177,20 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
                     }
 
                     songDetail[i] = map.get("trackName"+i)+"-"+map.get("artistName"+i);
+                    trackID[i] = String.valueOf(map.get("trackID"+i)).trim();
+                    String url = String.valueOf(map.get("posterURL"+i)).trim();
 
-                    String url = String.valueOf(map.get("trackID"+i)).trim();
-
-                    poster[i] = url;
+                    posterURL[i] = url;
 
                     dateTime[i] = String.valueOf(map.get("LA"+i));
 
 
                 }
 
-                Log.d(TAG, "Poster array: "+ Arrays.toString(poster));
+                Log.d(TAG, "Poster array: "+ Arrays.toString(posterURL));
                 Log.d(TAG, "isPlaying array : "+ Arrays.toString(isPlaying));
                 Log.d(TAG, "songDetail array : "+ Arrays.toString(songDetail));
+                Log.d(TAG, "trackID array : "+ Arrays.toString(trackID));
 
 
 
@@ -199,11 +202,12 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 userRecyclerView.setLayoutManager(layoutManager);
                 dataHolder.setSongDetails(songDetail);
-                dataHolder.setTrackID(son);
+                dataHolder.setTrackID(trackID);
+               // dataHolder.setTrackID(son);
                 List<UserListModel> modelList = new ArrayList<>();
 
                 for (int i=0;i<size;i++) {
-                    modelList.add(new UserListModel(StatusActivity.this, dateTime[i],isPlaying[i], users[i], poster[i], status[i], songDetail[i]));
+                    modelList.add(new UserListModel(StatusActivity.this, dateTime[i],isPlaying[i], users[i], posterURL[i], status[i], songDetail[i]));
                 }
                 userListAdapter = new UserListAdapter(modelList, StatusActivity.this);
                 userRecyclerView.setAdapter(userListAdapter);
@@ -287,10 +291,11 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
 
         String details = dataHolder.getSongDetails()[position];
         String trackID = dataHolder.getTrackID()[position];
-       // Toast.makeText(StatusActivity.this ,details, Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onClick: POS:"+position+"  Details : "+details);
 
-        mBottomSheetDialog bottomSheet = new mBottomSheetDialog(details);
+        Log.d(TAG, "onClick: POS:"+position+"  Details : "+details);
+        Log.d(TAG, "onClick: POS:"+position+"  Details : "+trackID);
+
+        mBottomSheetDialog bottomSheet = new mBottomSheetDialog(details,trackID);
         bottomSheet.show(getSupportFragmentManager(),"ModalBottomSheet");
 
     }

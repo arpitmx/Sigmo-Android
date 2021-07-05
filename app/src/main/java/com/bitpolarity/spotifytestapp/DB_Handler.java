@@ -1,27 +1,14 @@
 package com.bitpolarity.spotifytestapp;
 
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.provider.DocumentsContract;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.bitpolarity.spotifytestapp.database_related.fbase_bundle;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
-import java.nio.file.Path;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
-import static android.content.ContentValues.TAG;
 
 public class DB_Handler {
 
@@ -104,14 +91,14 @@ public class DB_Handler {
     /////////////////////////////////////////------SONG DETAIL SECTION---------/////////////////////////////////
 
 
-     void setSong_Details(String posterURL, String artistName, String albumName, String trackName, String trackLength ){
+     void setSong_Details(String trackID,String posterURL, String artistName, String albumName, String trackName, String trackLength ){
 
          if (artistName == null) artistName = "Loading";
          else if (albumName==null) albumName = "Loading";
          else if (trackName==null) trackName = "Loading";
          else if (trackLength == null) trackLength = "0";
 
-         fbase_bundle bundle = new fbase_bundle(posterURL,artistName.replace(",",""),albumName.replace(",",""),trackName.replace(",",""),trackLength);
+         fbase_bundle bundle = new fbase_bundle(trackID,posterURL,artistName.replace(",",""),albumName.replace(",",""),trackName.replace(",",""),trackLength);
          ROOTPATH.child("SD").setValue(bundle);
 
      }

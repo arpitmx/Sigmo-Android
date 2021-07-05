@@ -7,6 +7,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.function.ToDoubleBiFunction;
+
 public class OnClearFromRecentService extends Service {
 
     DB_Handler dbHolder = new DB_Handler();
@@ -50,6 +52,8 @@ public class OnClearFromRecentService extends Service {
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
+        //TODO BUG1 : ONLINE STATUS NOT CHANGING IN SOME MODELS
+
         Log.e(LOG, "App closed completly!");
         dbHolder.setStatus(0);
         Toast.makeText(getBaseContext(), "Sigmo Closed forcefly", Toast.LENGTH_LONG).show();
