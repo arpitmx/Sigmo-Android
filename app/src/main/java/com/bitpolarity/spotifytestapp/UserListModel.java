@@ -1,6 +1,7 @@
 package com.bitpolarity.spotifytestapp;
 
 import android.app.Activity;
+import android.content.Context;
 
 public class UserListModel {
 
@@ -8,7 +9,7 @@ public class UserListModel {
     private String poster;
     private Integer imageid;
     private String SongDetail;
-    public Activity context;
+    public Context context;
     private String isPlaying;
     private String datetime;
 
@@ -32,7 +33,7 @@ public class UserListModel {
 
 
 
-    public Activity getContext() {
+    public Context getContext() {
         return this.context;
     }
 
@@ -46,7 +47,7 @@ public class UserListModel {
     }
 
 
-    public UserListModel(Activity context , String datetime,String isPlaying, String username, String poster, Integer statusid, String SongDetail) {
+    public UserListModel(Context context , String datetime, String isPlaying, String username, String poster, Integer statusid, String SongDetail) {
 
         this.context = context;
         this.username = username;

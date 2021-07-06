@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.bitpolarity.spotifytestapp.StatusActivity;
+
 import org.jetbrains.annotations.NotNull;
 
 public class Circle_Tab_Adapter extends FragmentStateAdapter {
@@ -17,9 +19,9 @@ public class Circle_Tab_Adapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         if (position == 1) {
-            return new Circle_Friends_Fragment();
+            return new Circle_Search_Fragment();
         }
-        return new Circle_Search_Fragment();
+        return new StatusActivity();
     }
 
     @Override

@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:orientation="vertical"
         android:weightSum="10"
 
@@ -106,7 +106,7 @@
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                 android:text="Sunday 28th, 2020"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:textColor="@color/s_blue"
+                android:textColor="@color/s_readable_black"
                 android:textSize="10sp" />
 
 
@@ -139,11 +139,9 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="100dp"
                 android:background="@drawable/borders_post"
                 android:orientation="horizontal"
-
-
                 android:weightSum="10"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -156,15 +154,31 @@
 
 
                     <ImageView
-                        android:id="@+id/artwork"
-                        android:layout_width="110dp"
+                        android:id="@+id/background"
+                        android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/s_grey"
-                        android:elevation="15dp"
+                        android:background="@drawable/button_round"
                         android:scaleType="fitCenter"
                         android:scaleX="1"
                         android:scaleY="1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/artwork"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center"
+                        android:elevation="25dp"
+                        android:scaleType="fitCenter"
+                        android:scaleX="1"
+                        android:scaleY="1"
+                        android:src="@drawable/poster"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -179,10 +193,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"
-                    android:fontFamily="@font/hmed"
+                    android:fontFamily="@font/hb"
                     android:gravity="center"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                    android:padding="10dp"
+                    android:padding="5dp"
+                    android:paddingStart="1dp"
                     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                     android:text="Higher Power - Coldplay"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"

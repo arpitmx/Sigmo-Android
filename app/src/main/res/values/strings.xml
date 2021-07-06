@@ -6,4 +6,6 @@
     <string name="exercise">Exercise</string>
     <string name="post">Post</string>
     <string name="social">Social</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
 </resources>

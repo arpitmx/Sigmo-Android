@@ -11,6 +11,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.bitpolarity.spotifytestapp.R;
 import com.google.android.material.tabs.TabLayout;
@@ -24,7 +26,6 @@ public class Circle_Fragment extends Fragment {
     Circle_Tab_Adapter adapter;
     ConstraintLayout constraintLayout;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -33,12 +34,13 @@ public class Circle_Fragment extends Fragment {
 
         tabLayout = v.findViewById(R.id.tabLayout);
         viewPager = v.findViewById(R.id.viewpager);
+        tabLayout.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_down));
        // constraintLayout = v.findViewById(R.id.custom_action_bar_consLay);
        // constraintLayout.setElevation(0);
 
 
-        tabLayout.addTab(tabLayout.newTab().setText("Search"));
         tabLayout.addTab(tabLayout.newTab().setText("Friends"));
+        tabLayout.addTab(tabLayout.newTab().setText("Search"));
 
         FragmentManager fm = getChildFragmentManager();
         adapter = new Circle_Tab_Adapter(fm , getLifecycle());

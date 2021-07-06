@@ -2,13 +2,16 @@ package com.bitpolarity.spotifytestapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +32,7 @@ import java.util.Set;
 
 import static android.content.ContentValues.TAG;
 
-public class StatusActivity extends AppCompatActivity  implements UserListAdapter.ULEventListner {
+public class StatusActivity extends Fragment implements UserListAdapter.ULEventListner {
 
     final String LOG = "StatusActivity";
     Set<String> cache_friends;
@@ -42,49 +45,22 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
     DatabaseReference ref;
     TempDataHolder dataHolder;
 
-
-
-
-
-
-
-
     ////// Firebase specific
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_status);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState){
+       // super.onCreate(savedInstanceState);
 
-        userRecyclerView = findViewById(R.id.listview);
-        shimmerFrameLayout = findViewById(R.id.shimmerFrameLayout);
+        View v = inflater.inflate(R.layout.activity_status,container,false);
+
+        userRecyclerView = v.findViewById(R.id.listview);
+        shimmerFrameLayout = v.findViewById(R.id.shimmerFrameLayout);
         shimmerFrameLayout.startShimmerAnimation();
-        isPlayingTV = findViewById(R.id.isPlayingg);
-        imageView = findViewById(R.id.online_status);
+        isPlayingTV = v.findViewById(R.id.isPlayingg);
+        imageView = v.findViewById(R.id.online_status);
         dataHolder = new TempDataHolder();
-
-
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //setStatus(0);
-        //Log.v(LOG, "Activity status  : destroyed");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.v(LOG, "Status : Background");
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
 
         final int ONLINE = R.drawable.ongreen;
@@ -98,7 +74,7 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 Map<String, Object> map1 = (Map<String, Object>) snapshot.getValue();
-                Log.d(TAG, "HASSSHH:" + Arrays.toString(recArrayList(snapshot).get(0).get("SD").toString().replace("{","").replace("}","").split(",")));
+                Log.d(TAG, "HASSSHH:" + Arrays.toString(recArrayList(snapshot).get(0).get("SD").toString().replace("{", "").replace("}", "").split(",")));
 
                 assert map1 != null;
                 Log.d(TAG, "Value is: " + map1.keySet());
@@ -111,11 +87,11 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
                 ////////////////////////////// GETTING SONG META DATA ////////////////////////////////////////////////////////////
 
 
-                for(String key: keys){
-                    Log.d(TAG, "onDataChange: "+key + ": " + map1);
+                for (String key : keys) {
+                    Log.d(TAG, "onDataChange: " + key + ": " + map1);
                     String meta = map1.get(key).toString();
 
-                    String[] purge = {"{", "}", "=", "SD","albumName","isPlaying","trackLength","posterURL","trackID","artistName","trackName", "STATUS","LA"};
+                    String[] purge = {"{", "}", "=", "SD", "albumName", "isPlaying", "trackLength", "posterURL", "trackID", "artistName", "trackName", "STATUS", "LA"};
                     String result = meta;
 
 
@@ -124,22 +100,22 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
                     }
                     metaData = result.split(",");
                     metaList.add(metaData);
-                    Log.d(TAG, "metaList: "+ Arrays.toString(metaList.get(0)));
+                    Log.d(TAG, "metaList: " + Arrays.toString(metaList.get(0)));
                 }
 
                 Map<String, Object> map = new HashMap<>();
 
-                for (int i = 0 ; i < size ; i ++){
+                for (int i = 0; i < size; i++) {
 
-                    map.put("albumName"+i,metaList.get(i)[0]);
-                    map.put("trackLength"+i,metaList.get(i)[2]);
-                    map.put("isPlaying"+i,metaList.get(i)[7]);
-                    map.put("trackID"+i,metaList.get(i)[3]);
-                    map.put("artistName"+i,metaList.get(i)[4]);
-                    map.put("trackName"+i,metaList.get(i)[5]);
-                    map.put("STATUS"+i,metaList.get(i)[6]);
-                    map.put("LA"+i,metaList.get(i)[8]);
-                    map.put("posterURL"+i,metaList.get(i)[1]);
+                    map.put("albumName" + i, metaList.get(i)[0]);
+                    map.put("trackLength" + i, metaList.get(i)[2]);
+                    map.put("isPlaying" + i, metaList.get(i)[7]);
+                    map.put("trackID" + i, metaList.get(i)[3]);
+                    map.put("artistName" + i, metaList.get(i)[4]);
+                    map.put("trackName" + i, metaList.get(i)[5]);
+                    map.put("STATUS" + i, metaList.get(i)[6]);
+                    map.put("LA" + i, metaList.get(i)[8]);
+                    map.put("posterURL" + i, metaList.get(i)[1]);
 
                 }
 
@@ -147,76 +123,71 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
 
                 //////////////////////////////////  GETTING SONG META DATA //////////////////////////////////////////////
 
-                isPlayingTV = (TextView) findViewById(R.id.isPlayingg);
+                isPlayingTV = (TextView) v.findViewById(R.id.isPlayingg);
 
 
                 String[] users = (String[]) keys.toArray(new String[size]);
-                Log.d(TAG, "onDataChange: "+Arrays.toString(users));
+                Log.d(TAG, "onDataChange: " + Arrays.toString(users));
                 Integer[] status = new Integer[size];
                 String[] songDetail = new String[size];
                 String[] posterURL = new String[size];
-                String[] isPlaying  = new String[size];
+                String[] isPlaying = new String[size];
                 String[] dateTime = new String[size];
                 String[] trackID = new String[size];
 
 
-                for (int i = 0 ; i < size ; i ++) {
+                for (int i = 0; i < size; i++) {
 
-                    Log.d(TAG, "Online Status : "+map.get("STATUS"+i));
-                    if (Integer.parseInt(map.get("STATUS"+i).toString().trim())==1) {
+                    Log.d(TAG, "Online Status : " + map.get("STATUS" + i));
+                    if (Integer.parseInt(map.get("STATUS" + i).toString().trim()) == 1) {
                         status[i] = ONLINE;
-                    }else{
+                    } else {
                         status[i] = OFFLINE;
                     }
 
-                    if(map.get("isPlaying"+i).toString().trim().equals("true")){
+                    if (map.get("isPlaying" + i).toString().trim().equals("true")) {
                         isPlaying[i] = "Playing";
-                    }else{
+                    } else {
                         isPlaying[i] = "Paused";
 
                     }
 
-                    songDetail[i] = map.get("trackName"+i)+"-"+map.get("artistName"+i);
-                    trackID[i] = String.valueOf(map.get("trackID"+i)).trim();
-                    String url = String.valueOf(map.get("posterURL"+i)).trim();
+                    songDetail[i] = map.get("trackName" + i) + "-" + map.get("artistName" + i);
+                    trackID[i] = String.valueOf(map.get("trackID" + i)).trim();
+                    String url = String.valueOf(map.get("posterURL" + i)).trim();
 
                     posterURL[i] = url;
 
-                    dateTime[i] = String.valueOf(map.get("LA"+i));
+                    dateTime[i] = String.valueOf(map.get("LA" + i));
 
 
                 }
 
-                Log.d(TAG, "Poster array: "+ Arrays.toString(posterURL));
-                Log.d(TAG, "isPlaying array : "+ Arrays.toString(isPlaying));
-                Log.d(TAG, "songDetail array : "+ Arrays.toString(songDetail));
-                Log.d(TAG, "trackID array : "+ Arrays.toString(trackID));
-
-
-
+                Log.d(TAG, "Poster array: " + Arrays.toString(posterURL));
+                Log.d(TAG, "isPlaying array : " + Arrays.toString(isPlaying));
+                Log.d(TAG, "songDetail array : " + Arrays.toString(songDetail));
+                Log.d(TAG, "trackID array : " + Arrays.toString(trackID));
 
 
                 ////////////////////////// SETTING DATA TO ADAPTER
 
-                LinearLayoutManager layoutManager = new LinearLayoutManager(StatusActivity.this);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 userRecyclerView.setLayoutManager(layoutManager);
                 dataHolder.setSongDetails(songDetail);
                 dataHolder.setTrackID(trackID);
-               // dataHolder.setTrackID(son);
+                // dataHolder.setTrackID(son);
                 List<UserListModel> modelList = new ArrayList<>();
 
-                for (int i=0;i<size;i++) {
-                    modelList.add(new UserListModel(StatusActivity.this, dateTime[i],isPlaying[i], users[i], posterURL[i], status[i], songDetail[i]));
+                for (int i = 0; i < size; i++) {
+                    modelList.add(new UserListModel(getContext(), dateTime[i], isPlaying[i], users[i], posterURL[i], status[i], songDetail[i]));
                 }
                 userListAdapter = new UserListAdapter(modelList, StatusActivity.this);
                 userRecyclerView.setAdapter(userListAdapter);
                 userListAdapter.notifyDataSetChanged();
 
 
-
                 ////////////////////////// SETTING DATA TO ADAPTER
-
 
 
                 //// SHIMMERS ///////////////////////////////////////////////////////////////
@@ -224,30 +195,44 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 userRecyclerView.setVisibility(View.VISIBLE);
+            }
 
                 //// SHIMMERS ///////////////////////////////////////////////////////////////
 
 
 
                 ///////////////////// SETTING ONCLICK LISTNER ON ELEMENTS OF RECYCLER VIEW
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // calling on cancelled method when we receive
+                    // any error or we are not able to get the data.
+                    Toast.makeText(getContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
+                }
+            });
 
 
 
+                return v;
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //setStatus(0);
+        //Log.v(LOG, "Activity status  : destroyed");
+    }
 
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // calling on cancelled method when we receive
-                // any error or we are not able to get the data.
-                Toast.makeText(StatusActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.v(LOG, "Status : Background");
 
     }
+
+
+
+
+
 
     public ArrayList<HashMap<String, Object>> recArrayList(DataSnapshot snapshot){
 
@@ -296,7 +281,7 @@ public class StatusActivity extends AppCompatActivity  implements UserListAdapte
         Log.d(TAG, "onClick: POS:"+position+"  Details : "+trackID);
 
         mBottomSheetDialog bottomSheet = new mBottomSheetDialog(details,trackID);
-        bottomSheet.show(getSupportFragmentManager(),"ModalBottomSheet");
+        bottomSheet.show(getChildFragmentManager(),"ModalBottomSheet");
 
     }
 
