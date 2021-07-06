@@ -105,7 +105,7 @@ public class SongDetails {
                                 }
 
 
-                                db_handler.setSong_Details(posterUrl,artistName,albumName,trackName, trackLengthInSec);
+                                db_handler.setSong_Details(trackId,posterUrl,artistName,albumName,trackName, trackLengthInSec);
                                 Log.d("SongDetails", "Poster URL: "+posterUrl);
                             }
 

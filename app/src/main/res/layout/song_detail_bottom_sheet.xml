@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:elevation="10dp"
     android:orientation="vertical">
+
 
     <TextView
         android:id="@+id/songD"
@@ -15,11 +16,32 @@
         android:text="Song Detail"
         android:gravity="center"
         android:elevation="5dp"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:textColor="@color/s_blue"
-        android:textSize="25sp" />
+        android:textSize="22sp" />
 
-            <WebView
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        >
+        <!-- Adding 15 rows of placeholders -->
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/shimmer_placeholder_layout_bottom_sheet" />
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    <WebView
         android:id="@+id/spotifyWebView"
         android:layout_width="match_parent"
         android:layout_margin="10dp"
@@ -27,5 +49,17 @@
         android:background="@drawable/round_dialog_bottomsheet"
         android:layout_height="wrap_content"
         />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/linkTospotifyBTN"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/hb"
+        app:cornerRadius="6dp"
+        android:textColor="@color/white"
+        android:text="Play on spotify"
+        />
+
 
 </LinearLayout>

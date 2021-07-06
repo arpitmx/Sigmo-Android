@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp;
+package com.bitpolarity.spotifytestapp.database_related;
 
 import android.app.Activity;
 import android.util.Log;
