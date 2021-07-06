@@ -8,6 +8,8 @@
     android:layout_height="match_parent"
     tools:ignore="HardcodedText">
 
+
+
    <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,7 +19,50 @@
         android:id="@+id/toolbar"
         layout="@layout/custom_action_bar"
 
+
         />
+
+       <androidx.fragment.app.FragmentContainerView
+           android:id="@+id/fragmentContainerView"
+           android:name="androidx.navigation.fragment.NavHostFragment"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_above="@+id/bottom_nav"
+           android:layout_below="@+id/toolbar"
+           android:layout_alignParentStart="true"
+           android:layout_alignParentRight="true"
+           android:layout_marginStart="0dp"
+           android:layout_marginBottom="55dp"
+           app:defaultNavHost="true"
+           app:navGraph="@navigation/nav" />
+
+       <androidx.coordinatorlayout.widget.CoordinatorLayout
+           android:id="@+id/clBottomSheet"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_marginBottom="55dp"
+           android:layout_marginTop="60dp"
+           >
+
+           <FrameLayout
+               android:id="@+id/standardBottomSheet"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:background="@color/white"
+               android:elevation="30dp"
+               style="?attr/bottomSheetStyle"
+               app:layout_behavior = "com.google.android.material.bottomsheet.BottomSheetBehavior"
+               app:behavior_peekHeight="55dp">
+
+               <include
+                   android:id="@+id/toolbar"
+                   layout="@layout/mini_song_player"
+
+                   />
+
+           </FrameLayout>
+       </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
@@ -30,26 +75,19 @@
         app:menu="@menu/bottom_navigation_menu"
         />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_below="@+id/toolbar"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginBottom="0dp"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav" />
+
+
 
         </RelativeLayout>
 
 
+
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/bottom_navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/side_navigation_drawer_menu" />
+
+
 </androidx.drawerlayout.widget.DrawerLayout>
