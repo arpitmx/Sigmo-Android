@@ -3,27 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeF">
+    app:startDestination="@id/Circle">
+
+
 
     <fragment
-        android:id="@+id/homeF"
-        android:name="com.bitpolarity.Bottom_Nav_Files.Home_Fragment"
-        android:label="home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/Circle"
+        android:name="com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Circle.Circle_Fragment"
+        android:label="Circle"
+        tools:layout="@layout/fragment_circle" />
     <fragment
-        android:id="@+id/exercisesF"
-        android:name="com.bitpolarity.careify.Bottom_Nav_Files.Exercise_Fragment"
-        android:label="circle"
-        tools:layout="@layout/fragment_exercises" />
-    <fragment
-        android:id="@+id/postF"
-        android:name="com.bitpolarity.careify.Bottom_Nav_Files.postF"
-        android:label="room"
-        tools:layout="@layout/fragment_post" />
+        android:id="@+id/Rooms"
+        android:name="com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Rooms_Fragment"
+        android:label="Rooms"
+        tools:layout="@layout/fragment_rooms" />
     <fragment
         android:id="@+id/socialF"
-        android:name="com.bitpolarity.careify.Bottom_Nav_Files.Social_Fragment"
-        android:label="profile"
-        tools:layout="@layout/fragment_social" />
+        android:name="com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Profile_Fragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 
 </navigation>

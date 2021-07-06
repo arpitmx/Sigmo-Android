@@ -82,8 +82,6 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
                 spotifyWebView.setAnimation(anim);
 
 
-
-
             }
         };
         handler.postAtTime(runnable, System.currentTimeMillis()+interval);
