@@ -39,6 +39,7 @@ public class MainHolder extends AppCompatActivity {
     ImageView bitpSymbol;
     ImageButton imgbtn;
     CircleImageView c;
+    ImageButton playback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,15 @@ public class MainHolder extends AppCompatActivity {
         sigmoTV = findViewById(R.id.sigmoTitleBar);
         bitpSymbol = findViewById(R.id.bitpSymbl);
         c = (CircleImageView) findViewById(R.id.cir);
+        playback = findViewById(R.id.playback);
 
+
+        playback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainHolder.this , "Playback", Toast.LENGTH_SHORT).show();
+            }
+        });
         bitpSymbol.setAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate));
         sigmoTV.setAnimation(AnimationUtils.loadAnimation(this , R.anim.fade_in));
         sigmoTV.setAnimation(AnimationUtils.loadAnimation(this , R.anim.slidein_left_to_right));
