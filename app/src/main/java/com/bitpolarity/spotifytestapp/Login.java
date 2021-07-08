@@ -5,11 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.service.notification.NotificationListenerService;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import com.bitpolarity.spotifytestapp.Bottom_Nav_Files.MainHolder;
 
 public class Login extends AppCompatActivity {
 
@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity {
                 public void onClick(View view) {
                    prefs.edit().putString("Username", name.getText().toString()).apply();
 
-                 //  startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+                    startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
                     startActivity(new Intent(Login.this , MainHolder.class));
 
                 }
@@ -50,7 +50,7 @@ public class Login extends AppCompatActivity {
         }
         else{
 
-            //startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+            startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
             startActivity(new Intent(this ,MainHolder.class));
 
         }

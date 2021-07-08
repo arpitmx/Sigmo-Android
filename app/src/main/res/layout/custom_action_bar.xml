@@ -1,28 +1,67 @@
 <?xml version = "1.0" encoding = "utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="55dp"
-    android:background="@color/s_blue"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/custom_action_bar_consLay"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/dark_bg"
+    android:weightSum="10">
 
-    >
 
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_effect"
+            android:background="#00FFFFFF"
+            android:paddingTop="3dp"
+            android:paddingEnd="5dp"
+            android:scaleType="centerInside"
+            android:scaleX="1.4"
+            android:scaleY="1.4"
+            android:src="@drawable/ic_baseline_dehaze_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/bitpSymbl"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/bitpSymbl"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:fontFamily="@font/hxtrabold"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:textSize="28sp"
-            android:elevation="2dp"
+            android:gravity="start"
+            android:paddingTop="6dp"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:src="@drawable/ic_sigmotitle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.138"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/sigmoTitleBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/hxtrabold"
+            android:gravity="center"
+            android:paddingTop="4dp"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/bitpSymbl"
+            tools:layout_editor_absoluteY="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

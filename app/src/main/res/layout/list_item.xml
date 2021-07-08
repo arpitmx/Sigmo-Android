@@ -6,7 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-
+    android:layout_marginStart="9dp"
+    android:layout_marginEnd="9dp"
+    android:layout_marginTop="5dp"
+    android:elevation="60dp"
+    android:background="@drawable/four_side_rounded_white"
     >
 
 
@@ -14,17 +18,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
         android:orientation="vertical"
         android:weightSum="10"
-
         >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/borders"
-            android:elevation="2dp"
+            android:layout_height="40dp"
+            android:elevation="10dp"
             android:orientation="horizontal"
             android:weightSum="10"
 
@@ -47,35 +48,41 @@
                 app:civ_border_width="1.2dp" />
 
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3.7"
+                android:layout_weight="3.5"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:fontFamily="@font/hb"
                     android:gravity="center_vertical"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
                     android:paddingStart="10dp"
                     android:text="Shaurya007"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                    android:textColor="@color/s_blue"
+                    android:textColor="@color/dark_bg"
                     android:textSize="15sp"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <ImageView
                     android:id="@+id/online_status"
-                    android:layout_width="30dp"
+                    android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:padding="6dp"
                     android:scaleType="centerInside"
-                    android:scaleX="0.5"
-                    android:scaleY="0.5"
+                    android:scaleX="1"
+                    android:scaleY="1"
                     android:src="@drawable/ongreen"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +94,7 @@
                 </ImageView>
 
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
@@ -106,7 +113,7 @@
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                 android:text="Sunday 28th, 2020"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:textColor="@color/s_blue"
+                android:textColor="@color/s_readable_black"
                 android:textSize="10sp" />
 
 
@@ -114,10 +121,10 @@
                 android:id="@+id/isPlayingg"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="2.2"
                 android:fontFamily="@font/hb"
                 android:foregroundTint="@color/purple_200"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:paddingStart="?android:attr/listPreferredItemPaddingStart"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
@@ -139,12 +146,10 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:background="@drawable/borders_post"
+                android:layout_height="90dp"
                 android:orientation="horizontal"
-
-
                 android:weightSum="10"
+                android:background="@drawable/borders_post"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -155,20 +160,42 @@
                     android:layout_height="match_parent">
 
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/artwork"
-                        android:layout_width="110dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/s_grey"
-                        android:elevation="15dp"
-                        android:scaleType="fitCenter"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:outlineAmbientShadowColor="@color/s_grey"
+                        android:padding="3dp"
                         android:scaleX="1"
                         android:scaleY="1"
+
+                        android:src="@drawable/poster"
+                        app:civ_border_color="@color/s_grey"
+                        app:civ_border_width="1.2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/hole"
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:padding="6dp"
+                        android:scaleType="centerInside"
+                        android:scaleX="1.3"
+                        android:scaleY="1.3"
+
+                        android:src="@drawable/holee"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0">
+
+                    </ImageView>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -179,14 +206,15 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"
-                    android:fontFamily="@font/hmed"
+                    android:fontFamily="@font/hb"
                     android:gravity="center"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                    android:padding="10dp"
+                    android:padding="5dp"
+                    android:paddingStart="1dp"
                     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                     android:text="Higher Power - Coldplay"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                    android:textColor="@color/black"
+                    android:textColor="@color/s_readable_black_200"
                     android:textSize="12sp" />
 
                 <TextView
@@ -199,7 +227,7 @@
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
                     android:text="3:40"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                    android:textColor="@color/black"
+                    android:textColor="@color/s_readable_black_200"
                     android:textSize="11dp" />
 
             <LinearLayout
@@ -216,7 +244,6 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:scaleType="centerCrop"
-                    android:elevation="5dp"
                     android:scaleX="1"
                     android:scaleY="1"
                     android:src="@drawable/eq"

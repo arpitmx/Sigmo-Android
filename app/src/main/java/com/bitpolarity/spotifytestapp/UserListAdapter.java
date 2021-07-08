@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
@@ -35,6 +39,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     @NotNull
     @Override
+
     public UserListAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent,false);
         return new ViewHolder(view,mULEventlisnter);
@@ -61,6 +66,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         holder.last_acive.setText(link.getDatetime());
 
 
+
         // Poster /////////////////////////////////////////////////////////////////
 
 
@@ -84,6 +90,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         if (link.getIsPlaying().equals("Playing")) {
             holder.isPlayingTV.setText(link.getIsPlaying());
             holder.equilizer_iv.setVisibility(View.VISIBLE);
+            holder.posterr.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
         }
         else
             {
@@ -115,7 +122,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
         TextView textViewUsername ;
        ImageView online_status;
-       ImageView posterr;
+       CircleImageView posterr;
        TextView songName;
        TextView isPlayingTV;
        ImageView equilizer_iv;
@@ -129,7 +136,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             this.ulEventListner = ulEventListner;
             textViewUsername = (TextView) itemView.findViewById(R.id.username);
             online_status = (ImageView) itemView.findViewById(R.id.online_status);
-            posterr = (ImageView) itemView.findViewById(R.id.artwork);
+            posterr =  itemView.findViewById(R.id.artwork);
             songName =(TextView) itemView.findViewById(R.id.songname);
             isPlayingTV = (TextView) itemView.findViewById(R.id.isPlayingg);
             equilizer_iv =(ImageView) itemView.findViewById(R.id.view2);

@@ -15,15 +15,14 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/s_blue"
-                app:tabTextColor="#ADCEFF"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_bg"
+                app:tabTextColor="#979797"
                 app:tabSelectedTextColor="@color/white"
-                app:tabIndicatorColor="@color/white"
-                android:elevation="4dp"
+                app:tabIndicatorColor="@color/s_yellow"
+                android:elevation="40dp"
                 app:tabIndicatorHeight="3dp"
-
-                />
+                    />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewpager"

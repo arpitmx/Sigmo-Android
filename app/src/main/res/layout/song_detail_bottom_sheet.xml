@@ -5,7 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:elevation="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+
+    >
 
 
     <TextView
@@ -46,20 +48,26 @@
         android:layout_width="match_parent"
         android:layout_margin="10dp"
         android:visibility="gone"
-        android:background="@drawable/round_dialog_bottomsheet"
         android:layout_height="wrap_content"
         />
 
-    <com.google.android.material.button.MaterialButton
+    <TextView
         android:id="@+id/linkTospotifyBTN"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_margin="20dp"
         android:fontFamily="@font/hb"
-        app:cornerRadius="6dp"
+        android:textSize="20sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_effect"
         android:textColor="@color/white"
-        android:text="Play on spotify"
+        android:gravity="center"
+        android:background="@drawable/four_side_rounded_blue"
+        android:text="Play on Spotify"
+
         />
+
 
 
 </LinearLayout>

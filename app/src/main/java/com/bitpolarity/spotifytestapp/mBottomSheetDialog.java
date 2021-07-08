@@ -31,7 +31,7 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
     WebView spotifyWebView;
     ShimmerFrameLayout shimmerFrameLayout;
     final int height = 250;
-    Button linkToSpotify ;
+    TextView linkToSpotify ;
 
     mBottomSheetDialog(String details,String trackID){
         this.details = details;
@@ -86,11 +86,6 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
         };
         handler.postAtTime(runnable, System.currentTimeMillis()+interval);
         handler.postDelayed(runnable, interval);
-
-
-
-
-
         //shimmerFrameLayout.setVisibility(View.GONE);
 
         TextView songD = v.findViewById(R.id.songD);
