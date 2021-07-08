@@ -6,14 +6,15 @@
         <shape
             android:shape="rectangle"
             >
-            <corners android:bottomLeftRadius="7dp"
-                android:bottomRightRadius="7dp"/>
-
-            <gradient android:startColor="#F6F6F6"
-                android:centerColor="#F6F6F6"
-                android:endColor="#F6F6F6"
-                android:angle="0"
+            <corners android:bottomRightRadius="7dp"
+                android:topRightRadius="7dp"
+                android:topLeftRadius="7dp"
+                android:bottomLeftRadius="7dp"
                 />
+
+           <solid
+           android:color="@color/s_blue"
+               />
 
 
         </shape>

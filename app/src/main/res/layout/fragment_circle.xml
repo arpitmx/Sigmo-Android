@@ -16,11 +16,11 @@
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/black"
+                android:background="@color/dark_bg"
                 app:tabTextColor="#979797"
                 app:tabSelectedTextColor="@color/white"
                 app:tabIndicatorColor="@color/s_yellow"
-                android:elevation="4dp"
+                android:elevation="40dp"
                 app:tabIndicatorHeight="3dp"
                     />
 

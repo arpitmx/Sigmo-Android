@@ -54,7 +54,7 @@
     <TextView
         android:id="@+id/linkTospotifyBTN"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_margin="20dp"
         android:fontFamily="@font/hb"
         android:textSize="20sp"
@@ -63,8 +63,9 @@
         android:foreground="@drawable/ripple_effect"
         android:textColor="@color/white"
         android:gravity="center"
-        android:background="@drawable/four_side_rounded_white"
-        android:text="Play on spotify"
+        android:background="@drawable/four_side_rounded_blue"
+        android:text="Play on Spotify"
+
         />
 
 

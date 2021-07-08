@@ -2,6 +2,7 @@ package com.bitpolarity.spotifytestapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,11 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bitpolarity.spotifytestapp.database_related.TempDataHolder;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,6 +64,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         isPlayingTV = v.findViewById(R.id.isPlayingg);
         imageView = v.findViewById(R.id.online_status);
         dataHolder = new TempDataHolder();
+
+
 
 
         final int ONLINE = R.drawable.ongreen;

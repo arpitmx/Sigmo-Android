@@ -8,6 +8,8 @@
         <item name="colorPrimary">@color/s_blue</item>
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/s_blue</item>
+        <item name="elevationOverlayColor">@color/white</item>
+
 
         <!-- Secondary brand color. -->
 

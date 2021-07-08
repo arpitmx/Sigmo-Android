@@ -5,7 +5,7 @@
     android:id="@+id/custom_action_bar_consLay"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="@color/black"
+    android:background="@color/dark_bg"
     android:weightSum="10">
 
 
