@@ -7,7 +7,6 @@ Sigmo is an android app made for music aggregation and synced music on top of sp
 
 >Supported apps : Spotify
 
-  https://user-images.githubusercontent.com/58986949/115314310-805b2780-a1a7-11eb-8558-648a367ea231.mp4
 <p float="left">
 
   <img src="https://github.com/arpitrmaurya/Sigmo-Music/blob/master/UI%20SS/photo_2021-07-08_23-35-13.jpg" width="150" />
