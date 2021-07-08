@@ -7,10 +7,7 @@ Sigmo is an android app made for music aggregation and synced music on top of sp
 >Make room, invite , listen together in sync!
 
 
-
-
-
->Supported apps : Spotify
+https://github.com/arpitrmaurya/Sigmo-Music/blob/master/UI%20SS/video_2021-07-08_23-44-51.mp4
 
 <p float="left">
 
