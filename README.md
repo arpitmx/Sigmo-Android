@@ -1,3 +1,7 @@
+
+
+https://user-images.githubusercontent.com/59350776/124971641-13895800-e047-11eb-81b9-56d4cf537776.mp4
+
 # Sigmo-Music
 Sigmo is an android app made for music aggregation and synced music on top of spotify!
 
