@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText"
+    >
 
     <item
         android:id="@+id/nav_account"
-        android:title="Notifications" />
+        android:title="Notifications"
+        />
 
     <item
         android:id="@+id/nav_settings"

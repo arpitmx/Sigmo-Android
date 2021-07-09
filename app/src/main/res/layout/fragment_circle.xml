@@ -20,7 +20,7 @@
                 app:tabTextColor="#979797"
                 app:tabSelectedTextColor="@color/white"
                 app:tabIndicatorColor="@color/s_yellow"
-                android:elevation="40dp"
+                android:elevation="4dp"
                 app:tabIndicatorHeight="3dp"
                     />
 
