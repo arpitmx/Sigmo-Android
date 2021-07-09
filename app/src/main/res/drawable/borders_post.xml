@@ -6,13 +6,11 @@
         <shape
             android:shape="rectangle"
             >
-            <corners android:bottomLeftRadius="7dp"
-                android:bottomRightRadius="7dp"/>
+            <corners android:bottomLeftRadius="12dp"
+                android:bottomRightRadius="12dp"/>
 
-            <gradient android:startColor="#F6F6F6"
-                android:centerColor="#F6F6F6"
-                android:endColor="#F6F6F6"
-                android:angle="0"
+            <solid
+                android:color="@color/dark_fg_border"
                 />
 
 
