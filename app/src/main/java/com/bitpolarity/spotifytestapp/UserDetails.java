@@ -2,14 +2,12 @@ package com.bitpolarity.spotifytestapp;
 
 public class UserDetails {
 
-    public String  trackID;
+    public String trackID;
     String artistName;
     String albumName;
 
     String trackName;
-      String trackLength;
-
-
+    String trackLength;
 
       UserDetails(){
 

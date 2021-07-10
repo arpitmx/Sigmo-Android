@@ -7,6 +7,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.bitpolarity.spotifytestapp.SpotifyHandler.Spotify_Handler;
+
 import java.util.function.ToDoubleBiFunction;
 
 public class OnClearFromRecentService extends Service {
@@ -15,7 +17,7 @@ public class OnClearFromRecentService extends Service {
     SharedPreferences prefs;
     String USERNAME;
     String LOG = "SERVICE";
-
+    Spotify_Handler spotify_handler;
 
 
     @Override
@@ -34,6 +36,7 @@ public class OnClearFromRecentService extends Service {
 
 
         dbHolder = new DB_Handler();
+
         dbHolder.setUsername(USERNAME);
 
         Log.d(LOG, "Service Started");
@@ -48,6 +51,8 @@ public class OnClearFromRecentService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.d(LOG, "Service Destroyed");
+        spotify_handler.onStop();
+
     }
 
     @Override

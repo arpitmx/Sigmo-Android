@@ -69,8 +69,7 @@ public class SongDetails {
                         String arl = requestURL+trackId;
 
 
-                        new Thread(new Runnable()
-                        {
+                        new Thread(new Runnable(){
                             public void run()
                             {
 

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.bitpolarity.spotifytestapp.Bottom_Nav_Files.MainHolder;
+import com.bitpolarity.spotifytestapp.SpotifyHandler.Spotify_Handler;
 
 public class Login extends AppCompatActivity {
 
@@ -51,7 +52,7 @@ public class Login extends AppCompatActivity {
         else{
 
             startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
-            startActivity(new Intent(this ,MainHolder.class));
+            startActivity(new Intent(this , MainHolder.class));
 
         }
             prefs.edit().putBoolean("firstrun", false).apply();

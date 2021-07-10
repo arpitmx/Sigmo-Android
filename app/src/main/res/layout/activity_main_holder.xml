@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:elevation="15dp"
-        android:background="@color/s_grey"
+        android:background="@color/white200"
         app:itemIconSize="22dp"
         app:itemIconTint="@drawable/tabcolor"
         app:itemTextColor="@drawable/tabcolor"
