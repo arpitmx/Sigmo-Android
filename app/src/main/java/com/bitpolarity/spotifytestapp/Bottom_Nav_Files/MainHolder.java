@@ -57,6 +57,8 @@ public class MainHolder extends AppCompatActivity {
     String TAG = "MainHolder";
     TempDataHolder instance;
 
+    boolean liked = false;
+
 
     ImageView cir;
     ImageView Fav;
@@ -258,11 +260,20 @@ public class MainHolder extends AppCompatActivity {
 
                         Log.d(TAG, "connected: "+mSpotifyAppRemote.getUserApi().getLibraryState(track.uri).getRequestId());
 
+
                         Fav.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                mSpotifyAppRemote.getUserApi().addToLibrary(track.uri);
-                                Fav.setImageResource(R.drawable.ic_hfilled);
+                                if (!liked) {
+                                    mSpotifyAppRemote.getUserApi().addToLibrary(track.uri);
+                                    Fav.setImageResource(R.drawable.ic_hfilled);
+                                    liked = true;
+                                }
+                                else{
+                                    mSpotifyAppRemote.getUserApi().removeFromLibrary(track.uri);
+                                    Fav.setImageResource(R.drawable.ic_fav);
+                                    liked = false;
+                                }
 
                             }
                         });
