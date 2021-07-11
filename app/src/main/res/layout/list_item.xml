@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginStart="9dp"
-    android:layout_marginEnd="9dp"
-    android:layout_marginTop="5dp"
-    android:elevation="60dp"
-    android:background="@drawable/four_side_rounded_white"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="7dp"
+    android:elevation="10dp"
+
     >
 
 
@@ -23,14 +23,16 @@
         >
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:elevation="10dp"
+            android:elevation="3dp"
             android:orientation="horizontal"
             android:weightSum="10"
-
             android:clickable="true"
             android:focusable="true"
+            android:background="@drawable/borders"
+
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -64,7 +66,7 @@
                     android:paddingStart="10dp"
                     android:text="Shaurya007"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                    android:textColor="@color/dark_bg"
+                    android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="normal"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -113,7 +115,7 @@
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                 android:text="Sunday 28th, 2020"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:textColor="@color/s_readable_black"
+                android:textColor="@color/black"
                 android:textSize="10sp" />
 
 
@@ -136,12 +138,16 @@
 
         </LinearLayout>
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:foreground="@drawable/ripple_effect"
+            android:id="@+id/conlay"
 
             >
+
+
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -164,11 +170,10 @@
                         android:id="@+id/artwork"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:outlineAmbientShadowColor="@color/s_grey"
                         android:padding="3dp"
                         android:scaleX="1"
                         android:scaleY="1"
-
+                        android:layout_marginStart="5dp"
                         android:src="@drawable/poster"
                         app:civ_border_color="@color/s_grey"
                         app:civ_border_width="1.2dp"

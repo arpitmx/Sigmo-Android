@@ -8,6 +8,7 @@
     <color name="black">#121212</color>
     <color name="white">#FFFFFFFF</color>
     <color name="s_blue">#0D82FF</color>
+    <color name="s_blue200">#90CAF9</color>
     <color name="s_green">#69DB22</color>
     <color name="s_grey">#dddddd</color>
     <color name="s_red">#E53935</color>
@@ -17,8 +18,10 @@
     <color name= "s_readable_black_200">#373737</color>
 
     <color name= "dark_bg">#1B1A1A</color>
-    <color name= "dark_fg">#979797</color>
-    <color name="white200">#FBFBFB</color>
+    <color name= "dark_fg">#323232</color>
+    <color name= "dark_fg_border">#9E3A3A3A</color>
+    <color name="white200">#FFFFFF</color>
+    <color name="white87">#DEFFFF</color>
 
 
 

@@ -1,5 +1,7 @@
 package com.bitpolarity.spotifytestapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -33,8 +36,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
         this.userModelList = categoryModelList;
         this.mULEventlisnter = mULEventListner;
-
-
     }
 
     @NotNull
@@ -64,6 +65,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         holder.songName.setText(songName);
         holder.online_status.setImageResource(online_status);
         holder.last_acive.setText(link.getDatetime());
+
+
 
 
 
@@ -127,6 +130,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
        TextView isPlayingTV;
        ImageView equilizer_iv;
        TextView last_acive;
+
 
        ULEventListner ulEventListner;
 
@@ -219,4 +223,15 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 //        songName.setText(SongDetail[position]);
 //        return  row;
 //    }
+
+    public static int getDominantColor(Bitmap bitmap) {
+        Bitmap newBitmap = Bitmap.createScaledBitmap(bitmap, 1, 1, true);
+        final int color = newBitmap.getPixel(0, 0);
+        newBitmap.recycle();
+        return color;
+    }
+
+
+
+
 }

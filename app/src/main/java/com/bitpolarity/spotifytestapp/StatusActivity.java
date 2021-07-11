@@ -38,9 +38,7 @@ import static android.content.ContentValues.TAG;
 public class StatusActivity extends Fragment implements UserListAdapter.ULEventListner {
 
     final String LOG = "StatusActivity";
-    Set<String> cache_friends;
     ImageView imageView;
-    SharedPreferences sharedPreferences;
     ShimmerFrameLayout shimmerFrameLayout;
     TextView isPlayingTV ;
     RecyclerView userRecyclerView;

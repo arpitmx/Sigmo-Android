@@ -41,7 +41,7 @@
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:layout_alignParentBottom="true"
-           android:layout_marginTop="60dp"
+           android:elevation="5dp"
            android:layout_marginBottom="54dp">
 
            <FrameLayout
@@ -60,7 +60,6 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    app:layout_anchorGravity="bottom"
-                   app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
 
                    />
 
@@ -74,8 +73,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:elevation="15dp"
-        android:background="@color/white"
+        android:background="@color/s_grey"
         app:itemIconSize="22dp"
+        app:itemIconTint="@drawable/tabcolor"
+        app:itemTextColor="@drawable/tabcolor"
+        app:labelVisibilityMode="labeled"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:menu="@menu/bottom_navigation_menu"
         />
 
@@ -91,6 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+
         app:menu="@menu/side_navigation_drawer_menu" />
 
 
