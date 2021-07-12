@@ -1,22 +1,19 @@
-package com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Circle;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle;
 
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.bitpolarity.spotifytestapp.R;
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 
 public class Circle_Fragment extends Fragment {

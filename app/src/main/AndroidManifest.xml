@@ -18,15 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpotifyTestApp">
         <activity android:name=".Spotify_Test_Act" />
-        <activity android:name=".Views.Login">
+        <activity android:name=".UI_Controllers.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.MainHolder" />
-        <activity android:name=".Views.MainActivity" />
+        <activity android:name=".UI_Controllers.MainHolder" />
+        <activity android:name=".UI_Controllers.MainActivity" />
 
         <service android:name=".Services.OnClearFromRecentService" />
 

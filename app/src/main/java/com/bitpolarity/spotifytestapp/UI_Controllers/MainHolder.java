@@ -1,30 +1,31 @@
-package com.bitpolarity.spotifytestapp.Views;
+package com.bitpolarity.spotifytestapp.UI_Controllers;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Circle.Circle_Fragment;
-import com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Profile_Fragment;
-import com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Rooms_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.Circle_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Profile_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms_Fragment;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 
+import com.bitpolarity.spotifytestapp.ViewModels.Spotify_ViewModel;
+import com.bitpolarity.spotifytestapp.databinding.ActivityMainHolderBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
@@ -44,8 +45,13 @@ public class MainHolder extends AppCompatActivity {
     String TAG = "MainHolder";
     AudioManager audioManager;
     boolean liked = false;
+    float prevVolume;
 
-   // MiniSongPlayerBinding binding;
+
+   //ViewBinidings
+    ActivityMainHolderBinding binding;
+    Spotify_ViewModel spotify_viewModel;
+
 
     ImageButton playback;
     ImageButton side_navigation_button;
@@ -57,6 +63,8 @@ public class MainHolder extends AppCompatActivity {
     ImageView peacock_symbol;
     ImageView cir;
     ImageView Fav;
+
+
 
     /////////////////////// SPOTIFY
 
@@ -71,15 +79,21 @@ public class MainHolder extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_holder);
+
+        binding = ActivityMainHolderBinding.inflate(getLayoutInflater());
+
+        setContentView(binding.getRoot());
 
 
         //////////////////////////////////////// Init5ializations ///////////////////////////////////////////////////
 
+        //ViewBindings
+        //miniSongPlayerBinding = MiniSongPlayerBinding.inflate(getLayoutInflater());
 
-      //  binding = DataBindingUtil.setContentView(this ,R.layout.mini_song_player);
 
-       // playback = binding.playback;
+        //ViewModel
+        //spotify_viewModel = ViewModelProviders.of(this).get(Spotify_ViewModel.class);
+
         //Models
         detail_holder = new mDetail_Holder();
 
@@ -101,6 +115,7 @@ public class MainHolder extends AppCompatActivity {
         peacock_symbol = findViewById(R.id.bitpSymbl);
 
         //System services
+
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         //Intro Animations
@@ -135,7 +150,6 @@ public class MainHolder extends AppCompatActivity {
         SpotifyAppRemote.connect(MainHolder.this, connectionParams,
                 new Connector.ConnectionListener() {
 
-                    @RequiresApi(api = Build.VERSION_CODES.M)
                     public void onConnected(SpotifyAppRemote spotifyAppRemote) {
                         mSpotifyAppRemote = spotifyAppRemote;
                         Log.d("Spotify_Handler", "Connected! Yay!");
@@ -150,7 +164,7 @@ public class MainHolder extends AppCompatActivity {
 
 
 
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        binding.myDrawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
 
@@ -174,14 +188,30 @@ public class MainHolder extends AppCompatActivity {
             if (item.getItemId() == R.id.nav_circle){
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainerView, new Circle_Fragment()).commit();
-            //Toast.makeText(MainHolder.this, "Exercise", Toast.LENGTH_SHORT).show();
+
+                if (binding.customAction.sigmoTitleBar.getVisibility()==View.GONE){
+                binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
+                binding.customAction.sigmoTitleBar.setVisibility(View.VISIBLE);
+                    binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left_to_right_fr));
+                    binding.customAction.bitpSymbl.setVisibility(View.VISIBLE);
+                    binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
+                    binding.customAction.Rooms.setVisibility(View.GONE);
+
+                }
+
             }
 
 
             else if (item.getItemId() ==  R.id.nav_rooms) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainerView, new Rooms_Fragment()).commit();
-                //Toast.makeText(MainHolder.this, "Post", Toast.LENGTH_SHORT).show();
+               binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
+                binding.customAction.sigmoTitleBar.setVisibility(View.GONE);
+                binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right_to_left_fr));
+                binding.customAction.bitpSymbl.setVisibility(View.GONE);
+
+                binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
+                binding.customAction.Rooms.setVisibility(View.VISIBLE);
             }
 
             else if (item.getItemId() ==  R.id.nav_profile) {
@@ -200,9 +230,11 @@ public class MainHolder extends AppCompatActivity {
     public void connected() {
 
 
-        //TempDataHolder mDetail_holder = new TempDataHolder();
-
+   //   TempDataHolder mDetail_holder = new TempDataHolder();
+//
         // Subscribe to PlayerState
+
+
         mSpotifyAppRemote.getPlayerApi()
 
                 .subscribeToPlayerState()
@@ -210,10 +242,10 @@ public class MainHolder extends AppCompatActivity {
                     final Track track = playerState.track;
 
                     if (track != null) {
-
+                       // int vol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                       // Log.d(TAG, "connected: volume "+vol);
                         String trackName = track.name;
                         String trackArtist = String.valueOf(track.artist.name);
-
                         Log.d("MainActivity", trackName + " by " + trackArtist);
                         Log.d("MainActivity", String.valueOf(track.imageUri));
                         Log.d("MainActivity", track.uri);
@@ -223,6 +255,24 @@ public class MainHolder extends AppCompatActivity {
                         Log.d("MainActivity", String.valueOf(playerState.playbackOptions));
                        // String url = "https://" + "i.scdn.co/image/" + track.imageUri.toString().substring(22, track.imageUri.toString().length() - 2);
                         mMiniPlayer_Handler(trackName,trackArtist);
+
+                        //float volu = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                        //Toast.makeText(this, "Previous volume : " + volu, Toast.LENGTH_SHORT).show();
+
+                        if(trackName.equals("Advertisement")){
+
+                            //this.prevVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                            Toast.makeText(this , "Muting ads",Toast.LENGTH_SHORT   ).show();
+                            mSpotifyAppRemote.getConnectApi().connectSetVolume(0f);
+
+                        }else{
+
+                             //   Log.d(TAG, "connected: prevVolume " + prevVolume);
+                            //    Toast.makeText(this, "Previous volume : " + prevVolume, Toast.LENGTH_SHORT).show();
+                                mSpotifyAppRemote.getConnectApi().connectSetVolume(0.4f);
+                            }
+                        }
+
 
 
 
@@ -245,7 +295,7 @@ public class MainHolder extends AppCompatActivity {
 
                         if(playerState.isPaused){
                             Log.d(TAG, "connected: paused ");
-                            playback.setImageResource(R.drawable.ic_play);
+                           playback.setImageResource(R.drawable.ic_play);
                             playback.setAnimation(AnimationUtils.loadAnimation(this , R.anim.fade_in_switch));
 
                             playback.setScaleX(1f);
@@ -296,11 +346,11 @@ public class MainHolder extends AppCompatActivity {
 
 
 
-                    }
+
 
                 });
 
-    }
+}
 
 
 

@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Circle;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle;
 
 import android.os.Bundle;
 
@@ -7,20 +7,22 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.bitpolarity.spotifytestapp.R;
 
-
-public class Circle_Search_Fragment extends Fragment {
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link Circle_Friends_Fragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class Circle_Friends_Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_circle_friends, container, false);
+        View v = inflater.inflate(R.layout.fragment_circle_search, container, false);
 
-        // TextView tv = (TextView) v.findViewById(R.id.t1);
-        //  tv.setText(getArguments().getString("msg"));
+        //TextView tv = (TextView) v.findViewById(R.id.t2);
+        //tv.setText(getArguments().getString("msg"));
 
         return v;
     }

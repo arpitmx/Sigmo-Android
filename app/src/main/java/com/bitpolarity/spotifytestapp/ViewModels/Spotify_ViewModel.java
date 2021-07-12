@@ -15,7 +15,7 @@ import com.spotify.android.appremote.api.SpotifyAppRemote;
 import com.spotify.protocol.types.Track;
 
 
-public class Spotify_Handler extends ViewModel {
+public class Spotify_ViewModel extends ViewModel {
 
     // 0F:9B:82:31:61:7F:F9:DA:DC:F9:C5:B8:E1:74:E4:90:4C:85:30:83
     private static final String CLIENT_ID = "84b37e8b82e2466c9f69a2e41b100476";
@@ -23,13 +23,14 @@ public class Spotify_Handler extends ViewModel {
     private SpotifyAppRemote mSpotifyAppRemote;
     Context context;
     SharedPreferences prefs;
-    TempDataHolder tempDataHolder;
 
-    public Spotify_Handler(Context context){
+   public Boolean mIsPaused;
+   public  String mTrackUri;
+   public  String mImageUri;
+
+    public Spotify_ViewModel(Context context){
         this.context = context;
-        prefs=  context.getSharedPreferences("com.bitpolarity.spotifytestapp",Context.MODE_PRIVATE);
         onStart();
-        tempDataHolder = new TempDataHolder();
 
     }
 
@@ -94,8 +95,10 @@ public class Spotify_Handler extends ViewModel {
                         Log.d("MainActivity", String.valueOf(playerState.playbackOptions));
                         String url = "https://" + "i.scdn.co/image/" + track.imageUri.toString().substring(22, track.imageUri.toString().length() - 2);
 
-                        mDetail_Holder appDetails = mDetail_Holder.getInstance();
-                        appDetails.setSong_Title(trackName);
+
+
+//                        mDetail_Holder appDetails = mDetail_Holder.getInstance();
+//                        appDetails.setSong_Title(trackName);
 
 
                     }

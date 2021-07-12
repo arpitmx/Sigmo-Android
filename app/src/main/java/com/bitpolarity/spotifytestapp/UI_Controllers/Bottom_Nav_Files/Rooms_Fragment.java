@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.Bottom_Nav_Files;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

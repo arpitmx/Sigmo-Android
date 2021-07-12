@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Circle;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.bitpolarity.spotifytestapp.Views.StatusActivity;
+import com.bitpolarity.spotifytestapp.UI_Controllers.StatusActivity;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi;
 
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.SongDetails;
-import com.bitpolarity.spotifytestapp.ViewModels.Spotify_Handler;
+import com.bitpolarity.spotifytestapp.ViewModels.Spotify_ViewModel;
 
 public class OnClearFromRecentService extends Service {
 
@@ -20,7 +20,7 @@ public class OnClearFromRecentService extends Service {
     SharedPreferences prefs;
     String USERNAME;
     String LOG = "SERVICE";
-    Spotify_Handler spotify_handler;
+    Spotify_ViewModel spotify_viewHolder;
 
 
 

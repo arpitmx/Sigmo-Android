@@ -42,9 +42,10 @@
             android:src="@drawable/ic_sigmotitle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.138"
+            app:layout_constraintHorizontal_bias="0.145"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
@@ -56,12 +57,30 @@
             android:paddingTop="4dp"
             android:text="@string/app_name"
             android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textSize="28sp"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/bitpSymbl"
+            android:visibility="visible"
             tools:layout_editor_absoluteY="0dp" />
+
+        <TextView
+            android:id="@+id/Rooms"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/hxtrabold"
+            android:gravity="center"
+            android:text="@string/rooms"
+            android:textColor="@color/black"
+            android:textSize="29sp"
+            android:paddingTop="4dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

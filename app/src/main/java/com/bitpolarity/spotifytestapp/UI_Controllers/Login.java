@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.Views;
+package com.bitpolarity.spotifytestapp.UI_Controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
