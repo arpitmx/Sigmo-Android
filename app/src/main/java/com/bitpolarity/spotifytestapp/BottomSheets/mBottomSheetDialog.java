@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp;
+package com.bitpolarity.spotifytestapp.BottomSheets;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.bitpolarity.spotifytestapp.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.database.snapshot.IndexedNode;
@@ -33,7 +34,7 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
     final int height = 250;
     TextView linkToSpotify ;
 
-    mBottomSheetDialog(String details,String trackID){
+    public mBottomSheetDialog(String details,String trackID){
         this.details = details;
         this.trackID = trackID;
        // tempDataHolder = new TempDataHolder();

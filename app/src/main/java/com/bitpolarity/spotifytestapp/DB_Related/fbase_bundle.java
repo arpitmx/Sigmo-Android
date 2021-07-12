@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.database_related;
+package com.bitpolarity.spotifytestapp.DB_Related;
 
 
 public class fbase_bundle {

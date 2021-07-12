@@ -1,7 +1,5 @@
-package com.bitpolarity.spotifytestapp;
+package com.bitpolarity.spotifytestapp.Adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,17 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bitpolarity.spotifytestapp.GetterSetterModels.UserListModel;
+import com.bitpolarity.spotifytestapp.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -38,12 +36,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         this.mULEventlisnter = mULEventListner;
     }
 
+
     @NotNull
     @Override
 
     public UserListAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent,false);
-        return new ViewHolder(view,mULEventlisnter);
+        return new ViewHolder(view, mULEventlisnter);
     }
 
     @Override
@@ -65,9 +64,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         holder.songName.setText(songName);
         holder.online_status.setImageResource(online_status);
         holder.last_acive.setText(link.getDatetime());
-
-
-
 
 
         // Poster /////////////////////////////////////////////////////////////////
@@ -105,14 +101,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
- //       ImageView posterr = (ImageView) row.findViewById(R.id.artwork);
-//        TextView songName = row.findViewById(R.id.songname);
-//        TextView isPlaying_TV = row.findViewById(R.id.isPlayingg);
-//       ImageView view = row.findViewById(R.id.view2);
-
-
-
     }
 
 
@@ -121,7 +109,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         return userModelList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
 
         TextView textViewUsername ;
        ImageView online_status;
@@ -137,6 +126,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         public ViewHolder(@NonNull View itemView, ULEventListner ulEventListner) {
             super(itemView);
 
+
             this.ulEventListner = ulEventListner;
             textViewUsername = (TextView) itemView.findViewById(R.id.username);
             online_status = (ImageView) itemView.findViewById(R.id.online_status);
@@ -148,9 +138,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             itemView.setOnClickListener(this);
 
 
-
-
-
         }
 
 
@@ -160,77 +147,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         }
     }
 
-    interface ULEventListner{
+    public interface ULEventListner{
         void onClick(int position);
     }
-
-
-
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//       animation = AnimationUtils.loadAnimation(getContext(),R.anim.slidein_left_to_right);
-//        View row=convertView;
-//        LayoutInflater inflater = context.getLayoutInflater();
-//
-//
-//
-//        row = inflater.inflate(R.layout.list_item, null, true);
-//
-//        TextView textViewCountry = (TextView) row.findViewById(R.id.username);
-//        ImageView imageFlag = (ImageView) row.findViewById(R.id.online_status);
-//        ImageView posterr = (ImageView) row.findViewById(R.id.artwork);
-//        TextView songName = row.findViewById(R.id.songname);
-//        TextView isPlaying_TV = row.findViewById(R.id.isPlayingg);
-//       ImageView view = row.findViewById(R.id.view2);
-//
-////        Glide.with(context)
-////                .load(R.drawable.eq)
-////                //,https://i.gifer.com/KNGq.gif
-////                .into((ImageView) view);
-//        Glide.with(context)
-//                .load(R.drawable.eq)
-//                //,https://i.gifer.com/KNGq.gif
-//                .into((ImageView) view);
-//
-//
-//
-//
-//        if(convertView==null)
-//
-//
-//        textViewCountry.setText(countryNames[position]);
-//
-//        imageFlag.setImageResource(imageid[position]);
-//
-//
-//        if (isPlaying[position].equals("Playing")) {
-//            isPlaying_TV.setText(isPlaying[position]);
-//            view.setVisibility(View.VISIBLE);
-//        }else{
-//            isPlaying_TV.setText(isPlaying[position]);
-//            isPlaying_TV.setTextColor(Color.parseColor("#E53935"));
-//            view.setVisibility(View.GONE);
-//        }
-//
-//        Glide.with(context)
-//                .load(poster[position])
-//                .placeholder(R.drawable.eq)// here you resize your image to whatever width and height you like
-//                .into(posterr);
-//
-//
-//
-//
-//        songName.setText(SongDetail[position]);
-//        return  row;
-//    }
-
-    public static int getDominantColor(Bitmap bitmap) {
-        Bitmap newBitmap = Bitmap.createScaledBitmap(bitmap, 1, 1, true);
-        final int color = newBitmap.getPixel(0, 0);
-        newBitmap.recycle();
-        return color;
-    }
-
 
 
 

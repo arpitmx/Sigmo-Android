@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.database_related;
+package com.bitpolarity.spotifytestapp.DB_Related;
 
 
 public class TempDataHolder {
@@ -8,7 +8,10 @@ public class TempDataHolder {
     static String sName;
    String artist;
 
+
     public String[] getSongDetails() {
+
+
         return songDetails;
     }
 

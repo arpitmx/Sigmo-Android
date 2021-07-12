@@ -1,6 +1,6 @@
-package com.bitpolarity.spotifytestapp;
+package com.bitpolarity.spotifytestapp.GetterSetterModels;
 
-public class UserDetails {
+public class UserDetailsModel {
 
     public String trackID;
     String artistName;
@@ -9,7 +9,7 @@ public class UserDetails {
     String trackName;
     String trackLength;
 
-      UserDetails(){
+      UserDetailsModel(){
 
       }
 

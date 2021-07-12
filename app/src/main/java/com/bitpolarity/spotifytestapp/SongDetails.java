@@ -41,7 +41,7 @@ public class SongDetails {
         static final String METADATA_CHANGED = SPOTIFY_PACKAGE + ".metadatachanged";
     }
 
-    void init_br(String username){
+    public void init_br(String username){
         db_handler = new DB_Handler();
         db_handler.setUsername(username);
         IntentFilter filter = new IntentFilter();
@@ -149,7 +149,7 @@ public class SongDetails {
 
 
 
-    void setContext(Context context){
+    public void setContext(Context context){
         this.context= context;
     }
 

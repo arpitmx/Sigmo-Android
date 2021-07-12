@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.bitpolarity.spotifytestapp.StatusActivity;
+import com.bitpolarity.spotifytestapp.Views.StatusActivity;
 
 import org.jetbrains.annotations.NotNull;
 

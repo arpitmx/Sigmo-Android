@@ -1,6 +1,5 @@
-package com.bitpolarity.spotifytestapp;
+package com.bitpolarity.spotifytestapp.GetterSetterModels;
 
-import android.app.Activity;
 import android.content.Context;
 
 public class UserListModel {

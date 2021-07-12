@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp;
+package com.bitpolarity.spotifytestapp.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.bitpolarity.spotifytestapp.Bottom_Nav_Files.MainHolder;
-import com.bitpolarity.spotifytestapp.SpotifyHandler.Spotify_Handler;
+import com.bitpolarity.spotifytestapp.Services.OnClearFromRecentService;
+import com.bitpolarity.spotifytestapp.R;
 
 public class Login extends AppCompatActivity {
 

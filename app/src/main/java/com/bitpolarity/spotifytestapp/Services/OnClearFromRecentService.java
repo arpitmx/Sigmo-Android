@@ -1,15 +1,18 @@
-package com.bitpolarity.spotifytestapp;
+package com.bitpolarity.spotifytestapp.Services;
 
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.bitpolarity.spotifytestapp.SpotifyHandler.Spotify_Handler;
+import androidx.annotation.RequiresApi;
 
-import java.util.function.ToDoubleBiFunction;
+import com.bitpolarity.spotifytestapp.DB_Handler;
+import com.bitpolarity.spotifytestapp.SongDetails;
+import com.bitpolarity.spotifytestapp.ViewModels.Spotify_Handler;
 
 public class OnClearFromRecentService extends Service {
 
@@ -20,11 +23,14 @@ public class OnClearFromRecentService extends Service {
     Spotify_Handler spotify_handler;
 
 
+
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -33,6 +39,7 @@ public class OnClearFromRecentService extends Service {
         SongDetails songDetails = new SongDetails();
         songDetails.setContext(getBaseContext());
         songDetails.init_br(USERNAME);
+
 
 
         dbHolder = new DB_Handler();
@@ -51,7 +58,7 @@ public class OnClearFromRecentService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.d(LOG, "Service Destroyed");
-        spotify_handler.onStop();
+
 
     }
 
@@ -64,4 +71,6 @@ public class OnClearFromRecentService extends Service {
         Toast.makeText(getBaseContext(), "Sigmo Closed forcefly", Toast.LENGTH_LONG).show();
         stopSelf();
     }
+
+
 }

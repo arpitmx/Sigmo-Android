@@ -1,33 +1,21 @@
-package com.bitpolarity.spotifytestapp.SpotifyHandler;
-import android.app.Activity;
+package com.bitpolarity.spotifytestapp.ViewModels;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.os.Bundle;
 
-import android.os.Handler;
-import android.os.TokenWatcher;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
 
-import com.bitpolarity.spotifytestapp.Bottom_Nav_Files.MainHolder;
-import com.bitpolarity.spotifytestapp.R;
-import com.bitpolarity.spotifytestapp.database_related.TempDataHolder;
+import com.bitpolarity.spotifytestapp.DB_Related.TempDataHolder;
+import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
-import com.spotify.protocol.client.CallResult;
 import com.spotify.protocol.types.Track;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
-
-public class Spotify_Handler {
+public class Spotify_Handler extends ViewModel {
 
     // 0F:9B:82:31:61:7F:F9:DA:DC:F9:C5:B8:E1:74:E4:90:4C:85:30:83
     private static final String CLIENT_ID = "84b37e8b82e2466c9f69a2e41b100476";

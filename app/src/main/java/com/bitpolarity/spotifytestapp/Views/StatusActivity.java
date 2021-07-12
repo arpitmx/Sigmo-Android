@@ -1,26 +1,25 @@
-package com.bitpolarity.spotifytestapp;
+package com.bitpolarity.spotifytestapp.Views;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bitpolarity.spotifytestapp.database_related.TempDataHolder;
+import com.bitpolarity.spotifytestapp.BottomSheets.mBottomSheetDialog;
+import com.bitpolarity.spotifytestapp.GetterSetterModels.UserListModel;
+import com.bitpolarity.spotifytestapp.R;
+import com.bitpolarity.spotifytestapp.Adapters.UserListAdapter;
+import com.bitpolarity.spotifytestapp.DB_Related.TempDataHolder;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +45,9 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     DatabaseReference ref;
     TempDataHolder dataHolder;
 
+
+
+
     ////// Firebase specific
 
 
@@ -62,9 +64,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         isPlayingTV = v.findViewById(R.id.isPlayingg);
         imageView = v.findViewById(R.id.online_status);
         dataHolder = new TempDataHolder();
-
-
-
 
         final int ONLINE = R.drawable.ongreen;
         final int OFFLINE = R.drawable.ored;
@@ -287,10 +286,4 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         bottomSheet.show(getChildFragmentManager(),"ModalBottomSheet");
 
     }
-
-    private void showBottomSheet(int pos) {
-
-    }
-
-
 }
