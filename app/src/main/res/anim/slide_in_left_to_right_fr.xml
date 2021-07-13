@@ -8,12 +8,12 @@
     </alpha>
 
     <rotate
-        android:duration="200"
+        android:duration="400"
         android:fromDegrees="0"
         android:interpolator="@android:anim/linear_interpolator"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:repeatCount="1"
+        android:repeatCount="0"
         android:toDegrees="360" />
 
     <translate
@@ -23,4 +23,5 @@
         android:interpolator="@android:anim/decelerate_interpolator"
         android:toXDelta="0%"
         android:toYDelta="0%" />
+
 </set>
