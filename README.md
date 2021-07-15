@@ -20,4 +20,55 @@ https://user-images.githubusercontent.com/59350776/124971641-13895800-e047-11eb-
 </p>
 
 
+Open issues :
+
+i1- Online status not updating sometimes
+i2- When sigmo is closed without pausing the song from the Spotify , the next time it will show playing as ísPlaying wasn't updated when the app got closed
+½p
+i3- discs will stop rotating when the recycler view is slided down due to reassiging of the items in the viewholders and the rotation animation is not applied when the new item is assigned
+i4- Songs won't update untill a restart sometimes
+
+--------------------------------------------------------------------------------------------------------------------------
+
+Icons :  🔹 (Partially done)
+             ✅ (Done)
+             👷‍♀️  (Building/Working on)
+
+Improvements and Additions:
+
+Ideas for Future Additions : 
+
+1. Use Spotify SDK for song thumbnails , song name and other song respective details
+2. Use Spotify SDK for miniplayer updation. (Partially Done 🔹)
+3. Adaptive themes : changes theme according to light conditions
+4. Initiate al the objects and classes during the splash screen
+5. Add lyrics page
+6. Downloadable music
+7. A podcast creator
+8. Users like to slide downwards instead of sideways , slide down to change song like resso.
+9.Add features like vocolloco
+
+-----------
+
+Backend and Logic Improvements :
+
+1. Remove equilizer gif , annoying
+2. Show rotating of discs only to the songs which users plays of the friends fragment
+3. Make bottom navigation hidable when scrolled down
+4. When some change occurs to the database whole list is reloaded with content
+
+Database and Backend Related:
+
+1. Use Room persistent Database
+2. Implement MVVM and seperate UI and business logics from activities and fragments
+3. 
+
+-----------
+
+UX/UI Improvements :
+
+1. Speak human.
+
+
+
 
