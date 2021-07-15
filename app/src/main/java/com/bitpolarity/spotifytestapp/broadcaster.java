@@ -9,11 +9,11 @@ import android.widget.Toast;
 public class broadcaster extends BroadcastReceiver {
 
 
-    static final class BroadcastTypes {
+    public static final class BroadcastTypes {
         static final String SPOTIFY_PACKAGE = "com.spotify.music";
-        static final String PLAYBACK_STATE_CHANGED = SPOTIFY_PACKAGE + ".playbackstatechanged";
-        static final String QUEUE_CHANGED = SPOTIFY_PACKAGE + ".queuechanged";
-        static final String METADATA_CHANGED = SPOTIFY_PACKAGE + ".metadatachanged";
+        public static final String PLAYBACK_STATE_CHANGED = SPOTIFY_PACKAGE + ".playbackstatechanged";
+        public static final String QUEUE_CHANGED = SPOTIFY_PACKAGE + ".queuechanged";
+        public static final String METADATA_CHANGED = SPOTIFY_PACKAGE + ".metadatachanged";
     }
 
 

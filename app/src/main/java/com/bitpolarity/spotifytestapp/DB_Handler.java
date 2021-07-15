@@ -3,7 +3,7 @@ package com.bitpolarity.spotifytestapp;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.bitpolarity.spotifytestapp.database_related.fbase_bundle;
+import com.bitpolarity.spotifytestapp.DB_Related.fbase_bundle;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,7 +30,7 @@ public class DB_Handler {
 
     ////////////////////////////////== INIT ==////////////////////////////////////////////////////////////////////////
 
-    DB_Handler(){
+    public DB_Handler(){
         formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         firebaseDatabase = FirebaseDatabase.getInstance();
         ref = firebaseDatabase.getReference();
@@ -47,7 +47,7 @@ public class DB_Handler {
         return datetime;
 
     }
-    void setStatus(int status){
+    public void setStatus(int status){
         //fbase_bundle bundle = new fbase_bundle(status);
         date = new Date();
         time = getTime(date);
@@ -71,7 +71,7 @@ public class DB_Handler {
 
     }
 
-   void setUsername(String username){
+   public void setUsername(String username){
         this.username = username;
        ROOTPATH =ref.child(ROOT).child(username);
 

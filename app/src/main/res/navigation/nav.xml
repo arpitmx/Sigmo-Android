@@ -9,17 +9,17 @@
 
     <fragment
         android:id="@+id/Circle"
-        android:name="com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Circle.Circle_Fragment"
+        android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.Circle_Fragment"
         android:label="Circle"
         tools:layout="@layout/fragment_circle" />
     <fragment
         android:id="@+id/Rooms"
-        android:name="com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Rooms_Fragment"
+        android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms_Fragment"
         android:label="Rooms"
         tools:layout="@layout/fragment_rooms" />
     <fragment
         android:id="@+id/socialF"
-        android:name="com.bitpolarity.spotifytestapp.Bottom_Nav_Files.Profile_Fragment"
+        android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Profile_Fragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 
