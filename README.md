@@ -1,4 +1,4 @@
-# Sigmo-Music
+# Sigmo-Music 📱
 
 Status : Under Development ⚒
 
