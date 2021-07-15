@@ -6,8 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.bitpolarity.spotifytestapp.UI_Controllers.StatusActivity;
-
 import org.jetbrains.annotations.NotNull;
 
 public class Circle_Tab_Adapter extends FragmentStateAdapter {

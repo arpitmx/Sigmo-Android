@@ -56,6 +56,7 @@ public class OnClearFromRecentService extends Service {
 
     @Override
     public void onDestroy() {
+        unregisterReceiver(SongDetails.receiver);
         super.onDestroy();
         Log.d(LOG, "Service Destroyed");
 

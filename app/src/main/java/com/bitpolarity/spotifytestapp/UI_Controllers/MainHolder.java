@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.Circle_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.StatusActivity;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Profile_Fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms_Fragment;
 import com.bitpolarity.spotifytestapp.R;
@@ -31,6 +32,7 @@ import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 import com.spotify.protocol.client.CallResult;
+import com.spotify.protocol.types.Empty;
 import com.spotify.protocol.types.Track;
 
 
@@ -234,6 +236,7 @@ public class MainHolder extends AppCompatActivity {
 //
         // Subscribe to PlayerState
 
+      mSpotifyAppRemote.getPlayerApi().resume();
 
         mSpotifyAppRemote.getPlayerApi()
 

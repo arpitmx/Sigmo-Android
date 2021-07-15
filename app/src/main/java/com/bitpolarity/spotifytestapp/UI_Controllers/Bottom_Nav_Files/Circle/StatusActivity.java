@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -278,6 +278,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
         String details = dataHolder.getSongDetails()[position];
         String trackID = dataHolder.getTrackID()[position];
+
 
         Log.d(TAG, "onClick: POS:"+position+"  Details : "+details);
         Log.d(TAG, "onClick: POS:"+position+"  Details : "+trackID);
