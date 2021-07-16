@@ -15,12 +15,12 @@ public class DB_Handler {
     //////////////////////////////== INIT ==//////////////////////////////////////////////
 
     String username;
-    int status ;
+
     Date date;
     String time ;
+
     SimpleDateFormat formatter;
     final String LOG = "db_handler";
-    SharedPreferences prefs;
 
     //Firebase
     FirebaseDatabase firebaseDatabase;

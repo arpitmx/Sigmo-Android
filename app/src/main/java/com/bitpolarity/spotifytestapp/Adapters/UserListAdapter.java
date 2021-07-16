@@ -111,7 +111,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         if (link.getIsPlaying().equals("Playing")) {
             holder.isPlayingTV.setText(link.getIsPlaying());
             holder.equilizer_iv.setVisibility(View.VISIBLE);
-           // holder.posterr.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
+            holder.posterr.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
         }
         else
         {

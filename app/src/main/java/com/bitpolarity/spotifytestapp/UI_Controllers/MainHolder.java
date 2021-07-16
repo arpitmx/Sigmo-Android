@@ -259,6 +259,7 @@ public class MainHolder extends AppCompatActivity {
                        // String url = "https://" + "i.scdn.co/image/" + track.imageUri.toString().substring(22, track.imageUri.toString().length() - 2);
                         mMiniPlayer_Handler(trackName,trackArtist);
 
+
                         //float volu = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                         //Toast.makeText(this, "Previous volume : " + volu, Toast.LENGTH_SHORT).show();
 

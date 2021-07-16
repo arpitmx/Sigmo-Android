@@ -154,7 +154,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="85dp"
                 android:orientation="horizontal"
                 android:weightSum="10"
                 android:background="@drawable/borders_post"
@@ -242,52 +242,35 @@
                     android:textColor="@color/s_readable_black_200"
                    />
 
-                <LinearLayout
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-
-                    android:gravity="end">
-
+                    android:layout_weight="1.3"
+                    android:layout_height="40dp"
+                    app:cardCornerRadius="5dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="20dp"
+                    >
 
                     <ImageView
                         android:id="@+id/view2"
-                        android:layout_width="20dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="end"
+                        android:layout_gravity="center_vertical"
                         android:scaleType="centerCrop"
                         android:scaleX="1"
                         android:scaleY="1"
                         android:src="@drawable/eq"
-
                         android:visibility="gone" />
-                </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+
             </LinearLayout>
 
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        android:visibility="gone"
-        android:elevation="2dp"
-        >
-        <ImageView
-            android:id="@+id/bottom_eq"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/eq"
-            android:scaleType="fitXY"
-            android:visibility="visible"
-            android:scaleX="2"
-            android:scaleY=".8"
-            />
     </LinearLayout>
 
 
