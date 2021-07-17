@@ -1,6 +1,7 @@
 package com.bitpolarity.spotifytestapp.Adapters;
 
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,10 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitpolarity.spotifytestapp.GetterSetterModels.UserListModel;
@@ -26,8 +30,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
 
-   private final List<UserListModel> userModelList;
-   private final ULEventListner mULEventlisnter;
+    private final List<UserListModel> userModelList;
+    private final ULEventListner mULEventlisnter;
+
 
 
     public UserListAdapter(List<UserListModel> categoryModelList, ULEventListner mULEventListner) {
@@ -64,15 +69,32 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         holder.songName.setText(songName);
         holder.online_status.setImageResource(online_status);
         holder.last_acive.setText(link.getDatetime());
+        holder.play_trackbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(link.context, "Play Track clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         // Poster /////////////////////////////////////////////////////////////////
 
-
         Glide.with(userModelList.get(position).getContext())
                 .load(link.getPoster())
-                .apply(new RequestOptions().override(180, 180))
-               .into(holder.posterr);
+                .apply(new RequestOptions().override(100, 100))
+                .into(holder.posterr);
+
+
+        Glide.with(userModelList.get(position).getContext())
+                .load("https://i.scdn.co/image/ab6775700000ee855ffdafb1d7fb1eb34622f04f")
+                .apply(new RequestOptions().override(50, 50))
+                .into(holder.user_profile_dp);
+
+        //"https://i.scdn.co/image/ab6775700000ee855ffdafb1d7fb1eb34622f04f"
+
+
+
+
 
 
 
@@ -92,16 +114,18 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             holder.posterr.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
         }
         else
-            {
-                holder.isPlayingTV.setText("Paused");
-                holder.isPlayingTV.setTextColor(Color.parseColor("#E53935"));
-                holder.equilizer_iv.setVisibility(View.GONE);
+        {
+            holder.isPlayingTV.setText("Paused");
+            holder.isPlayingTV.setTextColor(Color.parseColor("#E53935"));
+            holder.equilizer_iv.setVisibility(View.GONE);
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     }
+
+
 
 
     @Override
@@ -113,15 +137,17 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
 
         TextView textViewUsername ;
-       ImageView online_status;
-       CircleImageView posterr;
-       TextView songName;
-       TextView isPlayingTV;
-       ImageView equilizer_iv;
-       TextView last_acive;
+        ImageView online_status;
+        CircleImageView posterr;
+        TextView songName;
+        TextView isPlayingTV;
+        ImageView equilizer_iv;
+        TextView last_acive;
+        ImageView user_profile_dp;
+        ImageView play_trackbtn;
 
 
-       ULEventListner ulEventListner;
+        ULEventListner ulEventListner;
 
         public ViewHolder(@NonNull View itemView, ULEventListner ulEventListner) {
             super(itemView);
@@ -135,6 +161,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             isPlayingTV = (TextView) itemView.findViewById(R.id.isPlayingg);
             equilizer_iv =(ImageView) itemView.findViewById(R.id.view2);
             last_acive = (TextView) itemView.findViewById(R.id.last_active);
+            user_profile_dp = itemView.findViewById(R.id.profile_image);
+            play_trackbtn = itemView.findViewById(R.id.play_track);
+
             itemView.setOnClickListener(this);
 
 

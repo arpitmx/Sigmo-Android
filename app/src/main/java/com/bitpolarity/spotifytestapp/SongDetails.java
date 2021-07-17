@@ -26,7 +26,7 @@ import java.util.Set;
 
 public class SongDetails {
 
-    BroadcastReceiver receiver;
+   public static BroadcastReceiver receiver;
     Context context;
     Set<String> details;
     DB_Handler db_handler;

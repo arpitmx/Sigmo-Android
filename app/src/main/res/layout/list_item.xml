@@ -34,20 +34,22 @@
             android:background="@drawable/borders"
 
             >
+            <androidx.cardview.widget.CardView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:cardCornerRadius="10dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                >
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_weight="0.7"
-                android:padding="3dp"
-                android:scaleX="1.6"
-                android:scaleY="1.6"
-                android:outlineAmbientShadowColor="@color/s_grey"
-                android:src="@drawable/poster"
-                app:civ_border_color="@color/s_grey"
-                app:civ_border_width="1.2dp" />
+                <ImageView
+                    android:id="@+id/profile_image"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/poster"
+                    />
+            </androidx.cardview.widget.CardView>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,7 +125,7 @@
                 android:id="@+id/isPlayingg"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2.2"
+                android:layout_weight="2.5"
                 android:fontFamily="@font/hb"
                 android:foregroundTint="@color/purple_200"
                 android:gravity="center"
@@ -152,7 +154,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="85dp"
                 android:orientation="horizontal"
                 android:weightSum="10"
                 android:background="@drawable/borders_post"
@@ -223,65 +225,52 @@
                     android:textColor="@color/s_readable_black_200"
                     android:textSize="12sp" />
 
-                <TextView
-                    android:id="@+id/songlength"
+                <ImageView
+                    android:id="@+id/play_track"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2.0"
                     android:fontFamily="@font/hb"
                     android:gravity="center"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_play_circles"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                    android:text="3:40"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
                     android:textColor="@color/s_readable_black_200"
-                    android:textSize="11dp" />
-
-            <LinearLayout
-    android:layout_width="0dp"
-    android:layout_weight="1"
-    android:layout_height="match_parent"
-
-                android:gravity="end">
+                   />
 
 
-                <ImageView
-                    android:id="@+id/view2"
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:scaleType="centerCrop"
-                    android:scaleX="1"
-                    android:scaleY="1"
-                    android:src="@drawable/eq"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.3"
+                    android:layout_height="40dp"
+                    app:cardCornerRadius="5dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="20dp"
+                    >
 
-                    android:visibility="gone" />
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:scaleType="centerCrop"
+                        android:scaleX="1"
+                        android:scaleY="1"
+                        android:src="@drawable/eq"
+                        android:visibility="gone" />
+                </androidx.cardview.widget.CardView>
+
+
+
             </LinearLayout>
 
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        android:visibility="gone"
-        android:elevation="2dp"
-        >
-        <ImageView
-            android:id="@+id/bottom_eq"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/eq"
-           android:scaleType="fitXY"
-            android:visibility="visible"
-            android:scaleX="2"
-            android:scaleY=".8"
-            />
     </LinearLayout>
 
 

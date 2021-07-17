@@ -6,14 +6,11 @@
         <shape
             android:shape="rectangle"
             >
-            <corners android:bottomRightRadius="7dp"
-                android:topRightRadius="7dp"
-                android:topLeftRadius="7dp"
-                android:bottomLeftRadius="7dp"
+            <corners android:radius="50dp"
                 />
 
            <solid
-           android:color="@color/s_blue"
+           android:color="#3E79EA"
                />
 
 
