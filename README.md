@@ -55,6 +55,7 @@ Issues are open in the issues section.
 13. Rooms for synced listening 👷‍ - 1
 14. Explore page - User can see New Tweets notifications and announcements from their favourite artists(as analysed by spotify). 
 15. Automatic stories - Stories will be displayed at the top of explore page of the client based on their daily top 5s.
+16. User can connect their social profiles to Sigmo.
 
 -----------
 
