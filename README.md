@@ -53,6 +53,8 @@ Issues are open in the issues section.
 11. Add more analytics of a song through spotify web api 👷‍- 2
 12. An Explore page, in which recommemended songs will be streamed for a playback of 30 seconds (sort of gives an idea of a song without fully listening) 👷‍♀️ - 3 
 13. Rooms for synced listening 👷‍ - 1
+14. Explore page - User can see New Tweets notifications and announcements from their favourite artists(as analysed by spotify). 
+15. Automatic stories - Stories will be displayed at the top of explore page of the client based on their daily top 5s.
 
 -----------
 
