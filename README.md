@@ -34,10 +34,7 @@ https://user-images.githubusercontent.com/59350776/124971641-13895800-e047-11eb-
 
 ### Open issues 🔴:
 
-I2. When sigmo is closed without pausing the song from the Spotify , 
-    the next time it will show playing as ísPlaying wasn't updated when the app got closed 🔹
-I3. Discs will stop rotating when the recycler view is slided down due to reassiging of the items in the viewholders and the rotation animation is not applied when        the new item is assigned
-I4. Songs won't update untill a restart 'sometimes'.
+Issues are open in the issues section.
 
 --------------------------------------------------------------------------------------------------------------------------
 
