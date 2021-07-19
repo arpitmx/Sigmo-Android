@@ -269,15 +269,8 @@ public class MainHolder extends AppCompatActivity {
                             Toast.makeText(this , "Muting ads",Toast.LENGTH_SHORT   ).show();
                             mSpotifyAppRemote.getConnectApi().connectSetVolume(0f);
 
-                        }else{
-
-                             //   Log.d(TAG, "connected: prevVolume " + prevVolume);
-                            //    Toast.makeText(this, "Previous volume : " + prevVolume, Toast.LENGTH_SHORT).show();
-                                mSpotifyAppRemote.getConnectApi().connectSetVolume(0.4f);
-                            }
                         }
-
-
+                        }
 
 
                         Fav.setOnClickListener( view -> {

@@ -69,7 +69,7 @@ public class OnClearFromRecentService extends Service {
 
         Log.e(LOG, "App closed completly!");
         dbHolder.setStatus(0);
-        Toast.makeText(getBaseContext(), "Sigmo Closed forcefly", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Sigmo Closed forcefly", Toast.LENGTH_SHORT).show();
         stopSelf();
     }
 
