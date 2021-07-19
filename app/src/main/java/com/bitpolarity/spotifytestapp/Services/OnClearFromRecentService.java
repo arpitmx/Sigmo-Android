@@ -40,8 +40,6 @@ public class OnClearFromRecentService extends Service {
         songDetails.setContext(getBaseContext());
         songDetails.init_br(USERNAME);
 
-
-
         dbHolder = new DB_Handler();
 
         dbHolder.setUsername(USERNAME);

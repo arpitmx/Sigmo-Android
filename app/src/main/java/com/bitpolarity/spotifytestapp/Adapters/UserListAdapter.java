@@ -70,12 +70,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         holder.songName.setText(songName);
         holder.online_status.setImageResource(online_status);
         holder.last_acive.setText(link.getDatetime());
-        holder.play_trackbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(link.context, "Play Track clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+
+//        holder.play_trackbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(link.context, "Play Track clicked", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
         // Poster /////////////////////////////////////////////////////////////////

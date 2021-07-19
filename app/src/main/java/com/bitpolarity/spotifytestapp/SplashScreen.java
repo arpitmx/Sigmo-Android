@@ -16,21 +16,25 @@ public class SplashScreen extends AppCompatActivity {
 
     SpotifySDK sdk ;
     ActivitySplashScreenBinding binding;
+    static final int delay = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
         Handler handler = new Handler();
 
+        //1 +2s131ms Theme
+        //2 +2s927ms W
+        //3 +2s278ms w +334ms
 
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        binding.heart.setAnimation(AnimationUtils.loadAnimation(this,R.anim.rotate_fadein_fast));
-
+        //binding.heart.setAnimation(AnimationUtils.loadAnimation(this,R.anim.zoom_in));
+       // binding.imageView.setAnimation(AnimationUtils.loadAnimation(this, R.anim.zoom_in));
         //sdk = new SpotifySDK(this);
 
 
@@ -39,7 +43,7 @@ public class SplashScreen extends AppCompatActivity {
             finish();
         };
 
-        handler.postDelayed(runnable,1000);
+        handler.postDelayed(runnable,delay);
 
 
 

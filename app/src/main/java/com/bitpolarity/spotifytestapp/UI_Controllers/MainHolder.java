@@ -35,6 +35,11 @@ import com.spotify.protocol.client.CallResult;
 import com.spotify.protocol.types.Empty;
 import com.spotify.protocol.types.Track;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
+
 
 public class MainHolder extends AppCompatActivity {
 
@@ -104,12 +109,10 @@ public class MainHolder extends AppCompatActivity {
 
         side_navigation_button = findViewById(R.id.imageButton);
 
-
         //TextViews
         mSongName = findViewById(R.id.m_song_name);
         mArtistName = findViewById(R.id.mArtist_name);
         sigmo_Title = findViewById(R.id.sigmoTitleBar);
-
 
         //ImageViews
         cir = findViewById(R.id.cir);
@@ -120,13 +123,8 @@ public class MainHolder extends AppCompatActivity {
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-        //Intro Animations
-        peacock_symbol.setAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate));
-        sigmo_Title.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
-        sigmo_Title.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slidein_left_to_right));
-
-
         //Object types
+
         bottomNavigation = findViewById(R.id.bottom_nav);
         drawerLayout = findViewById(R.id.my_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
@@ -143,30 +141,45 @@ public class MainHolder extends AppCompatActivity {
         super.onStart();
 
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                peacock_symbol.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.rotate));
+        sigmo_Title.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.fade_in));
+        sigmo_Title.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.slidein_left_to_right));
+
+            }
+        }).start();
+
+
+
         ConnectionParams connectionParams =
                 new ConnectionParams.Builder(CLIENT_ID)
                         .setRedirectUri(REDIRECT_URI)
                         .showAuthView(true)
                         .build();
 
-        SpotifyAppRemote.connect(MainHolder.this, connectionParams,
-                new Connector.ConnectionListener() {
+            SpotifyAppRemote.connect(MainHolder.this, connectionParams,
+                    new Connector.ConnectionListener() {
 
-                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
-                        mSpotifyAppRemote = spotifyAppRemote;
-                        Log.d("Spotify_Handler", "Connected! Yay!");
-                        connected();
+                        public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+                            mSpotifyAppRemote = spotifyAppRemote;
+                            Log.d("Spotify_Handler", "Connected! Yay!");
+                            connected();
 
-                    }
+                        }
 
-                    public void onFailure(Throwable throwable) {
-                        Log.e("Spotify_Handler", throwable.getMessage(), throwable);
-                    }
-                });
+                        public void onFailure(Throwable throwable) {
+                            Log.e("Spotify_Handler", throwable.getMessage(), throwable);
+                        }
+                    });
 
 
 
-        binding.myDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
 
@@ -247,6 +260,8 @@ public class MainHolder extends AppCompatActivity {
                     if (track != null) {
                        // int vol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                        // Log.d(TAG, "connected: volume "+vol);
+
+
                         String trackName = track.name;
                         String trackArtist = String.valueOf(track.artist.name);
                         Log.d("MainActivity", trackName + " by " + trackArtist);
