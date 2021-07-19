@@ -1,4 +1,5 @@
-# Sigmo-Music 📱
+# Sigmo-Music 📱 
+<img width="143" alt="sbluemain1" src="https://user-images.githubusercontent.com/59350776/126187919-736034f4-90fe-41bf-b375-1fec9db017c2.png">
 
 Status : Under Development ⚒
 
@@ -82,6 +83,8 @@ Issues are open in the issues section.
 4. Make bottom navigation hidable when scrolled down
 5. Make figma models of the screens and then design the app accordingly 👷‍
 
+
+![photo_2021-07-19_21-14-25](https://user-images.githubusercontent.com/59350776/126188448-f30fe6ab-319f-4b70-ae58-3e00b8fe734f.jpg)
 
 
 
