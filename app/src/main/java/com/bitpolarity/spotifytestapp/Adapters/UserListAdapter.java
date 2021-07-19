@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.MenuView;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitpolarity.spotifytestapp.GetterSetterModels.UserListModel;
@@ -81,7 +82,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
         Glide.with(userModelList.get(position).getContext())
                 .load(link.getPoster())
-                .apply(new RequestOptions().override(100, 100))
+                .apply(new RequestOptions().override(50, 50))
                 .into(holder.posterr);
 
 
@@ -110,7 +111,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
         if (link.getIsPlaying().equals("Playing")) {
             holder.isPlayingTV.setText(link.getIsPlaying());
-            holder.equilizer_iv.setVisibility(View.VISIBLE);
+            holder.cardView.setVisibility(View.VISIBLE);
             holder.posterr.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
         }
         else
@@ -145,6 +146,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         TextView last_acive;
         ImageView user_profile_dp;
         ImageView play_trackbtn;
+        CardView cardView;
 
 
         ULEventListner ulEventListner;
@@ -163,6 +165,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             last_acive = (TextView) itemView.findViewById(R.id.last_active);
             user_profile_dp = itemView.findViewById(R.id.profile_image);
             play_trackbtn = itemView.findViewById(R.id.play_track);
+            cardView = itemView.findViewById(R.id.eq_card);
 
             itemView.setOnClickListener(this);
 
