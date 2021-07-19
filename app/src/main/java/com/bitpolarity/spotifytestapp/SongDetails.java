@@ -79,11 +79,14 @@ public class SongDetails {
                                 } catch (MalformedURLException e) {
                                     e.printStackTrace();
                                 }
+
                                 Scanner sc = null;
+
                                 try {
                                     sc = new Scanner(url.openStream());
                                 } catch (IOException e) {
                                     e.printStackTrace();
+
                                 }
                                 StringBuffer sb = new StringBuffer();
                                 while(sc.hasNext()) {
@@ -96,16 +99,14 @@ public class SongDetails {
                                 Log.d("urllll", result);
                                 String brl = result.split(",")[8].replace("\"thumbnail_url\":","").replace("\"","");
 
-                                Log.d("urlll", brl);
-                                String posterUrl = brl;
 
-                                if (posterUrl.length()==0){
-                                    posterUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQpnVsnrM_RRT2ty6uAXPwoQMQIIQNb7V8cQ&usqp=CAU";
+
+                                if (brl.length()==0){
+                                    brl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQpnVsnrM_RRT2ty6uAXPwoQMQIIQNb7V8cQ&usqp=CAU";
                                 }
 
-
-                                db_handler.setSong_Details(trackId,posterUrl,artistName,albumName,trackName, trackLengthInSec);
-                                Log.d("SongDetails", "Poster URL: "+posterUrl);
+                                db_handler.setSong_Details(trackId,brl,artistName,albumName,trackName, trackLengthInSec);
+                                Log.d("SongDetails", "Poster URL: "+brl);
                             }
 
                         }).start();

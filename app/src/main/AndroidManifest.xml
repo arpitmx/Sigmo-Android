@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bitpolarity.spotifytestapp">
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the "MyLocation" functionality.
-    -->
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/s2"
+        android:icon="@drawable/s1"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/s2"
+        android:roundIcon="@drawable/s1"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpotifyTestApp">
-        <activity android:name=".Spotify_Test_Act" />
-        <activity android:name=".UI_Controllers.Login">
+        <!--  -->
+        <activity android:name=".SplashScreen"
+            android:theme="@style/SplashTheme"
+            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".UI_Controllers.Login"/>
+
         <activity android:name=".UI_Controllers.MainHolder" />
         <activity android:name=".UI_Controllers.MainActivity" />
 

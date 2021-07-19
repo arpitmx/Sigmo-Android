@@ -38,7 +38,7 @@ public class SpotifySDK {
                     public void onConnected(SpotifyAppRemote spotifyAppRemote) {
                         mSpotifyAppRemote = spotifyAppRemote;
                         Log.d("Spotify_Handler", "Connected! Yay!");
-                        connected();
+
                     }
 
                     public void onFailure(Throwable throwable) {
@@ -47,6 +47,19 @@ public class SpotifySDK {
                 });
     }
 
+    public void init(){
+        connect(connectionParams);
+    }
+
+
+
+    public void connect(ConnectionParams connectionParams){
+        if (connectionParams!= null){
+            Log.d("Spotify_Handler", "Spotify hooked , now can do the job");
+
+            connected();
+            }
+    }
 
     public void onStop() {
         SpotifyAppRemote.disconnect(mSpotifyAppRemote);

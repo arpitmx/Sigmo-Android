@@ -40,8 +40,6 @@ public class OnClearFromRecentService extends Service {
         songDetails.setContext(getBaseContext());
         songDetails.init_br(USERNAME);
 
-
-
         dbHolder = new DB_Handler();
 
         dbHolder.setUsername(USERNAME);
@@ -69,7 +67,7 @@ public class OnClearFromRecentService extends Service {
 
         Log.e(LOG, "App closed completly!");
         dbHolder.setStatus(0);
-        Toast.makeText(getBaseContext(), "Sigmo Closed forcefly", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Sigmo Closed forcefly", Toast.LENGTH_SHORT).show();
         stopSelf();
     }
 
