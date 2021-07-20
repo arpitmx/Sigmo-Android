@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.bitpolarity.spotifytestapp.BottomSheets.mBottomSheetDialog;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.UserListModel;
 import com.bitpolarity.spotifytestapp.R;
-import com.bitpolarity.spotifytestapp.Adapters.UserListAdapter;
+import com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter.UserListAdapter;
 import com.bitpolarity.spotifytestapp.DB_Related.TempDataHolder;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -67,11 +67,18 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
         final int ONLINE = R.drawable.ongreen;
         final int OFFLINE = R.drawable.ored;
+
         ref =FirebaseDatabase.getInstance().getReference().child("Users");
 
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
 
         ref.addValueEventListener(new ValueEventListener() {
+
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -176,6 +183,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 userRecyclerView.setLayoutManager(layoutManager);
+                userRecyclerView.setNestedScrollingEnabled(false);
+
                 dataHolder.setSongDetails(songDetail);
                 dataHolder.setTrackID(trackID);
                 // dataHolder.setTrackID(son);
@@ -211,6 +220,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                     Toast.makeText(getContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
                 }
             });
+            }
+        }).start();
 
 
 

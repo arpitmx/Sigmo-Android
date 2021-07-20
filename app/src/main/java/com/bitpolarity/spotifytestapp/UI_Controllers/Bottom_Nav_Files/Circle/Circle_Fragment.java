@@ -37,7 +37,7 @@ public class Circle_Fragment extends Fragment {
 
 
         tabLayout.addTab(tabLayout.newTab().setText("Friends"));
-        tabLayout.addTab(tabLayout.newTab().setText("Search"));
+        tabLayout.addTab(tabLayout.newTab().setText("Status"));
 
         FragmentManager fm = getChildFragmentManager();
         adapter = new Circle_Tab_Adapter(fm , getLifecycle());

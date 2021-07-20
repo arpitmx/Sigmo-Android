@@ -6,21 +6,62 @@
 
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/startroomBTN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/invitesBTN"
+            android:layout_width="264dp"
+            android:layout_height="111dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/four_side_rounded_white"
+            android:elevation="10dp"
+            android:focusable="true"
+            android:fontFamily="@font/hb"
+            android:text="Invites"
+            android:textColor="@color/white200"
+            android:textSize="15sp"
+            android:theme="@style/Widget.AppCompat.Button.Colored" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/publicroomBTN"
+            android:layout_width="264dp"
+            android:layout_height="111dp"
+            android:background="@drawable/four_side_rounded_white"
+            android:elevation="10dp"
+            android:fontFamily="@font/hb"
+            android:text="Public Rooms"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+/>
+    </LinearLayout>
+
     <Button
-        android:id="@+id/button"
+        android:id="@+id/startroomBTN"
         android:layout_width="180dp"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/four_side_rounded_blue"
         android:fontFamily="@font/hmed"
         android:text="+ Start a room"
-        android:textSize="12sp"
         android:textColor="@color/white"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.951" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

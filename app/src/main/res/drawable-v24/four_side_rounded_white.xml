@@ -10,8 +10,9 @@
                 />
 
            <solid
-           android:color="@color/white200"
+           android:color="@color/s_readable_black_200"
                />
+
 
 
         </shape>

@@ -19,9 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.Circle_Fragment;
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.StatusActivity;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Profile_Fragment;
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.Rooms_Fragment;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 
@@ -32,13 +31,7 @@ import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 import com.spotify.protocol.client.CallResult;
-import com.spotify.protocol.types.Empty;
 import com.spotify.protocol.types.Track;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Scanner;
 
 
 public class MainHolder extends AppCompatActivity {
@@ -66,6 +59,7 @@ public class MainHolder extends AppCompatActivity {
 
     TextView mSongName, mArtistName;
     TextView sigmo_Title;
+    TextView room;
 
     ImageView peacock_symbol;
     ImageView cir;
@@ -102,7 +96,6 @@ public class MainHolder extends AppCompatActivity {
         //spotify_viewModel = ViewModelProviders.of(this).get(Spotify_ViewModel.class);
 
         //Models
-        detail_holder = new mDetail_Holder();
 
         //Buttons
         playback = findViewById(R.id.playback);
@@ -112,7 +105,7 @@ public class MainHolder extends AppCompatActivity {
         //TextViews
         mSongName = findViewById(R.id.m_song_name);
         mArtistName = findViewById(R.id.mArtist_name);
-        sigmo_Title = findViewById(R.id.sigmoTitleBar);
+        //sigmo_Title = findViewById(R.id.sigmoTitleBar);
 
         //ImageViews
         cir = findViewById(R.id.cir);
@@ -141,15 +134,22 @@ public class MainHolder extends AppCompatActivity {
         super.onStart();
 
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                peacock_symbol.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.rotate));
-        sigmo_Title.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.fade_in));
-        sigmo_Title.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.slidein_left_to_right));
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                peacock_symbol.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.rotate));
+//        sigmo_Title.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.fade_in));
+//        sigmo_Title.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.slidein_left_to_right));
+//
+//            }
+//        }).start();
 
-            }
-        }).start();
+        mSongName = findViewById(R.id.m_song_name);
+        mArtistName = findViewById(R.id.mArtist_name);
+        sigmo_Title = findViewById(R.id.sigmoTitleBar);
+        room = findViewById(R.id.Rooms);
+
+        detail_holder = new mDetail_Holder();
 
 
 
@@ -204,13 +204,13 @@ public class MainHolder extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainerView, new Circle_Fragment()).commit();
 
-                if (binding.customAction.sigmoTitleBar.getVisibility()==View.GONE){
-                binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
-                binding.customAction.sigmoTitleBar.setVisibility(View.VISIBLE);
-                    binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left_to_right_fr));
-                    binding.customAction.bitpSymbl.setVisibility(View.VISIBLE);
-                    binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
-                    binding.customAction.Rooms.setVisibility(View.GONE);
+                if (sigmo_Title.getVisibility()==View.GONE){
+//                binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
+                sigmo_Title.setVisibility(View.VISIBLE);
+//                    binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left_to_right_fr));
+                    peacock_symbol.setVisibility(View.VISIBLE);
+//                    binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
+                   room.setVisibility(View.GONE);
 
                 }
 
@@ -220,13 +220,13 @@ public class MainHolder extends AppCompatActivity {
             else if (item.getItemId() ==  R.id.nav_rooms) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainerView, new Rooms_Fragment()).commit();
-               binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
-                binding.customAction.sigmoTitleBar.setVisibility(View.GONE);
-                binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right_to_left_fr));
-                binding.customAction.bitpSymbl.setVisibility(View.GONE);
-
-                binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
-                binding.customAction.Rooms.setVisibility(View.VISIBLE);
+//               binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
+                sigmo_Title.setVisibility(View.GONE);
+//                binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right_to_left_fr));
+                peacock_symbol.setVisibility(View.GONE);
+//
+//                binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
+                room.setVisibility(View.VISIBLE);
             }
 
             else if (item.getItemId() ==  R.id.nav_profile) {
@@ -273,8 +273,6 @@ public class MainHolder extends AppCompatActivity {
                         Log.d("MainActivity", String.valueOf(playerState.playbackOptions));
                        // String url = "https://" + "i.scdn.co/image/" + track.imageUri.toString().substring(22, track.imageUri.toString().length() - 2);
                         mMiniPlayer_Handler(trackName,trackArtist);
-
-
                         //float volu = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                         //Toast.makeText(this, "Previous volume : " + volu, Toast.LENGTH_SHORT).show();
 
@@ -292,12 +290,15 @@ public class MainHolder extends AppCompatActivity {
                           {
                                 if (!liked) {
                                     mSpotifyAppRemote.getUserApi().addToLibrary(track.uri);
-                                    Fav.setImageResource(R.drawable.ic_hfilled);
+                                    Fav.setImageResource(R.drawable.ic_heart);
+                                    Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_in));
                                     liked = true;
                                 }
                                 else{
                                     mSpotifyAppRemote.getUserApi().removeFromLibrary(track.uri);
                                     Fav.setImageResource(R.drawable.ic_fav);
+                                    Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_out));
+
                                     liked = false;
                                 }
 
@@ -308,7 +309,7 @@ public class MainHolder extends AppCompatActivity {
                         if(playerState.isPaused){
                             Log.d(TAG, "connected: paused ");
                            playback.setImageResource(R.drawable.ic_play);
-                            playback.setAnimation(AnimationUtils.loadAnimation(this , R.anim.fade_in_switch));
+                            playback.setAnimation(AnimationUtils.loadAnimation(this , R.anim.fade_in));
 
                             playback.setScaleX(1f);
                             playback.setScaleY(1f);

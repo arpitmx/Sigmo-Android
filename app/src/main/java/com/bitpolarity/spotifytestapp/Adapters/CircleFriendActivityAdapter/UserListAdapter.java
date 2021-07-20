@@ -1,18 +1,16 @@
-package com.bitpolarity.spotifytestapp.Adapters;
+package com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter;
 
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +31,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     private final List<UserListModel> userModelList;
     private final ULEventListner mULEventlisnter;
+    Animation animation;
 
 
 
@@ -47,7 +46,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     @Override
 
     public UserListAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.circle_friend_activity_list_item,parent,false);
         return new ViewHolder(view, mULEventlisnter);
     }
 
@@ -56,19 +55,19 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
         UserListModel link = userModelList.get(position); //Making a link to save multiple calls
 
-        String userName = link.getUsername();
-        Log.d("Adapter LOG", "onBindViewHolder: "+ userName);
-        String songName = link.getSongDetail();
-        Log.d("Adapter LOG", "onBindViewHolder: "+ songName);
-        Integer online_status = link.getImageid();
-        Log.d("Adapter LOG", "onBindViewHolder: "+ online_status);
+//        String userName = link.getUsername();
+//        Log.d("Adapter LOG", "onBindViewHolder: "+ userName);
+//        String songName = link.getSongDetail();
+//        Log.d("Adapter LOG", "onBindViewHolder: "+ songName);
+//        Integer online_status = link.getImageid();
+//        Log.d("Adapter LOG", "onBindViewHolder: "+ online_status);
 
 
         ////////////Setting Values /////////////////////////////////////////////
 
-        holder.textViewUsername.setText(userName);
-        holder.songName.setText(songName);
-        holder.online_status.setImageResource(online_status);
+        holder.textViewUsername.setText(link.getUsername());
+        holder.songName.setText(link.getSongDetail());
+        holder.online_status.setImageResource(link.getImageid());
         holder.last_acive.setText(link.getDatetime());
 
 //        holder.play_trackbtn.setOnClickListener(new View.OnClickListener() {
@@ -101,26 +100,29 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
 
         // Equilizer///////////////////////////////////////////////////////////
-
-        Glide.with(userModelList.get(position).getContext())
-                .load(R.drawable.eq)
-                .apply(new RequestOptions().override(110, 110))
-                .into(holder.equilizer_iv);
-
-
-        // Setting Playing and Paused TVs and making equilizer visible and gone ////////////////////////////////////////////
-
+//
+//        Glide.with(userModelList.get(position).getContext())
+//                .load(R.drawable.eq)
+//                .apply(new RequestOptions().override(110, 110))
+//                .into(holder.equilizer_iv);
+//
+//
+//        // Setting Playing and Paused TVs and making equilizer visible and gone ////////////////////////////////////////////
+//
         if (link.getIsPlaying().equals("Playing")) {
             holder.isPlayingTV.setText(link.getIsPlaying());
-            holder.cardView.setVisibility(View.VISIBLE);
-            holder.posterr.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
+            //holder.cardView.setVisibility(View.VISIBLE);
+           holder.posterr.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
         }
         else
         {
-            holder.isPlayingTV.setText("Paused");
             holder.isPlayingTV.setTextColor(Color.parseColor("#E53935"));
             holder.equilizer_iv.setVisibility(View.GONE);
         }
+
+
+
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
