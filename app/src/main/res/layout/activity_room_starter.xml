@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
-    tools:context=".UI_Controllers.Bottom_Nav_Files.Rooms.RoomStarterActivity">
+>
 
 
     <include
@@ -24,42 +23,76 @@
 <!--      >-->
 <!--    </androidx.recyclerview.widget.RecyclerView>-->
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        app:civ_border_width="3dp"
+        app:civ_border_color="@color/s_blue"
+        android:src="@drawable/poster"
+        />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textField"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:startIconDrawable="@drawable/ic_baseline_group_work_24"
+        android:layout_height="100dp"
         app:startIconContentDescription="Room"
-        android:background="#DDDDDD"
+        android:layout_margin="30dp"
         app:endIconMode="clear_text"
-        android:hint="Room Name"
-        app:boxBackgroundColor="@color/dark_bg"
+        android:layout_gravity="center"
+        android:hint="Room Title"
+
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        android:paddingBottom="5dp"
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="@color/s_blue"
+        app:counterTextColor="@color/s_blue"
+        app:helperText="Write a catchy one!"
         app:counterEnabled="true"
-        
-        app:counterMaxLength="10"
-        >
+        app:counterMaxLength="15"
+        app:errorEnabled="true"
+       >
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white87"
-            android:textColorHint="@color/white"
+            android:layout_height="70dp"
+            android:textSize="20sp"
+            android:fontFamily="@font/hb"
+            android:background="#EBF9FF"
+            android:focusedByDefault="true"
+            android:textColor="@color/black"
+            android:maxLines="1"
+            android:saveEnabled="true"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:orientation="vertical"
-        android:id="@+id/all_friends_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include"
-        app:layout_constraintVertical_bias="0.15">
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/startMainRoomBTN"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+       android:background="@drawable/four_side_rounded_white"
+        android:textColor="@color/white"
+        android:layout_margin="20dp"
+        android:text="Start the party!" />
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:orientation="vertical"-->
+<!--        android:id="@+id/all_friends_list"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@color/white"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/include"-->
+<!--        app:layout_constraintVertical_bias="0.15">-->
+
+<!--    </androidx.recyclerview.widget.RecyclerView>-->
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -20,7 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.Circle_Fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Profile_Fragment;
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.Rooms_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.BottomSheet.Rooms_Fragment;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 

@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.BottomSheet;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import com.bitpolarity.spotifytestapp.R;
 public class Rooms_Fragment extends Fragment {
     AppCompatButton startRoomBTN;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -22,11 +24,9 @@ public class Rooms_Fragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_rooms, container, false);
         startRoomBTN =v.findViewById(R.id.startroomBTN);
 
-        startRoomBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), RoomStarterActivity.class));
-            }
+        startRoomBTN.setOnClickListener(view -> {
+            mCreateRoomBottomSheet bottomSheet = new mCreateRoomBottomSheet();
+            bottomSheet.show(getChildFragmentManager(),"Bottom");
         });
 
 
