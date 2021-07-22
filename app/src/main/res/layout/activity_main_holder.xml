@@ -18,9 +18,9 @@
     <include
         android:id="@+id/custom_action"
         layout="@layout/custom_action_bar"
-
-
         />
+
+
 
        <androidx.fragment.app.FragmentContainerView
            android:id="@+id/fragmentContainerView"
@@ -32,8 +32,8 @@
            android:layout_alignParentStart="true"
            android:layout_alignParentRight="true"
            android:layout_marginStart="0dp"
-           android:layout_marginBottom="55dp"
            app:defaultNavHost="true"
+           android:layout_marginBottom="55dp"
            app:navGraph="@navigation/nav" />
 
        <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -44,7 +44,9 @@
            android:layout_alignTop="@id/custom_action"
            android:layout_marginTop="60dp"
            android:layout_marginBottom="54dp"
-           android:elevation="5dp">
+           android:elevation="5dp"
+
+           >
 
            <FrameLayout
                android:id="@+id/standardBottomSheet"
@@ -65,6 +67,7 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    app:layout_anchorGravity="bottom"
+
 
                    />
 

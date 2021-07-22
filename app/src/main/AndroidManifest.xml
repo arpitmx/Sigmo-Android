@@ -12,8 +12,9 @@
         android:roundIcon="@drawable/s1"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpotifyTestApp">
-        <activity android:name=".UI_Controllers.Bottom_Nav_Files.Rooms.RoomStarterActivity"></activity>
-        <!--  -->
+
+
+        <activity android:name=".UI_Controllers.Bottom_Nav_Files.Rooms.MainRoom.MainHolder.RoomHolderActivity" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme">

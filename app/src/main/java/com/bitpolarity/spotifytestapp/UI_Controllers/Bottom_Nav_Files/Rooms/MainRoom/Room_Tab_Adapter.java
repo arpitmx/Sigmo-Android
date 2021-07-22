@@ -20,12 +20,12 @@ public class Room_Tab_Adapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        if (position == 1) {
+        if (position == 0) {
             return new SongQueueFrag();
         } else if (position == 2) {
-            return new ChatsFrag();
+            return new MembersFrag();
 
-        } else return new MembersFrag();
+        } else return new ChatsFrag();
     }
 
     @Override

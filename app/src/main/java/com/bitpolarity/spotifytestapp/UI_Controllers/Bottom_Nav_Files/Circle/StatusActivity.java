@@ -44,11 +44,14 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     UserListAdapter userListAdapter;
     DatabaseReference ref;
     TempDataHolder dataHolder;
-
+    final int ONLINE = R.drawable.ongreen;
+    final int OFFLINE = R.drawable.ored;
 
 
 
     ////// Firebase specific
+
+
 
 
     @Override
@@ -65,16 +68,25 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         imageView = v.findViewById(R.id.online_status);
         dataHolder = new TempDataHolder();
 
-        final int ONLINE = R.drawable.ongreen;
-        final int OFFLINE = R.drawable.ored;
+
 
         ref =FirebaseDatabase.getInstance().getReference().child("Users");
+        isPlayingTV = (TextView) v.findViewById(R.id.isPlayingg);
 
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
 
+//        new Thread(() ->
+//            })).start();
+
+
+
+                return v;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         ref.addValueEventListener(new ValueEventListener() {
 
@@ -132,7 +144,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
                 //////////////////////////////////  GETTING SONG META DATA //////////////////////////////////////////////
 
-                isPlayingTV = (TextView) v.findViewById(R.id.isPlayingg);
 
 
                 String[] users = (String[]) keys.toArray(new String[size]);
@@ -208,24 +219,20 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                 userRecyclerView.setVisibility(View.VISIBLE);
             }
 
-                //// SHIMMERS ///////////////////////////////////////////////////////////////
+            //// SHIMMERS ///////////////////////////////////////////////////////////////
 
 
 
-                ///////////////////// SETTING ONCLICK LISTNER ON ELEMENTS OF RECYCLER VIEW
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // calling on cancelled method when we receive
-                    // any error or we are not able to get the data.
-                    Toast.makeText(getContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
-                }
-            });
+            ///////////////////// SETTING ONCLICK LISTNER ON ELEMENTS OF RECYCLER VIEW
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(getContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
             }
-        }).start();
 
 
-
-                return v;
+    });
     }
 
     @Override
@@ -282,6 +289,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
         return list;
     }
+
 
 
     @Override

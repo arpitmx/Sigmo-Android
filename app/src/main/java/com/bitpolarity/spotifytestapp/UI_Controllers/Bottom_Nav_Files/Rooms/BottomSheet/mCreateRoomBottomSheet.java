@@ -14,12 +14,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.Circle_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.MainRoom.MainHolder.RoomHolderActivity;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.MainRoom.MainHolder.RoomMainFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 
 public class mCreateRoomBottomSheet extends BottomSheetDialogFragment {
-
     AppCompatButton startRoom;
 
     @Override
@@ -27,16 +27,10 @@ public class mCreateRoomBottomSheet extends BottomSheetDialogFragment {
     View v = inflater.inflate(R.layout.activity_room_starter, container , true);
     startRoom = v.findViewById(R.id.startMainRoomBTN);
 
-//    startRoom.setOnClickListener(view->{
-//        FragmentManager manager = getChildFragmentManager();
-//        FragmentTransaction transaction = manager.beginTransaction();
-//        transaction.add(R.id.container,new Circle_Fragment(),"e");
-//        transaction.addToBackStack(null);
-//        transaction.commit();
-//    });
-
-    return v;
-
+    startRoom.setOnClickListener(view->{
+        startActivity(new Intent(getContext() , RoomHolderActivity.class));
+    });
+        return v;
     }
 }
 

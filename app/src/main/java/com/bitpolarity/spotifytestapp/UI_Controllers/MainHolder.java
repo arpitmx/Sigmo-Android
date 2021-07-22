@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.Circle_Fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Profile_Fragment;
@@ -24,6 +26,7 @@ import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.Bott
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.MainRoom.MainHolder.RoomMainFragment;
 import com.bitpolarity.spotifytestapp.ViewModels.Spotify_ViewModel;
 import com.bitpolarity.spotifytestapp.databinding.ActivityMainHolderBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -64,6 +67,16 @@ public class MainHolder extends AppCompatActivity {
     ImageView peacock_symbol;
     ImageView cir;
     ImageView Fav;
+
+
+
+    //Fragments
+    final Fragment circle_fragment = new Circle_Fragment();
+    final Fragment rooms_fragment = new Rooms_Fragment();
+    final Fragment profile_fragment = new Profile_Fragment();
+    final FragmentManager fm = getSupportFragmentManager();
+    //Fragment active = fragment1;
+
 
 
 
@@ -201,10 +214,10 @@ public class MainHolder extends AppCompatActivity {
 
 
             if (item.getItemId() == R.id.nav_circle){
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainerView, new Circle_Fragment()).commit();
+                fm.beginTransaction().replace(R.id.fragmentContainerView, circle_fragment).commit();
 
-                if (sigmo_Title.getVisibility()==View.GONE){
+
+                 if (sigmo_Title.getVisibility()==View.GONE){
 //                binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
                 sigmo_Title.setVisibility(View.VISIBLE);
 //                    binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left_to_right_fr));
@@ -217,9 +230,10 @@ public class MainHolder extends AppCompatActivity {
             }
 
 
-            else if (item.getItemId() ==  R.id.nav_rooms) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainerView, new Rooms_Fragment()).commit();
+          else  if (item.getItemId() ==  R.id.nav_rooms) {
+                fm.beginTransaction()
+                        .replace(R.id.fragmentContainerView, rooms_fragment).commit();
+//
 //               binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
                 sigmo_Title.setVisibility(View.GONE);
 //                binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right_to_left_fr));
@@ -230,8 +244,8 @@ public class MainHolder extends AppCompatActivity {
             }
 
             else if (item.getItemId() ==  R.id.nav_profile) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentContainerView, new Profile_Fragment()).commit();
+                    fm.beginTransaction()
+                            .replace(R.id.fragmentContainerView,profile_fragment).commit();
                     //  Toast.makeText(MainHolder.this, "Social", Toast.LENGTH_SHORT).show();
             }
 

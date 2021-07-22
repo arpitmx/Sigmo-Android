@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     >
+
+
+
+    <include
+        layout="@layout/room_action_bar"
+        />
 
 
     <LinearLayout
@@ -12,6 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            layout="@layout/room_mini_song_player"
+
+            />
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout_Rooms"
             android:layout_width="match_parent"
@@ -20,7 +30,7 @@
             app:tabTextColor="#979797"
             app:tabSelectedTextColor="@color/black"
             app:tabIndicatorColor="@color/s_yellow"
-            android:elevation="10dp"
+
             android:visibility="visible"
             app:tabIndicatorHeight="3dp"
             />
@@ -34,4 +44,6 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+
+
+</LinearLayout>

@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.Circle_Tab_Adapter;
@@ -33,6 +35,8 @@ public class RoomMainFragment extends Fragment {
         tabLayout = v.findViewById(R.id.tabLayout_Rooms);
         viewPager = v.findViewById(R.id.viewpager_Rooms);
         tabLayout.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_down));
+
+
         // constraintLayout = v.findViewById(R.id.custom_action_bar_consLay);
         // constraintLayout.setElevation(0);
 

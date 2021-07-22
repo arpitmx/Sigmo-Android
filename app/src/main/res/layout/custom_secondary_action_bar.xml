@@ -26,7 +26,7 @@
                     android:id="@+id/participantCountTXTV"
                     android:layout_width="wrap_content"
                     android:layout_height="32dp"
-                    android:layout_gravity="start"
+                    android:layout_gravity="center"
                     android:fontFamily="@font/hxtrabold"
                     android:gravity="start"
                     android:paddingTop="6dp"
