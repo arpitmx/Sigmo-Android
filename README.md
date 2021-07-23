@@ -39,27 +39,6 @@ Issues are open in the issues section.
 
 --------------------------------------------------------------------------------------------------------------------------
 
-### Ideas for Future Additions ➕ : 
-
-1. Use Spotify SDK for song thumbnails , song name and other song respective details 🔹
-2. Use Spotify SDK for miniplayer updation. 🔹
-3. Adaptive themes : changes theme according to light conditions
--
-5. Add lyrics feature into dropdown sheet and other analytics.
-6. One click downloadable music, refering the client to a site where song will be automatically downloaded to local storage once entered.
-7. A mini podcast creator , voice recorder
-8. Users like to slide downwards instead of sideways , slide down to change song like resso.
-9. Add features like vocolloco
-10. Adding comments on a particular song, so if a friend have left some comment on a particular song , when the user plays that same song comment will b visible
-11. Add more analytics of a song through spotify web api 👷‍- 2
-12. An Explore page, in which recommemended songs will be streamed for a playback of 30 seconds (sort of gives an idea of a song without fully listening) 👷‍♀️ - 3 
-13. Rooms for synced listening 👷‍ - 1
-14. Explore page - User can see New Tweets notifications and announcements from their favourite artists(as analysed by spotify). 
-15. Automatic stories - Stories will be displayed at the top of explore page of the client based on their daily top 5s.
-16. User can connect their social profiles to Sigmo.
-
------------
-
 ### Logic Improvements :
 
 1. When updates occurs to the database whole list is reloaded with content for example everytime a new songs loads
