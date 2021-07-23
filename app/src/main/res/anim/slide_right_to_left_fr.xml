@@ -8,7 +8,7 @@
     </alpha>
 
     <rotate
-        android:duration="200"
+        android:duration="300"
         android:fromDegrees="0"
         android:interpolator="@android:anim/linear_interpolator"
         android:pivotX="50%"

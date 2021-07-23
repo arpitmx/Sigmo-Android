@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/s_grey"
+    android:background="@color/white"
     tools:context=".UI_Controllers.Bottom_Nav_Files.Circle.Circle_Friends_Fragment">
 
     <TextView
@@ -11,6 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Friends" />
+        android:text="Queue" />
 
 </FrameLayout>

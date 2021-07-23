@@ -16,7 +16,7 @@ public class Circle_Search_Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_circle_friends, container, false);
+        View v = inflater.inflate(R.layout.fragment_circle_search, container, false);
 
         // TextView tv = (TextView) v.findViewById(R.id.t1);
         //  tv.setText(getArguments().getString("msg"));

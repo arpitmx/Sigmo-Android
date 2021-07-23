@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/custom_action_bar_consLay"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/white200"
+
+   >
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+                <TextView
+                    android:id="@+id/participantCountTXTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/hxtrabold"
+                    android:gravity="start"
+                    android:paddingTop="6dp"
+                    android:text="New Room"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/txtView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/hmed"
+                    android:gravity="start"
+                    android:paddingTop="4dp"
+                    android:text="Add details and start!"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+
+                    android:visibility="visible" />
+
+        </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

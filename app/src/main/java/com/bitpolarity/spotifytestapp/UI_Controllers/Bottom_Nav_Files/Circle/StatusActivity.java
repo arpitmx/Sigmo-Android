@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.bitpolarity.spotifytestapp.BottomSheets.mBottomSheetDialog;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.UserListModel;
 import com.bitpolarity.spotifytestapp.R;
-import com.bitpolarity.spotifytestapp.Adapters.UserListAdapter;
+import com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter.UserListAdapter;
 import com.bitpolarity.spotifytestapp.DB_Related.TempDataHolder;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -44,11 +44,14 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     UserListAdapter userListAdapter;
     DatabaseReference ref;
     TempDataHolder dataHolder;
-
+    final int ONLINE = R.drawable.ongreen;
+    final int OFFLINE = R.drawable.ored;
 
 
 
     ////// Firebase specific
+
+
 
 
     @Override
@@ -65,13 +68,29 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         imageView = v.findViewById(R.id.online_status);
         dataHolder = new TempDataHolder();
 
-        final int ONLINE = R.drawable.ongreen;
-        final int OFFLINE = R.drawable.ored;
+
+
         ref =FirebaseDatabase.getInstance().getReference().child("Users");
+        isPlayingTV = (TextView) v.findViewById(R.id.isPlayingg);
 
 
+
+//        new Thread(() ->
+//            })).start();
+
+
+
+                return v;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         ref.addValueEventListener(new ValueEventListener() {
+
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -125,7 +144,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
                 //////////////////////////////////  GETTING SONG META DATA //////////////////////////////////////////////
 
-                isPlayingTV = (TextView) v.findViewById(R.id.isPlayingg);
 
 
                 String[] users = (String[]) keys.toArray(new String[size]);
@@ -176,6 +194,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 userRecyclerView.setLayoutManager(layoutManager);
+                userRecyclerView.setNestedScrollingEnabled(false);
+
                 dataHolder.setSongDetails(songDetail);
                 dataHolder.setTrackID(trackID);
                 // dataHolder.setTrackID(son);
@@ -199,22 +219,20 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                 userRecyclerView.setVisibility(View.VISIBLE);
             }
 
-                //// SHIMMERS ///////////////////////////////////////////////////////////////
+            //// SHIMMERS ///////////////////////////////////////////////////////////////
 
 
 
-                ///////////////////// SETTING ONCLICK LISTNER ON ELEMENTS OF RECYCLER VIEW
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // calling on cancelled method when we receive
-                    // any error or we are not able to get the data.
-                    Toast.makeText(getContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
-                }
-            });
+            ///////////////////// SETTING ONCLICK LISTNER ON ELEMENTS OF RECYCLER VIEW
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(getContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
 
 
-
-                return v;
+    });
     }
 
     @Override
@@ -271,6 +289,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
         return list;
     }
+
 
 
     @Override

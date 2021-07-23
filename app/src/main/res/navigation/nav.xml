@@ -14,7 +14,7 @@
         tools:layout="@layout/fragment_circle" />
     <fragment
         android:id="@+id/Rooms"
-        android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms_Fragment"
+        android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.BottomSheet.Rooms_Fragment"
         android:label="Rooms"
         tools:layout="@layout/fragment_rooms" />
     <fragment

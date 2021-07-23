@@ -12,19 +12,19 @@
         android:roundIcon="@drawable/s1"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpotifyTestApp">
-        <!--  -->
-        <activity android:name=".SplashScreen"
-            android:theme="@style/SplashTheme"
-            >
 
+
+        <activity android:name=".UI_Controllers.Bottom_Nav_Files.Rooms.MainRoom.MainHolder.RoomHolderActivity" />
+        <activity
+            android:name=".SplashScreen"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".UI_Controllers.Login"/>
-
+        <activity android:name=".UI_Controllers.Login" />
         <activity android:name=".UI_Controllers.MainHolder" />
         <activity android:name=".UI_Controllers.MainActivity" />
 
