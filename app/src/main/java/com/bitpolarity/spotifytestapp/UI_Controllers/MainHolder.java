@@ -71,11 +71,11 @@ public class MainHolder extends AppCompatActivity {
 
 
     //Fragments
-    final Fragment circle_fragment = new Circle_Fragment();
-    final Fragment rooms_fragment = new Rooms_Fragment();
-    final Fragment profile_fragment = new Profile_Fragment();
+    final Fragment fragment1 = new Circle_Fragment();
+    final Fragment fragment2 = new Rooms_Fragment();
+    final Fragment fragment3 = new Profile_Fragment();
     final FragmentManager fm = getSupportFragmentManager();
-    //Fragment active = fragment1;
+    Fragment active = fragment1;
 
 
 
@@ -93,6 +93,12 @@ public class MainHolder extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+//        fm.beginTransaction().add(R.id.fragmentContainerView, fragment3, "3").hide(fragment3).commit();
+//        fm.beginTransaction().add(R.id.fragmentContainerView, fragment2, "2").hide(fragment2).commit();
+//        fm.beginTransaction().add(R.id.fragmentContainerView,fragment1, "1").commit();
+
 
         binding = ActivityMainHolderBinding.inflate(getLayoutInflater());
 
@@ -212,42 +218,44 @@ public class MainHolder extends AppCompatActivity {
 ////                        break;
 ////                        }
 
+            switch (item.getItemId()) {
 
-            if (item.getItemId() == R.id.nav_circle){
-                fm.beginTransaction().replace(R.id.fragmentContainerView, circle_fragment).commit();
+                case R.id.nav_circle:
+                    fm.beginTransaction().replace(R.id.fragmentContainerView,fragment1).commit();
+                    active = fragment1;
 
 
-                 if (sigmo_Title.getVisibility()==View.GONE){
+                    if (sigmo_Title.getVisibility() == View.GONE) {
 //                binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
-                sigmo_Title.setVisibility(View.VISIBLE);
+                        sigmo_Title.setVisibility(View.VISIBLE);
 //                    binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left_to_right_fr));
-                    peacock_symbol.setVisibility(View.VISIBLE);
+                        peacock_symbol.setVisibility(View.VISIBLE);
 //                    binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
-                   room.setVisibility(View.GONE);
+                        room.setVisibility(View.GONE);
 
                 }
+                    return true;
 
-            }
+                case R.id.nav_rooms :
+                    fm.beginTransaction().replace(R.id.fragmentContainerView,fragment2).commit();
+                    active = fragment2;
 
-
-          else  if (item.getItemId() ==  R.id.nav_rooms) {
-                fm.beginTransaction()
-                        .replace(R.id.fragmentContainerView, rooms_fragment).commit();
-//
 //               binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
-                sigmo_Title.setVisibility(View.GONE);
+                    sigmo_Title.setVisibility(View.GONE);
 //                binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right_to_left_fr));
-                peacock_symbol.setVisibility(View.GONE);
+                    peacock_symbol.setVisibility(View.GONE);
 //
 //                binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
-                room.setVisibility(View.VISIBLE);
-            }
+                    room.setVisibility(View.VISIBLE);
 
-            else if (item.getItemId() ==  R.id.nav_profile) {
-                    fm.beginTransaction()
-                            .replace(R.id.fragmentContainerView,profile_fragment).commit();
-                    //  Toast.makeText(MainHolder.this, "Social", Toast.LENGTH_SHORT).show();
-            }
+                    return true;
+
+
+                case  R.id.nav_profile:
+                    fm.beginTransaction().replace(R.id.fragmentContainerView,fragment3).commit();
+                    active = fragment3;
+                    return true;
+                }
 
 
             return true;

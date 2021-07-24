@@ -21,6 +21,12 @@ allprojects {
         flatDir{
             dirs 'libs'
         }
+        // @TODO : Have to remove this one in production
+
+        if (project.hasProperty('devBuild')) {
+            splits.abi.enable = false
+            splits.density.enable = false
+        }
 
 
 

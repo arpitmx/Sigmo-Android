@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,9 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     TempDataHolder dataHolder;
     final int ONLINE = R.drawable.ongreen;
     final int OFFLINE = R.drawable.ored;
+    Parcelable state;
+    LinearLayoutManager layoutManager ;
+
 
 
 
@@ -61,6 +65,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
         View v = inflater.inflate(R.layout.activity_status,container,false);
 
+        isPlayingTV = (TextView) v.findViewById(R.id.isPlayingg);
+
         userRecyclerView = v.findViewById(R.id.listview);
         shimmerFrameLayout = v.findViewById(R.id.shimmerFrameLayout);
         shimmerFrameLayout.startShimmerAnimation();
@@ -68,14 +74,13 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         imageView = v.findViewById(R.id.online_status);
         dataHolder = new TempDataHolder();
 
+        layoutManager = new LinearLayoutManager(getContext());
 
 
         ref =FirebaseDatabase.getInstance().getReference().child("Users");
-        isPlayingTV = (TextView) v.findViewById(R.id.isPlayingg);
 
 
-
-//        new Thread(() ->
+//       new Thread(() ->
 //            })).start();
 
 
@@ -88,7 +93,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     public void onResume() {
         super.onResume();
 
-        ref.addValueEventListener(new ValueEventListener() {
+
+        new Thread(() -> ref.addValueEventListener(new ValueEventListener() {
 
 
             @Override
@@ -191,10 +197,11 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
                 ////////////////////////// SETTING DATA TO ADAPTER
 
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 userRecyclerView.setLayoutManager(layoutManager);
                 userRecyclerView.setNestedScrollingEnabled(false);
+                int lastFirstVisiblePosition = ((LinearLayoutManager)userRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                userRecyclerView.getLayoutManager().scrollToPosition(lastFirstVisiblePosition);
 
                 dataHolder.setSongDetails(songDetail);
                 dataHolder.setTrackID(trackID);
@@ -205,7 +212,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                     modelList.add(new UserListModel(getContext(), dateTime[i], isPlaying[i], users[i], posterURL[i], status[i], songDetail[i]));
                 }
                 userListAdapter = new UserListAdapter(modelList, StatusActivity.this);
-                userRecyclerView.setAdapter(userListAdapter);
+                //userRecyclerView.setAdapter(userListAdapter);
+               someMethod(userRecyclerView, userListAdapter);
                 userListAdapter.notifyDataSetChanged();
 
 
@@ -222,7 +230,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
             //// SHIMMERS ///////////////////////////////////////////////////////////////
 
 
-
             ///////////////////// SETTING ONCLICK LISTNER ON ELEMENTS OF RECYCLER VIEW
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -232,7 +239,10 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
             }
 
 
-    });
+        })).start();
+
+
+
     }
 
     @Override
@@ -246,10 +256,15 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     public void onPause() {
         super.onPause();
         Log.v(LOG, "Status : Background");
+        state = layoutManager.onSaveInstanceState();
+
 
     }
 
-
+    private void someMethod(RecyclerView rv, UserListAdapter adapter) {
+        rv.setAdapter(adapter);
+        layoutManager.onRestoreInstanceState(state);
+    }
 
 
 
@@ -289,7 +304,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
         return list;
     }
-
 
 
     @Override
