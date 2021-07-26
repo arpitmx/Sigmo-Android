@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI_Controllers.Bottom_Nav_Files.Circle.Circle_Search_Fragment">
+    tools:context=".UI_Controllers.Bottom_Tabs.Circle.Circle_Search_Fragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

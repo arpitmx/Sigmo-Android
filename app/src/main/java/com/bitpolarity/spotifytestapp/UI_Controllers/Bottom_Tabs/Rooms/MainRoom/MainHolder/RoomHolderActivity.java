@@ -1,11 +1,9 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.MainRoom.MainHolder;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.MainRoom.MainHolder;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.bitpolarity.spotifytestapp.R;

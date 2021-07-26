@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitpolarity.spotifytestapp.GetterSetterModels.UserListModel;
 import com.bitpolarity.spotifytestapp.R;
+import com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import org.jetbrains.annotations.NotNull;
@@ -87,9 +89,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
 
         Glide.with(userModelList.get(position).getContext())
-                .load("https://i.scdn.co/image/ab6775700000ee855ffdafb1d7fb1eb34622f04f")
+                .load("https://picsum.photos/100/100")
                 .apply(new RequestOptions().override(50, 50))
                 .into(holder.user_profile_dp);
+
+
+
 
         //"https://i.scdn.co/image/ab6775700000ee855ffdafb1d7fb1eb34622f04f"
 
@@ -171,6 +176,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             cardView = itemView.findViewById(R.id.eq_card);
 
             itemView.setOnClickListener(this);
+
+
 
 
         }

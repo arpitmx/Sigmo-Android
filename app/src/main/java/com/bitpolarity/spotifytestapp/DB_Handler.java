@@ -1,6 +1,5 @@
 package com.bitpolarity.spotifytestapp;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.bitpolarity.spotifytestapp.DB_Related.fbase_bundle;
@@ -13,9 +12,7 @@ import java.util.Date;
 public class DB_Handler {
 
     //////////////////////////////== INIT ==//////////////////////////////////////////////
-
-    String username;
-
+    static String username;
     Date date;
     String time ;
 
@@ -25,7 +22,8 @@ public class DB_Handler {
     //Firebase
     FirebaseDatabase firebaseDatabase;
     DatabaseReference ref;
-    final String ROOT = "Users";
+    final String usr_ROOT = "Users";
+    final String room_ROOT = "Rooms";
     DatabaseReference ROOTPATH;
 
     ////////////////////////////////== INIT ==////////////////////////////////////////////////////////////////////////
@@ -52,8 +50,8 @@ public class DB_Handler {
         date = new Date();
         time = getTime(date);
 
-        ref.child(ROOT).child(username).child("STATUS").setValue(status);
-        ref.child(ROOT).child(username).child("LA").setValue(time);
+        ref.child(usr_ROOT).child(username).child("STATUS").setValue(status);
+        ref.child(usr_ROOT).child(username).child("LA").setValue(time);
 
         if (status ==1)
         {
@@ -73,7 +71,7 @@ public class DB_Handler {
 
    public void setUsername(String username){
         this.username = username;
-       ROOTPATH =ref.child(ROOT).child(username);
+       ROOTPATH =ref.child(usr_ROOT).child(username);
 
    }
 
@@ -109,6 +107,28 @@ public class DB_Handler {
 
      }
 
+     public DatabaseReference getRef(int TYPE){
+         DatabaseReference f = null;
+        if (TYPE == 0){
+           f =  ref.child("Users");
+        }else if (TYPE ==1){
+            f =  ref.child("Rooms");
+        }
+
+         return f;
+     }
+
+
+
+     ////////////////////////////////// ROOOOOOOMS
+     public void CreateRoom(String mRoomName){
+        ref.child(room_ROOT).child(mRoomName).child("mHostName").setValue(username);
+     }
+
+    ////////////////////////////////// ROOOOOOOMS
+
 
 
 }
+
+

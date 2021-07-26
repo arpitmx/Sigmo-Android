@@ -9,5 +9,7 @@
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
     <string name="rooms">Rooms</string>
+    <string name="start_a_room">+ Start a room</string>
+    <string name="start_the_party">Start the party!</string>
 
 </resources>

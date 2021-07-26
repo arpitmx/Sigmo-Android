@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,15 +21,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.Circle_Fragment;
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Profile_Fragment;
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.BottomSheet.Rooms_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Circle_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Profile_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.MainRoom.MainHolder.RoomMainFragment;
 import com.bitpolarity.spotifytestapp.ViewModels.Spotify_ViewModel;
 import com.bitpolarity.spotifytestapp.databinding.ActivityMainHolderBinding;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
@@ -51,6 +53,9 @@ public class MainHolder extends AppCompatActivity {
     float prevVolume;
 
 
+    //Layout
+    RelativeLayout miniRL;
+
    //ViewBinidings
     ActivityMainHolderBinding binding;
     Spotify_ViewModel spotify_viewModel;
@@ -58,6 +63,7 @@ public class MainHolder extends AppCompatActivity {
 
     ImageButton playback;
     ImageButton side_navigation_button;
+    ImageView miniPlayer_bg;
 
 
     TextView mSongName, mArtistName;
@@ -118,6 +124,7 @@ public class MainHolder extends AppCompatActivity {
 
         //Buttons
         playback = findViewById(R.id.playback);
+        miniPlayer_bg = findViewById(R.id.miniplayer_bg);
 
         side_navigation_button = findViewById(R.id.imageButton);
 
@@ -141,7 +148,11 @@ public class MainHolder extends AppCompatActivity {
         drawerLayout = findViewById(R.id.my_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
-
+        Glide.with(MainHolder.this)
+                .load("https://picsum.photos/900/700")
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(miniPlayer_bg);
         //////////////////////////////////////// Initializations//////////////////////////////////////////////
 
 
@@ -169,6 +180,8 @@ public class MainHolder extends AppCompatActivity {
         room = findViewById(R.id.Rooms);
 
         detail_holder = new mDetail_Holder();
+
+
 
 
 
@@ -308,6 +321,9 @@ public class MainHolder extends AppCompatActivity {
                         }
 
 
+
+
+
                         Fav.setOnClickListener( view -> {
                           {
                                 if (!liked) {
@@ -348,7 +364,12 @@ public class MainHolder extends AppCompatActivity {
                         }
 
 
-                        playback.setOnClickListener(view -> {
+
+
+
+
+
+                    playback.setOnClickListener(view -> {
                             if(!playerState.isPaused){
                                 Log.d(TAG, "connected: playing ");
                                 playback.setImageResource(R.drawable.ic_baseline_pause_24);
@@ -378,6 +399,7 @@ public class MainHolder extends AppCompatActivity {
                             {
                                 cir.setImageBitmap(bitmap);
                             } });
+
 
 
 

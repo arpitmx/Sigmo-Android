@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -79,6 +79,10 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
         ref =FirebaseDatabase.getInstance().getReference().child("Users");
 
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        userRecyclerView.setLayoutManager(layoutManager);
+        userRecyclerView.setNestedScrollingEnabled(false);
+
 
 //       new Thread(() ->
 //            })).start();
@@ -110,6 +114,11 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                 int size = keys.size();
                 String metaData[];
                 ArrayList<String[]> metaList = new ArrayList<>();
+
+                //TODO : Changed positions of this .
+
+                int lastFirstVisiblePosition = ((LinearLayoutManager)userRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                userRecyclerView.getLayoutManager().scrollToPosition(lastFirstVisiblePosition);
 
                 ////////////////////////////// GETTING SONG META DATA ////////////////////////////////////////////////////////////
 
@@ -197,11 +206,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
                 ////////////////////////// SETTING DATA TO ADAPTER
 
-                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                userRecyclerView.setLayoutManager(layoutManager);
-                userRecyclerView.setNestedScrollingEnabled(false);
-                int lastFirstVisiblePosition = ((LinearLayoutManager)userRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                userRecyclerView.getLayoutManager().scrollToPosition(lastFirstVisiblePosition);
+
+
 
                 dataHolder.setSongDetails(songDetail);
                 dataHolder.setTrackID(trackID);
@@ -213,12 +219,9 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                 }
                 userListAdapter = new UserListAdapter(modelList, StatusActivity.this);
                 //userRecyclerView.setAdapter(userListAdapter);
-               someMethod(userRecyclerView, userListAdapter);
+                someMethod(userRecyclerView, userListAdapter);
                 userListAdapter.notifyDataSetChanged();
-
-
                 ////////////////////////// SETTING DATA TO ADAPTER
-
 
                 //// SHIMMERS ///////////////////////////////////////////////////////////////
 
