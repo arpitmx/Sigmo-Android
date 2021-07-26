@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle;
 
 import android.os.Bundle;
 

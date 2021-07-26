@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,15 +21,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle.Circle_Fragment;
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Profile_Fragment;
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.BottomSheet.Rooms_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Circle_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Profile_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Rooms.MainRoom.MainHolder.RoomMainFragment;
 import com.bitpolarity.spotifytestapp.ViewModels.Spotify_ViewModel;
 import com.bitpolarity.spotifytestapp.databinding.ActivityMainHolderBinding;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
@@ -51,6 +53,9 @@ public class MainHolder extends AppCompatActivity {
     float prevVolume;
 
 
+    //Layout
+    RelativeLayout miniRL;
+
    //ViewBinidings
     ActivityMainHolderBinding binding;
     Spotify_ViewModel spotify_viewModel;
@@ -58,6 +63,7 @@ public class MainHolder extends AppCompatActivity {
 
     ImageButton playback;
     ImageButton side_navigation_button;
+    ImageView miniPlayer_bg;
 
 
     TextView mSongName, mArtistName;
@@ -71,11 +77,11 @@ public class MainHolder extends AppCompatActivity {
 
 
     //Fragments
-    final Fragment circle_fragment = new Circle_Fragment();
-    final Fragment rooms_fragment = new Rooms_Fragment();
-    final Fragment profile_fragment = new Profile_Fragment();
+    final Fragment fragment1 = new Circle_Fragment();
+    final Fragment fragment2 = new Rooms_Fragment();
+    final Fragment fragment3 = new Profile_Fragment();
     final FragmentManager fm = getSupportFragmentManager();
-    //Fragment active = fragment1;
+    Fragment active = fragment1;
 
 
 
@@ -93,6 +99,12 @@ public class MainHolder extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+//        fm.beginTransaction().add(R.id.fragmentContainerView, fragment3, "3").hide(fragment3).commit();
+//        fm.beginTransaction().add(R.id.fragmentContainerView, fragment2, "2").hide(fragment2).commit();
+//        fm.beginTransaction().add(R.id.fragmentContainerView,fragment1, "1").commit();
+
 
         binding = ActivityMainHolderBinding.inflate(getLayoutInflater());
 
@@ -112,6 +124,7 @@ public class MainHolder extends AppCompatActivity {
 
         //Buttons
         playback = findViewById(R.id.playback);
+        miniPlayer_bg = findViewById(R.id.miniplayer_bg);
 
         side_navigation_button = findViewById(R.id.imageButton);
 
@@ -135,7 +148,11 @@ public class MainHolder extends AppCompatActivity {
         drawerLayout = findViewById(R.id.my_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
-
+        Glide.with(MainHolder.this)
+                .load("https://picsum.photos/900/700")
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(miniPlayer_bg);
         //////////////////////////////////////// Initializations//////////////////////////////////////////////
 
 
@@ -163,6 +180,8 @@ public class MainHolder extends AppCompatActivity {
         room = findViewById(R.id.Rooms);
 
         detail_holder = new mDetail_Holder();
+
+
 
 
 
@@ -212,42 +231,44 @@ public class MainHolder extends AppCompatActivity {
 ////                        break;
 ////                        }
 
+            switch (item.getItemId()) {
 
-            if (item.getItemId() == R.id.nav_circle){
-                fm.beginTransaction().replace(R.id.fragmentContainerView, circle_fragment).commit();
+                case R.id.nav_circle:
+                    fm.beginTransaction().replace(R.id.fragmentContainerView,fragment1).commit();
+                    active = fragment1;
 
 
-                 if (sigmo_Title.getVisibility()==View.GONE){
+                    if (sigmo_Title.getVisibility() == View.GONE) {
 //                binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
-                sigmo_Title.setVisibility(View.VISIBLE);
+                        sigmo_Title.setVisibility(View.VISIBLE);
 //                    binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left_to_right_fr));
-                    peacock_symbol.setVisibility(View.VISIBLE);
+                        peacock_symbol.setVisibility(View.VISIBLE);
 //                    binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
-                   room.setVisibility(View.GONE);
+                        room.setVisibility(View.GONE);
 
                 }
+                    return true;
 
-            }
+                case R.id.nav_rooms :
+                    fm.beginTransaction().replace(R.id.fragmentContainerView,fragment2).commit();
+                    active = fragment2;
 
-
-          else  if (item.getItemId() ==  R.id.nav_rooms) {
-                fm.beginTransaction()
-                        .replace(R.id.fragmentContainerView, rooms_fragment).commit();
-//
 //               binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
-                sigmo_Title.setVisibility(View.GONE);
+                    sigmo_Title.setVisibility(View.GONE);
 //                binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right_to_left_fr));
-                peacock_symbol.setVisibility(View.GONE);
+                    peacock_symbol.setVisibility(View.GONE);
 //
 //                binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
-                room.setVisibility(View.VISIBLE);
-            }
+                    room.setVisibility(View.VISIBLE);
 
-            else if (item.getItemId() ==  R.id.nav_profile) {
-                    fm.beginTransaction()
-                            .replace(R.id.fragmentContainerView,profile_fragment).commit();
-                    //  Toast.makeText(MainHolder.this, "Social", Toast.LENGTH_SHORT).show();
-            }
+                    return true;
+
+
+                case  R.id.nav_profile:
+                    fm.beginTransaction().replace(R.id.fragmentContainerView,fragment3).commit();
+                    active = fragment3;
+                    return true;
+                }
 
 
             return true;
@@ -300,6 +321,9 @@ public class MainHolder extends AppCompatActivity {
                         }
 
 
+
+
+
                         Fav.setOnClickListener( view -> {
                           {
                                 if (!liked) {
@@ -340,7 +364,12 @@ public class MainHolder extends AppCompatActivity {
                         }
 
 
-                        playback.setOnClickListener(view -> {
+
+
+
+
+
+                    playback.setOnClickListener(view -> {
                             if(!playerState.isPaused){
                                 Log.d(TAG, "connected: playing ");
                                 playback.setImageResource(R.drawable.ic_baseline_pause_24);
@@ -370,6 +399,7 @@ public class MainHolder extends AppCompatActivity {
                             {
                                 cir.setImageBitmap(bitmap);
                             } });
+
 
 
 

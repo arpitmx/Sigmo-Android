@@ -14,10 +14,11 @@
         android:theme="@style/Theme.SpotifyTestApp">
 
 
-        <activity android:name=".UI_Controllers.Bottom_Nav_Files.Rooms.MainRoom.MainHolder.RoomHolderActivity" />
+        <activity android:name=".UI_Controllers.Bottom_Tabs.Rooms.MainRoom.MainHolder.RoomHolderActivity" />
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +26,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".UI_Controllers.Login" />
-        <activity android:name=".UI_Controllers.MainHolder" />
+        <activity android:name=".UI_Controllers.MainHolder"
+            android:launchMode="singleTop"
+
+            />
         <activity android:name=".UI_Controllers.MainActivity" />
 
         <service android:name=".Services.OnClearFromRecentService" />
@@ -43,6 +47,13 @@
         </receiver>
 
         <service android:name=".Services.OnClearFromRecentService" />
+
+
+        <!--  Logs for performance monitoring -->
+        <meta-data
+            android:name="firebase_performance_logcat_enabled"
+            android:value="true" />
+
     </application>
 
 </manifest>

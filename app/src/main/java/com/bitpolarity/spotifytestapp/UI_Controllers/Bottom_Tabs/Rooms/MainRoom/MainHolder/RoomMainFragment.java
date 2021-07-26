@@ -1,8 +1,7 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Nav_Files.Circle;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.MainRoom.MainHolder;
 
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -13,34 +12,37 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 
 import com.bitpolarity.spotifytestapp.R;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.MainRoom.Room_Tab_Adapter;
 import com.google.android.material.tabs.TabLayout;
 
 
-public class Circle_Fragment extends Fragment {
+public class RoomMainFragment extends Fragment {
 
     TabLayout tabLayout;
     ViewPager2 viewPager;
-    Circle_Tab_Adapter adapter;
-    ConstraintLayout constraintLayout;
+    Room_Tab_Adapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_circle,container , false);
+        View v = inflater.inflate(R.layout.fragment_room_mainholder,container , false);
 
-        tabLayout = v.findViewById(R.id.tabLayout);
-        viewPager = v.findViewById(R.id.viewpager);
+        tabLayout = v.findViewById(R.id.tabLayout_Rooms);
+        viewPager = v.findViewById(R.id.viewpager_Rooms);
         tabLayout.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_down));
-       // constraintLayout = v.findViewById(R.id.custom_action_bar_consLay);
-       // constraintLayout.setElevation(0);
 
 
-        tabLayout.addTab(tabLayout.newTab().setText("Friends"));
-        tabLayout.addTab(tabLayout.newTab().setText("Status"));
+        // constraintLayout = v.findViewById(R.id.custom_action_bar_consLay);
+        // constraintLayout.setElevation(0);
+
+
+        tabLayout.addTab(tabLayout.newTab().setText("Queue"));
+        tabLayout.addTab(tabLayout.newTab().setText("Chats"));
+        tabLayout.addTab(tabLayout.newTab().setText("Members"));
 
         FragmentManager fm = getChildFragmentManager();
-        adapter = new Circle_Tab_Adapter(fm , getLifecycle());
+        adapter = new Room_Tab_Adapter(fm , getLifecycle());
         viewPager.setAdapter(adapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

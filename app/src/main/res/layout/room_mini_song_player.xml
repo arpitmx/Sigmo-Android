@@ -15,7 +15,7 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout_ROOM"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_alignParentBottom="true"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/cir"
+            android:id="@+id/cir_ROOM"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
@@ -51,7 +51,7 @@
             android:paddingStart="2dp">
 
             <TextView
-                android:id="@+id/m_song_name"
+                android:id="@+id/m_song_name_ROOM"
                 android:layout_width="match_parent"
                 android:layout_height="37dp"
                 android:fontFamily="@font/hb"
@@ -73,7 +73,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/mArtist_name"
+                android:id="@+id/mArtist_name_ROOM"
                 android:layout_width="match_parent"
                 android:layout_height="31dp"
                 android:fontFamily="@font/hb"
@@ -97,7 +97,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageButton
-            android:id="@+id/add_to_fav"
+            android:id="@+id/add_to_fav_ROOM"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
@@ -110,7 +110,7 @@
 
 
         <ImageButton
-            android:id="@+id/playback"
+            android:id="@+id/playback_ROOM"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.5"

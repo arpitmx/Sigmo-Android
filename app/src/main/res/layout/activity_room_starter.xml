@@ -57,6 +57,7 @@
        >
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextROOM"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:textSize="20sp"
@@ -75,10 +76,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-       android:background="@drawable/four_side_rounded_white"
+       android:background="@drawable/four_side_rounded_blue_more_rounder"
         android:textColor="@color/white"
         android:layout_margin="20dp"
-        android:text="Start the party!" />
+        android:text="@string/start_the_party" />
 
     <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:orientation="vertical"-->
