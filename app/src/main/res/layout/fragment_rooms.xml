@@ -32,7 +32,7 @@
             android:id="@+id/startroomBTN"
             android:layout_width="180dp"
             android:layout_height="50dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/four_side_rounded_white"
             android:fontFamily="@font/hmed"
             android:text="@string/start_a_room"
@@ -42,6 +42,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/gradient_overlay"
+
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </FrameLayout>

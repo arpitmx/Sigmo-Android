@@ -27,10 +27,13 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static android.content.ContentValues.TAG;
 
 
 public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEventListner_Room {
@@ -78,43 +81,51 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 
 
        // Log.d(TAG, "onDataChange: "+modelList);
-        modelList.add(new RoomsListModel("TestRoom0","@arpitmaurya"));
-        Log.d(TAG, "Rooms: "+modelList);
-                listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this);
-               mRoomRV.setAdapter(listAdapter);
-               listAdapter.notifyDataSetChanged();
+//        modelList.add(new RoomsListModel("TestRoom0","@arpitmaurya"));
+//        Log.d(TAG, "Rooms: "+modelList);
+//                listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this);
+//
 
 
-        new Thread(()-> mref.addValueEventListener(new ValueEventListener() {
+   mref.addValueEventListener(new ValueEventListener() {
 
 
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
-                Iterator<? extends DataSnapshot> i = snapshot.getChildren().iterator();
-                //Map<String, Object> map1 = (Map<String, Object>) snapshot.getValue();
+                //Iterator<? extends DataSnapshot> i = snapshot.getChildren().iterator();
+                Map<String, Object> map1 = (Map<String, Object>) snapshot.getValue();
 
-                while (i.hasNext()){
-                     modelList.add(new RoomsListModel(((DataSnapshot) i.next()).getKey(),"@arpitmaurya"));
-                     Log.d(TAG, "DS: "+ (DataSnapshot) ((DataSnapshot) i.next()).getValue());
-                     Log.d(TAG, "DSValue: "+ ((DataSnapshot) i.next()).getValue());
-
-                 }
-
-               // assert map1 != null;
-             //   Set<String> keys = map1.keySet();
-
-//                for (String key : keys) {
-//                    Log.d(TAG, "onDataChange: " + key + ": " + map1);
-//                    modelList.add(new RoomsListModel(key,"@arpitmaurya"));
+//                while (i.hasNext()){
+//                     modelList.add(new RoomsListModel(((DataSnapshot) i.next()).getKey(),"@arpitmaurya"));
+//                     Log.d(TAG, "DS: "+ (DataSnapshot) ((DataSnapshot) i.next()).getValue());
+//                     Log.d(TAG, "DSValue: "+ ((DataSnapshot) i.next()).getValue());
 //
-//                }
+//                 }
 
-                    modelList.add(new RoomsListModel("TestRoom0","@arpitmaurya"));
+                assert map1 != null;
+                Set<String> keys = map1.keySet();
+
+                for (String key : keys) {
+                    Log.d(TAG, "onDataChange: " + key + ": " + map1);
+                    modelList.add(new RoomsListModel(key,"@arpitmaurya"));
+
+                }
+
+//                Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
+//                assert map != null;
+//                Log.d(TAG, "Value is: " + map.keySet());
+//                Set<String> keys = map.keySet();
+
+
+
+
+
+                modelList.add(new RoomsListModel("TestRoom0","@arpitmaurya"));
 
 
                 Log.d(TAG, "onDataChange: "+modelList);
-                listAdapter = new RoomsListAdapter(modelList, (RoomsListAdapter.ULEventListner_Room) getContext());
+                listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this::onClick);
                 mRoomRV.setAdapter(listAdapter);
                 listAdapter.notifyDataSetChanged();
 
@@ -127,7 +138,7 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 
             }
 
-        }));
+        });
 
 
 

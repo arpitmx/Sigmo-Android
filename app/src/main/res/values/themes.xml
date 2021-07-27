@@ -10,7 +10,7 @@
         <item name="colorOnPrimary">@color/s_blue</item>
         <item name="elevationOverlayColor">@color/white</item>
 
-
+        <item name="android:navigationBarColor">@color/white</item>
         <!-- Secondary brand color. -->
 
         <item name="colorSecondary">@color/teal_200</item>

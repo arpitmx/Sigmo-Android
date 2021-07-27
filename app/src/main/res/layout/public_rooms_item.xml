@@ -32,7 +32,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="85dp"
+                android:layout_height="100dp"
                 android:orientation="horizontal"
                 android:weightSum="10"
 
@@ -82,10 +82,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:fontFamily="@font/hb"
-
         android:gravity="start"
         android:paddingTop="10dp"
         android:paddingStart="6dp"
+        android:layout_marginTop="10dp"
         android:text="Room"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -94,7 +94,7 @@
     <TextView
         android:id="@+id/mHostName"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="40dp"
         android:layout_gravity="center_vertical"
         android:fontFamily="@font/hmed"
         android:gravity="start"
