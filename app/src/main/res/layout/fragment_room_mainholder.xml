@@ -18,10 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            layout="@layout/room_mini_song_player"
 
-            />
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout_Rooms"
             android:layout_width="match_parent"
@@ -34,12 +31,17 @@
             android:visibility="visible"
             app:tabIndicatorHeight="3dp"
             />
+        <include
+            layout="@layout/room_mini_song_player"
 
+            />
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_Rooms"
             android:layout_weight="1"
             android:layout_height="0dp"
             android:layout_width="match_parent"/>
+
+
 
     </LinearLayout>
 

@@ -46,6 +46,7 @@
            android:layout_marginBottom="54dp"
            android:elevation="5dp"
 
+
            >
 
            <FrameLayout
@@ -57,8 +58,6 @@
                android:elevation="30dp"
                app:behavior_peekHeight="57dp"
                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-
-
                >
 
                <include
@@ -84,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:elevation="15dp"
-        android:background="@color/white200"
+        android:background="@color/white"
         app:itemIconSize="22dp"
         app:itemIconTint="@drawable/tabcolor"
         app:itemTextColor="@drawable/tabcolor"

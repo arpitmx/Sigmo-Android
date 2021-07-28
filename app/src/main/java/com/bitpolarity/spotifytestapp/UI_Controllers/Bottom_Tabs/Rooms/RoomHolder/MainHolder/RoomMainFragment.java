@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.MainRoom.MainHolder;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.MainHolder;
 
 import android.os.Bundle;
 
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 
 import com.bitpolarity.spotifytestapp.R;
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.MainRoom.Room_Tab_Adapter;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Room_Tab_Adapter;
 import com.google.android.material.tabs.TabLayout;
 
 

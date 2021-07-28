@@ -1,5 +1,6 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.bitpolarity.spotifytestapp.Adapters.RoomsListAdapters.RoomsListAdapte
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.RoomsListModel;
 import com.bitpolarity.spotifytestapp.R;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.MainHolder.RoomHolderActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,7 +46,6 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
     LinearLayoutManager lm;
     RecyclerView mRoomRV;
     RoomsListAdapter listAdapter;
-    FirebaseDatabase firebaseDatabase;
 
 
     @Override
@@ -52,12 +53,6 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
         super.onCreate(savedInstanceState);
         db_handler = new DB_Handler();
         mref = FirebaseDatabase.getInstance().getReference().child("Rooms");
-
-
-
-
-
-
     }
 
     @Override
@@ -103,11 +98,15 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 //
 //                 }
 
+                Log.d(TAG, "onDataChange Map : "+ map1);
+
                 assert map1 != null;
                 Set<String> keys = map1.keySet();
 
                 for (String key : keys) {
-                    Log.d(TAG, "onDataChange: " + key + ": " + map1);
+                    Log.d(TAG, "onDataChange key : "+ key);
+                    Log.d(TAG, "onDataChange Value : "+ map1.get(key));
+
                     modelList.add(new RoomsListModel(key,"@arpitmaurya"));
 
                 }
@@ -118,14 +117,8 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 //                Set<String> keys = map.keySet();
 
 
-
-
-
-                modelList.add(new RoomsListModel("TestRoom0","@arpitmaurya"));
-
-
-                Log.d(TAG, "onDataChange: "+modelList);
-                listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this::onClick);
+                Log.d(TAG, "onDataChange ModelList: "+modelList);
+                listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this);
                 mRoomRV.setAdapter(listAdapter);
                 listAdapter.notifyDataSetChanged();
 
@@ -163,6 +156,7 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 
     @Override
     public void onClick(int position) {
+        startActivity(new Intent(getContext(), RoomHolderActivity.class));
 
     }
 

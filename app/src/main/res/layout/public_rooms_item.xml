@@ -36,7 +36,7 @@
                 android:orientation="horizontal"
                 android:weightSum="10"
 
-                android:background="@drawable/four_side_rounded_blue"
+                android:background="@color/s_blue200"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,13 +81,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:fontFamily="@font/hb"
+        android:fontFamily="@font/hxtrabold"
         android:gravity="start"
         android:paddingTop="10dp"
         android:paddingStart="6dp"
         android:layout_marginTop="10dp"
         android:text="Room"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:visibility="visible" />
 
@@ -101,7 +101,7 @@
         android:paddingTop="4dp"
         android:paddingStart="6dp"
         android:text="Hosted by \@arpitmaurya"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="13sp"
 
         android:visibility="visible"

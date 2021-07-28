@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="65dp"
     android:orientation="vertical"
+    android:id="@id/linearLayout"
     >
 
 
@@ -43,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:scaleType="center"
-            android:src="@drawable/bg"
+            android:src="@drawable/miniplayer_gradient"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,8 +72,8 @@
                 android:layout_weight="1.6"
                 android:background="@drawable/button_round"
                 android:padding="5dp"
-                android:scaleX="1"
-                android:scaleY="1"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
 
                 android:src="@drawable/poster"
                 app:layout_constraintBottom_toBottomOf="parent"
