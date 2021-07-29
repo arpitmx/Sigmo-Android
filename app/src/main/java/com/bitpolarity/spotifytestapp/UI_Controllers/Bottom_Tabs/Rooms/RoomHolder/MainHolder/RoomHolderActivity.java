@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.MainRoom.MainHolder;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.MainHolder;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;

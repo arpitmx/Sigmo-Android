@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +52,7 @@ public class MainHolder extends AppCompatActivity {
     String TAG = "MainHolder";
     AudioManager audioManager;
     boolean liked = false;
-    float prevVolume;
+    LinearLayout standard;
 
 
     //Layout
@@ -107,6 +109,7 @@ public class MainHolder extends AppCompatActivity {
 
 
         binding = ActivityMainHolderBinding.inflate(getLayoutInflater());
+        standard = findViewById(R.id.linearLayout);
 
         setContentView(binding.getRoot());
 
@@ -148,11 +151,12 @@ public class MainHolder extends AppCompatActivity {
         drawerLayout = findViewById(R.id.my_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
-        Glide.with(MainHolder.this)
-                .load("https://picsum.photos/900/700")
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .into(miniPlayer_bg);
+
+//        Glide.with(MainHolder.this)
+//                .load("https://picsum.photos/900/700")
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                .skipMemoryCache(true)
+//                .into(miniPlayer_bg);
         //////////////////////////////////////// Initializations//////////////////////////////////////////////
 
 
@@ -162,6 +166,8 @@ public class MainHolder extends AppCompatActivity {
     public void onStart() {
 
         super.onStart();
+
+      //  standard.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
 
 
 //        new Thread(new Runnable() {

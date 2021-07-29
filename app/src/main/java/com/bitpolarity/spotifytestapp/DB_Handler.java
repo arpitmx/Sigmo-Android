@@ -20,18 +20,21 @@ public class DB_Handler {
     final String LOG = "db_handler";
 
     //Firebase
-    FirebaseDatabase firebaseDatabase;
     DatabaseReference ref;
     final String usr_ROOT = "Users";
     final String room_ROOT = "Rooms";
     DatabaseReference ROOTPATH;
 
+
     ////////////////////////////////== INIT ==////////////////////////////////////////////////////////////////////////
 
     public DB_Handler(){
         formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        ref = firebaseDatabase.getReference();
+
+        if (ref == null) {
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            ref = firebaseDatabase.getReference();
+        }
     }
 
 
@@ -81,9 +84,6 @@ public class DB_Handler {
    }
 
     /////////////////////////////////////////-------BASIC IO--------/////////////////////////////////
-
-
-
 
 
     /////////////////////////////////////////------SONG DETAIL SECTION---------/////////////////////////////////

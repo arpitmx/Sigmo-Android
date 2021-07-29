@@ -24,6 +24,17 @@
     <color name="white87">#81FFFFFF</color>
     <color name="s_purple_light">#B5BAD0</color>
 
+    <color name="BottomTabColor">#FFF</color>
+
+
+    <color name="seek_bar_backgroundi">#ababab</color>
+    <color name="seek_bar_progress">#00B0FF</color>
+    <color name="seek_bar_secondary_progress">#3399CC</color>
+
+
+
+    <color name="gpurple_start">#8E2DE2</color>
+    <color name="gpurple_end">#4A00E0</color>
 
 
 

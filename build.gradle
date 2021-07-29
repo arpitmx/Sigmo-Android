@@ -27,7 +27,12 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        mavenCentral()
+        maven {
+
+            url 'https://jitpack.io'
+
+        }
+
         flatDir{
             dirs 'libs'
         }
@@ -43,6 +48,8 @@ allprojects {
 
     }
 }
+
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir
