@@ -50,14 +50,13 @@ Issues are open in the issues section.
 
 1. Fetch only nodes which are updated , not the whole base.
 2. Used Spotify api to extract details from the trackIDs instead of whole details of the track , so that less data is fetched , therefore faster embedding.
-3. Do network stuff async ✅
 
 -----------
 
 ### UX/UI Improvements :
 
 1. Speak human, easy to understand..layman's.
-2. Change equilizer size  ✅
+--
 3. Show rotating of discs only to the songs which users plays of the friends fragment
 4. Make bottom navigation hidable when scrolled down
 5. Make figma models of the screens and then design the app accordingly 👷‍
