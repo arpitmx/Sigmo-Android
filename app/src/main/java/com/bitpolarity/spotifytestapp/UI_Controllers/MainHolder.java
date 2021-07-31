@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,17 +21,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
+import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModelFactory;
+import com.bitpolarity.spotifytestapp.TestingActivity;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Circle_Fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Profile_Fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 
-import com.bitpolarity.spotifytestapp.ViewModels.Spotify_ViewModel;
+import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModel;
 import com.bitpolarity.spotifytestapp.databinding.ActivityMainHolderBinding;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
@@ -53,6 +57,7 @@ public class MainHolder extends AppCompatActivity {
     AudioManager audioManager;
     boolean liked = false;
     LinearLayout standard;
+    SpotifyViewModel viewModel;
 
 
     //Layout
@@ -60,7 +65,7 @@ public class MainHolder extends AppCompatActivity {
 
    //ViewBinidings
     ActivityMainHolderBinding binding;
-    Spotify_ViewModel spotify_viewModel;
+    SpotifyViewModel spotify_viewModel;
 
 
     ImageButton playback;
@@ -112,6 +117,8 @@ public class MainHolder extends AppCompatActivity {
         standard = findViewById(R.id.linearLayout);
 
         setContentView(binding.getRoot());
+
+        viewModel = new ViewModelProvider(this, new SpotifyViewModelFactory(getApplication())).get(SpotifyViewModel.class);
 
 
         //////////////////////////////////////// Init5ializations ///////////////////////////////////////////////////
@@ -191,26 +198,26 @@ public class MainHolder extends AppCompatActivity {
 
 
 
-        ConnectionParams connectionParams =
-                new ConnectionParams.Builder(CLIENT_ID)
-                        .setRedirectUri(REDIRECT_URI)
-                        .showAuthView(true)
-                        .build();
-
-            SpotifyAppRemote.connect(MainHolder.this, connectionParams,
-                    new Connector.ConnectionListener() {
-
-                        public void onConnected(SpotifyAppRemote spotifyAppRemote) {
-                            mSpotifyAppRemote = spotifyAppRemote;
-                            Log.d("Spotify_Handler", "Connected! Yay!");
-                            connected();
-
-                        }
-
-                        public void onFailure(Throwable throwable) {
-                            Log.e("Spotify_Handler", throwable.getMessage(), throwable);
-                        }
-                    });
+//        ConnectionParams connectionParams =
+//                new ConnectionParams.Builder(CLIENT_ID)
+//                        .setRedirectUri(REDIRECT_URI)
+//                        .showAuthView(true)
+//                        .build();
+//
+//            SpotifyAppRemote.connect(MainHolder.this, connectionParams,
+//                    new Connector.ConnectionListener() {
+//
+//                        public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+//                            mSpotifyAppRemote = spotifyAppRemote;
+//                            Log.d("Spotify_Handler", "Connected! Yay!");
+//                            connected();
+//
+//                        }
+//
+//                        public void onFailure(Throwable throwable) {
+//                            Log.e("Spotify_Handler", throwable.getMessage(), throwable);
+//                        }
+//                    });
 
 
 
@@ -280,6 +287,52 @@ public class MainHolder extends AppCompatActivity {
             return true;
         });
 
+
+        viewModel.getTrackName().observe(this, new Observer<String>(){
+                    @Override
+                    public void onChanged(String s) {
+
+                        mSongName.setText(s);
+                    }
+                }
+        );
+
+        viewModel.getTrackArtist().observe(this, new Observer<String>(){
+                    @Override
+                    public void onChanged(String s) {
+
+                        mArtistName.setText(s);
+                    }
+                }
+        );
+
+
+        viewModel.getImageURI().observe(this, new Observer<String>(){
+                    @Override
+                    public void onChanged(String s) {
+
+                        Glide.with(MainHolder.this)
+                                .load(s)
+                                .apply(new RequestOptions().override(50, 50))
+                                .into(cir);
+
+                    }
+                }
+
+        );
+
+
+
+        Fav.setOnClickListener(view -> {
+
+        });
+
+
+
+
+
+
+
     }
 
 
@@ -296,7 +349,7 @@ public class MainHolder extends AppCompatActivity {
 
                 .subscribeToPlayerState()
                 .setEventCallback( playerState -> {
-                    final Track track = playerState.track;
+                   final Track track = playerState.track;
 
                     if (track != null) {
                        // int vol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);

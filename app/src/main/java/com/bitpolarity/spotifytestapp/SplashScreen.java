@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Login;
 import com.bitpolarity.spotifytestapp.databinding.ActivitySplashScreenBinding;
 
@@ -23,6 +24,10 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        SpotifyRepository spotifyModel;
+        spotifyModel = new SpotifyRepository(this);
+        spotifyModel.onStart();
 
 
         Handler handler = new Handler();
