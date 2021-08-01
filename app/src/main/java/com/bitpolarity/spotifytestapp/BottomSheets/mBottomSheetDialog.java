@@ -33,6 +33,9 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
     ShimmerFrameLayout shimmerFrameLayout;
     final int height = 250;
     TextView linkToSpotify ;
+    Animation anim;
+    TextView songD;
+    String mTrackID;
 
     public mBottomSheetDialog(String details,String trackID){
         this.details = details;
@@ -50,12 +53,10 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
         shimmerFrameLayout = v.findViewById(R.id.shimmerFrameLayout);
         shimmerFrameLayout.startShimmerAnimation();
 
-        Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+        anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
         spotifyWebView = v.findViewById(R.id.spotifyWebView);
         String mTrackID = trackID.replace("spotify","").replace(":","").replace("track","").trim();
         linkToSpotify = v.findViewById(R.id.linkTospotifyBTN);
-        String openLink = "https://open.spotify.com/track/4GKcaqt6PFor4siHXMO42e?si=FlnDCX-kR36KndA1zoP2MA&utm_source=copy-link&dl_branch=1";
-
 
         WebSettings webViewSettings = spotifyWebView.getSettings();
         webViewSettings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -64,8 +65,6 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
         webViewSettings.setBuiltInZoomControls(false);
         webViewSettings.setPluginState(WebSettings.PluginState.ON);
 
-
-
         String data = "<iframe src=\"https://open.spotify.com/embed/track/"+mTrackID+"\"" +
                 " width=\"320\" height=\""+height+"\" frameborder=\"0\" allowtransparency=\"true\" allow=\"encrypted-media\"></iframe>";
         Log.d("mBottomSheetDialog", "trackID: "+mTrackID);
@@ -73,23 +72,21 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
         spotifyWebView.loadData(data,"text/html","UTF-8");
 
 
-        final int interval = 900; // 1 Second
+        final int interval = 800; // 0.8 Second
         Handler handler = new Handler();
-        Runnable runnable = new Runnable(){
-            public void run() {
+        Runnable runnable = () -> {
 
-                shimmerFrameLayout.setVisibility(View.GONE);
-                spotifyWebView.setVisibility(View.VISIBLE);
-                spotifyWebView.setAnimation(anim);
+            shimmerFrameLayout.setVisibility(View.GONE);
+            spotifyWebView.setVisibility(View.VISIBLE);
+            spotifyWebView.setAnimation(anim);
 
 
-            }
         };
         handler.postAtTime(runnable, System.currentTimeMillis()+interval);
         handler.postDelayed(runnable, interval);
         //shimmerFrameLayout.setVisibility(View.GONE);
 
-        TextView songD = v.findViewById(R.id.songD);
+        songD = v.findViewById(R.id.songD);
         songD.setText(details);
 
 
@@ -104,4 +101,6 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
 
         return v;
     }
+
+
 }

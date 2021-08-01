@@ -63,7 +63,7 @@
         android:foreground="@drawable/ripple_effect"
         android:textColor="@color/white"
         android:gravity="center"
-        android:background="@drawable/miniplayer_gradient"
+        android:background="@drawable/four_side_rounded_blue_more_rounder"
         android:text="Play on Spotify"
 
         />

@@ -4,7 +4,12 @@ import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.media.AudioManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -25,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.palette.graphics.Palette;
 
 import com.bitpolarity.spotifytestapp.Spotify.SongModel;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
@@ -48,6 +55,13 @@ import com.spotify.android.appremote.api.SpotifyAppRemote;
 import com.spotify.protocol.client.CallResult;
 import com.spotify.protocol.types.ImageUri;
 import com.spotify.protocol.types.Track;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class MainHolder extends AppCompatActivity {
@@ -140,7 +154,6 @@ public class MainHolder extends AppCompatActivity {
         //Buttons
         playback = findViewById(R.id.playback);
         miniPlayer_bg = findViewById(R.id.miniplayer_bg);
-
         side_navigation_button = findViewById(R.id.imageButton);
 
         //TextViews
@@ -179,7 +192,7 @@ public class MainHolder extends AppCompatActivity {
 
         super.onStart();
 
-      //  standard.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
+        //  standard.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
 
 
 //        new Thread(new Runnable() {
@@ -207,7 +220,7 @@ public class MainHolder extends AppCompatActivity {
 
         side_navigation_button.setOnClickListener(view -> drawerLayout.open());
 
-        bottomNavigation.setOnItemSelectedListener( item -> {
+        bottomNavigation.setOnItemSelectedListener(item -> {
 
 //           if (item.getItemId()==R.id.nav_home){
 //
@@ -222,9 +235,8 @@ public class MainHolder extends AppCompatActivity {
             switch (item.getItemId()) {
 
                 case R.id.nav_circle:
-                    fm.beginTransaction().replace(R.id.fragmentContainerView,fragment1).commit();
+                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment1).commit();
                     active = fragment1;
-
 
                     if (sigmo_Title.getVisibility() == View.GONE) {
 //                binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
@@ -234,11 +246,11 @@ public class MainHolder extends AppCompatActivity {
 //                    binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
                         room.setVisibility(View.GONE);
 
-                }
+                    }
                     return true;
 
-                case R.id.nav_rooms :
-                    fm.beginTransaction().replace(R.id.fragmentContainerView,fragment2).commit();
+                case R.id.nav_rooms:
+                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment2).commit();
                     active = fragment2;
 
 //               binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
@@ -252,74 +264,33 @@ public class MainHolder extends AppCompatActivity {
                     return true;
 
 
-                case  R.id.nav_profile:
-                    fm.beginTransaction().replace(R.id.fragmentContainerView,fragment3).commit();
+                case R.id.nav_profile:
+                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment3).commit();
                     active = fragment3;
                     return true;
-                }
+            }
 
 
             return true;
         });
 
-
-       setMiniPlayerDetails();
-       setPlayerState();
-
-       Fav.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-            Fav_clicked();
-           }
-       });
+       // setMiniplayerTextColor();
+        setMiniPlayerDetails();
+        setPlayerState();
+        //setMiniPlayerBGPicassio();
 
 
+        Fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fav_clicked();
+            }
+        });
 
-
+        //setMiniplayerTextColor();
 
 
     }
-
-
-
-
-    public void connected(SpotifyAppRemote remote) {
-
-
-   //   TempDataHolder mDetail_holder = new TempDataHolder();
-//
-        // Subscribe to PlayerState
-
-        remote.getPlayerApi()
-
-                .subscribeToPlayerState()
-                .setEventCallback( playerState -> {
-                   final Track track = playerState.track;
-                    if (track != null) {
-
-                        String trackName = track.name;
-                        String trackArtist = String.valueOf(track.artist.name);
-
-
-                        if(trackName.equals("Advertisement")){
-
-                            //this.prevVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                            Toast.makeText(this , "Muting ads",Toast.LENGTH_SHORT   ).show();
-                            remote.getConnectApi().connectSetVolume(0f);
-
-                        }
-                        }
-
-
-
-
-
-                });
-
-}
-
-
-
 
     /// Handlers
 
@@ -331,6 +302,87 @@ public class MainHolder extends AppCompatActivity {
 
 
     }
+
+    void setMiniplayerTextColor(){
+
+
+           // Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawableFromUrl("https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d"));
+
+        Bitmap b  = getBitmapFromURL("https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d");
+        Palette.from(b).maximumColorCount(12).generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                // Get the "vibrant" color swatch based on the bitmap
+                Palette.Swatch vibrant = palette.getVibrantSwatch();
+                if (vibrant != null) {
+                    miniPlayer_bg.setBackgroundColor(vibrant.getRgb());
+
+                    mSongName.setTextColor(vibrant.getTitleTextColor());
+                    mArtistName.setTextColor(vibrant.getTitleTextColor());
+
+                    Log.d(TAG, "onGenerated: RGB "+vibrant.getBodyTextColor());
+                    int Rgb = vibrant.getRgb();
+
+                }
+            }
+        });
+
+    }
+
+
+    public Drawable drawableFromUrl(String url) throws IOException {
+        Bitmap x;
+        HttpURLConnection connection = (HttpURLConnection) new URL(url)
+                .openConnection();
+        connection.connect();
+        InputStream input = connection.getInputStream();
+        x = BitmapFactory.decodeStream(input);
+        return new BitmapDrawable(x);
+
+
+    }
+
+    void setMiniPlayerBGPicassio(){
+    //"https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d"
+        Picasso.with(this)
+                .load("")
+                .resize(200, 100)
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        Palette.from(bitmap)
+                                .generate(palette -> {
+
+                                    assert palette != null;
+                                    Palette.Swatch textSwatch = palette.getVibrantSwatch();
+
+
+                                    if (textSwatch == null) {
+                                        Log.d(TAG, "onBitmapLoaded: Color"+null);
+                                        return;
+                                    }
+
+                                    Log.d(TAG, "onBitmapLoaded: color" + textSwatch.getRgb());
+                                    miniPlayer_bg.setBackgroundColor(textSwatch.getRgb());
+                                    mSongName.setTextColor(textSwatch.getBodyTextColor());
+                                });
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                            Toast.makeText(MainHolder.this, "Error loading ", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+
+
+    }
+
+
 
 
     @Override
@@ -350,18 +402,26 @@ public class MainHolder extends AppCompatActivity {
 
 
 
-        SongModel.getImgURI().observe(this, new Observer<ImageUri>() {
-            @Override
-            public void onChanged(ImageUri imageUri) {
-                SpotifyRepository.mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(bitmap -> cir.setImageBitmap(bitmap));
-            }
-        });
+        SongModel.getImgURI().observe(this, imageUri -> SpotifyRepository.mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
+             cir.setImageBitmap(data);
+            Bitmap bitmap = getBitmapFromURL("https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d");
+
+            Log.d(TAG, "setMiniPlayerDetails: Bitmap"+bitmap);
+
+        }));
 
 
         SongModel.getTrackName().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 mSongName.setText(s);
+                if(s.equals("Advertisement")){
+
+                    //this.prevVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                    Toast.makeText(MainHolder.this , "Muting ads",Toast.LENGTH_SHORT   ).show();
+                    SpotifyRepository.mSpotifyAppRemote.getConnectApi().connectSetVolume(0f);
+
+                }
             }
         });
 
@@ -373,6 +433,35 @@ public class MainHolder extends AppCompatActivity {
         });
 
 
+    }
+
+
+    public static Bitmap getBitmapFromURL(String src) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();
+        try {
+            URL url = new URL(src);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            }).start();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
@@ -436,6 +525,12 @@ public class MainHolder extends AppCompatActivity {
 
         });
 
+
+
+
+    }
+
+    void getPallete(){
 
 
 
