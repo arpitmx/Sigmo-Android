@@ -381,10 +381,6 @@ public class MainHolder extends AppCompatActivity {
 
 
     }
-
-
-
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -404,9 +400,21 @@ public class MainHolder extends AppCompatActivity {
 
         SongModel.getImgURI().observe(this, imageUri -> SpotifyRepository.mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
              cir.setImageBitmap(data);
-            Bitmap bitmap = getBitmapFromURL("https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d");
 
-            Log.d(TAG, "setMiniPlayerDetails: Bitmap"+bitmap);
+            Palette.from(data).maximumColorCount(12).generate(palette -> {
+                // Get the "vibrant" color swatch based on the bitmap
+
+                Palette.Swatch vibrant = palette.getVibrantSwatch();
+                if (vibrant != null) {
+                    miniPlayer_bg.setBackgroundColor(vibrant.getRgb());
+                    mSongName.setTextColor(vibrant.getTitleTextColor());
+                    mArtistName.setTextColor(vibrant.getTitleTextColor());
+
+                    Log.d(TAG, "onGenerated: RGB "+vibrant.getBodyTextColor());
+                    int Rgb = vibrant.getRgb();
+
+                }
+            });
 
         }));
 
@@ -525,12 +533,6 @@ public class MainHolder extends AppCompatActivity {
 
         });
 
-
-
-
-    }
-
-    void getPallete(){
 
 
 
