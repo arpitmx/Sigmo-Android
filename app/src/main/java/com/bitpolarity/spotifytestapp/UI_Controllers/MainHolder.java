@@ -1,5 +1,7 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers;
 
+import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
@@ -24,6 +26,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bitpolarity.spotifytestapp.Spotify.SongModel;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModelFactory;
 import com.bitpolarity.spotifytestapp.TestingActivity;
@@ -37,11 +40,13 @@ import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModel;
 import com.bitpolarity.spotifytestapp.databinding.ActivityMainHolderBinding;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.common.internal.Asserts;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 import com.spotify.protocol.client.CallResult;
+import com.spotify.protocol.types.ImageUri;
 import com.spotify.protocol.types.Track;
 
 
@@ -97,7 +102,7 @@ public class MainHolder extends AppCompatActivity {
 
     private static final String CLIENT_ID = "84b37e8b82e2466c9f69a2e41b100476";
     private static final String REDIRECT_URI = "http://localhost:8888/callback";
-    private SpotifyAppRemote mSpotifyAppRemote;
+    private SpotifyAppRemote mSpotifyAppRemote_MH;
 
 
     ////////////////////////////////
@@ -194,36 +199,6 @@ public class MainHolder extends AppCompatActivity {
 
         detail_holder = new mDetail_Holder();
 
-
-
-
-
-//        ConnectionParams connectionParams =
-//                new ConnectionParams.Builder(CLIENT_ID)
-//                        .setRedirectUri(REDIRECT_URI)
-//                        .showAuthView(true)
-//                        .build();
-//
-//            SpotifyAppRemote.connect(MainHolder.this, connectionParams,
-//                    new Connector.ConnectionListener() {
-//
-//                        public void onConnected(SpotifyAppRemote spotifyAppRemote) {
-//                            mSpotifyAppRemote = spotifyAppRemote;
-//                            Log.d("Spotify_Handler", "Connected! Yay!");
-//                            connected();
-//
-//                        }
-//
-//                        public void onFailure(Throwable throwable) {
-//                            Log.e("Spotify_Handler", throwable.getMessage(), throwable);
-//                        }
-//                    });
-
-
-
-
-
-
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
@@ -288,45 +263,15 @@ public class MainHolder extends AppCompatActivity {
         });
 
 
-        viewModel.getTrackName().observe(this, new Observer<String>(){
-                    @Override
-                    public void onChanged(String s) {
+       setMiniPlayerDetails();
+       setPlayerState();
 
-                        mSongName.setText(s);
-                    }
-                }
-        );
-
-        viewModel.getTrackArtist().observe(this, new Observer<String>(){
-                    @Override
-                    public void onChanged(String s) {
-
-                        mArtistName.setText(s);
-                    }
-                }
-        );
-
-
-        viewModel.getImageURI().observe(this, new Observer<String>(){
-                    @Override
-                    public void onChanged(String s) {
-
-                        Glide.with(MainHolder.this)
-                                .load(s)
-                                .apply(new RequestOptions().override(50, 50))
-                                .into(cir);
-
-                    }
-                }
-
-        );
-
-
-
-        Fav.setOnClickListener(view -> {
-
-        });
-
+       Fav.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+            Fav_clicked();
+           }
+       });
 
 
 
@@ -336,129 +281,34 @@ public class MainHolder extends AppCompatActivity {
     }
 
 
-    public void connected() {
+
+
+    public void connected(SpotifyAppRemote remote) {
 
 
    //   TempDataHolder mDetail_holder = new TempDataHolder();
 //
         // Subscribe to PlayerState
 
-      mSpotifyAppRemote.getPlayerApi().resume();
-
-        mSpotifyAppRemote.getPlayerApi()
+        remote.getPlayerApi()
 
                 .subscribeToPlayerState()
                 .setEventCallback( playerState -> {
                    final Track track = playerState.track;
-
                     if (track != null) {
-                       // int vol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                       // Log.d(TAG, "connected: volume "+vol);
-
 
                         String trackName = track.name;
                         String trackArtist = String.valueOf(track.artist.name);
-                        Log.d("MainActivity", trackName + " by " + trackArtist);
-                        Log.d("MainActivity", String.valueOf(track.imageUri));
-                        Log.d("MainActivity", track.uri);
-                        Log.d("MainActivity", String.valueOf(track.album));
-                        Log.d("MainActivity Paused ? ", String.valueOf(playerState.isPaused));
-                        Log.d("MainActivity", String.valueOf(playerState.playbackPosition));
-                        Log.d("MainActivity", String.valueOf(playerState.playbackOptions));
-                       // String url = "https://" + "i.scdn.co/image/" + track.imageUri.toString().substring(22, track.imageUri.toString().length() - 2);
-                        mMiniPlayer_Handler(trackName,trackArtist);
-                        //float volu = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                        //Toast.makeText(this, "Previous volume : " + volu, Toast.LENGTH_SHORT).show();
+
 
                         if(trackName.equals("Advertisement")){
 
                             //this.prevVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                             Toast.makeText(this , "Muting ads",Toast.LENGTH_SHORT   ).show();
-                            mSpotifyAppRemote.getConnectApi().connectSetVolume(0f);
+                            remote.getConnectApi().connectSetVolume(0f);
 
                         }
                         }
-
-
-
-
-
-                        Fav.setOnClickListener( view -> {
-                          {
-                                if (!liked) {
-                                    mSpotifyAppRemote.getUserApi().addToLibrary(track.uri);
-                                    Fav.setImageResource(R.drawable.ic_heart);
-                                    Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_in));
-                                    liked = true;
-                                }
-                                else{
-                                    mSpotifyAppRemote.getUserApi().removeFromLibrary(track.uri);
-                                    Fav.setImageResource(R.drawable.ic_fav);
-                                    Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_out));
-
-                                    liked = false;
-                                }
-
-                            }
-                        });
-
-
-                        if(playerState.isPaused){
-                            Log.d(TAG, "connected: paused ");
-                           playback.setImageResource(R.drawable.ic_play);
-                            playback.setAnimation(AnimationUtils.loadAnimation(this , R.anim.fade_in));
-
-                            playback.setScaleX(1f);
-                            playback.setScaleY(1f);
-
-                        }else{
-                            Log.d(TAG, "connected: playing ");
-
-                            playback.setImageResource(R.drawable.ic_baseline_pause_24);
-                            playback.setAnimation(AnimationUtils.loadAnimation(this , R.anim.fade_in_switch));
-
-                            playback.setScaleX(1.3f);
-                            playback.setScaleY(1.6f);
-
-                        }
-
-
-
-
-
-
-
-                    playback.setOnClickListener(view -> {
-                            if(!playerState.isPaused){
-                                Log.d(TAG, "connected: playing ");
-                                playback.setImageResource(R.drawable.ic_baseline_pause_24);
-                                playback.setAnimation(AnimationUtils.loadAnimation(this , R.anim.fade_in_switch));
-                                playback.setScaleX(1.3f);
-                                playback.setScaleY(1.6f);
-                                mSpotifyAppRemote.getPlayerApi().pause();
-                            }
-                            else{
-                                playback.setImageResource(R.drawable.ic_play);
-                                Log.d(TAG, "connected: paused ");
-
-                                playback.setAnimation(AnimationUtils.loadAnimation(this , R.anim.fade_in_switch));
-
-                                playback.setScaleX(1f);
-                                playback.setScaleY(1f);
-                                mSpotifyAppRemote.getPlayerApi().resume();
-
-                            }
-                        });
-
-
-
-
-                        mSpotifyAppRemote.getImagesApi().getImage(track.imageUri).setResultCallback(new CallResult.ResultCallback<Bitmap>() {
-                            @Override public void onResult(Bitmap bitmap)
-                            {
-                                cir.setImageBitmap(bitmap);
-                            } });
-
 
 
 
@@ -496,11 +346,125 @@ public class MainHolder extends AppCompatActivity {
     /// Handlers
 
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
+    private void setMiniPlayerDetails(){
+
+
+
+        SongModel.getImgURI().observe(this, new Observer<ImageUri>() {
+            @Override
+            public void onChanged(ImageUri imageUri) {
+                SpotifyRepository.mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(bitmap -> cir.setImageBitmap(bitmap));
+            }
+        });
+
+
+        SongModel.getTrackName().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                mSongName.setText(s);
+            }
+        });
+
+        SongModel.getTrackArtist().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                mArtistName.setText(s);
+            }
+        });
+
+
     }
 
-}
 
+    void setPlayerState(){
+        SongModel.getPlayerState().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+
+               ////////////////////////////////////////////////////////////////////////////////////////
+
+                if(aBoolean){
+                    Log.d(TAG, "connected: paused ");
+                    playback.setImageResource(R.drawable.ic_play);
+                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in));
+
+                    playback.setScaleX(1f);
+                    playback.setScaleY(1f);
+
+                }else{
+                    Log.d(TAG, "connected: playing ");
+
+                    playback.setImageResource(R.drawable.ic_baseline_pause_24);
+                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.fade_in_switch));
+
+                    playback.setScaleX(1.3f);
+                    playback.setScaleY(1.6f);
+
+                }
+
+                ///////////////////////////////////////////////////////////////////////////////
+
+
+                playback.setOnClickListener(view -> {
+                    if(!aBoolean){
+                        Log.d(TAG, "connected: playing ");
+                        playback.setImageResource(R.drawable.ic_baseline_pause_24);
+                        playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
+                        playback.setScaleX(1.3f);
+                        playback.setScaleY(1.6f);
+                        SpotifyRepository.mSpotifyAppRemote.getPlayerApi().pause();
+                    }
+                    else{
+                        playback.setImageResource(R.drawable.ic_play);
+                        Log.d(TAG, "connected: paused ");
+
+                        playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
+
+                        playback.setScaleX(1f);
+                        playback.setScaleY(1f);
+                        SpotifyRepository.mSpotifyAppRemote.getPlayerApi().resume();
+
+                    }
+                });
+
+
+
+
+
+
+            }
+
+        });
+
+
+
+
+    }
+
+
+    void Fav_clicked(){
+
+
+        if (track != null) {
+
+                    if (!liked) {
+                        SpotifyRepository.mSpotifyAppRemote.getUserApi().addToLibrary(track.uri);
+                        Fav.setImageResource(R.drawable.ic_heart);
+                        Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_in));
+                        liked = true;
+
+                        Toast.makeText(this, "Added to library", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        SpotifyRepository.mSpotifyAppRemote.getUserApi().removeFromLibrary(track.uri);
+                        Fav.setImageResource(R.drawable.ic_fav);
+                        Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_out));
+
+                        liked = false;
+                        Toast.makeText(this, "Removed from library", Toast.LENGTH_SHORT).show();
+
+                    }
+                    }
+
+}
+}

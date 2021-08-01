@@ -2,15 +2,18 @@ package com.bitpolarity.spotifytestapp.Spotify;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.bitpolarity.spotifytestapp.R;
+import com.bitpolarity.spotifytestapp.SongDetails;
 import com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
+import com.spotify.protocol.client.CallResult;
 import com.spotify.protocol.types.ImageUri;
 import com.spotify.protocol.types.Track;
 import com.spotify.protocol.types.Uri;
@@ -19,19 +22,20 @@ public class SpotifyRepository {
 
     private static final String CLIENT_ID = "84b37e8b82e2466c9f69a2e41b100476";
     private static final String REDIRECT_URI = "http://localhost:8888/callback";
-    private SpotifyAppRemote mSpotifyAppRemote;
+    public static SpotifyAppRemote mSpotifyAppRemote;
     Context context;
     SharedPreferences prefs;
     final String TAG = "SpotifySDK";
     boolean connected ;
     boolean liked = false;
 
+    public static String iURI;
     String trackUri;
+    public static Track track;
 
-    ImageView Fav;
 
 
-    public SpotifyRepository(Context context){
+     public SpotifyRepository(Context context){
         this.context = context;
         connected = false;
     }
@@ -64,15 +68,6 @@ public class SpotifyRepository {
                 });
     }
 
-//    void connect(){
-//
-//        if (connected){
-//            connected();
-//        }else{
-//            Log.d(TAG, "connect: Spotify not connected");
-//        }
-//
-//    }
 
 
     public void onStop() {
@@ -83,28 +78,36 @@ public class SpotifyRepository {
     public void connected() {
 
 
+
+        mSpotifyAppRemote.getPlayerApi().resume();
+
         mSpotifyAppRemote.getPlayerApi()
                 .subscribeToPlayerState()
                 .setEventCallback( playerState -> {
-                    final Track track = playerState.track;
-
+                    track = playerState.track;
                     if (track != null) {
 
-                        String t_uri = String.valueOf(track.imageUri);
-
+                        ImageUri t_uri = track.imageUri;
                         String trackName = track.name;
                         String trackArtist = String.valueOf(track.artist.name);
-                        String url = "https://" + "i.scdn.co/image/" + t_uri.substring(22, t_uri.length() - 2);
+
+                       // String url = "https://" + "i.scdn.co/image/" + t_uri.substring(22, t_uri.length() - 2);
 
                         this.trackUri = track.uri;
-
-
-
                         Log.d(TAG, "connected: trackname "+trackName);
+                        Log.d(TAG, "connected: trackURI "+t_uri);
 
-                        SongModel.setImageURI(url);
+
                         SongModel.setTrackName(trackName);
                         SongModel.setTrackArtist(trackArtist);
+                        SongModel.setImageURI(t_uri);
+                        SongModel.setPlayerState(playerState.isPaused);
+
+
+
+
+
+
 
                     }
 
@@ -113,27 +116,7 @@ public class SpotifyRepository {
     }
 
 
-    public void fav_clicked(){
 
-
-            {
-                if (!liked) {
-                    mSpotifyAppRemote.getUserApi().addToLibrary(trackUri);
-                    Fav.setImageResource(R.drawable.ic_heart);
-                    Fav.setAnimation(AnimationUtils.loadAnimation(context, R.anim.pop_in));
-                    liked = true;
-                }
-                else{
-                    mSpotifyAppRemote.getUserApi().removeFromLibrary(trackUri);
-                    Fav.setImageResource(R.drawable.ic_fav);
-                    Fav.setAnimation(AnimationUtils.loadAnimation(context, R.anim.pop_out));
-
-                    liked = false;
-                }
-
-            }
-
-    }
 
 }
 

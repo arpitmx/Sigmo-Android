@@ -1,6 +1,7 @@
 package com.bitpolarity.spotifytestapp.Spotify;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -8,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class SpotifyViewModelFactory implements ViewModelProvider.Factory {
 
-    Application context;
+   Application context;
 
     public SpotifyViewModelFactory(Application context){
         this.context = context;

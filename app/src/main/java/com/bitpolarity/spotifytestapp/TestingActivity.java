@@ -43,13 +43,7 @@ public class TestingActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        viewModel.getTrackName().observe(this, new Observer<String>(){
-                    @Override
-                    public void onChanged(String s) {
-                        tName.setText(s);
-                        Toast.makeText(TestingActivity.this, s , Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
+
+
     }
 }

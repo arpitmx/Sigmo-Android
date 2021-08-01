@@ -7,7 +7,12 @@ import android.content.IntentFilter;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.lifecycle.Observer;
+
+import com.bitpolarity.spotifytestapp.Spotify.SongModel;
+import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
 import com.google.android.gms.common.util.IOUtils;
+import com.spotify.protocol.types.ImageUri;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -61,7 +66,7 @@ public class SongDetails {
 
 
                     case broadcaster.BroadcastTypes.METADATA_CHANGED:
-                        String trackId = intent.getStringExtra("id");
+                      String trackId = intent.getStringExtra("id");
                         String artistName = intent.getStringExtra("artist");
                         String albumName = intent.getStringExtra("album");
                         String trackName = intent.getStringExtra("track");
