@@ -312,15 +312,22 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     @Override
     public void onClick(int position) {
 
-        String details = dataHolder.getSongDetails()[position];
-        String trackID = dataHolder.getTrackID()[position];
+        new Thread(() -> {
 
 
-        Log.d(TAG, "onClick: POS:"+position+"  Details : "+details);
-        Log.d(TAG, "onClick: POS:"+position+"  Details : "+trackID);
+            String details = dataHolder.getSongDetails()[position];
+            String trackID = dataHolder.getTrackID()[position];
 
-        mBottomSheetDialog bottomSheet = new mBottomSheetDialog(details,trackID);
-        bottomSheet.show(getChildFragmentManager(),"ModalBottomSheet");
+
+            Log.d(TAG, "onClick: POS:"+position+"  Details : "+details);
+            Log.d(TAG, "onClick: POS:"+position+"  Details : "+trackID);
+
+            mBottomSheetDialog bottomSheet = new mBottomSheetDialog(details,trackID);
+            bottomSheet.show(getChildFragmentManager(),"ModalBottomSheet");
+        }).start();
+
+
+
 
     }
 }

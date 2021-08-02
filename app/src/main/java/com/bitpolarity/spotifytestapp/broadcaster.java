@@ -40,7 +40,7 @@ public class broadcaster extends BroadcastReceiver {
             Log.d("Broadcast", albumName);
             Log.d("Broadcast", trackName);
             Log.d("Broadcast", "Total length :"+trackLengthInSec);
-            Toast.makeText(context, trackId, Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, trackId, Toast.LENGTH_SHORT).show();
 
 
 
