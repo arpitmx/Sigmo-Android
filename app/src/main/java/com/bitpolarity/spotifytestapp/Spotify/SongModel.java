@@ -13,6 +13,8 @@ public class SongModel {
     private static MutableLiveData<String> tArtist;
     private static MutableLiveData<ImageUri> tImgURI;
     private static MutableLiveData<Boolean> playerState;
+    private static MutableLiveData<Integer> tPalette;
+
 
     public static void setTrackName(String trackName) {
         tNAME.postValue(trackName);
@@ -28,6 +30,10 @@ public class SongModel {
 
     public static void setPlayerState(Boolean playerStateg){
         playerState.postValue(playerStateg);
+    }
+
+    public static void setMpallete(Integer pallete) {
+        tPalette.postValue(pallete);
     }
 
 
@@ -53,6 +59,12 @@ public class SongModel {
     public static LiveData<Boolean> getPlayerState(){
         if(playerState == null) playerState = new MutableLiveData<>();
         return playerState;
+    }
+
+    public static LiveData<Integer> getTrackPalette(){
+        if (tPalette == null)  tPalette = new MutableLiveData<>();
+        return tPalette;
+
     }
 
 

@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import androidx.palette.graphics.Palette;
+
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.SongDetails;
 import com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder;
@@ -14,7 +16,9 @@ import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 import com.spotify.protocol.client.CallResult;
+import com.spotify.protocol.client.Subscription;
 import com.spotify.protocol.types.ImageUri;
+import com.spotify.protocol.types.PlayerContext;
 import com.spotify.protocol.types.Track;
 import com.spotify.protocol.types.Uri;
 
@@ -81,6 +85,14 @@ public class SpotifyRepository {
 
         mSpotifyAppRemote.getPlayerApi().resume();
 
+      mSpotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(playerState -> {
+          track = playerState.track;
+          if (track != null) {
+              SongModel.setPlayerState(playerState.isPaused);
+          }
+      });
+
+
         mSpotifyAppRemote.getPlayerApi()
                 .subscribeToPlayerState()
                 .setEventCallback( playerState -> {
@@ -90,24 +102,21 @@ public class SpotifyRepository {
                         ImageUri t_uri = track.imageUri;
                         String trackName = track.name;
                         String trackArtist = String.valueOf(track.artist.name);
-
-                       // String url = "https://" + "i.scdn.co/image/" + t_uri.substring(22, t_uri.length() - 2);
-
                         this.trackUri = track.uri;
                         Log.d(TAG, "connected: trackname "+trackName);
                         Log.d(TAG, "connected: trackURI "+t_uri);
 
+                        mSpotifyAppRemote.getImagesApi().getImage(t_uri).setResultCallback(data -> {
+                            Palette.from(data).maximumColorCount(12).generate(palette -> {
+                                assert palette != null;
+                                Palette.Swatch vibrant = palette.getVibrantSwatch();
+                                if (vibrant != null) SongModel.setMpallete(vibrant.getRgb());
+                            });
+                        });
 
                         SongModel.setTrackName(trackName);
                         SongModel.setTrackArtist(trackArtist);
                         SongModel.setImageURI(t_uri);
-                        SongModel.setPlayerState(playerState.isPaused);
-
-
-
-
-
-
 
                     }
 

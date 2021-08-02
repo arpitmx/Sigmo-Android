@@ -45,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:scaleType="center"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +122,7 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                    android:textColor="@color/white"
+                    android:textColor="#E8FBFBFB"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

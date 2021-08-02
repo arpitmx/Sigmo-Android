@@ -74,46 +74,42 @@ public class SongDetails {
                         String arl = requestURL+trackId;
 
 
-                        new Thread(new Runnable(){
-                            public void run()
-                            {
+                        new Thread(() -> {
 
-                                URL url = null;
-                                try {
-                                    url = new URL(arl);
-                                } catch (MalformedURLException e) {
-                                    e.printStackTrace();
-                                }
-
-                                Scanner sc = null;
-
-                                try {
-                                    sc = new Scanner(url.openStream());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-
-                                }
-                                StringBuffer sb = new StringBuffer();
-                                while(sc.hasNext()) {
-                                    sb.append(sc.next());
-                                }
-                                String result = sb.toString();
-
-                                result = result.replaceAll("<[^>]*>", "");
-
-                                Log.d("urllll", result);
-                                String brl = result.split(",")[8].replace("\"thumbnail_url\":","").replace("\"","");
-
-
-
-                                if (brl.length()==0){
-                                    brl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQpnVsnrM_RRT2ty6uAXPwoQMQIIQNb7V8cQ&usqp=CAU";
-                                }
-
-                                db_handler.setSong_Details(trackId,brl,artistName,albumName,trackName, trackLengthInSec);
-                                Log.d("SongDetails", "Poster URL: "+brl);
+                            URL url = null;
+                            try {
+                                url = new URL(arl);
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
                             }
 
+                            Scanner sc = null;
+
+                            try {
+                                sc = new Scanner(url.openStream());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+
+                            }
+                            StringBuffer sb = new StringBuffer();
+                            while(sc.hasNext()) {
+                                sb.append(sc.next());
+                            }
+                            String result = sb.toString();
+
+                            result = result.replaceAll("<[^>]*>", "");
+
+                            Log.d("urllll", result);
+                            String brl = result.split(",")[8].replace("\"thumbnail_url\":","").replace("\"","");
+
+
+
+                            if (brl.length()==0){
+                                brl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQpnVsnrM_RRT2ty6uAXPwoQMQIIQNb7V8cQ&usqp=CAU";
+                            }
+
+                            db_handler.setSong_Details(trackId,brl,artistName,albumName,trackName, trackLengthInSec);
+                            Log.d("SongDetails", "Poster URL: "+brl);
                         }).start();
 
 
@@ -122,7 +118,7 @@ public class SongDetails {
                         Log.d("Broadcast", albumName);
                         Log.d("Broadcast", trackName);
                         Log.d("Broadcast", "Total length :" + trackLengthInSec);
-                        Toast.makeText(context, trackName, Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(context, trackName, Toast.LENGTH_SHORT).show();
 
                         break;
 
@@ -130,7 +126,7 @@ public class SongDetails {
                     case broadcaster.BroadcastTypes.PLAYBACK_STATE_CHANGED:
 
                         boolean playing = intent.getBooleanExtra("playing", false);
-                        Toast.makeText(context, ""+playing,Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, ""+playing,Toast.LENGTH_SHORT).show();
 
                         db_handler.setSong_PlaybackDetails(playing);
                         Log.d("Broadcast", "Playing : " + playing);

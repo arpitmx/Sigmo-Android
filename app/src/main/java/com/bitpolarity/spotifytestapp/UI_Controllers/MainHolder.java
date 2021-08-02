@@ -5,6 +5,7 @@ import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -274,10 +275,9 @@ public class MainHolder extends AppCompatActivity {
             return true;
         });
 
-       // setMiniplayerTextColor();
         setMiniPlayerDetails();
+        setPosterAndPallet();
         setPlayerState();
-        //setMiniPlayerBGPicassio();
 
 
         Fav.setOnClickListener(new View.OnClickListener() {
@@ -396,29 +396,6 @@ public class MainHolder extends AppCompatActivity {
 
     private void setMiniPlayerDetails(){
 
-
-
-        SongModel.getImgURI().observe(this, imageUri -> SpotifyRepository.mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
-             cir.setImageBitmap(data);
-
-            Palette.from(data).maximumColorCount(12).generate(palette -> {
-                // Get the "vibrant" color swatch based on the bitmap
-
-                Palette.Swatch vibrant = palette.getVibrantSwatch();
-                if (vibrant != null) {
-                    miniPlayer_bg.setBackgroundColor(vibrant.getRgb());
-                    mSongName.setTextColor(vibrant.getTitleTextColor());
-                    mArtistName.setTextColor(vibrant.getTitleTextColor());
-
-                    Log.d(TAG, "onGenerated: RGB "+vibrant.getBodyTextColor());
-                    int Rgb = vibrant.getRgb();
-
-                }
-            });
-
-        }));
-
-
         SongModel.getTrackName().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -439,6 +416,23 @@ public class MainHolder extends AppCompatActivity {
                 mArtistName.setText(s);
             }
         });
+
+
+    }
+
+
+    void setPosterAndPallet(){
+
+        SongModel.getImgURI().observe(this, imageUri -> SpotifyRepository.mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
+            cir.setImageBitmap(data);
+        }));
+        SongModel.getTrackPalette().observe(this, integer -> {
+
+           miniPlayer_bg.setBackgroundColor(integer);
+           miniPlayer_bg.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+
+        });
+
 
 
     }
