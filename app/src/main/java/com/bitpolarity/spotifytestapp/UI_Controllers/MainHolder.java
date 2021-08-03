@@ -59,6 +59,7 @@ import com.spotify.protocol.types.Track;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -117,7 +118,6 @@ public class MainHolder extends AppCompatActivity {
 
     private static final String CLIENT_ID = "84b37e8b82e2466c9f69a2e41b100476";
     private static final String REDIRECT_URI = "http://localhost:8888/callback";
-    private SpotifyAppRemote mSpotifyAppRemote_MH;
 
 
     ////////////////////////////////
@@ -153,19 +153,20 @@ public class MainHolder extends AppCompatActivity {
         //Models
 
         //Buttons
-        playback = findViewById(R.id.playback);
-        miniPlayer_bg = findViewById(R.id.miniplayer_bg);
-        side_navigation_button = findViewById(R.id.imageButton);
+
+        playback = binding.toolbar.playback;
+        miniPlayer_bg = binding.toolbar.miniplayerBg;
+        side_navigation_button = binding.customAction.imageButton;
 
         //TextViews
-        mSongName = findViewById(R.id.m_song_name);
-        mArtistName = findViewById(R.id.mArtist_name);
+        mSongName = binding.toolbar.mSongName;
+        mArtistName = binding.toolbar.mArtistName;
         //sigmo_Title = findViewById(R.id.sigmoTitleBar);
 
         //ImageViews
-        cir = findViewById(R.id.cir);
-        Fav = findViewById(R.id.add_to_fav);
-        peacock_symbol = findViewById(R.id.bitpSymbl);
+        cir = binding.toolbar.cir;
+        Fav = binding.toolbar.addToFav;
+        peacock_symbol = binding.customAction.bitpSymbl;
 
         //System services
 
@@ -173,8 +174,9 @@ public class MainHolder extends AppCompatActivity {
 
         //Object types
 
-        bottomNavigation = findViewById(R.id.bottom_nav);
-        drawerLayout = findViewById(R.id.my_drawer_layout);
+
+        bottomNavigation = binding.bottomNav;
+        drawerLayout = binding.myDrawerLayout;
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
 
@@ -277,6 +279,7 @@ public class MainHolder extends AppCompatActivity {
 
         setMiniPlayerDetails();
         setPosterAndPallet();
+       // setPalette();
         setPlayerState();
 
 
@@ -292,7 +295,21 @@ public class MainHolder extends AppCompatActivity {
 
     }
 
-    /// Handlers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////// Handlers
 
     public void mMiniPlayer_Handler(String sName, String artistName){
         Log.d(TAG, "mMiniPlayer_Handler: "+ sName);
@@ -425,15 +442,24 @@ public class MainHolder extends AppCompatActivity {
 
         SongModel.getImgURI().observe(this, imageUri -> SpotifyRepository.mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
             cir.setImageBitmap(data);
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            miniPlayer_bg.setImageBitmap(data);
+
+
         }));
+
+
+
+
+    }
+
+    void setPalette(){
         SongModel.getTrackPalette().observe(this, integer -> {
 
-           miniPlayer_bg.setBackgroundColor(integer);
-           miniPlayer_bg.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+            miniPlayer_bg.setBackgroundColor(integer);
+            miniPlayer_bg.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
 
         });
-
-
 
     }
 
@@ -447,12 +473,6 @@ public class MainHolder extends AppCompatActivity {
         }).start();
         try {
             URL url = new URL(src);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                }
-            }).start();
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
@@ -517,17 +537,9 @@ public class MainHolder extends AppCompatActivity {
 
                     }
                 });
-
-
-
-
-
-
             }
 
         });
-
-
 
 
     }

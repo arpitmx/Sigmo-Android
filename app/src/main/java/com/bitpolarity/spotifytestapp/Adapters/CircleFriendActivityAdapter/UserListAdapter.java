@@ -1,32 +1,24 @@
 package com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitpolarity.spotifytestapp.GetterSetterModels.UserListModel;
 import com.bitpolarity.spotifytestapp.R;
-import com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder;
+import com.bitpolarity.spotifytestapp.databinding.CircleFriendActivityListItemBinding;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
@@ -34,6 +26,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     private final List<UserListModel> userModelList;
     private final ULEventListner mULEventlisnter;
     Animation animation;
+    CircleFriendActivityListItemBinding binding;
 
 
 
@@ -49,7 +42,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     public UserListAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.circle_friend_activity_list_item,parent,false);
-        return new ViewHolder(view, mULEventlisnter);
+        return new ViewHolder(CircleFriendActivityListItemBinding.bind(view), mULEventlisnter);
+
     }
 
     @Override
@@ -57,77 +51,42 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
         UserListModel link = userModelList.get(position); //Making a link to save multiple calls
 
-//        String userName = link.getUsername();
-//        Log.d("Adapter LOG", "onBindViewHolder: "+ userName);
-//        String songName = link.getSongDetail();
-//        Log.d("Adapter LOG", "onBindViewHolder: "+ songName);
-//        Integer online_status = link.getImageid();
-//        Log.d("Adapter LOG", "onBindViewHolder: "+ online_status);
-
-
         ////////////Setting Values /////////////////////////////////////////////
 
-        holder.textViewUsername.setText(link.getUsername());
-        holder.songName.setText(link.getSongDetail());
-        holder.online_status.setImageResource(link.getImageid());
-        holder.last_acive.setText(link.getDatetime());
 
-//        holder.play_trackbtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(link.context, "Play Track clicked", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
+        holder.binding.username.setText(link.getUsername());
+        holder.binding.songname.setText(link.getSongDetail());
+        holder.binding.onlineStatus.setImageResource(link.getImageid());
+        holder.binding.lastActive.setText(link.getDatetime());
 
         // Poster /////////////////////////////////////////////////////////////////
 
         Glide.with(userModelList.get(position).getContext())
                 .load(link.getPoster())
-                .apply(new RequestOptions().override(50, 50))
-                .into(holder.posterr);
+                .apply(new RequestOptions().override(80, 80))
+                .into(holder.binding.artwork);
 
 
         Glide.with(userModelList.get(position).getContext())
                 .load("https://picsum.photos/100/100")
                 .apply(new RequestOptions().override(50, 50))
-                .into(holder.user_profile_dp);
-
-
-
+                .into(holder.binding.profileImage);
 
         //"https://i.scdn.co/image/ab6775700000ee855ffdafb1d7fb1eb34622f04f"
 
 
-
-
-
-
-
         // Equilizer///////////////////////////////////////////////////////////
-//
-//        Glide.with(userModelList.get(position).getContext())
-//                .load(R.drawable.eq)
-//                .apply(new RequestOptions().override(110, 110))
-//                .into(holder.equilizer_iv);
-//
-//
+
 //        // Setting Playing and Paused TVs and making equilizer visible and gone ////////////////////////////////////////////
 //
         if (link.getIsPlaying().equals("Playing")) {
-            holder.isPlayingTV.setText(link.getIsPlaying());
-            //holder.cardView.setVisibility(View.VISIBLE);
-           holder.posterr.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
+            holder.binding.isPlayingg.setText(link.getIsPlaying());
+           holder.binding.artwork.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
         }
         else
         {
-            holder.isPlayingTV.setTextColor(Color.parseColor("#E53935"));
-            holder.equilizer_iv.setVisibility(View.GONE);
+            holder.binding.isPlayingg.setTextColor(Color.parseColor("#E53935"));
         }
-
-
-
-
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -145,43 +104,23 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
-        TextView textViewUsername ;
-        ImageView online_status;
-        CircleImageView posterr;
-        TextView songName;
-        TextView isPlayingTV;
-        ImageView equilizer_iv;
-        TextView last_acive;
-        ImageView user_profile_dp;
+
+        CircleFriendActivityListItemBinding binding;
         ImageView play_trackbtn;
-        CardView cardView;
-
-
         ULEventListner ulEventListner;
 
-        public ViewHolder(@NonNull View itemView, ULEventListner ulEventListner) {
-            super(itemView);
+        public ViewHolder(@NonNull CircleFriendActivityListItemBinding b, ULEventListner ulEventListner) {
 
-
+            super(b.getRoot());
+            binding = b;
             this.ulEventListner = ulEventListner;
-            textViewUsername = (TextView) itemView.findViewById(R.id.username);
-            online_status = (ImageView) itemView.findViewById(R.id.online_status);
-            posterr =  itemView.findViewById(R.id.artwork);
-            songName =(TextView) itemView.findViewById(R.id.songname);
-            isPlayingTV = (TextView) itemView.findViewById(R.id.isPlayingg);
-            equilizer_iv =(ImageView) itemView.findViewById(R.id.view2);
-            last_acive = (TextView) itemView.findViewById(R.id.last_active);
-            user_profile_dp = itemView.findViewById(R.id.profile_image);
-            play_trackbtn = itemView.findViewById(R.id.play_track);
-            cardView = itemView.findViewById(R.id.eq_card);
-
+            //play_trackbtn = binding.playTrack;
             itemView.setOnClickListener(this);
 
 
 
 
         }
-
 
         @Override
         public void onClick(View view) {
@@ -192,7 +131,5 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     public interface ULEventListner{
         void onClick(int position);
     }
-
-
 
 }

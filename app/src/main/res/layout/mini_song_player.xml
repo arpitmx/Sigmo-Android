@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-
+        android:background="@drawable/button_round"
         >
 
 
@@ -44,7 +44,8 @@
             android:id="@+id/miniplayer_bg"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:scaleType="center"
+            android:scaleType="centerCrop"
+            android:alpha="0.6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +71,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1.6"
-                android:background="@drawable/button_round"
                 android:padding="5dp"
                 android:scaleX="0.9"
                 android:scaleY="0.9"

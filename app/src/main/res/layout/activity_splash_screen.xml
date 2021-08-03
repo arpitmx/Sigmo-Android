@@ -31,73 +31,24 @@
         app:layout_constraintVertical_bias="0.088"
         app:srcCompat="@drawable/ic_musicmeet" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/hxtrabold"
+        android:gravity="center"
+        android:text="bitpolarity! "
+        android:textColor="@color/white"
+        android:textSize="17sp"
+
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/slogan"
-        app:layout_constraintVertical_bias="0.797">
+        app:layout_constraintVertical_bias="0.836" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="58dp"
-            android:layout_height="16dp"
-            android:fontFamily="@font/hregular"
-            android:gravity="center"
-            android:text="from"
-            android:textSize="14sp"
-            android:textColor="@color/white200"
-            app:layout_constraintBottom_toTopOf="@id/linearLayout2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/hxtrabold"
-                android:gravity="center"
-                android:text="bitpolarity! "
-                android:textColor="@color/white"
-                android:textSize="17sp"
-
-
-                />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/hregular"
-                android:gravity="center"
-                android:text="with "
-                android:textColor="@color/white200"
-                android:textSize="14sp"
-
-                />
-
-            <ImageView
-                android:id="@+id/heart"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_gravity="bottom"
-                app:srcCompat="@drawable/ic_heart" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
