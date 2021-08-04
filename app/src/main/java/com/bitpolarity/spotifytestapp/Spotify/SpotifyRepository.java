@@ -111,7 +111,7 @@ public class SpotifyRepository {
                         mSpotifyAppRemote.getImagesApi().getImage(t_uri).setResultCallback(data -> {
                             Palette.from(data).maximumColorCount(12).generate(palette -> {
                                 assert palette != null;
-                                Palette.Swatch dominant = palette.getVibrantSwatch();
+                                Palette.Swatch dominant = palette.getDominantSwatch();
                                // Palette.Swatch dominant = palette.getDominantSwatch();
                                 if (dominant != null) SongModel.setMpallete(dominant.getRgb());
                             });
@@ -145,29 +145,7 @@ public class SpotifyRepository {
 
 
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //                        Log.d("MainActivity", trackName + " by " + trackArtist);

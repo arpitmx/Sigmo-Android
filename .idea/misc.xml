@@ -15,7 +15,7 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.152" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/activity_status.xml" value="0.23055555555555557" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/activity_testing.xml" value="0.264" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/circle_friend_activity_list_item.xml" value="0.2" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/circle_friend_activity_list_item.xml" value="0.136" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/custom_action_bar.xml" value="0.15601851851851853" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/custom_secondary_action_bar.xml" value="0.23055555555555557" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_circle.xml" value="0.1875" />
@@ -25,6 +25,7 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/mini_song_player.xml" value="0.22962962962962963" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_message_input_box.xml" value="0.21574074074074073" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_mini_song_player.xml" value="0.11296296296296296" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/shimmer_placeholder_layout.xml" value="0.536" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/song_detail_bottom_sheet.xml" value="0.176" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_dehaze_24.xml" value="0.2449074074074074" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_musicmeet.xml" value="0.2449074074074074" />
