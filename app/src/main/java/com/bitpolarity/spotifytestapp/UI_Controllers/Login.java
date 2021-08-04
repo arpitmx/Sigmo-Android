@@ -52,7 +52,6 @@ public class Login extends AppCompatActivity {
         }
         else{
 
-            startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
             startActivity(new Intent(this , MainHolder.class));
 
         }

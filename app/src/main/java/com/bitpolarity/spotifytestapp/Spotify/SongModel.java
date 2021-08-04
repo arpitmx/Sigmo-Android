@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.palette.graphics.Palette;
 
 import com.spotify.protocol.types.ImageUri;
 
@@ -66,9 +67,6 @@ public class SongModel {
         return tPalette;
 
     }
-
-
-
 
 }
 

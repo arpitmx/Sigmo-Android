@@ -32,8 +32,6 @@ public class SpotifyRepository {
     final String TAG = "SpotifySDK";
     boolean connected ;
     boolean liked = false;
-
-    public static String iURI;
     String trackUri;
     public static Track track;
 
@@ -86,8 +84,8 @@ public class SpotifyRepository {
         mSpotifyAppRemote.getPlayerApi().resume();
 
       mSpotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(playerState -> {
-          track = playerState.track;
-          if (track != null) {
+         Track brack = playerState.track;
+          if (brack != null) {
               SongModel.setPlayerState(playerState.isPaused);
           }
       });
@@ -109,8 +107,9 @@ public class SpotifyRepository {
                         mSpotifyAppRemote.getImagesApi().getImage(t_uri).setResultCallback(data -> {
                             Palette.from(data).maximumColorCount(12).generate(palette -> {
                                 assert palette != null;
-                                Palette.Swatch vibrant = palette.getVibrantSwatch();
-                                if (vibrant != null) SongModel.setMpallete(vibrant.getRgb());
+                                Palette.Swatch dominant = palette.getVibrantSwatch();
+                                //Palette.Swatch dominant = palette.getDominantSwatch();
+                               // if (dominant != null) SongModel.setMpallete(dominant.getRgb());
                             });
                         });
 
