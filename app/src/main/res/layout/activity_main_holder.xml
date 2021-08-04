@@ -42,7 +42,7 @@
            android:layout_height="match_parent"
            android:layout_below="@+id/custom_action"
            android:layout_alignTop="@id/custom_action"
-           android:layout_marginTop="60dp"
+
            android:layout_marginBottom="54dp"
            android:elevation="5dp"
 
@@ -82,13 +82,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:elevation="15dp"
-        android:background="@color/white"
+        android:background="@color/dark_bg"
         app:itemIconSize="22dp"
         app:itemIconTint="@drawable/tabcolor"
-        app:itemTextColor="@drawable/tabcolor"
-        app:labelVisibilityMode="labeled"
-        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_navigation_menu"
+
         />
 
         </RelativeLayout>

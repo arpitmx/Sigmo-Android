@@ -21,8 +21,7 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.SplashTheme);
-
+        //setTheme(R.style.SplashTheme);
 
         Handler handler = new Handler();
         startService(new Intent(getBaseContext(), OnClearFromRecentService.class));

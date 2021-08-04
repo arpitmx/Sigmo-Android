@@ -4,8 +4,12 @@
    >
     <item
         android:drawable="@drawable/splash_bg"/>
-    <item>
-        <bitmap android:gravity="center"
-            android:src="@drawable/s3"/>
+
+    <item
+        android:gravity="center">
+        <bitmap
+            android:src="@drawable/s3"
+            />
     </item>
+
 </layer-list>

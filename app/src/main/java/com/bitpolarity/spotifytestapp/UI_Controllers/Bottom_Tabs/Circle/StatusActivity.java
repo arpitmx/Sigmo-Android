@@ -21,6 +21,8 @@ import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter.UserListAdapter;
 import com.bitpolarity.spotifytestapp.DB_Related.TempDataHolder;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +51,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     final int OFFLINE = R.drawable.ored;
     Parcelable state;
     LinearLayoutManager layoutManager ;
+    BottomNavigationView bottomNavigationItemView;
+
 
 
 
@@ -73,6 +77,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         isPlayingTV = v.findViewById(R.id.isPlayingg);
         imageView = v.findViewById(R.id.online_status);
         dataHolder = new TempDataHolder();
+
+        bottomNavigationItemView = v.findViewById(R.id.bottom_nav);
 
         layoutManager = new LinearLayoutManager(getContext());
 
@@ -243,6 +249,9 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
 
         })).start();
+
+
+
 
 
 

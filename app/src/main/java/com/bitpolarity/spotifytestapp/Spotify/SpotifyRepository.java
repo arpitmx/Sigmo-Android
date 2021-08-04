@@ -3,6 +3,7 @@ package com.bitpolarity.spotifytestapp.Spotify;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -21,6 +22,9 @@ import com.spotify.protocol.types.ImageUri;
 import com.spotify.protocol.types.PlayerContext;
 import com.spotify.protocol.types.Track;
 import com.spotify.protocol.types.Uri;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 public class SpotifyRepository {
 
@@ -108,8 +112,8 @@ public class SpotifyRepository {
                             Palette.from(data).maximumColorCount(12).generate(palette -> {
                                 assert palette != null;
                                 Palette.Swatch dominant = palette.getVibrantSwatch();
-                                //Palette.Swatch dominant = palette.getDominantSwatch();
-                               // if (dominant != null) SongModel.setMpallete(dominant.getRgb());
+                               // Palette.Swatch dominant = palette.getDominantSwatch();
+                                if (dominant != null) SongModel.setMpallete(dominant.getRgb());
                             });
                         });
 
@@ -121,6 +125,22 @@ public class SpotifyRepository {
 
                 });
 
+    }
+
+
+    public static Bitmap compressImage(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
+        int options = 30;
+        while ( baos.toByteArray().length / 1024>50) {
+            // Clear baos
+            baos.reset();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
+            options -= 10; //
+        }
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());
+        // the data generated picture ByteArrayInputStream
+        return BitmapFactory.decodeStream(isBm, null, null);
     }
 
 

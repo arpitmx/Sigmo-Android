@@ -25,7 +25,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     private final List<UserListModel> userModelList;
     private final ULEventListner mULEventlisnter;
-    Animation animation;
     CircleFriendActivityListItemBinding binding;
 
 

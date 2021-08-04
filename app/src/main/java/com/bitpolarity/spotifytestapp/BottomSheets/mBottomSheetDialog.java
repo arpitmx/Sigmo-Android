@@ -12,13 +12,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bitpolarity.spotifytestapp.R;
+import com.bitpolarity.spotifytestapp.databinding.SongDetailBottomSheetBinding;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.database.snapshot.IndexedNode;
@@ -26,16 +29,15 @@ import com.google.firebase.database.snapshot.IndexedNode;
 public class mBottomSheetDialog extends BottomSheetDialogFragment {
 
 
+    SongDetailBottomSheetBinding binding;
     String details ;
     String trackID ;
 
     WebView spotifyWebView;
-    ShimmerFrameLayout shimmerFrameLayout;
     final int height = 250;
     TextView linkToSpotify ;
     Animation anim;
     TextView songD;
-    String mTrackID;
 
     public mBottomSheetDialog(String details,String trackID){
         this.details = details;
@@ -44,21 +46,22 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState)
     {
 
-        View v = inflater.inflate(R.layout.song_detail_bottom_sheet,container, false);
+        //View v = inflater.inflate(R.layout.song_detail_bottom_sheet,container, false);
+        binding = SongDetailBottomSheetBinding.inflate(inflater);
 
-        shimmerFrameLayout = v.findViewById(R.id.shimmerFrameLayout);
-        shimmerFrameLayout.startShimmerAnimation();
 
-        anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-        spotifyWebView = v.findViewById(R.id.spotifyWebView);
+       // binding.shimmerFrameLayout.startShimmerAnimation();
+        binding.shimmerFrameLayout.setVisibility(View.GONE);
+        spotifyWebView = binding.spotifyWebView;
+
+        anim = AnimationUtils.loadAnimation(getContext(), R.anim.pop_in);
         String mTrackID = trackID.replace("spotify","").replace(":","").replace("track","").trim();
-        linkToSpotify = v.findViewById(R.id.linkTospotifyBTN);
 
-        WebSettings webViewSettings = spotifyWebView.getSettings();
+        WebSettings webViewSettings = binding.spotifyWebView.getSettings();
         webViewSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webViewSettings.setJavaScriptEnabled(true);
         webViewSettings.getLoadsImagesAutomatically();
@@ -72,34 +75,41 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
         spotifyWebView.loadData(data,"text/html","UTF-8");
 
 
-        final int interval = 800; // 0.8 Second
+
+        spotifyWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageCommitVisible (WebView view,
+                                             String url){
+
+            }
+        });
+
+
+        final int interval = 500; // 0.8 Second
         Handler handler = new Handler();
         Runnable runnable = () -> {
 
-            shimmerFrameLayout.setVisibility(View.GONE);
-            spotifyWebView.setVisibility(View.VISIBLE);
-            spotifyWebView.setAnimation(anim);
 
+           // binding.shimmerFrameLayout.stopShimmerAnimation();
+            //binding.shimmerFrameLayout.setVisibility(View.GONE);
+
+            spotifyWebView.setAnimation(anim);
+            spotifyWebView.setVisibility(View.VISIBLE);
 
         };
         handler.postAtTime(runnable, System.currentTimeMillis()+interval);
         handler.postDelayed(runnable, interval);
-        //shimmerFrameLayout.setVisibility(View.GONE);
-
-        songD = v.findViewById(R.id.songD);
-        songD.setText(details);
 
 
-        linkToSpotify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(trackID) );
-                startActivity(launcher);
-            }
+        binding.songD.setText(details);
 
+
+        binding.linkTospotifyBTN.setOnClickListener(view -> {
+            Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(trackID) );
+            startActivity(launcher);
         });
 
-        return v;
+        return binding.getRoot();
     }
 
 

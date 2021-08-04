@@ -1,5 +1,6 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers;
 
+import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.compressImage;
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
 
 import android.content.Context;
@@ -59,6 +60,7 @@ import com.spotify.protocol.types.Track;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,18 +77,12 @@ public class MainHolder extends AppCompatActivity {
 
     mDetail_Holder detail_holder;
     String TAG = "MainHolder";
-    AudioManager audioManager;
     boolean liked = false;
     LinearLayout standard;
     SpotifyViewModel viewModel;
 
-
-    //Layout
-    RelativeLayout miniRL;
-
    //ViewBinidings
     ActivityMainHolderBinding binding;
-    SpotifyViewModel spotify_viewModel;
 
 
     ImageButton playback;
@@ -134,11 +130,11 @@ public class MainHolder extends AppCompatActivity {
 
 
         binding = ActivityMainHolderBinding.inflate(getLayoutInflater());
-        standard = findViewById(R.id.linearLayout);
 
         setContentView(binding.getRoot());
 
-        viewModel = new ViewModelProvider(this, new SpotifyViewModelFactory(getApplication())).get(SpotifyViewModel.class);
+        //viewModel = new ViewModelProvider(this, new SpotifyViewModelFactory(getApplication())).get(SpotifyViewModel.class);
+        standard = findViewById(R.id.linearLayout);
 
 
         //////////////////////////////////////// Init5ializations ///////////////////////////////////////////////////
@@ -170,7 +166,10 @@ public class MainHolder extends AppCompatActivity {
 
         //System services
 
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+       // binding.fragmentContainerView.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+
+
 
         //Object types
 
@@ -207,6 +206,7 @@ public class MainHolder extends AppCompatActivity {
 //
 //            }
 //        }).start();
+
 
         mSongName = findViewById(R.id.m_song_name);
         mArtistName = findViewById(R.id.mArtist_name);
@@ -279,7 +279,7 @@ public class MainHolder extends AppCompatActivity {
 
         setMiniPlayerDetails();
         setPosterAndPallet();
-       // setPalette();
+       setPalette();
         setPlayerState();
 
 
@@ -310,15 +310,6 @@ public class MainHolder extends AppCompatActivity {
 
 
     ////////////////////////////////////////////////////////////////////////////////// Handlers
-
-    public void mMiniPlayer_Handler(String sName, String artistName){
-        Log.d(TAG, "mMiniPlayer_Handler: "+ sName);
-
-        mSongName.setText(sName);
-        mArtistName.setText(artistName);
-
-
-    }
 
     void setMiniplayerTextColor(){
 
@@ -442,22 +433,19 @@ public class MainHolder extends AppCompatActivity {
 
         SongModel.getImgURI().observe(this, imageUri -> SpotifyRepository.mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
             cir.setImageBitmap(data);
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            miniPlayer_bg.setImageBitmap(data);
-
-
+           // miniPlayer_bg.setImageBitmap(compressImage(data));
         }));
 
-
-
-
     }
+
+
+
 
     void setPalette(){
         SongModel.getTrackPalette().observe(this, integer -> {
 
             miniPlayer_bg.setBackgroundColor(integer);
-            miniPlayer_bg.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+           //miniPlayer_bg.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
 
         });
 
