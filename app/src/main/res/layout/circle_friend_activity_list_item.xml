@@ -154,6 +154,7 @@
                 android:layout_height="85dp"
                 android:orientation="horizontal"
                 android:weightSum="10"
+                android:alpha="0.92"
                 android:background="@drawable/borders_post"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

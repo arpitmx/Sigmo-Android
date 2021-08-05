@@ -38,7 +38,7 @@ public class UserListModel {
 
 
     public String getIsPlaying() {
-        return this.isPlaying;
+        return isPlaying;
     }
 
     public String getDatetime(){
@@ -50,7 +50,7 @@ public class UserListModel {
 
         this.context = context;
         this.username = username;
-        this.isPlaying = isPlaying;
+       this.isPlaying = isPlaying;
         this.poster = poster;
         this.imageid = statusid;
         this.SongDetail = SongDetail;

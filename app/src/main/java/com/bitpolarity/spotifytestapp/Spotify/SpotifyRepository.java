@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import androidx.palette.graphics.Palette;
 
@@ -142,6 +143,24 @@ public class SpotifyRepository {
         // the data generated picture ByteArrayInputStream
         return BitmapFactory.decodeStream(isBm, null, null);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

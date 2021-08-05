@@ -3,15 +3,11 @@ package com.bitpolarity.spotifytestapp.UI_Controllers;
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.compressImage;
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.media.AudioManager;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -37,8 +33,7 @@ import androidx.palette.graphics.Palette;
 
 import com.bitpolarity.spotifytestapp.Spotify.SongModel;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
-import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModelFactory;
-import com.bitpolarity.spotifytestapp.TestingActivity;
+
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Circle_Fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Profile_Fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment;
@@ -47,21 +42,12 @@ import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModel;
 import com.bitpolarity.spotifytestapp.databinding.ActivityMainHolderBinding;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.common.internal.Asserts;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.spotify.android.appremote.api.ConnectionParams;
-import com.spotify.android.appremote.api.Connector;
-import com.spotify.android.appremote.api.SpotifyAppRemote;
-import com.spotify.protocol.client.CallResult;
-import com.spotify.protocol.types.ImageUri;
-import com.spotify.protocol.types.Track;
+
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -433,7 +419,7 @@ public class MainHolder extends AppCompatActivity {
 
         SongModel.getImgURI().observe(this, imageUri -> SpotifyRepository.mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
             cir.setImageBitmap(data);
-           // miniPlayer_bg.setImageBitmap(compressImage(data));
+            miniPlayer_bg.setImageBitmap(compressImage(data));
         }));
 
     }
@@ -444,8 +430,8 @@ public class MainHolder extends AppCompatActivity {
     void setPalette(){
         SongModel.getTrackPalette().observe(this, integer -> {
 
-            miniPlayer_bg.setBackgroundColor(integer);
-           //miniPlayer_bg.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+            //miniPlayer_bg.setBackgroundColor(integer);
+          // miniPlayer_bg.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
 
         });
 
@@ -453,11 +439,8 @@ public class MainHolder extends AppCompatActivity {
 
 
     public static Bitmap getBitmapFromURL(String src) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
 
-            }
         }).start();
         try {
             URL url = new URL(src);

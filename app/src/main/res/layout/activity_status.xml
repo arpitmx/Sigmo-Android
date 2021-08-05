@@ -13,10 +13,11 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:orientation="vertical"
+        android:background="@color/dark_fg_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent">\
 
         <!-- Adding 15 rows of placeholders -->
         <LinearLayout
@@ -52,7 +53,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         app:layout_constraintVertical_bias="0.265">
 
     </androidx.recyclerview.widget.RecyclerView>

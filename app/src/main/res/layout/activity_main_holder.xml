@@ -42,7 +42,7 @@
            android:layout_height="match_parent"
            android:layout_below="@+id/custom_action"
            android:layout_alignTop="@id/custom_action"
-           android:layout_marginBottom="54dp"
+           android:layout_marginBottom="56dp"
 
 
            >
@@ -53,7 +53,7 @@
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:background="@color/black"
-               app:behavior_peekHeight="60dp"
+               app:behavior_peekHeight="55dp"
                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
                <include
@@ -71,6 +71,7 @@
 
 
        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

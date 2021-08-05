@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="58dp"
+    android:layout_height="54dp"
     android:orientation="vertical"
     android:id="@id/linearLayout"
 
@@ -23,7 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="51dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         android:background="@drawable/button_round"
         >
@@ -33,10 +33,11 @@
         <ImageView
             android:id="@+id/miniplayer_bg"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="51dp"
             android:scaleType="centerCrop"
-            android:alpha="0.6"
-
+            android:alpha="0.35"
+            android:background="@color/dark_bg"
+            android:src="@color/dark_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +47,7 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="51dp"
             android:orientation="horizontal"
             android:weightSum="10"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -56,7 +57,7 @@
 
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/cir"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -65,6 +66,7 @@
                 android:padding="5dp"
                 android:scaleX="0.9"
                 android:scaleY="0.9"
+                android:background="@drawable/gradient_overlay_minip"
                 android:src="@drawable/poster"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +94,7 @@
                     android:text="Song"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     app:layout_constraintBottom_toTopOf="@+id/mArtist_name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -107,7 +109,7 @@
                     android:fontFamily="@font/hb"
                     android:gravity="start"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                    android:padding="5dp"
+                    android:padding="6dp"
                     android:text="Artist"
                     android:paddingStart="10dp"
                     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
