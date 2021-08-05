@@ -1,14 +1,18 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers;
 
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.compressImage;
+import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.mSpotifyAppRemote;
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +50,8 @@ import com.bitpolarity.spotifytestapp.databinding.ActivityMainHolderBinding;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import com.spotify.protocol.client.Subscription;
+import com.spotify.protocol.types.PlayerState;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -86,6 +93,10 @@ public class MainHolder extends AppCompatActivity {
 
 
 
+    public static SeekBar playerSeekbar;
+
+
+
     //Fragments
     final Fragment fragment1 = new Circle_Fragment();
     final Fragment fragment2 = new Rooms_Fragment();
@@ -105,6 +116,20 @@ public class MainHolder extends AppCompatActivity {
     ////////////////////////////////
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,23 +141,17 @@ public class MainHolder extends AppCompatActivity {
 
 
         binding = ActivityMainHolderBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
-
-        //viewModel = new ViewModelProvider(this, new SpotifyViewModelFactory(getApplication())).get(SpotifyViewModel.class);
         standard = findViewById(R.id.linearLayout);
 
 
         //////////////////////////////////////// Init5ializations ///////////////////////////////////////////////////
 
-        //ViewBindings
-        //miniSongPlayerBinding = MiniSongPlayerBinding.inflate(getLayoutInflater());
 
 
-        //ViewModel
-        //spotify_viewModel = ViewModelProviders.of(this).get(Spotify_ViewModel.class);
+        playerSeekbar = binding.toolbar.playerSeekbar;
 
-        //Models
+
 
         //Buttons
 
@@ -153,7 +172,6 @@ public class MainHolder extends AppCompatActivity {
         //System services
 
 
-       // binding.fragmentContainerView.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
 
 
 
@@ -170,6 +188,15 @@ public class MainHolder extends AppCompatActivity {
 //                .diskCacheStrategy(DiskCacheStrategy.NONE)
 //                .skipMemoryCache(true)
 //                .into(miniPlayer_bg);
+
+
+
+
+
+//        playerSeekbar.setEnabled(true);
+//        playerSeekbar.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+//        playerSeekbar.getIndeterminateDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);
+
         //////////////////////////////////////// Initializations//////////////////////////////////////////////
 
 
@@ -203,6 +230,8 @@ public class MainHolder extends AppCompatActivity {
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+
 
 
         /////////////////////////// OnClick Listeners
@@ -276,23 +305,7 @@ public class MainHolder extends AppCompatActivity {
             }
         });
 
-        //setMiniplayerTextColor();
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     ////////////////////////////////////////////////////////////////////////////////// Handlers
@@ -398,7 +411,7 @@ public class MainHolder extends AppCompatActivity {
 
                     //this.prevVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                     Toast.makeText(MainHolder.this , "Muting ads",Toast.LENGTH_SHORT   ).show();
-                    SpotifyRepository.mSpotifyAppRemote.getConnectApi().connectSetVolume(0f);
+                    mSpotifyAppRemote.getConnectApi().connectSetVolume(0f);
 
                 }
             }
@@ -417,7 +430,7 @@ public class MainHolder extends AppCompatActivity {
 
     void setPosterAndPallet(){
 
-        SongModel.getImgURI().observe(this, imageUri -> SpotifyRepository.mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
+        SongModel.getImgURI().observe(this, imageUri -> mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
             cir.setImageBitmap(data);
             miniPlayer_bg.setImageBitmap(compressImage(data));
         }));
@@ -459,57 +472,53 @@ public class MainHolder extends AppCompatActivity {
 
 
     void setPlayerState(){
-        SongModel.getPlayerState().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
+        SongModel.getPlayerState().observe(this, aBoolean -> {
 
-               ////////////////////////////////////////////////////////////////////////////////////////
+           ////////////////////////////////////////////////////////////////////////////////////////
 
-                if(aBoolean){
-                    Log.d(TAG, "connected: paused ");
+            if(aBoolean){
+                Log.d(TAG, "connected: paused ");
+                playback.setImageResource(R.drawable.ic_play);
+                playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in));
+
+                playback.setScaleX(1f);
+                playback.setScaleY(1f);
+
+            }else{
+                Log.d(TAG, "connected: playing ");
+
+                playback.setImageResource(R.drawable.ic_baseline_pause_24);
+                playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.fade_in_switch));
+
+                playback.setScaleX(1.3f);
+                playback.setScaleY(1.6f);
+
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////
+
+
+            playback.setOnClickListener(view -> {
+                if(!aBoolean){
+                    Log.d(TAG, "connected: playing ");
+                    playback.setImageResource(R.drawable.ic_baseline_pause_24);
+                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
+                    playback.setScaleX(1.3f);
+                    playback.setScaleY(1.6f);
+                    mSpotifyAppRemote.getPlayerApi().pause();
+                }
+                else{
                     playback.setImageResource(R.drawable.ic_play);
-                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in));
+                    Log.d(TAG, "connected: paused ");
+
+                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
 
                     playback.setScaleX(1f);
                     playback.setScaleY(1f);
-
-                }else{
-                    Log.d(TAG, "connected: playing ");
-
-                    playback.setImageResource(R.drawable.ic_baseline_pause_24);
-                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.fade_in_switch));
-
-                    playback.setScaleX(1.3f);
-                    playback.setScaleY(1.6f);
+                    mSpotifyAppRemote.getPlayerApi().resume();
 
                 }
-
-                ///////////////////////////////////////////////////////////////////////////////
-
-
-                playback.setOnClickListener(view -> {
-                    if(!aBoolean){
-                        Log.d(TAG, "connected: playing ");
-                        playback.setImageResource(R.drawable.ic_baseline_pause_24);
-                        playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
-                        playback.setScaleX(1.3f);
-                        playback.setScaleY(1.6f);
-                        SpotifyRepository.mSpotifyAppRemote.getPlayerApi().pause();
-                    }
-                    else{
-                        playback.setImageResource(R.drawable.ic_play);
-                        Log.d(TAG, "connected: paused ");
-
-                        playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
-
-                        playback.setScaleX(1f);
-                        playback.setScaleY(1f);
-                        SpotifyRepository.mSpotifyAppRemote.getPlayerApi().resume();
-
-                    }
-                });
-            }
-
+            });
         });
 
 
@@ -522,7 +531,7 @@ public class MainHolder extends AppCompatActivity {
         if (track != null) {
 
                     if (!liked) {
-                        SpotifyRepository.mSpotifyAppRemote.getUserApi().addToLibrary(track.uri);
+                        mSpotifyAppRemote.getUserApi().addToLibrary(track.uri);
                         Fav.setImageResource(R.drawable.ic_heart);
                         Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_in));
                         liked = true;
@@ -530,7 +539,7 @@ public class MainHolder extends AppCompatActivity {
                         Toast.makeText(this, "Added to library", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        SpotifyRepository.mSpotifyAppRemote.getUserApi().removeFromLibrary(track.uri);
+                        mSpotifyAppRemote.getUserApi().removeFromLibrary(track.uri);
                         Fav.setImageResource(R.drawable.ic_fav);
                         Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_out));
 
@@ -541,4 +550,7 @@ public class MainHolder extends AppCompatActivity {
                     }
 
 }
+
+
+
 }

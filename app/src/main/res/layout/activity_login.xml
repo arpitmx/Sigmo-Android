@@ -29,6 +29,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginTop="64dp"
         android:text="Join the party!"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.354"

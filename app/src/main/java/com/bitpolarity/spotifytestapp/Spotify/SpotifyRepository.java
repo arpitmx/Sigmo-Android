@@ -1,28 +1,28 @@
 package com.bitpolarity.spotifytestapp.Spotify;
 
+import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.mSpotifyAppRemote;
+import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
+import static com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder.playerSeekbar;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.util.Log;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import androidx.palette.graphics.Palette;
 
-import com.bitpolarity.spotifytestapp.R;
-import com.bitpolarity.spotifytestapp.SongDetails;
-import com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
-import com.spotify.protocol.client.CallResult;
+
 import com.spotify.protocol.client.Subscription;
 import com.spotify.protocol.types.ImageUri;
-import com.spotify.protocol.types.PlayerContext;
+
+import com.spotify.protocol.types.PlayerState;
 import com.spotify.protocol.types.Track;
-import com.spotify.protocol.types.Uri;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -38,8 +38,8 @@ public class SpotifyRepository {
     boolean connected ;
     boolean liked = false;
     String trackUri;
+    static TrackProgressBar mTrackProgressBar;
     public static Track track;
-
 
 
      public SpotifyRepository(Context context){
@@ -88,18 +88,14 @@ public class SpotifyRepository {
 
         mSpotifyAppRemote.getPlayerApi().resume();
 
-      mSpotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(playerState -> {
-         Track brack = playerState.track;
-          if (brack != null) {
-              SongModel.setPlayerState(playerState.isPaused);
-          }
-      });
 
+       // mSpotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(mPlayerStateEventCallback);
 
         mSpotifyAppRemote.getPlayerApi()
                 .subscribeToPlayerState()
                 .setEventCallback( playerState -> {
                     track = playerState.track;
+
                     if (track != null) {
 
                         ImageUri t_uri = track.imageUri;
@@ -121,6 +117,11 @@ public class SpotifyRepository {
                         SongModel.setTrackName(trackName);
                         SongModel.setTrackArtist(trackArtist);
                         SongModel.setImageURI(t_uri);
+
+
+
+                        mTrackProgressBar = new TrackProgressBar(playerSeekbar);
+
 
                     }
 
@@ -145,26 +146,87 @@ public class SpotifyRepository {
     }
 
 
+    public static final Subscription.EventCallback<PlayerState> mPlayerStateEventCallback =
+            playerState -> {
+                // Update progressbar
+                if (playerState.playbackSpeed > 0) {
+                    mTrackProgressBar.unpause();
+                } else {
+                    mTrackProgressBar.pause();
+                }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                // Invalidate seekbar length and position
+                playerSeekbar.setMax((int) playerState.track.duration);
+                mTrackProgressBar.setDuration(playerState.track.duration);
+                mTrackProgressBar.update(playerState.playbackPosition);
+            };
 
 }
+
+
+
+
+class TrackProgressBar {
+
+    private static final int LOOP_DURATION = 500;
+    private final SeekBar mSeekBar;
+    private final Handler mHandler;
+
+    private final SeekBar.OnSeekBarChangeListener mSeekBarChangeListener =
+            new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    update(progress);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    mSpotifyAppRemote
+                            .getPlayerApi()
+                            .seekTo(seekBar.getProgress());
+
+                }
+            };
+
+    private final Runnable mSeekRunnable =
+            new Runnable() {
+                @Override
+                public void run() {
+                    int progress = mSeekBar.getProgress();
+                    mSeekBar.setProgress(progress + LOOP_DURATION);
+                    mHandler.postDelayed(mSeekRunnable, LOOP_DURATION);
+                }
+            };
+
+    public TrackProgressBar(SeekBar seekBar) {
+        mSeekBar = seekBar;
+        mSeekBar.setOnSeekBarChangeListener(mSeekBarChangeListener);
+        mSeekBar.setMax((int) track.duration);
+        mHandler = new Handler();
+    }
+
+    void setDuration(long duration) {
+        mSeekBar.setMax((int) duration);
+    }
+
+    void update(long progress) {
+        mSeekBar.setProgress((int) progress);
+    }
+
+    void pause() {
+        mHandler.removeCallbacks(mSeekRunnable);
+    }
+
+    protected void unpause() {
+        mHandler.removeCallbacks(mSeekRunnable);
+        mHandler.postDelayed(mSeekRunnable, LOOP_DURATION);
+    }
+}
+
+
 
 
 //                        Log.d("MainActivity", trackName + " by " + trackArtist);

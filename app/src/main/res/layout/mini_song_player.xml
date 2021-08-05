@@ -15,8 +15,16 @@
 
 
 
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/player_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_gravity="bottom"
+        android:background="@color/dark_fg"
+        android:scaleX="1.08"
+        app:trackHeight="5dp"
 
-
+        />
 
 
 
@@ -157,18 +165,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatSeekBar
 
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:valueFrom="30.0"
-        android:layout_gravity="bottom"
-        android:valueTo="100.00"
-        android:scaleX="1.08"
-        app:trackHeight="8dp"
-        android:background="@color/dark_fg"
-
-        />
 </LinearLayout>
 
 
