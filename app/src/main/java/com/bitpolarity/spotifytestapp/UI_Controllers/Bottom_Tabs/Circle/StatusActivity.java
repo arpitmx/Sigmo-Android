@@ -26,11 +26,14 @@ import com.bitpolarity.spotifytestapp.databinding.ActivityStatusBinding;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,6 +42,10 @@ import java.util.Map;
 import java.util.Set;
 
 import static android.content.ContentValues.TAG;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.xml.transform.Result;
 
@@ -232,116 +239,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
    void getMyData(DataSnapshot snapshot){
 
-        List<UserListModel> modelList = new ArrayList<>();
 
-
-            Log.d(TAG, "getMyData: List Thread "+Thread.currentThread().getName());
-    Map<String, Object> map1 = (Map<String, Object>) snapshot.getValue();
-    Log.d(TAG, "HASSSHH:" + Arrays.toString(recArrayList(snapshot).get(0).get("SD").toString().replace("{", "").replace("}", "").split(",")));
-
-    assert map1 != null;
-    Log.d(TAG, "Value is: " + map1.keySet());
-
-    Set<String> keys = map1.keySet();
-    int size = keys.size();
-    String metaData[];
-    ArrayList<String[]> metaList = new ArrayList<>();
-
-
-    for (String key : keys) {
-        Log.d(TAG, "onDataChange: " + key + ": " + map1);
-        String meta = map1.get(key).toString();
-
-        String[] purge = {"{", "}", "=", "SD", "albumName", "isPlaying", "trackLength", "posterURL", "trackID", "artistName", "trackName", "STATUS", "LA"};
-        String result = meta;
-
-
-        for (String s : purge) {
-            result = result.replace(s, "");
-        }
-        metaData = result.split(",");
-        metaList.add(metaData);
-        Log.d(TAG, "metaList: " + Arrays.toString(metaList.get(0)));
-    }
-
-
-
-    Map<String, Object> map = new HashMap<>();
-
-    for (int i = 0; i < size; i++) {
-
-        map.put("albumName" + i, metaList.get(i)[0]);
-        map.put("trackLength" + i, metaList.get(i)[2]);
-        map.put("isPlaying" + i, metaList.get(i)[7]);
-        map.put("trackID" + i, metaList.get(i)[3]);
-        map.put("artistName" + i, metaList.get(i)[4]);
-        map.put("trackName" + i, metaList.get(i)[5]);
-        map.put("STATUS" + i, metaList.get(i)[6]);
-        map.put("LA" + i, metaList.get(i)[8]);
-        map.put("posterURL" + i, metaList.get(i)[1]);
-
-    }
-
-    Log.d(TAG, "HASH MAP: " + map);
-
-    //////////////////////////////////  GETTING SONG META DATA //////////////////////////////////////////////
-
-
-    String[] users = (String[]) keys.toArray(new String[size]);
-    Log.d(TAG, "onDataChange: " + Arrays.toString(users));
-    Integer[] status = new Integer[size];
-    String[] songDetail = new String[size];
-    String[] posterURL = new String[size];
-    String[] isPlaying = new String[size];
-    String[] dateTime = new String[size];
-    String[] trackID = new String[size];
-
-
-    for (int i = 0; i < size; i++) {
-
-        Log.d(TAG, "Online Status : " + map.get("STATUS" + i));
-        if (Integer.parseInt(map.get("STATUS" + i).toString().trim()) == 1) {
-            status[i] = ONLINE;
-        } else {
-            status[i] = OFFLINE;
-        }
-
-        if (map.get("isPlaying" + i).toString().trim().equals("true")) {
-            isPlaying[i] = "Playing";
-        } else {
-            isPlaying[i] = "Paused";
-
-        }
-
-        songDetail[i] = map.get("trackName" + i) + "-" + map.get("artistName" + i);
-        trackID[i] = String.valueOf(map.get("trackID" + i)).trim();
-        String url = String.valueOf(map.get("posterURL" + i)).trim();
-
-        posterURL[i] = url;
-
-        dateTime[i] = String.valueOf(map.get("LA" + i));
-
-
-    }
-
-    Log.d(TAG, "Poster array: " + Arrays.toString(posterURL));
-    Log.d(TAG, "isPlaying array : " + Arrays.toString(isPlaying));
-    Log.d(TAG, "songDetail array : " + Arrays.toString(songDetail));
-    Log.d(TAG, "trackID array : " + Arrays.toString(trackID));
-
-
-    ////////////////////////// SETTING DATA TO ADAPTER
-
-
-    dataHolder.setSongDetails(songDetail);
-    dataHolder.setTrackID(trackID);
-    // dataHolder.setTrackID(son);
-
-    for (int i = 0; i < size; i++) {
-        modelList.add(new UserListModel(getContext(), dateTime[i], isPlaying[i], users[i], posterURL[i], status[i], songDetail[i]));
-    }
-
-        userListAdapter = new UserListAdapter(modelList, StatusActivity.this);
+        userListAdapter = new UserListAdapter(getDataFaster(snapshot), StatusActivity.this);
         //userRecyclerView.setAdapter(userListAdapter);
         someMethod(userRecyclerView, userListAdapter);
         userListAdapter.notifyDataSetChanged();
@@ -350,10 +249,163 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
 
 
+
+    List<UserListModel> getDataFaster(DataSnapshot snapshot){
+
+        ArrayList<HashMap<String, Object>> data = recArrayList(snapshot);
+        List<UserListModel> modelList = new ArrayList<>();
+
+
+        int size = data.size();
+        Log.d(TAG, "getDataFaster: data SIZE"+data.size());
+
+
+        String[] users = new String[size]; // done
+        Integer[] status = new Integer[size]; // done
+        String[] songDetail = new String[size]; // done
+        String[] posterURL = new String[size];  //done
+        String[] isPlaying = new String[size]; //done
+        String[] dateTime = new String[size];  //done
+        String[] trackID = new String[size]; //done
+
+
+
+        Log.d(TAG, "getDataFaster: "+data);
+        try {
+            for (int i = 0 ; i < size ; i++) {
+
+                JSONObject reader = new JSONObject(data.get(i));
+                JSONObject SD = reader.getJSONObject("SD");
+
+                // SONGDETAIL
+                Log.d(TAG, "Songdetail : " + SD.getString("trackName") + SD.getString("albumName"));
+                songDetail[i] = SD.getString("trackName") + " - " +SD.getString("albumName");
+
+                // TRACKID
+                Log.d(TAG, "TrackID : "+ SD.getString("trackID") );
+                trackID[i] = SD.getString("trackID");
+
+                //posterURL
+                Log.d(TAG, "PosterURL : "+ SD.getString("posterURL") );
+                posterURL[i] = SD.getString("posterURL");
+
+                //Status
+                Log.d(TAG, "Status : "+ data.get(i).get("STATUS") );
+                int s = Integer.parseInt(String.valueOf(data.get(i).get("STATUS")));
+                if (s == 1) status[i] = ONLINE;
+                else status[i] = OFFLINE;
+
+
+                //isPlaying
+                Log.d(TAG, "IsPlaying : "+ data.get(i).get("isPlaying") );
+                isPlaying[i] = String.valueOf(data.get(i).get("isPlaying"));
+
+
+                //DateTime
+                Log.d(TAG, "IsPlaying : "+ data.get(i).get("LA") );
+                dateTime[i] = String.valueOf(data.get(i).get("LA"));
+
+                //Users
+                Log.d(TAG, "UserName : "+ data.get(i).get("recKeyID") );
+                users[i] = String.valueOf(data.get(i).get("recKeyID"));
+
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        Log.d(TAG, "User array: " + Arrays.toString(users));
+        Log.d(TAG, "Poster array: " + Arrays.toString(posterURL));
+        Log.d(TAG, "isPlaying array : " + Arrays.toString(isPlaying));
+        Log.d(TAG, "songDetail array : " + Arrays.toString(songDetail));
+        Log.d(TAG, "trackID array : " + Arrays.toString(trackID));
+        Log.d(TAG, "Status array: " + Arrays.toString(status));
+
+
+
+        dataHolder.setSongDetails(songDetail);
+        dataHolder.setTrackID(trackID);
+
+        for (int i = 0; i < size; i++) {
+            modelList.add(new UserListModel(getContext(), dateTime[i], isPlaying[i], users[i], posterURL[i], status[i], songDetail[i]));
+        }
+
+        return modelList;
+    }
+
 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        {
+//            "SD": {
+//            "albumName": "Ambitions",
+//                    "posterURL": "https://i.scdn.co/image/ab67616d00001e020f94f53a1c9c60d953ffd2f2",
+//                    "trackLength": "255400",
+//                    "trackID": "spotify:track:57sk9X1fPLXRfkw74XNrmK",
+//                    "artistName": "ONE OK ROCK",
+//                    "trackName": "We Are"
+//        },
+//            "recKeyID": "Arpit!",
+//                "STATUS": 0,
+//                "isPlaying": false,
+//                "LA": "⏳ 3h ago"
+//        }
 
 
 ////////////////////////////////////////////ASYNC TASKS ////////////////////////////////////////////////

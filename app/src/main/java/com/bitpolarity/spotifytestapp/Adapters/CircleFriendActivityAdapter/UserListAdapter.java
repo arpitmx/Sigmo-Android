@@ -89,7 +89,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
 
         holder.binding.username.setText(link.getUsername());
         holder.binding.songname.setText(link.getSongDetail());
-        holder.binding.onlineStatus.setImageResource(link.getImageid());
+        holder.binding.onlineStatus.setImageResource(link.getStatus());
         holder.binding.lastActive.setText(link.getDatetime());
 
         // Poster /////////////////////////////////////////////////////////////////
@@ -109,7 +109,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
 
 
 
-        if (link.getIsPlaying().equals("Playing")) {
+        if (link.getIsPlaying().equals("true")) {
             Log.d("ISPLAYING ADAPTER", "onViewAttachedToWindow: "+ link.getIsPlaying());
             holder.binding.isPlayingg.setText("Playing");
             holder.binding.isPlayingg.setTextColor(Color.parseColor("#69DB22"));
