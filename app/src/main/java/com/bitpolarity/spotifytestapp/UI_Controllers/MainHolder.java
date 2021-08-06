@@ -71,8 +71,6 @@ public class MainHolder extends AppCompatActivity {
     mDetail_Holder detail_holder;
     String TAG = "MainHolder";
     boolean liked = false;
-    LinearLayout standard;
-    SpotifyViewModel viewModel;
 
    //ViewBinidings
     ActivityMainHolderBinding binding;
@@ -142,14 +140,9 @@ public class MainHolder extends AppCompatActivity {
 
         binding = ActivityMainHolderBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        standard = findViewById(R.id.linearLayout);
 
 
         //////////////////////////////////////// Init5ializations ///////////////////////////////////////////////////
-
-
-
-        playerSeekbar = binding.toolbar.playerSeekbar;
 
 
 
@@ -294,16 +287,11 @@ public class MainHolder extends AppCompatActivity {
 
         setMiniPlayerDetails();
         setPosterAndPallet();
-       setPalette();
+        setPalette();
         setPlayerState();
 
 
-        Fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fav_clicked();
-            }
-        });
+        Fav.setOnClickListener(view -> Fav_clicked());
 
     }
 
@@ -313,7 +301,7 @@ public class MainHolder extends AppCompatActivity {
     void setMiniplayerTextColor(){
 
 
-           // Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawableFromUrl("https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d"));
+        // Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawableFromUrl("https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d"));
 
         Bitmap b  = getBitmapFromURL("https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d");
         Palette.from(b).maximumColorCount(12).generate(new Palette.PaletteAsyncListener() {
@@ -351,6 +339,7 @@ public class MainHolder extends AppCompatActivity {
 
     void setMiniPlayerBGPicassio(){
     //"https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d"
+
         Picasso.with(this)
                 .load("")
                 .resize(200, 100)
@@ -403,26 +392,18 @@ public class MainHolder extends AppCompatActivity {
 
     private void setMiniPlayerDetails(){
 
-        SongModel.getTrackName().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                mSongName.setText(s);
-                if(s.equals("Advertisement")){
+        SongModel.getTrackName().observe(this, s -> {
+            mSongName.setText(s);
+            if(s.equals("Advertisement")){
 
-                    //this.prevVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                    Toast.makeText(MainHolder.this , "Muting ads",Toast.LENGTH_SHORT   ).show();
-                    mSpotifyAppRemote.getConnectApi().connectSetVolume(0f);
+                //this.prevVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                Toast.makeText(MainHolder.this , "Muting ads",Toast.LENGTH_SHORT   ).show();
+                mSpotifyAppRemote.getConnectApi().connectSetVolume(0f);
 
-                }
             }
         });
 
-        SongModel.getTrackArtist().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                mArtistName.setText(s);
-            }
-        });
+        SongModel.getTrackArtist().observe(this, s -> mArtistName.setText(s));
 
 
     }
@@ -432,7 +413,7 @@ public class MainHolder extends AppCompatActivity {
 
         SongModel.getImgURI().observe(this, imageUri -> mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
             cir.setImageBitmap(data);
-            miniPlayer_bg.setImageBitmap(compressImage(data));
+            //miniPlayer_bg.setImageBitmap(compressImage(data));
         }));
 
     }
@@ -457,6 +438,7 @@ public class MainHolder extends AppCompatActivity {
         }).start();
         try {
             URL url = new URL(src);
+
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();

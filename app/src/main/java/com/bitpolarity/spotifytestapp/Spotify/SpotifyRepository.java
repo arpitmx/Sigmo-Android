@@ -101,26 +101,28 @@ public class SpotifyRepository {
                         ImageUri t_uri = track.imageUri;
                         String trackName = track.name;
                         String trackArtist = String.valueOf(track.artist.name);
+
                         this.trackUri = track.uri;
                         Log.d(TAG, "connected: trackname "+trackName);
                         Log.d(TAG, "connected: trackURI "+t_uri);
 
-                        mSpotifyAppRemote.getImagesApi().getImage(t_uri).setResultCallback(data -> {
-                            Palette.from(data).maximumColorCount(12).generate(palette -> {
-                                assert palette != null;
-                                Palette.Swatch dominant = palette.getDominantSwatch();
-                               // Palette.Swatch dominant = palette.getDominantSwatch();
-                                if (dominant != null) SongModel.setMpallete(dominant.getRgb());
-                            });
-                        });
+//                        mSpotifyAppRemote.getImagesApi().getImage(t_uri).setResultCallback(data -> {
+//                            Palette.from(data).maximumColorCount(12).generate(palette -> {
+//                                assert palette != null;
+//                                Palette.Swatch dominant = palette.getDominantSwatch();
+//                               // Palette.Swatch dominant = palette.getDominantSwatch();
+//                                if (dominant != null) SongModel.setMpallete(dominant.getRgb());
+//                            });
+//                        });
 
                         SongModel.setTrackName(trackName);
                         SongModel.setTrackArtist(trackArtist);
                         SongModel.setImageURI(t_uri);
+                        SongModel.setPlayerState(playerState.isPaused);
 
 
 
-                        mTrackProgressBar = new TrackProgressBar(playerSeekbar);
+                       // mTrackProgressBar = new TrackProgressBar(playerSeekbar);
 
 
                     }
