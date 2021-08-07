@@ -1,17 +1,18 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers;
 
+import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.compressImage;
+import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.mSpotifyAppRemote;
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.media.AudioManager;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +38,7 @@ import androidx.palette.graphics.Palette;
 
 import com.bitpolarity.spotifytestapp.Spotify.SongModel;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
-import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModelFactory;
-import com.bitpolarity.spotifytestapp.TestingActivity;
+
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Circle_Fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Profile_Fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment;
@@ -46,20 +47,14 @@ import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModel;
 import com.bitpolarity.spotifytestapp.databinding.ActivityMainHolderBinding;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.common.internal.Asserts;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.spotify.android.appremote.api.ConnectionParams;
-import com.spotify.android.appremote.api.Connector;
-import com.spotify.android.appremote.api.SpotifyAppRemote;
-import com.spotify.protocol.client.CallResult;
-import com.spotify.protocol.types.ImageUri;
-import com.spotify.protocol.types.Track;
+
+import com.spotify.protocol.client.Subscription;
+import com.spotify.protocol.types.PlayerState;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -75,18 +70,10 @@ public class MainHolder extends AppCompatActivity {
 
     mDetail_Holder detail_holder;
     String TAG = "MainHolder";
-    AudioManager audioManager;
     boolean liked = false;
-    LinearLayout standard;
-    SpotifyViewModel viewModel;
-
-
-    //Layout
-    RelativeLayout miniRL;
 
    //ViewBinidings
     ActivityMainHolderBinding binding;
-    SpotifyViewModel spotify_viewModel;
 
 
     ImageButton playback;
@@ -101,6 +88,10 @@ public class MainHolder extends AppCompatActivity {
     ImageView peacock_symbol;
     ImageView cir;
     ImageView Fav;
+
+
+
+    public static SeekBar playerSeekbar;
 
 
 
@@ -123,6 +114,20 @@ public class MainHolder extends AppCompatActivity {
     ////////////////////////////////
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,23 +139,12 @@ public class MainHolder extends AppCompatActivity {
 
 
         binding = ActivityMainHolderBinding.inflate(getLayoutInflater());
-        standard = findViewById(R.id.linearLayout);
-
         setContentView(binding.getRoot());
-
-        viewModel = new ViewModelProvider(this, new SpotifyViewModelFactory(getApplication())).get(SpotifyViewModel.class);
 
 
         //////////////////////////////////////// Init5ializations ///////////////////////////////////////////////////
 
-        //ViewBindings
-        //miniSongPlayerBinding = MiniSongPlayerBinding.inflate(getLayoutInflater());
 
-
-        //ViewModel
-        //spotify_viewModel = ViewModelProviders.of(this).get(Spotify_ViewModel.class);
-
-        //Models
 
         //Buttons
 
@@ -170,7 +164,9 @@ public class MainHolder extends AppCompatActivity {
 
         //System services
 
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+
+
 
         //Object types
 
@@ -185,6 +181,15 @@ public class MainHolder extends AppCompatActivity {
 //                .diskCacheStrategy(DiskCacheStrategy.NONE)
 //                .skipMemoryCache(true)
 //                .into(miniPlayer_bg);
+
+
+
+
+
+//        playerSeekbar.setEnabled(true);
+//        playerSeekbar.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+//        playerSeekbar.getIndeterminateDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);
+
         //////////////////////////////////////// Initializations//////////////////////////////////////////////
 
 
@@ -208,6 +213,7 @@ public class MainHolder extends AppCompatActivity {
 //            }
 //        }).start();
 
+
         mSongName = findViewById(R.id.m_song_name);
         mArtistName = findViewById(R.id.mArtist_name);
         sigmo_Title = findViewById(R.id.sigmoTitleBar);
@@ -217,6 +223,8 @@ public class MainHolder extends AppCompatActivity {
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+
 
 
         /////////////////////////// OnClick Listeners
@@ -279,51 +287,21 @@ public class MainHolder extends AppCompatActivity {
 
         setMiniPlayerDetails();
         setPosterAndPallet();
-       // setPalette();
+        setPalette();
         setPlayerState();
 
 
-        Fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fav_clicked();
-            }
-        });
-
-        //setMiniplayerTextColor();
-
+        Fav.setOnClickListener(view -> Fav_clicked());
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     ////////////////////////////////////////////////////////////////////////////////// Handlers
 
-    public void mMiniPlayer_Handler(String sName, String artistName){
-        Log.d(TAG, "mMiniPlayer_Handler: "+ sName);
-
-        mSongName.setText(sName);
-        mArtistName.setText(artistName);
-
-
-    }
-
     void setMiniplayerTextColor(){
 
 
-           // Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawableFromUrl("https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d"));
+        // Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawableFromUrl("https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d"));
 
         Bitmap b  = getBitmapFromURL("https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d");
         Palette.from(b).maximumColorCount(12).generate(new Palette.PaletteAsyncListener() {
@@ -361,6 +339,7 @@ public class MainHolder extends AppCompatActivity {
 
     void setMiniPlayerBGPicassio(){
     //"https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d"
+
         Picasso.with(this)
                 .load("")
                 .resize(200, 100)
@@ -413,26 +392,18 @@ public class MainHolder extends AppCompatActivity {
 
     private void setMiniPlayerDetails(){
 
-        SongModel.getTrackName().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                mSongName.setText(s);
-                if(s.equals("Advertisement")){
+        SongModel.getTrackName().observe(this, s -> {
+            mSongName.setText(s);
+            if(s.equals("Advertisement")){
 
-                    //this.prevVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                    Toast.makeText(MainHolder.this , "Muting ads",Toast.LENGTH_SHORT   ).show();
-                    SpotifyRepository.mSpotifyAppRemote.getConnectApi().connectSetVolume(0f);
+                //this.prevVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                Toast.makeText(MainHolder.this , "Muting ads",Toast.LENGTH_SHORT   ).show();
+                mSpotifyAppRemote.getConnectApi().connectSetVolume(0f);
 
-                }
             }
         });
 
-        SongModel.getTrackArtist().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                mArtistName.setText(s);
-            }
-        });
+        SongModel.getTrackArtist().observe(this, s -> mArtistName.setText(s));
 
 
     }
@@ -440,24 +411,21 @@ public class MainHolder extends AppCompatActivity {
 
     void setPosterAndPallet(){
 
-        SongModel.getImgURI().observe(this, imageUri -> SpotifyRepository.mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
+        SongModel.getImgURI().observe(this, imageUri -> mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
             cir.setImageBitmap(data);
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            miniPlayer_bg.setImageBitmap(data);
-
-
+            //miniPlayer_bg.setImageBitmap(compressImage(data));
         }));
 
-
-
-
     }
+
+
+
 
     void setPalette(){
         SongModel.getTrackPalette().observe(this, integer -> {
 
-            miniPlayer_bg.setBackgroundColor(integer);
-            miniPlayer_bg.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+            //miniPlayer_bg.setBackgroundColor(integer);
+          // miniPlayer_bg.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
 
         });
 
@@ -465,14 +433,12 @@ public class MainHolder extends AppCompatActivity {
 
 
     public static Bitmap getBitmapFromURL(String src) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
 
-            }
         }).start();
         try {
             URL url = new URL(src);
+
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
@@ -488,57 +454,53 @@ public class MainHolder extends AppCompatActivity {
 
 
     void setPlayerState(){
-        SongModel.getPlayerState().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
+        SongModel.getPlayerState().observe(this, aBoolean -> {
 
-               ////////////////////////////////////////////////////////////////////////////////////////
+           ////////////////////////////////////////////////////////////////////////////////////////
 
-                if(aBoolean){
-                    Log.d(TAG, "connected: paused ");
+            if(aBoolean){
+                Log.d(TAG, "connected: paused ");
+                playback.setImageResource(R.drawable.ic_play);
+                playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in));
+
+                playback.setScaleX(1f);
+                playback.setScaleY(1f);
+
+            }else{
+                Log.d(TAG, "connected: playing ");
+
+                playback.setImageResource(R.drawable.ic_baseline_pause_24);
+                playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.fade_in_switch));
+
+                playback.setScaleX(1.3f);
+                playback.setScaleY(1.6f);
+
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////
+
+
+            playback.setOnClickListener(view -> {
+                if(!aBoolean){
+                    Log.d(TAG, "connected: playing ");
+                    playback.setImageResource(R.drawable.ic_baseline_pause_24);
+                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
+                    playback.setScaleX(1.3f);
+                    playback.setScaleY(1.6f);
+                    mSpotifyAppRemote.getPlayerApi().pause();
+                }
+                else{
                     playback.setImageResource(R.drawable.ic_play);
-                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in));
+                    Log.d(TAG, "connected: paused ");
+
+                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
 
                     playback.setScaleX(1f);
                     playback.setScaleY(1f);
-
-                }else{
-                    Log.d(TAG, "connected: playing ");
-
-                    playback.setImageResource(R.drawable.ic_baseline_pause_24);
-                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.fade_in_switch));
-
-                    playback.setScaleX(1.3f);
-                    playback.setScaleY(1.6f);
+                    mSpotifyAppRemote.getPlayerApi().resume();
 
                 }
-
-                ///////////////////////////////////////////////////////////////////////////////
-
-
-                playback.setOnClickListener(view -> {
-                    if(!aBoolean){
-                        Log.d(TAG, "connected: playing ");
-                        playback.setImageResource(R.drawable.ic_baseline_pause_24);
-                        playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
-                        playback.setScaleX(1.3f);
-                        playback.setScaleY(1.6f);
-                        SpotifyRepository.mSpotifyAppRemote.getPlayerApi().pause();
-                    }
-                    else{
-                        playback.setImageResource(R.drawable.ic_play);
-                        Log.d(TAG, "connected: paused ");
-
-                        playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
-
-                        playback.setScaleX(1f);
-                        playback.setScaleY(1f);
-                        SpotifyRepository.mSpotifyAppRemote.getPlayerApi().resume();
-
-                    }
-                });
-            }
-
+            });
         });
 
 
@@ -551,7 +513,7 @@ public class MainHolder extends AppCompatActivity {
         if (track != null) {
 
                     if (!liked) {
-                        SpotifyRepository.mSpotifyAppRemote.getUserApi().addToLibrary(track.uri);
+                        mSpotifyAppRemote.getUserApi().addToLibrary(track.uri);
                         Fav.setImageResource(R.drawable.ic_heart);
                         Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_in));
                         liked = true;
@@ -559,7 +521,7 @@ public class MainHolder extends AppCompatActivity {
                         Toast.makeText(this, "Added to library", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        SpotifyRepository.mSpotifyAppRemote.getUserApi().removeFromLibrary(track.uri);
+                        mSpotifyAppRemote.getUserApi().removeFromLibrary(track.uri);
                         Fav.setImageResource(R.drawable.ic_fav);
                         Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_out));
 
@@ -570,4 +532,7 @@ public class MainHolder extends AppCompatActivity {
                     }
 
 }
+
+
+
 }

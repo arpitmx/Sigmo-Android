@@ -6,7 +6,7 @@ public class UserListModel {
 
     private String username;
     private String poster;
-    private Integer imageid;
+    private Integer status;
     private String SongDetail;
     public Context context;
     private String isPlaying;
@@ -21,8 +21,8 @@ public class UserListModel {
         return poster;
     }
 
-    public Integer getImageid() {
-        return imageid;
+    public Integer getStatus() {
+        return status;
     }
 
 
@@ -38,7 +38,7 @@ public class UserListModel {
 
 
     public String getIsPlaying() {
-        return this.isPlaying;
+        return isPlaying;
     }
 
     public String getDatetime(){
@@ -46,13 +46,13 @@ public class UserListModel {
     }
 
 
-    public UserListModel(Context context , String datetime, String isPlaying, String username, String poster, Integer statusid, String SongDetail) {
+    public UserListModel(Context context , String datetime, String isPlaying, String username, String poster, Integer status, String SongDetail) {
 
         this.context = context;
         this.username = username;
-        this.isPlaying = isPlaying;
+       this.isPlaying = isPlaying;
         this.poster = poster;
-        this.imageid = statusid;
+        this.status = status;
         this.SongDetail = SongDetail;
         this.datetime = datetime;
 

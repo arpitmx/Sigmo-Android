@@ -42,9 +42,7 @@
            android:layout_height="match_parent"
            android:layout_below="@+id/custom_action"
            android:layout_alignTop="@id/custom_action"
-           android:layout_marginTop="60dp"
-           android:layout_marginBottom="54dp"
-           android:elevation="5dp"
+           android:layout_marginBottom="56dp"
 
 
            >
@@ -55,8 +53,7 @@
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:background="@color/black"
-               android:elevation="30dp"
-               app:behavior_peekHeight="57dp"
+               app:behavior_peekHeight="55dp"
                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
                <include
@@ -76,18 +73,17 @@
        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:elevation="15dp"
-        android:background="@color/white"
-        app:itemIconSize="22dp"
+        android:background="@color/dark_bg"
+        app:itemIconSize="20dp"
         app:itemIconTint="@drawable/tabcolor"
         app:itemTextColor="@drawable/tabcolor"
         app:labelVisibilityMode="labeled"
-        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:menu="@menu/bottom_navigation_menu"
         />
 

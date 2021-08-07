@@ -5,16 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
-import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
-
-import com.bitpolarity.spotifytestapp.Spotify.SongModel;
-import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
-import com.google.android.gms.common.util.IOUtils;
-import com.spotify.protocol.types.ImageUri;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

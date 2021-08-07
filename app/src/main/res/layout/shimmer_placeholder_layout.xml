@@ -3,17 +3,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="150dp"
+    xmlns:tool="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:layout_margin="10dp"
     android:elevation="1dp"
     android:orientation="vertical"
 
-    >
+    app:ignore="NamespaceTypo">
 
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="#00000000"
         android:orientation="vertical"
         android:weightSum="10"
         >
@@ -24,7 +27,7 @@
             android:orientation="horizontal"
             android:weightSum="10"
             android:elevation="2dp"
-            android:background="@color/white"
+            android:background="@drawable/borders"
 
             >
 
@@ -102,38 +105,43 @@
             android:layout_height="110dp"
             android:orientation="horizontal"
             android:weightSum="10"
-            android:background="@color/white"
+            android:background="@drawable/borders_post"
 
             >
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/artwork"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="80dp"
-                android:layout_gravity="center_vertical"
-                android:scaleType="fitCenter"
-                android:layout_margin="10dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="5dp"
+                android:padding="3dp"
                 android:scaleX="1"
+                android:layout_gravity="center"
                 android:scaleY="1"
-                android:src="@color/s_grey" />
-
+                android:src="@color/white"
+                app:civ_border_color="@color/s_grey"
+                app:civ_border_width="1.2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/songlength"
                 android:layout_width="0dp"
                 android:layout_weight="8"
                 android:layout_height="40dp"
+                android:layout_marginStart="20dp"
                 android:fontFamily= "sans-serif-condensed-medium"
                 android:textSize="13dp"
                 android:textColor="@color/black"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="35dp"
                 android:layout_marginEnd="10dp"
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:paddingStart="?android:attr/listPreferredItemPaddingStart"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-                android:background="@color/s_grey"
+                android:background="@color/white"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
 

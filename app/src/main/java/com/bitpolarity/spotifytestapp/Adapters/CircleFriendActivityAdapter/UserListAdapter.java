@@ -1,10 +1,10 @@
 package com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
@@ -20,43 +20,76 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
+import de.hdodenhof.circleimageview.CircleImageView;
 
+public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myViewHolder> {
 
     private final List<UserListModel> userModelList;
     private final ULEventListner mULEventlisnter;
-    Animation animation;
-    CircleFriendActivityListItemBinding binding;
-
+    public UserListModel link;
+    public Boolean playing = false;
 
 
     public UserListAdapter(List<UserListModel> categoryModelList, ULEventListner mULEventListner) {
-
         this.userModelList = categoryModelList;
         this.mULEventlisnter = mULEventListner;
+
     }
 
+    @Override
+    public void onViewAttachedToWindow(@NonNull myViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+
+
+    }
 
     @NotNull
     @Override
-
-    public UserListAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.circle_friend_activity_list_item,parent,false);
-        return new ViewHolder(CircleFriendActivityListItemBinding.bind(view), mULEventlisnter);
+    public myViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.circle_friend_activity_list_item, parent, false);
+        return new myViewHolder(CircleFriendActivityListItemBinding.bind(view), mULEventlisnter);
 
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull UserListAdapter.ViewHolder holder, int position) {
 
-        UserListModel link = userModelList.get(position); //Making a link to save multiple calls
+    public static class myViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+
+
+        CircleFriendActivityListItemBinding binding;
+        ImageView play_trackbtn;
+        ULEventListner ulEventListner;
+
+        public myViewHolder(@NonNull CircleFriendActivityListItemBinding b, ULEventListner ulEventListner) {
+
+            super(b.getRoot());
+            binding = b;
+            this.ulEventListner = ulEventListner;
+            //play_trackbtn = binding.playTrack;
+
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            ulEventListner.onClick(getAdapterPosition());
+        }
+    }
+
+
+
+    @Override
+    public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
+
+        link = userModelList.get(position); //Making a link to save multiple calls
 
         ////////////Setting Values /////////////////////////////////////////////
 
 
         holder.binding.username.setText(link.getUsername());
         holder.binding.songname.setText(link.getSongDetail());
-        holder.binding.onlineStatus.setImageResource(link.getImageid());
+        holder.binding.onlineStatus.setImageResource(link.getStatus());
         holder.binding.lastActive.setText(link.getDatetime());
 
         // Poster /////////////////////////////////////////////////////////////////
@@ -75,18 +108,19 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         //"https://i.scdn.co/image/ab6775700000ee855ffdafb1d7fb1eb34622f04f"
 
 
-        // Equilizer///////////////////////////////////////////////////////////
 
-//        // Setting Playing and Paused TVs and making equilizer visible and gone ////////////////////////////////////////////
-//
-        if (link.getIsPlaying().equals("Playing")) {
-            holder.binding.isPlayingg.setText(link.getIsPlaying());
-           holder.binding.artwork.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
-        }
-        else
-        {
+        if (link.getIsPlaying().equals("true")) {
+            Log.d("ISPLAYING ADAPTER", "onViewAttachedToWindow: "+ link.getIsPlaying());
+            holder.binding.isPlayingg.setText("Playing");
+            holder.binding.isPlayingg.setTextColor(Color.parseColor("#69DB22"));
+            startAnim(holder.binding.artwork);
+            playing = true;
+        } else  {
+            holder.binding.isPlayingg.setText("Paused");
             holder.binding.isPlayingg.setTextColor(Color.parseColor("#E53935"));
+            playing = false;
         }
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -94,42 +128,21 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     }
 
 
-
-
     @Override
     public int getItemCount() {
         return userModelList.size();
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-
-
-        CircleFriendActivityListItemBinding binding;
-        ImageView play_trackbtn;
-        ULEventListner ulEventListner;
-
-        public ViewHolder(@NonNull CircleFriendActivityListItemBinding b, ULEventListner ulEventListner) {
-
-            super(b.getRoot());
-            binding = b;
-            this.ulEventListner = ulEventListner;
-            //play_trackbtn = binding.playTrack;
-            itemView.setOnClickListener(this);
-
-
-
-
-        }
-
-        @Override
-        public void onClick(View view) {
-            ulEventListner.onClick(getAdapterPosition());
-        }
     }
 
     public interface ULEventListner{
         void onClick(int position);
     }
 
+
+
+    void startAnim(CircleImageView poster){
+        poster.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
+
+    }
+
 }
+

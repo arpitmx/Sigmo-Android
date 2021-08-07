@@ -5,7 +5,7 @@
     android:id="@+id/custom_action_bar_consLay"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="@color/white200"
+    android:background="@color/dark_bg"
     android:weightSum="10">
 
 
@@ -56,7 +56,7 @@
             android:gravity="center"
             android:paddingTop="4dp"
             android:text="@string/app_name"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="28sp"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +72,7 @@
             android:fontFamily="@font/hxtrabold"
             android:gravity="center"
             android:text="@string/rooms"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="29sp"
             android:paddingTop="4dp"
             android:visibility="gone"
