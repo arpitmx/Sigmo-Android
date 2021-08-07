@@ -257,6 +257,9 @@ public class MainHolder extends AppCompatActivity {
 //                    binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
                         room.setVisibility(View.GONE);
 
+
+
+
                     }
                     return true;
 

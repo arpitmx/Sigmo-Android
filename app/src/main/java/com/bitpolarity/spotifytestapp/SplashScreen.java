@@ -16,7 +16,7 @@ import com.bitpolarity.spotifytestapp.databinding.ActivitySplashScreenBinding;
 public class SplashScreen extends AppCompatActivity {
 
     SpotifySDK sdk ;
-    static final int delay = 500;
+    static final int delay = 50;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class SplashScreen extends AppCompatActivity {
         //setTheme(R.style.SplashTheme);
 
         Handler handler = new Handler();
-        startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+        startService(new Intent(getApplicationContext(), OnClearFromRecentService.class));
 
         //1 +2s131ms Theme
         //2 +2s927ms W

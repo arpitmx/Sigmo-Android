@@ -134,8 +134,8 @@ public class SpotifyRepository {
 
     public static Bitmap compressImage(Bitmap bitmap){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
-        int options = 30;
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 5, baos);
+        int options = 5;
         while ( baos.toByteArray().length / 1024>50) {
             // Clear baos
             baos.reset();
