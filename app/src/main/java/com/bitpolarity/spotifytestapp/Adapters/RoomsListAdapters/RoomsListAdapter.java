@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,8 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
     private final List<RoomsListModel> userModelList;
     private final ULEventListner_Room mULEventlisnter;
     Animation animation;
+    static final float MINIMUM = 25;
+    int lastPosition = -1;
 
 
 
@@ -48,6 +51,7 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
 
         holder.mRoomName.setText(link.getmRoomName());
         holder.mHostName.setText(link.getmHostName());
+        setAnimation(holder.itemView,position);
 
 
 
@@ -90,5 +94,52 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
     }
 
 
+    public abstract static class MyRecyclerScroll extends RecyclerView.OnScrollListener {
+
+        int scrollDist = 0;
+        boolean isVisible = true;
+
+
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+
+            if (isVisible && scrollDist > MINIMUM) {
+                hide();
+                scrollDist = 0;
+                isVisible = false;
+            }
+            else if (!isVisible && scrollDist < -MINIMUM) {
+                show();
+                scrollDist = 0;
+                isVisible = true;
+            }
+
+            if ((isVisible && dy > 0) || (!isVisible && dy < 0)) {
+                scrollDist += dy;
+            }
+
+        }
+
+
+        public abstract void show();
+        public abstract void hide();
+    }
+
+
+
+
+        private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.slide_up);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
 
 }

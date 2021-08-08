@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
@@ -28,6 +29,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
     private final ULEventListner mULEventlisnter;
     public UserListModel link;
     public Boolean playing = false;
+    private int lastPosition = -1;
+
+
 
 
     public UserListAdapter(List<UserListModel> categoryModelList, ULEventListner mULEventListner) {
@@ -99,6 +103,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
                 .apply(new RequestOptions().override(80, 80))
                 .into(holder.binding.artwork);
 
+       // setAnimation(holder.binding.artwork, position);
 
         Glide.with(userModelList.get(position).getContext())
                 .load("https://picsum.photos/100/100")
@@ -143,6 +148,20 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
         poster.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
 
     }
+
+//    private void setAnimation(View viewToAnimate, int position)
+//    {
+//        // If the bound view wasn't previously displayed on screen, it's animated
+//        if (position > lastPosition)
+//        {
+//            Animation animation = AnimationUtils.loadAnimation(link.getContext(), R.anim.rotate_fadein);
+//            viewToAnimate.startAnimation(animation);
+//            lastPosition = position;
+//        }
+//    }
+
+
+
 
 }
 

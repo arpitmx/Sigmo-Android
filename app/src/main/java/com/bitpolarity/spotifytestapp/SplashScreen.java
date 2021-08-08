@@ -15,8 +15,7 @@ import com.bitpolarity.spotifytestapp.databinding.ActivitySplashScreenBinding;
 
 public class SplashScreen extends AppCompatActivity {
 
-    SpotifySDK sdk ;
-    static final int delay = 50;
+    static final int delay = 400;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

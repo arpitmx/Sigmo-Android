@@ -416,7 +416,7 @@ public class MainHolder extends AppCompatActivity {
 
         SongModel.getImgURI().observe(this, imageUri -> mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
             cir.setImageBitmap(data);
-            //miniPlayer_bg.setImageBitmap(compressImage(data));
+            miniPlayer_bg.setImageBitmap(compressImage(data));
         }));
 
     }

@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -80,44 +82,37 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 //        Log.d(TAG, "Rooms: "+modelList);
 //                listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this);
 //
+        mRoomRV.hasFixedSize();
 
 
-   mref.addValueEventListener(new ValueEventListener() {
+
+        mref.addValueEventListener(new ValueEventListener() {
 
 
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
-                //Iterator<? extends DataSnapshot> i = snapshot.getChildren().iterator();
                 Map<String, Object> map1 = (Map<String, Object>) snapshot.getValue();
 
-//                while (i.hasNext()){
-//                     modelList.add(new RoomsListModel(((DataSnapshot) i.next()).getKey(),"@arpitmaurya"));
-//                     Log.d(TAG, "DS: "+ (DataSnapshot) ((DataSnapshot) i.next()).getValue());
-//                     Log.d(TAG, "DSValue: "+ ((DataSnapshot) i.next()).getValue());
-//
-//                 }
 
                 Log.d(TAG, "onDataChange Map : "+ map1);
 
                 assert map1 != null;
                 Set<String> keys = map1.keySet();
 
-                for (String key : keys) {
-                    Log.d(TAG, "onDataChange key : "+ key);
-                    Log.d(TAG, "onDataChange Value : "+ map1.get(key));
+                if (modelList != null){
+                    modelList.clear();
+                }
 
-                    modelList.add(new RoomsListModel(key,"@arpitmaurya"));
+                for (String key : keys) {
+                    Log.d(TAG, "onDataChange key : " + key);
+                    Log.d(TAG, "onDataChange Value : " + map1.get(key));
+                    modelList.add(new RoomsListModel(key, "@arpitmaurya"));
 
                 }
 
-//                Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
-//                assert map != null;
-//                Log.d(TAG, "Value is: " + map.keySet());
-//                Set<String> keys = map.keySet();
-
-
                 Log.d(TAG, "onDataChange ModelList: "+modelList);
+
                 listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this);
                 mRoomRV.setAdapter(listAdapter);
                 listAdapter.notifyDataSetChanged();
@@ -135,6 +130,7 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 
 
 
+
         startRoomBTN.setOnClickListener(view -> {
 
             mCreateRoomBottomSheet bottomSheet = new mCreateRoomBottomSheet();
@@ -145,6 +141,25 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 
         return v;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mRoomRV.addOnScrollListener(new RoomsListAdapter.MyRecyclerScroll() {
+            @Override
+            public void show() {
+                startRoomBTN.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+            }
+
+            @Override
+            public void hide() {
+                startRoomBTN.animate().translationY(startRoomBTN.getHeight() +16).setInterpolator(new AccelerateInterpolator(2)).start();
+            }
+        });
+    }
+
+
 
     public void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();

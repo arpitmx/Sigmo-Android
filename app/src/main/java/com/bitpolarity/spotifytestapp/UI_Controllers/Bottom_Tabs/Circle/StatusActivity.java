@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,11 +59,8 @@ import javax.xml.transform.Result;
 public class StatusActivity extends Fragment implements UserListAdapter.ULEventListner {
 
     final String LOG = "StatusActivity";
-    ImageView imageView;
-    TextView isPlayingTV ;
     RecyclerView userRecyclerView;
     RecyclerView fr_rv;
-
     UserListAdapter userListAdapter;
     FR_Adapter fr_adapter;
 
@@ -76,7 +74,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     LinearLayoutManager layoutManager ;
     LinearLayoutManager layoutManagerFR;
 
-    BottomNavigationView bottomNavigationItemView;
     ActivityStatusBinding binding;
     static String finaltime = "";
 
@@ -137,8 +134,14 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     @Override
     public void onResume() {
         super.onResume();
-
         loadData();
+
+
+
+        binding.refreshLayout.setOnRefreshListener(() -> {
+            loadData();
+            binding.refreshLayout.setRefreshing(false);
+        });
     }
 
     @Override
