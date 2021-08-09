@@ -228,7 +228,7 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
     List<RoomsListModel> getDataFaster(DataSnapshot snapshot){
 
         ArrayList<HashMap<String, Object>> data = recArrayList(snapshot);
-       // List<RoomsListModel> modelList = new ArrayList<>();
+        List<RoomsListModel> modelList = new ArrayList<>();
 
 
         int size = data.size();

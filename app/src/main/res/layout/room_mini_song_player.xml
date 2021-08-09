@@ -7,9 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="vertical"
-    android:background="@color/dark_fg"
     android:id="@+id/mini_lin"
-
+    android:background="@color/dark_fg"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     >
 
