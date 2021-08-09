@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel;
 import com.bitpolarity.spotifytestapp.R;
-import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemSendBinding;
+import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemIncomingBinding;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatsViewHol
     @Override
     public ChatsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_incoming,parent,false);
-        return new ChatsViewHolder(ChatMsgItemSendBinding.bind(view));
+        return new ChatsViewHolder(ChatMsgItemIncomingBinding.bind(view));
     }
 
     @Override
@@ -59,9 +59,9 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatsViewHol
 
     public static class ChatsViewHolder extends RecyclerView.ViewHolder {
 
-            ChatMsgItemSendBinding binding;
+            ChatMsgItemIncomingBinding binding;
 
-        public ChatsViewHolder(ChatMsgItemSendBinding binding) {
+        public ChatsViewHolder(ChatMsgItemIncomingBinding binding) {
             super(binding.getRoot());
 
             this.binding = binding;
