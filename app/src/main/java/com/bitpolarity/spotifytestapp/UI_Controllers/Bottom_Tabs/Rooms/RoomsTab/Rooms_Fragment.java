@@ -154,7 +154,7 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 
             @Override
             public void hide() {
-                startRoomBTN.animate().translationY(startRoomBTN.getHeight() +16).setInterpolator(new AccelerateInterpolator(2)).start();
+                startRoomBTN.animate().translationY(startRoomBTN.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
             }
         });
     }

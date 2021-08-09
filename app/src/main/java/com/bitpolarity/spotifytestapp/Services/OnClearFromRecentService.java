@@ -28,8 +28,6 @@ public class OnClearFromRecentService extends Service {
     String LOG = "SERVICE";
     SpotifyRepository spotifyRepository;
 
-
-
     @Override
     public IBinder onBind(Intent intent) {
         return null;

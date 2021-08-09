@@ -5,7 +5,7 @@
     android:id="@+id/custom_action_bar_consLay"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="@color/white200"
+    android:background="@color/dark_bg"
     android:weightSum="10">
 
 
@@ -63,7 +63,7 @@
             android:paddingStart="5dp"
 
             android:text="Ajaao sabbb"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
 
             android:textSize="20sp"
             android:visibility="visible"

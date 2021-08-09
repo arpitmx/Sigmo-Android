@@ -14,11 +14,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bitpolarity.spotifytestapp.Adapters.FR_Adapter;
+import com.bitpolarity.spotifytestapp.Adapters.RoomsListAdapters.RoomsListAdapter;
 import com.bitpolarity.spotifytestapp.BottomSheets.mBottomSheetDialog;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.FR_Model;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.UserListModel;
@@ -26,9 +29,11 @@ import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter.UserListAdapter;
 import com.bitpolarity.spotifytestapp.DB_Related.TempDataHolder;
 import com.bitpolarity.spotifytestapp.databinding.ActivityStatusBinding;
+import com.bitpolarity.spotifytestapp.databinding.FragmentCircleBinding;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.crashlytics.internal.model.CrashlyticsReport;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,7 +68,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     RecyclerView fr_rv;
     UserListAdapter userListAdapter;
     FR_Adapter fr_adapter;
-
+    TabLayout tabLayout;
     DatabaseReference ref;
 
     TempDataHolder dataHolder;
@@ -88,9 +93,9 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                              Bundle savedInstanceState){
 
         binding = ActivityStatusBinding.inflate(inflater,container,false);
-
         userRecyclerView = binding.listview;
         fr_rv = binding.frRv;
+
 
         layoutManager = new LinearLayoutManager(getContext());
         layoutManagerFR = new LinearLayoutManager(getContext());
@@ -135,8 +140,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     public void onResume() {
         super.onResume();
         loadData();
-
-
 
         binding.refreshLayout.setOnRefreshListener(() -> {
             loadData();

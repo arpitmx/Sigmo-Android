@@ -23,7 +23,7 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
     private final List<RoomsListModel> userModelList;
     private final ULEventListner_Room mULEventlisnter;
     Animation animation;
-    static final float MINIMUM = 25;
+    static final float MINIMUM = 20;
     int lastPosition = -1;
 
 
@@ -136,7 +136,7 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
         // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition)
         {
-            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.slide_up);
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.fade_in);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }

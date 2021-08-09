@@ -30,6 +30,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
     public UserListModel link;
     public Boolean playing = false;
     private int lastPosition = -1;
+    static final float MINIMUM = 25;
+
 
 
 
@@ -159,6 +161,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
 //            lastPosition = position;
 //        }
 //    }
+
+
 
 
 
