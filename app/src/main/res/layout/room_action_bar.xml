@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/custom_action_bar_consLay"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="55dp"
     android:background="@color/dark_bg"
     android:weightSum="10">
 
@@ -20,8 +20,8 @@
             android:paddingTop="3dp"
             android:paddingEnd="5dp"
             android:scaleType="centerInside"
-            android:scaleX="1.4"
-            android:scaleY="1.4"
+            android:scaleX="1"
+            android:scaleY="1"
 
             android:src="@drawable/ic_baseline_arrow_back_24"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -34,9 +34,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/room_dp_IMGV"
-            android:layout_width="32dp"
+            android:layout_width="35dp"
 
-            android:layout_height="32dp"
+            android:layout_height="35dp"
             android:layout_margin="5dp"
             app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -51,38 +51,58 @@
                     android:src="@drawable/poster" />
         </androidx.cardview.widget.CardView>
 
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/search_button"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toEndOf="@+id/room_dp_IMGV"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.0"
+    >
         <TextView
             android:id="@+id/roomTitleBar"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="92dp"
-            android:fontFamily="@font/hxtrabold"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:fontFamily="@font/hb"
+            android:gravity="center"
             android:paddingStart="5dp"
-
-            android:text="Ajaao sabbb"
+           android:paddingTop="5dp"
+            android:text="Room"
             android:textColor="@color/white"
-
             android:textSize="20sp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/room_dp_IMGV"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            />
+
+        <TextView
+            android:id="@+id/totalOnline_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/hmed"
+            android:gravity="center"
+            android:paddingStart="5dp"
+            android:text="1 online"
+            android:textColor="@color/s_grey"
+            android:paddingBottom="5dp"
+            android:textSize="12sp"
+            android:visibility="visible"
+            />
+
+</LinearLayout>
 
         <ImageButton
             android:id="@+id/search_button"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="#00000000"
-            android:scaleX="0.9"
-            android:scaleY="0.9"
+            android:scaleX="1"
+            android:scaleY="1"
             android:paddingTop="5dp"
-            android:src="@drawable/ic_search"
+            android:src="@drawable/ic_baseline_more_vert_24"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

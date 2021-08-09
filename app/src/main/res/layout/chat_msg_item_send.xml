@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:id="@+id/linearLayout_chat"
+    android:layout_marginTop="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profie_display_picture_chat"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/poster"
+        android:layout_gravity="bottom"
+        android:layout_margin = "5dp"
+
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_gchat_message_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/dark_fg"
+        app:cardCornerRadius="10dp"
+
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true"
+       >
+
+        <LinearLayout
+            android:id="@+id/layout_gchat_container_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/username_chatroom"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:maxWidth="260dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="Arpit!"
+                android:textColor="@color/s_blue200"
+                android:fontFamily="@font/hb"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_marginBottom="8dp"
+                >
+
+            <TextView
+                android:id="@+id/text_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:fontFamily="@font/hmed"
+                android:maxWidth="180dp"
+                android:minWidth="60dp"
+                android:text="Hi!"
+                android:textColor="#ffffff"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="8dp"
+                android:scaleX="0.6"
+                android:scaleY="0.6"
+                android:src="@drawable/ic_baseline_check_24"
+
+                />
+
+
+
+</LinearLayout>
+        </LinearLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</LinearLayout>

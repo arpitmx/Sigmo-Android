@@ -19,6 +19,7 @@
         android:src="@drawable/playing_on" />
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/msgEditBox"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="6"
@@ -26,7 +27,7 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         >
-
+        <requestFocus/>
 
     </com.google.android.material.textfield.TextInputEditText>
 
@@ -39,6 +40,9 @@
         android:gravity="center"
         android:scaleX="1"
         android:scaleY="1"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_effect"
         android:src="@drawable/ic_baseline_send_24" />
 
 

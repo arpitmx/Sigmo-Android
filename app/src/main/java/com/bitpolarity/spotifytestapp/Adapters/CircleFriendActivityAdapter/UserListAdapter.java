@@ -63,7 +63,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
 
 
         CircleFriendActivityListItemBinding binding;
-        ImageView play_trackbtn;
         ULEventListner ulEventListner;
 
         public myViewHolder(@NonNull CircleFriendActivityListItemBinding b, ULEventListner ulEventListner) {

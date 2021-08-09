@@ -54,11 +54,7 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
         setAnimation(holder.itemView,position);
 
 
-
-
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     }
 
     @Override

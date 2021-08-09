@@ -9,6 +9,7 @@
 
 
     <include
+        android:id="@+id/room_action_bar"
         layout="@layout/room_action_bar"
         />
 
@@ -27,10 +28,12 @@
             app:tabTextColor="#979797"
             app:tabSelectedTextColor="@color/white200"
             app:tabIndicatorColor="@color/s_yellow"
-            android:visibility="gone"
+            android:visibility="visible"
             app:tabIndicatorHeight="3dp"
             />
+
         <include
+            android:id="@+id/mini_player_room"
             layout="@layout/room_mini_song_player"
 
             />
