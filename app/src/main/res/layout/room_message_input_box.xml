@@ -1,44 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
+    android:minHeight="50dp"
+    android:maxHeight="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:background="@color/dark_fg"
+    android:elevation="5dp"
     android:weightSum="10">
 
 
 
-    <ImageView
-        android:id="@+id/cir_ROOM"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:src="@drawable/playing_on" />
+
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/msgEditBox"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="6"
-        android:hint="Message"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="8.4"
+        android:minHeight="45dp"
+        android:maxHeight="90dp"
+        android:padding="10dp"
+        android:layout_marginStart="5dp"
+        android:focusable="true"
+        android:cursorVisible="true"
+        android:gravity="center_vertical"
+        android:hint="Vala baba dub dub!"
+        android:background="@drawable/editbox_bg"
         android:textColor="@color/white"
-        android:textColorHint="@color/s_grey"
+
+        android:textColorHint="#88838383"
         >
-        <requestFocus/>
+
+
 
     </com.google.android.material.textfield.TextInputEditText>
+
 
     <ImageButton
         android:id="@+id/send_btn"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:background="#00FFFFFF"
+        android:layout_height="45dp"
+        android:layout_weight="1.5"
+        android:background="@drawable/four_side_send_btn"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:scaleX="1"
+        android:layout_gravity="center"
         android:scaleY="1"
         android:clickable="true"
         android:focusable="true"

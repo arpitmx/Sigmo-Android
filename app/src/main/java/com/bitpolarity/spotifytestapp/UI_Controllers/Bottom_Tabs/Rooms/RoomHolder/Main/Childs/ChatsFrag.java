@@ -1,11 +1,16 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Main.Childs;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.content.Context;
+import android.inputmethodservice.InputMethodService;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.ChatsAdapter;
+import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.MultiViewChatAdapter;
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel;
 import com.bitpolarity.spotifytestapp.R;
@@ -55,6 +61,7 @@ public class ChatsFrag extends Fragment {
 
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -71,6 +78,7 @@ public class ChatsFrag extends Fragment {
        chatList = new ArrayList<>();
 
         return binding.getRoot();
+
     }
 
     @Override
@@ -82,6 +90,8 @@ public class ChatsFrag extends Fragment {
         chatRV.hasFixedSize();
         chatRV.setLayoutManager(layoutManager);
         chatRV.setNestedScrollingEnabled(false);
+
+
 
 
 
@@ -98,7 +108,9 @@ public class ChatsFrag extends Fragment {
             DatabaseReference in_msg = msgRoot.child(temp_key);
             Map<String, Object> map2 = new HashMap<>();
 
-            if (!msg.equals("")){
+
+
+            if (filterText(msg)){
 
                 map2.put("msg",msg);
                 if (usrname!=null) {
@@ -128,6 +140,7 @@ public class ChatsFrag extends Fragment {
                 ArrayList<ChatListModel> c = new ArrayList<>();
                 c = getModelList(snapshot);
                 adapter = new ChatsAdapter(c);
+               // multiViewChatAdapter = new MultiViewChatAdapter(c);
 
 
             chatRV.setAdapter(adapter);
@@ -162,6 +175,24 @@ public class ChatsFrag extends Fragment {
 
 
     }
+
+
+    boolean filterText(String msg){
+
+        boolean sendable = false;
+
+        if(!msg.equals("") && msg.length()!=0){
+             if(!msg.trim().isEmpty()){
+                 if (!msg.matches("[\\n\\r]+")) {
+                     sendable = true;
+                 }
+             }
+        }
+
+        return sendable;
+    }
+
+
 
 
 

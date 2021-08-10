@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/dark_bg"
     android:weightSum="10"
     android:orientation="vertical">
 
@@ -13,7 +12,7 @@
         android:id="@+id/chats_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="9"
+        android:layout_weight="8.8"
         android:background="@drawable/chatbg"
         android:visibility="visible">
     </androidx.recyclerview.widget.RecyclerView>
@@ -21,10 +20,10 @@
 
     <include
         android:id="@+id/room_input"
-        android:layout_weight="1"
+        android:layout_weight="1.2"
         layout="@layout/room_message_input_box"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
 
         />
