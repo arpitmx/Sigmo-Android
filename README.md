@@ -41,8 +41,8 @@ Issues are open in the issues section.
 
 ### Logic Improvements :
 
-1. When updates occurs to the database whole list is reloaded with content for example everytime a new songs loads
-2. Initiate the apis and services during the splash screen 👷‍ - 4
+1. When updates occurs to the database whole list is reloaded with content for example everytime a new songs loads  ✅
+2. Initiate the apis and services during the splash screen 👷‍ - 4 () ✅
 3. Implement MVVM and seperate UI and business logics from activities and fragments 👷‍♀️ - L
 3. Use dependency injections like dagger2 for more flexibility 👷‍♀️ - L
 
@@ -55,16 +55,9 @@ Issues are open in the issues section.
 
 ### UX/UI Improvements :
 
-1. Speak human, easy to understand..layman's.
 --
-3. Show rotating of discs only to the songs which users plays of the friends fragment
-4. Make bottom navigation hidable when scrolled down
-5. Make figma models of the screens and then design the app accordingly 👷‍
-
+4. Make bottom navigation hidable when scrolled down.
 
 ![photo_2021-07-19_21-14-25](https://user-images.githubusercontent.com/59350776/126188448-f30fe6ab-319f-4b70-ae58-3e00b8fe734f.jpg)
 
-
-
-
-arpitrmaurya
+-arpitrmaurya, bitpolarity!
