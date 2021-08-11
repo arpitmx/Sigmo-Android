@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/custom_action_bar_consLay"
     android:layout_width="match_parent"
-    android:layout_height="55dp"
+    android:layout_height="58dp"
     android:background="@color/dark_bg"
     android:weightSum="10">
 
@@ -73,7 +73,7 @@
            android:paddingTop="5dp"
             android:text="Room"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:visibility="visible"
             />
 

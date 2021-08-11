@@ -1,62 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="50dp"
-    android:maxHeight="100dp"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:orientation="vertical"
     android:background="@color/dark_fg"
     android:elevation="5dp"
-    android:weightSum="10">
+
+    >
 
 
-
-
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/msgEditBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="8.4"
-        android:minHeight="45dp"
-        android:maxHeight="90dp"
-        android:padding="10dp"
-        android:layout_marginStart="5dp"
-        android:focusable="true"
-        android:cursorVisible="true"
+    <TextView
+        android:id="@+id/istypingTV"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_weight="1"
+        android:background="@color/dark_fg"
+        android:fontFamily="@font/hregular"
         android:gravity="center_vertical"
-        android:hint="Vala baba dub dub!"
-        android:background="@drawable/editbox_bg"
-        android:textColor="@color/white"
-
-        android:textColorHint="#88838383"
-        >
-
-
-
-    </com.google.android.material.textfield.TextInputEditText>
+        android:paddingStart="8dp"
+        android:text="Sara is typing..."
+        android:textColor="@color/s_blue200"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageButton
-        android:id="@+id/send_btn"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_weight="1.5"
-        android:background="@drawable/four_side_send_btn"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:scaleX="1"
-        android:layout_gravity="center"
-        android:scaleY="1"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="@drawable/ripple_effect"
-        android:src="@drawable/ic_baseline_send_24" />
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_weight="2"
+        android:maxHeight="100dp"
+        android:minHeight="55dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/istypingTV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/msgEditBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="8.5"
+            android:background="@drawable/editbox_bg"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_vertical"
+            android:hint="Vala baba dub dub!"
+            android:maxHeight="90dp"
+            android:minHeight="50dp"
+            android:padding="10dp"
+            android:textColor="@color/white"
+
+            android:textColorHint="#88838383">
 
 
+        </com.google.android.material.textfield.TextInputEditText>
 
-</LinearLayout>
+
+        <ImageButton
+            android:id="@+id/send_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1.3"
+            android:layout_marginTop="5dp"
+
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/four_side_send_btn"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:src="@drawable/ic_baseline_send_24" />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

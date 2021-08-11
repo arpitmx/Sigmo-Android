@@ -23,7 +23,7 @@ import com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder;
 public class OnClearFromRecentService extends Service {
 
     DB_Handler dbHolder = new DB_Handler();
-    SharedPreferences prefs;
+    public static SharedPreferences prefs;
     String USERNAME;
     String LOG = "SERVICE";
     SpotifyRepository spotifyRepository;

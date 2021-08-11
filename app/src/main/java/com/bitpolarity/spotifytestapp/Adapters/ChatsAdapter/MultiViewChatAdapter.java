@@ -4,11 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bitpolarity.spotifytestapp.DB_Handler;
-import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel;
+import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemIncomingBinding;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemOutgoingBinding;
@@ -17,16 +15,18 @@ import java.util.ArrayList;
 
 public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    ArrayList<ChatListModel> list;
+    ArrayList<ChatListModel_Multi> list;
+    public static final int MESSAGE_TYPE_IN = 1;
+    public static final int MESSAGE_TYPE_OUT = 2;
 
-    public MultiViewChatAdapter(ArrayList<ChatListModel> list){
+
+    public MultiViewChatAdapter(ArrayList<ChatListModel_Multi> list){
         this.list = list;
     }
 
-
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
 
@@ -39,7 +39,12 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
          this.binding_incoming = binding;
         }
 
+         void bind(int position) {
+            ChatListModel_Multi  messageModel = list.get(position);
+             binding_incoming.usernameChatroom.setText(messageModel.getSenderName());
+             binding_incoming.textMessage.setText(messageModel.getMessage());
 
+         }
      }
 
      class ViewHolderOutgoing extends RecyclerView.ViewHolder{
@@ -52,60 +57,44 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
              this.binding_outgoing = binding;
          }
 
+         void bind(int position) {
+             ChatListModel_Multi  messageModel = list.get(position);
+             binding_outgoing.textMessage.setText(messageModel.getMessage());
+         }
      }
 
-
-    @Override
+     @Override
     public int getItemViewType(int position) {
-        // Just as an example, return 0 or 2 depending on position
-        // Note that unlike in ListView adapters, types don't have to be contiguous
-        return position % 2 * 2;
+        return list.get(position).getMessageType();
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-       if (viewType == 0) {
+       if (viewType == 1) {
+
            View view_incoming = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_incoming, parent, false);
            return new ViewHolderIncoming(ChatMsgItemIncomingBinding.bind(view_incoming));
-       }else{
+
+       }else {
+
           View view_outgoing = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_outgoing,parent,false);
           return new ViewHolderOutgoing(ChatMsgItemOutgoingBinding.bind(view_outgoing));
 
        }
     }
 
-
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
-        ViewHolderIncoming holderin = (ViewHolderIncoming) holder;
-        ViewHolderOutgoing holderout = (ViewHolderOutgoing) holder;
+        if (list.get(position).getMessageType() == MESSAGE_TYPE_IN) {
+            ((ViewHolderIncoming) holder).bind(position);
 
-
-
-        if(list.get(position).getSenderName().equals(DB_Handler.getUsername())){
-
-            holderin.binding_incoming.textMessage.setText(list.get(position).getMessage());
-            holderin.binding_incoming.usernameChatroom.setText(list.get(position).getSenderName());
+        } else {
+            ((ViewHolderOutgoing) holder).bind(position);
 
         }
 
-        else{
-            holderout.binding_outgoing.textMessage.setText(list.get(position).getMessage());
-        }
 
-//        switch (holder.getItemViewType()) {
-//            case 0:
-//                ViewHolderIncoming viewHolder0 = (ViewHolderIncoming) holder;
-//
-//                break;
-//
-//            case 2:
-//               ViewHolderOutgoing viewHolder2 = (ViewHolderOutgoing) holder;
-//
-//                break;
-//        }
     }
 
 }

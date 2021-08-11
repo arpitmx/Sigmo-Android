@@ -7,6 +7,7 @@
     android:id="@+id/linearLayout_chat"
     android:clickable="true"
     android:focusable="true"
+
     android:gravity="end"
     android:foreground="@drawable/ripple_effect"
     android:layout_marginTop="8dp">
@@ -26,8 +27,7 @@
             android:id="@+id/layout_gchat_container_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/chatitembg"
-
+            android:background="@drawable/chatitembg_outgoing"
             android:orientation="vertical">
 
             <TextView
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="textStart"
                 android:fontFamily="@font/hmed"
-                android:maxWidth="180dp"
+                android:maxWidth="230dp"
                 android:minWidth="60dp"
                 android:text="Hi!"
                 android:textColor="@color/white200"

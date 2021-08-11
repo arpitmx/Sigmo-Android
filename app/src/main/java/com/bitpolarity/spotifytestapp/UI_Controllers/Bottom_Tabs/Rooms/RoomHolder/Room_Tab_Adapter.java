@@ -24,6 +24,8 @@ public class Room_Tab_Adapter extends FragmentStateAdapter {
             return new SongQueueFrag();
         } else if (position == 2) {
             return new MembersFrag();
+        }else if (position == 1){
+            return new ChatsFrag();
 
         } else return new ChatsFrag();
     }
