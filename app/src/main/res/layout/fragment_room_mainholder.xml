@@ -9,6 +9,7 @@
 
 
     <include
+        android:id="@+id/room_action_bar"
         layout="@layout/room_action_bar"
         />
 
@@ -23,15 +24,17 @@
             android:id="@+id/tabLayout_Rooms"
             android:layout_width="match_parent"
             android:layout_height="37dp"
-            android:background="@color/white200"
+            android:background="@color/dark_bg"
             app:tabTextColor="#979797"
-            app:tabSelectedTextColor="@color/black"
+            app:tabSelectedTextColor="@color/white200"
             app:tabIndicatorColor="@color/s_yellow"
-
-            android:visibility="visible"
+            android:visibility="gone"
             app:tabIndicatorHeight="3dp"
             />
+
+
         <include
+            android:id="@+id/mini_player_room"
             layout="@layout/room_mini_song_player"
 
             />
@@ -39,6 +42,7 @@
             android:id="@+id/viewpager_Rooms"
             android:layout_weight="1"
             android:layout_height="0dp"
+            android:background="@color/dark_fg"
             android:layout_width="match_parent"/>
 
 

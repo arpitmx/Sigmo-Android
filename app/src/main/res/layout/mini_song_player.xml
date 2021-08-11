@@ -11,18 +11,11 @@
 
     >
 
-
-
-
-
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
         android:layout_height="51dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        android:background="@drawable/button_round"
         >
 
 
@@ -32,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="51dp"
             android:scaleType="centerCrop"
-            android:alpha="0.35"
+            android:alpha="0.2"
             android:background="@color/dark_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +80,7 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                     android:singleLine="true"
-                    android:text="Song"
+                    android:text="Sip your coffee"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
                     android:textColor="@color/white"
                     android:textSize="15sp"
@@ -106,7 +99,7 @@
                     android:gravity="start"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
                     android:padding="6dp"
-                    android:text="Artist"
+                    android:text="loading"
                     android:paddingStart="10dp"
                     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"

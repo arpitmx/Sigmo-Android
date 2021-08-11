@@ -257,6 +257,9 @@ public class MainHolder extends AppCompatActivity {
 //                    binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
                         room.setVisibility(View.GONE);
 
+
+
+
                     }
                     return true;
 
@@ -287,7 +290,7 @@ public class MainHolder extends AppCompatActivity {
 
         setMiniPlayerDetails();
         setPosterAndPallet();
-        setPalette();
+        //setPalette();
         setPlayerState();
 
 
@@ -413,7 +416,7 @@ public class MainHolder extends AppCompatActivity {
 
         SongModel.getImgURI().observe(this, imageUri -> mSpotifyAppRemote.getImagesApi().getImage(imageUri).setResultCallback(data -> {
             cir.setImageBitmap(data);
-            //miniPlayer_bg.setImageBitmap(compressImage(data));
+            miniPlayer_bg.setImageBitmap(compressImage(data));
         }));
 
     }
@@ -421,15 +424,15 @@ public class MainHolder extends AppCompatActivity {
 
 
 
-    void setPalette(){
-        SongModel.getTrackPalette().observe(this, integer -> {
-
-            //miniPlayer_bg.setBackgroundColor(integer);
-          // miniPlayer_bg.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
-
-        });
-
-    }
+//    void setPalette(){
+//        SongModel.getTrackPalette().observe(this, integer -> {
+//
+//            //miniPlayer_bg.setBackgroundColor(integer);
+//          // miniPlayer_bg.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+//
+//        });
+//
+//    }
 
 
     public static Bitmap getBitmapFromURL(String src) {

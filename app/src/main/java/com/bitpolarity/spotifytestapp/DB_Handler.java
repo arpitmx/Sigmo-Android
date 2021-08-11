@@ -38,6 +38,7 @@ public class DB_Handler {
     }
 
 
+
     /////////////////////////////////////////-------BASIC IO--------/////////////////////////////////
 
 
@@ -78,9 +79,8 @@ public class DB_Handler {
 
    }
 
-   String getUsername(){
+   public static String getUsername(){
         return username;
-
    }
 
     /////////////////////////////////////////-------BASIC IO--------/////////////////////////////////
@@ -122,7 +122,23 @@ public class DB_Handler {
 
      ////////////////////////////////// ROOOOOOOMS
      public void CreateRoom(String mRoomName){
-        ref.child(room_ROOT).child(mRoomName).child("mHostName").setValue(username);
+
+
+        // RoomDetails
+
+        ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("hostDetails").child("userName").setValue(username);
+        ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("isPublic").setValue("true");
+        ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("size").child("total").setValue("30");
+        ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("size").child("current").setValue("0");
+        date = new Date();
+        ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("startedAt").setValue(getTime(date));
+
+
+        //Member Structure
+
+         ref.child(room_ROOT).child(mRoomName).child("members").child("currentOnline").setValue("0");
+
+
      }
 
     ////////////////////////////////// ROOOOOOOMS

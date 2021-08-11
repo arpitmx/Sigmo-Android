@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,19 +14,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bitpolarity.spotifytestapp.Adapters.FR_Adapter;
+import com.bitpolarity.spotifytestapp.Adapters.RoomsListAdapters.RoomsListAdapter;
 import com.bitpolarity.spotifytestapp.BottomSheets.mBottomSheetDialog;
+import com.bitpolarity.spotifytestapp.GetterSetterModels.FR_Model;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.UserListModel;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter.UserListAdapter;
 import com.bitpolarity.spotifytestapp.DB_Related.TempDataHolder;
 import com.bitpolarity.spotifytestapp.databinding.ActivityStatusBinding;
+import com.bitpolarity.spotifytestapp.databinding.FragmentCircleBinding;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.crashlytics.internal.model.CrashlyticsReport;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,10 +42,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -52,18 +64,24 @@ import javax.xml.transform.Result;
 public class StatusActivity extends Fragment implements UserListAdapter.ULEventListner {
 
     final String LOG = "StatusActivity";
-    ImageView imageView;
-    TextView isPlayingTV ;
     RecyclerView userRecyclerView;
+    RecyclerView fr_rv;
     UserListAdapter userListAdapter;
+    FR_Adapter fr_adapter;
+    TabLayout tabLayout;
     DatabaseReference ref;
+
     TempDataHolder dataHolder;
     final int ONLINE = R.drawable.ongreen;
     final int OFFLINE = R.drawable.ored;
     Parcelable state;
+
     LinearLayoutManager layoutManager ;
-    BottomNavigationView bottomNavigationItemView;
+    LinearLayoutManager layoutManagerFR;
+
     ActivityStatusBinding binding;
+    static String finaltime = "";
+
 
     ////// Firebase specific
 
@@ -76,8 +94,11 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
         binding = ActivityStatusBinding.inflate(inflater,container,false);
         userRecyclerView = binding.listview;
+        fr_rv = binding.frRv;
+
 
         layoutManager = new LinearLayoutManager(getContext());
+        layoutManagerFR = new LinearLayoutManager(getContext());
 
         return binding.getRoot();
 
@@ -91,17 +112,39 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         ref =FirebaseDatabase.getInstance().getReference().child("Users");
         binding.shimmerFrameLayout.startShimmerAnimation();
 
+
+
+        layoutManagerFR.setOrientation(RecyclerView.HORIZONTAL);
+        fr_rv.setLayoutManager(layoutManagerFR);
+        fr_rv.setNestedScrollingEnabled(false);
+
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         userRecyclerView.setLayoutManager(layoutManager);
         userRecyclerView.setNestedScrollingEnabled(false);
+
+
+        ArrayList<FR_Model> list = new ArrayList<>();
+        list.add(new FR_Model(R.drawable.poster,"Teena"));
+        list.add(new FR_Model(R.drawable.poster,"Teena"));
+        list.add(new FR_Model(R.drawable.poster,"Teena"));
+        list.add(new FR_Model(R.drawable.poster,"Teena"));
+        fr_adapter = new FR_Adapter(list , getContext());
+        fr_rv.setAdapter(fr_adapter);
+        fr_rv.setNestedScrollingEnabled(false);
+        fr_adapter.notifyDataSetChanged();
+
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         loadData();
+
+        binding.refreshLayout.setOnRefreshListener(() -> {
+            loadData();
+            binding.refreshLayout.setRefreshing(false);
+        });
     }
 
     @Override
@@ -151,7 +194,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
                 continue;
             }
-
             // Include the primary key of this Firebase data record. Named it 'recKeyID'
             fldObj.put("recKeyID", shot.getKey());
 
@@ -295,6 +337,10 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                 if (s == 1) status[i] = ONLINE;
                 else status[i] = OFFLINE;
 
+                String now = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
+                Log.d(TAG, "Last active : "+ data.get(i).get("recKeyID") + ":" + findDifference(String.valueOf(data.get(i).get("LA")),now) );
+
+
 
                 //isPlaying
                 Log.d(TAG, "IsPlaying : "+ data.get(i).get("isPlaying") );
@@ -302,7 +348,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
 
                 //DateTime
-                Log.d(TAG, "IsPlaying : "+ data.get(i).get("LA") );
+                Log.d(TAG, "IsPlaying : "+ data.get(i).get("LA"));
                 dateTime[i] = String.valueOf(data.get(i).get("LA"));
 
                 //Users
@@ -333,6 +379,82 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         }
 
         return modelList;
+    }
+
+    static String findDifference(String start_date,String end_date) {
+
+        SimpleDateFormat sdf
+                = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+
+
+        // Try Block
+        try {
+
+            Date d1 = sdf.parse(start_date);
+            Date d2 = sdf.parse(end_date);
+
+            long difference_In_Time
+                    = d2.getTime() - d1.getTime();
+            long difference_In_Seconds
+                    = (difference_In_Time
+                    / 1000) % 60;
+
+            long difference_In_Minutes
+                    = (difference_In_Time
+                    / (1000 * 60)) % 60;
+
+            long difference_In_Hours
+                    = (difference_In_Time
+                    / (1000 * 60 * 60)) % 24;
+
+            long difference_In_Years
+                    = (difference_In_Time / (1000L * 60 * 60 * 24 * 365));
+
+            long difference_In_Days
+                    = (difference_In_Time
+                    / (1000 * 60 * 60 * 24)) % 365;
+            System.out.print(
+                    "Difference "
+                            + "between two dates is: ");
+
+
+            long[] s = {difference_In_Years, difference_In_Days, difference_In_Hours, difference_In_Minutes, difference_In_Seconds};
+
+            if (s[0] == 0 && s[1] == 0 && s[2] == 0 && s[3] == 0 && s[4] != 0) {
+                finaltime = s[4] + " sec ago";
+            } else if (s[0] == 0 && s[1] == 0 && s[2] == 0 && s[3] != 0) {
+                finaltime = s[3] + " min ago";
+            } else if (s[0] == 0 && s[1] == 0 && s[2] != 0) {
+                finaltime = s[2] + " hour ago";
+            } else if (s[0] == 0 && s[1] != 0) {
+                finaltime = s[1] + " day ago";
+            } else if (s[0] != 0) {
+                finaltime = s[0] + " year ago";
+
+            }
+
+
+            System.out.println(
+                    difference_In_Years
+                            + " years, "
+                            + difference_In_Days
+                            + " days, "
+                            + difference_In_Hours
+                            + " ⌛ hours, "
+                            + difference_In_Minutes
+                            + " minutes, "
+                            + difference_In_Seconds
+                            + " seconds");
+
+
+        }
+
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return finaltime;
     }
 
 }

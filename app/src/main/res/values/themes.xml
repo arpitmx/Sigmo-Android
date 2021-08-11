@@ -33,9 +33,19 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
-    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/white</item>
-        <item name="android:textColor">@color/s_blue</item>
-    </style>
+
+
+
+        <style name="Theme.Transparent" parent="android:Theme">
+            <item name="android:windowIsTranslucent">true</item>
+            <item name="android:windowBackground">@android:color/transparent</item>
+            <item name="android:windowContentOverlay">@null</item>
+            <item name="android:windowNoTitle">true</item>
+            <item name="android:windowIsFloating">true</item>
+            <item name="android:backgroundDimEnabled">false</item>
+        </style>
+
+
 
 </resources>
+

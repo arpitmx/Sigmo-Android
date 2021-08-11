@@ -9,8 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="s_blue">#0D82FF</color>
     <color name="s_blue200">#90CAF9</color>
+    <color name="s_blue100">#ABD4F6</color>
+
+
     <color name="s_green">#69DB22</color>
-    <color name="s_grey">#dddddd</color>
+    <color name="s_grey">#CACACA</color>
     <color name="s_red">#E53935</color>
     <color name="s_grey_Dark">#D36E93</color>
     <color name="s_yellow">@color/s_blue</color>
@@ -20,6 +23,7 @@
     <color name= "dark_bg">#F2121212</color>
     <color name= "dark_bg_toptab">#34121212</color>
 <!--    <color name= "dark_fg">#323232</color> -->
+    <color name="dark_chat_bg">#9EB3C5</color>
     <color name= "dark_fg">#CC323232</color>
     <color name= "dark_fg_border">#F2050505</color>
 
