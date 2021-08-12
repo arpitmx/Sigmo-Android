@@ -94,7 +94,7 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
         mRoomRV.hasFixedSize();
 
 
-        mref.addValueEventListener(new ValueEventListener() {
+        mref.addListenerForSingleValueEvent(new ValueEventListener() {
 
 
             @Override

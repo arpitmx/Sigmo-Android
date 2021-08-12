@@ -166,6 +166,8 @@ public class ChatsFrag extends Fragment {
             }
             else{
                 binding.roomInput.msgEditBox.setError("Message can't be empty!");
+                binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_out));
+
             }
         });
 

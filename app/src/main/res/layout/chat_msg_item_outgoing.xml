@@ -58,9 +58,9 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="textStart"
                 android:fontFamily="@font/hmed"
-                android:maxWidth="230dp"
+                android:maxWidth="210dp"
                 android:minWidth="60dp"
-                android:text="Hi!"
+                android:text="Hikjhkjkjkjkjhkoijeoirjeeoijeorijgeeorijeorgi!"
                 android:textColor="@color/white200"
                 android:textSize="17sp" />
 

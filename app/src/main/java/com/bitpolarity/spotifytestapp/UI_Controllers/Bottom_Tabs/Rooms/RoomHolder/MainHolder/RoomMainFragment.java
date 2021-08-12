@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
@@ -55,17 +56,22 @@ public class RoomMainFragment extends Fragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         memberRoot = firebaseDatabase.getReference().child("Rooms").child(roomName).child("members");
-
-//        memberRoot.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                binding.roomActionBar.totalOnlineTv.setText(snapshot.child("currentOnline").getValue().toString()+" Online");
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.d(TAG, "onCancelled: Error");
-//            }
-//        });
+        memberRoot.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild("allmembers")) {
+                    Map<String, Object> map = (Map<String, Object>) snapshot.child("allmembers").getValue();
+                    binding.roomActionBar.totalOnlineTv.setText(map.size()+" online");
+                }
+                else{
+                    binding.roomActionBar.totalOnlineTv.setText("Loading");
+                }
+                    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d(TAG, "onCancelled: Error");
+            }
+        });
 
 
         tabLayout = binding.tabLayoutRooms;
