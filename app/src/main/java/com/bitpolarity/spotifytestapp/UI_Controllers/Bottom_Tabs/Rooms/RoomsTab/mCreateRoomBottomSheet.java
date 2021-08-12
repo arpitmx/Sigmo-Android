@@ -44,7 +44,10 @@ public class mCreateRoomBottomSheet extends BottomSheetDialogFragment {
             db_handler.CreateRoom(roomName);
             Toast.makeText(getContext(), "Room created" , Toast.LENGTH_SHORT).show();
             Log.d("Bottom", "onCreateView: "+"Room created");
-            startActivity(new Intent(getContext(), RoomHolderActivity.class));
+            Intent i = new Intent(getContext(), RoomHolderActivity.class);
+            i.putExtra("room_name",roomName);
+            startActivity(i);
+
         }else{
             mRoomNameEditText.setError("Com'on! give it a dope name!");
         }

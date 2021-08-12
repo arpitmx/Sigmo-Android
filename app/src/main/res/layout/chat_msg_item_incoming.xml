@@ -35,7 +35,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/chatitembg"
-
             android:orientation="vertical">
 
             <TextView
@@ -43,7 +42,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginTop="5dp"
-                android:maxWidth="260dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:text="Arpit!"
@@ -66,22 +64,13 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="textStart"
                 android:fontFamily="@font/hmed"
-                android:maxWidth="180dp"
+                android:maxWidth="260dp"
                 android:minWidth="60dp"
                 android:text="Hi!"
                 android:textColor="@color/white200"
                 android:textSize="17sp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginStart="8dp"
-                android:scaleX="0.6"
-                android:scaleY="0.6"
-                android:src="@drawable/ic_baseline_check_24"
 
-                />
 
 
 

@@ -1,5 +1,7 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.MainHolder;
 
+import static com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.MainHolder.RoomHolderActivity.roomName;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.bitpolarity.spotifytestapp.R;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Main.Childs.ChatsFrag;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Room_Tab_Adapter;
 import com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomMainholderBinding;
@@ -38,6 +41,9 @@ public class RoomMainFragment extends Fragment {
     ViewPager2 viewPager;
     Room_Tab_Adapter adapter;
     FragmentRoomMainholderBinding binding;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference memberRoot;
+    final static String TAG = "RoomHolderActivity";
 
 
     @Override
@@ -45,10 +51,21 @@ public class RoomMainFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = FragmentRoomMainholderBinding.inflate(inflater, container, false);
-        binding.roomActionBar.roomTitleBar.setText(getActivity().getIntent().getStringExtra("room_name"));
+        binding.roomActionBar.roomTitleBar.setText(roomName);
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        memberRoot = firebaseDatabase.getReference().child("Rooms").child(roomName).child("members");
 
-
+//        memberRoot.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                binding.roomActionBar.totalOnlineTv.setText(snapshot.child("currentOnline").getValue().toString()+" Online");
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.d(TAG, "onCancelled: Error");
+//            }
+//        });
 
 
         tabLayout = binding.tabLayoutRooms;
@@ -61,8 +78,6 @@ public class RoomMainFragment extends Fragment {
 //                startActivity(new Intent(getActivity().getBaseContext(), MainHolder.class));
 //            }
 //        });
-
-
         // constraintLayout = v.findViewById(R.id.custom_action_bar_consLay);
         // constraintLayout.setElevation(0);
 
@@ -74,23 +89,19 @@ public class RoomMainFragment extends Fragment {
         FragmentManager fm = getChildFragmentManager();
         adapter = new Room_Tab_Adapter(fm , getLifecycle());
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
-
         });
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

@@ -1,5 +1,7 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Main.Childs;
 
+import static android.view.WindowManager.LayoutParams.ANIMATION_CHANGED;
+import static android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.content.Context;
@@ -7,9 +9,11 @@ import android.inputmethodservice.InputMethodService;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -18,11 +22,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.ChatsAdapter;
 import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.MultiViewChatAdapter;
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel;
+import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
 import com.bitpolarity.spotifytestapp.databinding.RoomActionBarBinding;
@@ -31,6 +37,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -44,20 +51,23 @@ public class ChatsFrag extends Fragment {
 
     FragmentRoomChatBinding binding;
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference msgRoot;
+    DatabaseReference msgRoot, isTypingRoot;
     private String temp_key;
     MediaPlayer mpSent, mpClick ;
 
     RecyclerView chatRV;
-    ChatsAdapter adapter;
+    MultiViewChatAdapter adapter;
     LinearLayoutManager layoutManager;
-
+    SwipeRefreshLayout swipeRefreshLayout;
     private String userName , msg;
-    ArrayList<ChatListModel> chatList;
+    ArrayList<ChatListModel_Multi> chatList;
 
-
-    RoomActionBarBinding actionBarBinding;
+    final static String TAG = "ChatsFrag";
     private Parcelable recyclerViewState;
+
+    static final int TOTAL_ELEMENT_TO_LOAD = 20;
+    private  int mCurrentPage = 1;
+    static boolean isTyping = false;
 
 
 
@@ -69,9 +79,15 @@ public class ChatsFrag extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
        msgRoot= firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("messages");
+       //isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("members").child("allmembers").child("Arpit!");
+
 
        mpSent = MediaPlayer.create(getContext(), R.raw.hs_bg_message_sent2);
        mpClick = MediaPlayer.create(getContext(), R.raw.know);
+
+      // getActivity().getWindow().setSoftInputMode(SOFT_INPUT_ADJUST_PAN);
+       //swipeRefreshLayout = binding.swipeRefresh;
+       //swipeRefreshLayout.setEnabled(false);
 
        chatRV = binding.chatsLayout;
        layoutManager = new LinearLayoutManager(getContext());
@@ -80,6 +96,7 @@ public class ChatsFrag extends Fragment {
         return binding.getRoot();
 
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -92,12 +109,36 @@ public class ChatsFrag extends Fragment {
         chatRV.setNestedScrollingEnabled(false);
 
 
-
-
+//        ValueEventListener postListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.child("isTyping").getValue().toString().equals("true")){
+//                    binding.roomInput.istypingTV.setVisibility(View.VISIBLE);
+//                    isTyping = true;
+//                   // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_up));
+//                    binding.roomInput.istypingTV.setText("Arpit! is typing...");
+//                }else{
+//                       // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_down));
+//                        binding.roomInput.istypingTV.setVisibility(View.GONE);
+//                        isTyping = false;
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Getting Post failed, log a message
+//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+//            }
+//        };
+//
+//        isTypingRoot.addValueEventListener(postListener);
+//
 
 
         binding.roomInput.sendBtn.setOnClickListener(v -> {
            // mpClick.start();
+            binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
             String msg = binding.roomInput.msgEditBox.getText().toString();
             String usrname = DB_Handler.getUsername();
 
@@ -108,15 +149,13 @@ public class ChatsFrag extends Fragment {
             DatabaseReference in_msg = msgRoot.child(temp_key);
             Map<String, Object> map2 = new HashMap<>();
 
-
-
             if (filterText(msg)){
 
                 map2.put("msg",msg);
                 if (usrname!=null) {
+
                     map2.put("sender", usrname);
                     in_msg.updateChildren(map2);
-
                     Toast.makeText(getContext(),"Sent",Toast.LENGTH_SHORT).show();
                     binding.roomInput.msgEditBox.setText("");
                     mpSent.start();
@@ -132,22 +171,39 @@ public class ChatsFrag extends Fragment {
 
 
 
+        loadmessages();
+
+//         swipeRefreshLayout.setOnRefreshListener(() -> {
+//             mCurrentPage++;
+//             chatList.clear();
+//             loadmessages();
+//         });
+
+
+
+
+    }
+
+    void loadmessages(){
+
+       // Query msgQue = msgRoot.limitToLast(mCurrentPage*TOTAL_ELEMENT_TO_LOAD);
+
         msgRoot.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                recyclerViewState = chatRV.getLayoutManager().onSaveInstanceState();
+                //recyclerViewState = chatRV.getLayoutManager().onSaveInstanceState();
 
-                ArrayList<ChatListModel> c = new ArrayList<>();
-                c = getModelList(snapshot);
-                adapter = new ChatsAdapter(c);
-               // multiViewChatAdapter = new MultiViewChatAdapter(c);
+                //int size = getModelList(snapshot).size();
+                adapter = new MultiViewChatAdapter(getModelList(snapshot));
+
+                chatRV.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                //chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+
+                //swipeRefreshLayout.setRefreshing(false);
+                //chatRV.scrollToPosition(c.size()- 1);
 
 
-            chatRV.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-
-            chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
-            chatRV.scrollToPosition(c.size()- 1);
 
             }
 
@@ -177,6 +233,7 @@ public class ChatsFrag extends Fragment {
     }
 
 
+
     boolean filterText(String msg){
 
         boolean sendable = false;
@@ -197,16 +254,30 @@ public class ChatsFrag extends Fragment {
 
 
 
-    ArrayList<ChatListModel> getModelList(DataSnapshot dataSnapshot){
+    ArrayList<ChatListModel_Multi> getModelList(DataSnapshot dataSnapshot){
 
         Iterator i = dataSnapshot.getChildren().iterator();
 
         while (i.hasNext()){
             msg = String.valueOf(((DataSnapshot)i.next()).getValue());
             userName = String.valueOf(((DataSnapshot)i.next()).getValue());
-            chatList.add(new ChatListModel(userName,msg));
+            if (userName.equals(DB_Handler.getUsername())){
+                chatList.add(new ChatListModel_Multi(userName,msg,2));
+                Log.d(TAG, "getModelList: TYPE 1");
+            }else{
+                chatList.add(new ChatListModel_Multi(userName,msg,1));
+                Log.d(TAG, "getModelList: TYPE 2");
+
+            }
+
         }
 
         return chatList;
     }
+
+
+
+
+
+
 }

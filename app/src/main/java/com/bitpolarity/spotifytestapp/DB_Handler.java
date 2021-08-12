@@ -1,5 +1,8 @@
 package com.bitpolarity.spotifytestapp;
 
+import static com.bitpolarity.spotifytestapp.Services.OnClearFromRecentService.prefs;
+
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.bitpolarity.spotifytestapp.DB_Related.fbase_bundle;
@@ -24,7 +27,9 @@ public class DB_Handler {
     final String usr_ROOT = "Users";
     final String room_ROOT = "Rooms";
     DatabaseReference ROOTPATH;
+    SharedPreferences pref;
 
+   // static SharedPreferences prefs;
 
     ////////////////////////////////== INIT ==////////////////////////////////////////////////////////////////////////
 
@@ -80,7 +85,13 @@ public class DB_Handler {
    }
 
    public static String getUsername(){
-        return username;
+        if (username!=null) {
+            return username;
+        }else{
+            //prefs=  getSharedPreferences("com.bitpolarity.spotifytestapp",MODE_PRIVATE);
+            username = prefs.getString("Username","Error-1");
+            return username;
+        }
    }
 
     /////////////////////////////////////////-------BASIC IO--------/////////////////////////////////
@@ -126,17 +137,16 @@ public class DB_Handler {
 
         // RoomDetails
 
-        ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("hostDetails").child("userName").setValue(username);
+         ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("roomName").setValue(mRoomName);
+         ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("hostDetails").child("userName").setValue(username);
         ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("isPublic").setValue("true");
         ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("size").child("total").setValue("30");
-        ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("size").child("current").setValue("0");
         date = new Date();
         ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("startedAt").setValue(getTime(date));
 
 
         //Member Structure
 
-         ref.child(room_ROOT).child(mRoomName).child("members").child("currentOnline").setValue("0");
 
 
      }

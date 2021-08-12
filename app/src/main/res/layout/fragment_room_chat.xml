@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chats_layout"
         android:layout_width="match_parent"
@@ -24,7 +25,6 @@
         layout="@layout/room_message_input_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
 
         />
 
