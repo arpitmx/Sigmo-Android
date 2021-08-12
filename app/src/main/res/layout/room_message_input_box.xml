@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/chatbg"
-    android:elevation="5dp"
+
     >
 
     <TextView
@@ -13,13 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="28dp"
         android:layout_weight="1"
-        android:background="@drawable/top_round_borders_chatbg"
+        android:background="#EE202020"
         android:fontFamily="@font/hregular"
         android:gravity="center_vertical"
         android:paddingStart="12dp"
         android:paddingBottom="5dp"
         android:text="Sara is typing..."
-        android:textColor="@color/white87"
+        android:textColor="@color/s_blue200"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,6 +52,8 @@
             app:boxStrokeWidthFocused="0dp"
             app:hintEnabled="false"
             app:endIconTint="@color/white87"
+            app:counterEnabled="true"
+            app:counterMaxLength="300"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
