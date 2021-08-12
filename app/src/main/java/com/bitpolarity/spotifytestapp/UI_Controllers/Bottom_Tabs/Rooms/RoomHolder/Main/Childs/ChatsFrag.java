@@ -32,6 +32,7 @@ import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
 import com.bitpolarity.spotifytestapp.databinding.RoomActionBarBinding;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -68,6 +69,7 @@ public class ChatsFrag extends Fragment {
     static final int TOTAL_ELEMENT_TO_LOAD = 20;
     private  int mCurrentPage = 1;
     static boolean isTyping = false;
+    ShimmerFrameLayout shimmerFrameLayout;
 
 
 
@@ -81,6 +83,8 @@ public class ChatsFrag extends Fragment {
        msgRoot= firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("messages");
        //isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("members").child("allmembers").child("Arpit!");
 
+       shimmerFrameLayout = binding.shimmerFrameLayoutChatfrag;
+       shimmerFrameLayout.startShimmerAnimation();
 
        mpSent = MediaPlayer.create(getContext(), R.raw.hs_bg_message_sent2);
        mpClick = MediaPlayer.create(getContext(), R.raw.know);
@@ -172,7 +176,6 @@ public class ChatsFrag extends Fragment {
         });
 
 
-
         loadmessages();
 
 //         swipeRefreshLayout.setOnRefreshListener(() -> {
@@ -180,9 +183,6 @@ public class ChatsFrag extends Fragment {
 //             chatList.clear();
 //             loadmessages();
 //         });
-
-
-
 
     }
 
@@ -197,7 +197,7 @@ public class ChatsFrag extends Fragment {
 
                 //int size = getModelList(snapshot).size();
                 adapter = new MultiViewChatAdapter(getModelList(snapshot));
-
+                chatRV.setVisibility(View.VISIBLE);
                 chatRV.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 //chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
@@ -263,16 +263,19 @@ public class ChatsFrag extends Fragment {
         while (i.hasNext()){
             msg = String.valueOf(((DataSnapshot)i.next()).getValue());
             userName = String.valueOf(((DataSnapshot)i.next()).getValue());
+
             if (userName.equals(DB_Handler.getUsername())){
                 chatList.add(new ChatListModel_Multi(userName,msg,2));
-                Log.d(TAG, "getModelList: TYPE 1");
+                Log.d(TAG, "getModelList: TYPE 1"+msg);
             }else{
                 chatList.add(new ChatListModel_Multi(userName,msg,1));
-                Log.d(TAG, "getModelList: TYPE 2");
+                Log.d(TAG, "getModelList: TYPE 2"+msg);
 
             }
 
         }
+        shimmerFrameLayout.stopShimmerAnimation();
+        shimmerFrameLayout.setVisibility(View.GONE);
 
         return chatList;
     }

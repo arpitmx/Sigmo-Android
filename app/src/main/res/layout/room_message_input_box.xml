@@ -2,25 +2,24 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/dark_fg"
+    android:background="@drawable/chatbg"
     android:elevation="5dp"
-
     >
-
 
     <TextView
         android:id="@+id/istypingTV"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="28dp"
         android:layout_weight="1"
-        android:background="@color/dark_fg"
+        android:background="@drawable/top_round_borders_chatbg"
         android:fontFamily="@font/hregular"
         android:gravity="center_vertical"
-        android:paddingStart="8dp"
+        android:paddingStart="12dp"
+        android:paddingBottom="5dp"
         android:text="Sara is typing..."
-        android:textColor="@color/s_blue200"
+        android:textColor="@color/white87"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,52 +29,63 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="60dp"
         android:layout_weight="2"
         android:maxHeight="100dp"
         android:minHeight="55dp"
+        android:elevation="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         android:weightSum="10"
+        android:background="@color/dark_fg_darker"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/istypingTV">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/msgEditBox"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="8.5"
-            android:background="@drawable/editbox_bg"
-            android:cursorVisible="true"
-            android:focusable="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center_vertical"
-            android:hint="Vala baba dub dub!"
-            android:maxHeight="90dp"
-            android:minHeight="50dp"
-            android:padding="10dp"
-            android:textColor="@color/white"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:layout_margin="8dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false"
+            app:endIconTint="@color/white87"
+            app:endIconMode="clear_text">
 
-            android:textColorHint="#88838383">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/msgEditBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="100dp"
+                android:minHeight="60dp"
+                android:padding="1dp"
+                android:fontFamily="@font/hmed"
+                android:textStyle="normal"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:hint="Type you message here"
+                android:textColorHint="#88838383"
+                android:background="@drawable/editbox_bg"
+                android:textColor="@color/white200"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        </com.google.android.material.textfield.TextInputEditText>
 
 
         <ImageButton
             android:id="@+id/send_btn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:layout_weight="1.3"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="2dp"
 
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/four_side_send_btn"
             android:clickable="true"
@@ -88,3 +98,43 @@
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+<!--<com.google.android.material.textfield.TextInputLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_weight="8.7"-->
+<!--android:layout_marginStart="10dp"-->
+<!--android:layout_marginTop="5dp"-->
+<!--android:layout_marginEnd="5dp"-->
+<!--android:layout_marginBottom="5dp"-->
+<!--android:gravity="center_vertical"-->
+<!--android:hint="Vala baba dub dub!"-->
+<!--android:padding="10dp"-->
+<!--android:textColor="@color/white"-->
+<!--app:endIconMode="clear_text">-->
+
+
+<!--<com.google.android.material.textfield.TextInputEditText-->
+<!--    android:id="@+id/msgEditBox"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:layout_gravity="center"-->
+<!--    android:maxHeight="90dp"-->
+<!--    android:minHeight="50dp"-->
+<!--    android:cursorVisible="true"-->
+<!--    android:focusable="true"-->
+<!--    android:background="@drawable/editbox_bg"-->
+
+<!--    android:textColorHint="#88838383">-->
+
+
+
+
+<!--</com.google.android.material.textfield.TextInputEditText>-->
+
+<!--</com.google.android.material.textfield.TextInputLayout>-->

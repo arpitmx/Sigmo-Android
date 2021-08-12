@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.MainHolder.RoomHolderActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,8 +60,10 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
     LinearLayoutManager lm;
     RecyclerView mRoomRV;
     RoomsListAdapter listAdapter;
-    static List<RoomsListModel> modelList;
+     List<RoomsListModel> modelList;
 
+
+    CircularProgressIndicator progressBar;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -75,11 +79,13 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
         View v = inflater.inflate(R.layout.fragment_rooms, container, false);
         startRoomBTN = v.findViewById(R.id.startroomBTN);
 
-
+        progressBar = v.findViewById(R.id.progress_room);
         lm = new LinearLayoutManager(getContext());
         mRoomRV = v.findViewById(R.id.rooms_listview);
         modelList = new ArrayList<>();
 
+
+        progressBar.setVisibility(View.VISIBLE);
 
         lm.setOrientation(LinearLayoutManager.VERTICAL);
         mRoomRV.setLayoutManager(lm);
@@ -96,12 +102,10 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 
         mref.addListenerForSingleValueEvent(new ValueEventListener() {
 
-
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
                 Map<String, Object> map1 = (Map<String, Object>) snapshot.getValue();
-
 
                 Log.d(TAG, "onDataChange Map : " + map1);
 
@@ -113,9 +117,6 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
                 }
 
                 for (String key : keys) {
-
-                    String hostname;
-                    DatabaseReference hostref = mref.child(key).child("roomDetails").child("hostDetails").child("userName");
 
                     modelList.add(new RoomsListModel(key, "Host"));
                     Log.d(TAG, "onDataChange key : " + key);
@@ -130,6 +131,7 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
                 listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this);
                 mRoomRV.setAdapter(listAdapter);
                 listAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
 
 
             }
