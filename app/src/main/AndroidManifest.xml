@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpotifyTestApp">
         <activity
+            android:name=".OverLapTesting"
+            android:exported="true" />
+        <activity
             android:name=".TestingActivity"
             android:exported="true" />
         <activity android:name=".UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.MainHolder.RoomHolderActivity" />
@@ -49,7 +52,6 @@
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
-
     </application>
 
 </manifest>

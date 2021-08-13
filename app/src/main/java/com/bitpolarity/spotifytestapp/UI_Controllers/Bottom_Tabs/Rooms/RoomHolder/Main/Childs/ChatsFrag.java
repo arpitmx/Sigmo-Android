@@ -8,7 +8,10 @@ import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +35,7 @@ import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
 import com.bitpolarity.spotifytestapp.databinding.RoomActionBarBinding;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,7 +44,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -66,10 +72,21 @@ public class ChatsFrag extends Fragment {
     private Parcelable recyclerViewState;
 
     static final int TOTAL_ELEMENT_TO_LOAD = 20;
-    private  int mCurrentPage = 1;
+    private final int mCurrentPage = 1;
     static boolean isTyping = false;
+    ShimmerFrameLayout shimmerFrameLayout;
 
 
+    long delay = 1000; // 1 seconds after user stops typing
+    long last_text_edit = 0;
+    Handler handler = new Handler();
+
+
+    private Runnable input_finish_checker = () -> {
+        if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
+                updateTyping();
+        }
+    };
 
 
     @Override
@@ -79,8 +96,10 @@ public class ChatsFrag extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
        msgRoot= firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("messages");
-       //isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("members").child("allmembers").child("Arpit!");
+       isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("members");
 
+       shimmerFrameLayout = binding.shimmerFrameLayoutChatfrag;
+       shimmerFrameLayout.startShimmerAnimation();
 
        mpSent = MediaPlayer.create(getContext(), R.raw.hs_bg_message_sent2);
        mpClick = MediaPlayer.create(getContext(), R.raw.know);
@@ -93,7 +112,7 @@ public class ChatsFrag extends Fragment {
        layoutManager = new LinearLayoutManager(getContext());
        chatList = new ArrayList<>();
 
-        return binding.getRoot();
+       return binding.getRoot();
 
     }
 
@@ -108,70 +127,68 @@ public class ChatsFrag extends Fragment {
         chatRV.setLayoutManager(layoutManager);
         chatRV.setNestedScrollingEnabled(false);
 
+        //getTypingMembers();
 
-//        ValueEventListener postListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.child("isTyping").getValue().toString().equals("true")){
-//                    binding.roomInput.istypingTV.setVisibility(View.VISIBLE);
-//                    isTyping = true;
-//                   // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_up));
-//                    binding.roomInput.istypingTV.setText("Arpit! is typing...");
-//                }else{
-//                       // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_down));
-//                        binding.roomInput.istypingTV.setVisibility(View.GONE);
-//                        isTyping = false;
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-//            }
-//        };
-//
-//        isTypingRoot.addValueEventListener(postListener);
-//
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+               if(dataSnapshot.hasChild("typingNow")){
+                   String s = dataSnapshot.child("typingNow").getValue().toString();
+                if(!s.equals("") && !s.equals(DB_Handler.getUsername()) ){
+                    binding.roomInput.istypingTV.setVisibility(View.VISIBLE);
+                    isTyping = true;
+                   // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_up));
+                    binding.roomInput.istypingTV.setText(dataSnapshot.child("typingNow").getValue()+ " is typing...");
+                }else{
+                       // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_down));
+                    binding.roomInput.istypingTV.setVisibility(View.INVISIBLE);
+                        isTyping = false;
+                }}
+               else{
+                   binding.roomInput.istypingTV.setText("Loading...");
+
+               }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+
+        isTypingRoot.addValueEventListener(postListener);
+
 
 
         binding.roomInput.sendBtn.setOnClickListener(v -> {
-           // mpClick.start();
-            binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
-            String msg = binding.roomInput.msgEditBox.getText().toString();
-            String usrname = DB_Handler.getUsername();
+            sendMessage();
+        });
+        loadmessages();
 
-            Map<String, Object> map = new HashMap<>();
-            temp_key = msgRoot.push().getKey();
-            msgRoot.updateChildren(map);
-
-            DatabaseReference in_msg = msgRoot.child(temp_key);
-            Map<String, Object> map2 = new HashMap<>();
-
-            if (filterText(msg)){
-
-                map2.put("msg",msg);
-                if (usrname!=null) {
-
-                    map2.put("sender", usrname);
-                    in_msg.updateChildren(map2);
-                    Toast.makeText(getContext(),"Sent",Toast.LENGTH_SHORT).show();
-                    binding.roomInput.msgEditBox.setText("");
-                    mpSent.start();
-
-                }else{
-                    binding.roomInput.msgEditBox.setError("Internal error , restart sigmo!");
-                }
+        binding.roomInput.msgEditBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
-            else{
-                binding.roomInput.msgEditBox.setError("Message can't be empty!");
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                handler.removeCallbacks(input_finish_checker);
+                isTypingRoot.child("typingNow").setValue(DB_Handler.getUsername()) ;
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+                    last_text_edit = System.currentTimeMillis();
+                    handler.postDelayed(input_finish_checker, delay);
+
+                   // isTypingRoot.child("Divyanshu").child("isTyping").setValue("false");
             }
         });
-
-
-
-        loadmessages();
 
 //         swipeRefreshLayout.setOnRefreshListener(() -> {
 //             mCurrentPage++;
@@ -179,11 +196,7 @@ public class ChatsFrag extends Fragment {
 //             loadmessages();
 //         });
 
-
-
-
     }
-
     void loadmessages(){
 
        // Query msgQue = msgRoot.limitToLast(mCurrentPage*TOTAL_ELEMENT_TO_LOAD);
@@ -195,7 +208,7 @@ public class ChatsFrag extends Fragment {
 
                 //int size = getModelList(snapshot).size();
                 adapter = new MultiViewChatAdapter(getModelList(snapshot));
-
+                chatRV.setVisibility(View.VISIBLE);
                 chatRV.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 //chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
@@ -232,27 +245,22 @@ public class ChatsFrag extends Fragment {
 
     }
 
-
-
     boolean filterText(String msg){
 
         boolean sendable = false;
 
         if(!msg.equals("") && msg.length()!=0){
+            if(msg.length()<300){
              if(!msg.trim().isEmpty()){
                  if (!msg.matches("[\\n\\r]+")) {
                      sendable = true;
                  }
              }
+            }
         }
 
         return sendable;
     }
-
-
-
-
-
 
     ArrayList<ChatListModel_Multi> getModelList(DataSnapshot dataSnapshot){
 
@@ -261,23 +269,83 @@ public class ChatsFrag extends Fragment {
         while (i.hasNext()){
             msg = String.valueOf(((DataSnapshot)i.next()).getValue());
             userName = String.valueOf(((DataSnapshot)i.next()).getValue());
+
             if (userName.equals(DB_Handler.getUsername())){
                 chatList.add(new ChatListModel_Multi(userName,msg,2));
-                Log.d(TAG, "getModelList: TYPE 1");
+                Log.d(TAG, "getModelList: TYPE 1"+msg);
             }else{
                 chatList.add(new ChatListModel_Multi(userName,msg,1));
-                Log.d(TAG, "getModelList: TYPE 2");
+                Log.d(TAG, "getModelList: TYPE 2"+msg);
 
             }
 
         }
+        shimmerFrameLayout.stopShimmerAnimation();
+        shimmerFrameLayout.setVisibility(View.GONE);
 
         return chatList;
     }
 
+    void sendMessage(){
 
+        binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
+        String msg = binding.roomInput.msgEditBox.getText().toString();
+        String usrname = DB_Handler.getUsername();
 
+        Map<String, Object> map = new HashMap<>();
+        temp_key = msgRoot.push().getKey();
+        msgRoot.updateChildren(map);
 
+        DatabaseReference in_msg = msgRoot.child(temp_key);
+        Map<String, Object> map2 = new HashMap<>();
+
+        if (filterText(msg)){
+
+            map2.put("msg",msg);
+
+            if (usrname!=null) {
+                map2.put("sender", usrname);
+                in_msg.updateChildren(map2);
+                Toast.makeText(getContext(),"Sent",Toast.LENGTH_SHORT).show();
+                binding.roomInput.msgEditBox.setText("");
+                mpSent.start();
+
+            }else{
+                binding.roomInput.msgEditBox.setError("Internal error , restart sigmo!");
+            }
+        }
+        else{
+            binding.roomInput.msgEditBox.setError("Message invalid!");
+            binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_out));
+
+        }
+
+    }
+
+    void updateTyping(){
+
+        isTypingRoot.child("typingNow").setValue("");
+    }
+
+    void getTypingMembers(){
+
+        isTypingRoot.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
+                //Log.d(TAG, "onDataChange: Map ChatsFrag"+map.toString());
+
+                for (String key : map.keySet()){
+                    Log.d(TAG, "onDataChange: KEYS"+ key+" : "+ map.get(key));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 
 }

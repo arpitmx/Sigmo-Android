@@ -26,7 +26,24 @@
 
             app:layout_constraintVertical_bias="0.265">
 
+
         </androidx.recyclerview.widget.RecyclerView>
+
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+           android:id="@+id/progress_room"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rooms_listview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:indicatorColor="@color/s_blue"
+            app:trackColor="@color/white"
+            android:indeterminate="true"
+            android:visibility="invisible"
+
+            />
 
         <Button
             android:id="@+id/startroomBTN"
@@ -44,10 +61,11 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="@drawable/gradient_overlay"
 
+            android:background="@drawable/gradient_overlay"
             app:layout_constraintBottom_toBottomOf="parent" />
 
 

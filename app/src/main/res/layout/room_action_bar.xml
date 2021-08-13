@@ -5,7 +5,7 @@
     android:id="@+id/custom_action_bar_consLay"
     android:layout_width="match_parent"
     android:layout_height="58dp"
-    android:background="@color/dark_bg"
+    android:background="@color/dark_fg_darker"
     android:weightSum="10">
 
 
@@ -35,9 +35,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/room_dp_IMGV"
             android:layout_width="35dp"
-
             android:layout_height="35dp"
-            android:layout_margin="5dp"
+
             app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/room_back_BTN"
