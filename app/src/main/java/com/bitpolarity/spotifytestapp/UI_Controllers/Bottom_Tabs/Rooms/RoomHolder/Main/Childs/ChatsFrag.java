@@ -143,11 +143,10 @@ public class ChatsFrag extends Fragment {
                 }else{
                        // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_down));
                     binding.roomInput.istypingTV.setVisibility(View.INVISIBLE);
-                        isTyping = false;
+                    isTyping = false;
                 }}
                else{
-                   binding.roomInput.istypingTV.setText("Loading...");
-
+                   binding.roomInput.istypingTV.setText("Hey, Sara here! let's listen together ;)<3 ");
                }
             }
 
@@ -159,9 +158,6 @@ public class ChatsFrag extends Fragment {
         };
 
         isTypingRoot.addValueEventListener(postListener);
-
-
-
         binding.roomInput.sendBtn.setOnClickListener(v -> {
             sendMessage();
         });
@@ -204,19 +200,22 @@ public class ChatsFrag extends Fragment {
         msgRoot.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                //recyclerViewState = chatRV.getLayoutManager().onSaveInstanceState();
+                if(snapshot.exists()) {
+                    //recyclerViewState = chatRV.getLayoutManager().onSaveInstanceState();
+                    //int size = getModelList(snapshot).size();
 
-                //int size = getModelList(snapshot).size();
-                adapter = new MultiViewChatAdapter(getModelList(snapshot));
-                chatRV.setVisibility(View.VISIBLE);
-                chatRV.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                //chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+                    adapter = new MultiViewChatAdapter(getModelList(snapshot));
+                    chatRV.setVisibility(View.VISIBLE);
+                    chatRV.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    //chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
 
-                //swipeRefreshLayout.setRefreshing(false);
-                //chatRV.scrollToPosition(c.size()- 1);
+                    //swipeRefreshLayout.setRefreshing(false);
+                    //chatRV.scrollToPosition(c.size()- 1);
 
-
+                }else{
+                    Toast.makeText(getContext(), "No messages yet , say hello!", Toast.LENGTH_LONG).show();
+                }
 
             }
 

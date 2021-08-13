@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_bg"
+    android:background="@color/white200"
 
 >
     <TextView
@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textColor="@color/white"
-        android:text="Queue" />
+        android:fontFamily="@font/hregular"
+        android:textColor="@color/s_blue"
+        android:textSize="20sp"
+        android:text="Your song requests will pop here!" />
 
 </FrameLayout>

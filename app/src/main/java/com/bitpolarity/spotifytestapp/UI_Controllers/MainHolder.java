@@ -202,7 +202,7 @@ public class MainHolder extends AppCompatActivity {
 
         //  standard.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
 
-
+//
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
