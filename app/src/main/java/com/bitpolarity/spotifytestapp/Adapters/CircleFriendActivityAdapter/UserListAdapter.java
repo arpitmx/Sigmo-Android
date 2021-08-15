@@ -2,6 +2,7 @@ package com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter;
 
 import android.graphics.Color;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
     @Override
     public void onViewAttachedToWindow(@NonNull myViewHolder holder) {
         super.onViewAttachedToWindow(holder);
+
+        //holder.binding.artwork.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
+
 
 
     }
@@ -93,7 +97,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
 
 
         holder.binding.username.setText(link.getUsername());
-        holder.binding.songname.setText(link.getSongDetail());
+        holder.binding.songname.setText("\uD83C\uDFB5 "+link.getSongDetail());
+        holder.binding.artistName.setText("\uD83D\uDCBF "+link.getArtistName());
         holder.binding.onlineStatus.setImageResource(link.getStatus());
         holder.binding.lastActive.setText(link.getDatetime());
 
@@ -114,17 +119,24 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
         //"https://i.scdn.co/image/ab6775700000ee855ffdafb1d7fb1eb34622f04f"
 
 
-
-        if (link.getIsPlaying().equals("true")) {
+        if(link.getStatus() == 2131165407){
+            holder.binding.isPlayingg.setVisibility(View.VISIBLE);
+            if (link.getIsPlaying().equals("true")) {
             Log.d("ISPLAYING ADAPTER", "onViewAttachedToWindow: "+ link.getIsPlaying());
-            holder.binding.isPlayingg.setText("Playing");
-            holder.binding.isPlayingg.setTextColor(Color.parseColor("#69DB22"));
+            holder.binding.isPlayingg.setText("\uD83C\uDFA7");
+            //holder.binding.isPlayingg.setTextColor(Color.parseColor("#69DB22"));
             startAnim(holder.binding.artwork);
             playing = true;
+
         } else  {
-            holder.binding.isPlayingg.setText("Paused");
+            holder.binding.isPlayingg.setText("⏸");
             holder.binding.isPlayingg.setTextColor(Color.parseColor("#E53935"));
             playing = false;
+        }
+        }else{
+            //holder.binding.isPlayingg.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
+            holder.binding.isPlayingg.setText("\uD83D\uDCA4");
+
         }
 
 
@@ -147,7 +159,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
 
     void startAnim(CircleImageView poster){
         poster.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
-
     }
 
 //    private void setAnimation(View viewToAnimate, int position)

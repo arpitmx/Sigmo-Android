@@ -26,11 +26,7 @@ public class SplashScreen extends AppCompatActivity {
         //setTheme(R.style.SplashTheme);
 
         Handler handler = new Handler();
-        startService(new Intent(getApplicationContext(), OnClearFromRecentService.class));
         Toast.makeText(this, "service started", Toast.LENGTH_SHORT).show();
-
-
-
         //1 +2s131ms Theme
         //2 +2s927ms W
         //3 +2s278ms w +334ms

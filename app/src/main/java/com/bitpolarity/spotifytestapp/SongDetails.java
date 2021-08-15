@@ -5,28 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+
 import java.util.Scanner;
-import java.util.Set;
 
 public class SongDetails {
 
    public static BroadcastReceiver receiver;
     Context context;
-    Set<String> details;
     DB_Handler db_handler;
     String requestURL = "https://embed.spotify.com/oembed/?url=";
+    private static String error1 = "Null";
+    String trackId,artistName,albumName,trackName,trackLengthInSec;
+
 
 
 
@@ -46,24 +42,36 @@ public class SongDetails {
         filter.addAction("com.spotify.music.queuechanged");
 
 
+
         receiver = new BroadcastReceiver() {
+
+
             @Override
             public void onReceive(Context context, Intent intent) {
-
                 String action = intent.getAction();
+
+
 
                 switch (action) {
 
 
 
                     case broadcaster.BroadcastTypes.METADATA_CHANGED:
-                      String trackId = intent.getStringExtra("id");
-                        String artistName = intent.getStringExtra("artist");
-                        String albumName = intent.getStringExtra("album");
-                        String trackName = intent.getStringExtra("track");
-                        String trackLengthInSec = String.valueOf(intent.getIntExtra("length", 0));
-                        String arl = requestURL+trackId;
 
+                       trackId = intent.getStringExtra("id");
+                        artistName = intent.getStringExtra("artist");
+                        albumName = intent.getStringExtra("album");
+                        trackName = intent.getStringExtra("track");
+                        trackLengthInSec = String.valueOf(intent.getIntExtra("length", 0));
+
+                        if(trackId==null && artistName == null && albumName == null && trackName == null && trackLengthInSec == null){
+                            trackId = error1;
+                            albumName = error1;
+                            trackName = error1;
+                            trackLengthInSec = error1;
+                        }
+
+                        String arl = requestURL+trackId;
 
                         new Thread(() -> {
 
@@ -86,6 +94,8 @@ public class SongDetails {
                             while(sc.hasNext()) {
                                 sb.append(sc.next());
                             }
+
+
                             String result = sb.toString();
 
                             result = result.replaceAll("<[^>]*>", "");
@@ -93,9 +103,7 @@ public class SongDetails {
                             Log.d("urllll", result);
                             String brl = result.split(",")[8].replace("\"thumbnail_url\":","").replace("\"","");
 
-
-
-                            if (brl.length()==0){
+                            if (brl == null){
                                 brl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQpnVsnrM_RRT2ty6uAXPwoQMQIIQNb7V8cQ&usqp=CAU";
                             }
 
@@ -136,7 +144,10 @@ public class SongDetails {
 
             }
         };
+
+
         context.registerReceiver(receiver, filter);
+
 
     }
 
