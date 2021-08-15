@@ -7,49 +7,101 @@
     >
 
 
-
     <include
         android:id="@+id/room_action_bar"
         layout="@layout/room_action_bar"
         />
 
+    <include
+        android:id="@+id/mini_player_room"
+        layout="@layout/room_mini_song_player"
+        />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+        <com.discord.panels.OverlappingPanelsLayout
+        android:id="@+id/overLappingLayout"
+        android:layout_height="match_parent"
+        android:background="@color/dark_fg"
+        android:layout_width="match_parent">
 
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout_Rooms"
+        <LinearLayout
+            android:id="@+id/start_panel"
+            style="@style/Panel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:orientation="vertical"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp">
+
+            <include
+                layout="@layout/fragment_room_members"
+                />
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/center_panel"
+
+            style="@style/Panel"
             android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:background="@color/dark_bg"
-            app:tabTextColor="#979797"
-            app:tabSelectedTextColor="@color/white200"
-            app:tabIndicatorColor="@color/s_yellow"
-            android:visibility="gone"
-            app:tabIndicatorHeight="3dp"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/child_chat_frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/end_panel"
+            style="@style/Panel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:orientation="vertical">
 
 
-        <include
-            android:id="@+id/mini_player_room"
-            layout="@layout/room_mini_song_player"
-
-            />
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager_Rooms"
-            android:layout_weight="1"
-            android:layout_height="0dp"
-            android:background="@color/dark_fg"
-            android:layout_width="match_parent"/>
+            <include
+                layout="@layout/fragment_room_squeue"
+                />
 
 
+        </LinearLayout>
 
-    </LinearLayout>
-
-
-
+        </com.discord.panels.OverlappingPanelsLayout>
 
 </LinearLayout>
+
+
+
+
+    <!--            <com.google.android.material.tabs.TabLayout-->
+    <!--                android:id="@+id/tabLayout_Rooms"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="37dp"-->
+    <!--                android:background="@color/dark_bg"-->
+    <!--                app:tabTextColor="#979797"-->
+    <!--                app:tabSelectedTextColor="@color/white200"-->
+    <!--                app:tabIndicatorColor="@color/s_yellow"-->
+    <!--                android:visibility="gone"-->
+    <!--                app:tabIndicatorHeight="3dp"-->
+    <!--                />-->
+
+
+    <!--    <androidx.viewpager2.widget.ViewPager2-->
+    <!--    android:id="@+id/viewpager_Rooms"-->
+    <!--    android:layout_weight="1"-->
+    <!--    android:layout_height="0dp"-->
+    <!--    android:background="@color/dark_fg"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:visibility="gone"-->
+    <!--        />-->
+
+

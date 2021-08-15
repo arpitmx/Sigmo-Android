@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -45,7 +46,7 @@ public class RoomMainFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference memberRoot;
     final static String TAG = "RoomHolderActivity";
-
+    ConstraintLayout constraintLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +57,60 @@ public class RoomMainFragment extends Fragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         memberRoot = firebaseDatabase.getReference().child("Rooms").child(roomName).child("members");
+
+//
+//        tabLayout = binding.tabLayoutRooms;
+//        viewPager = binding.viewpagerRooms;
+//        tabLayout.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_down));
+
+        binding.roomActionBar.roomBackBTN.setOnClickListener(view -> getActivity().onBackPressed());
+
+
+
+//         constraintLayout =  binding.roomActionBar.customActionBarConsLay;
+//         constraintLayout.setElevation(0);
+
+//
+//        tabLayout.addTab(tabLayout.newTab().setText("Queue"));
+//        tabLayout.addTab(tabLayout.newTab().setText("Chats"));
+//        tabLayout.addTab(tabLayout.newTab().setText("Members"));
+//
+//        FragmentManager fm = getChildFragmentManager();
+//        adapter = new Room_Tab_Adapter(fm , getLifecycle());
+//        viewPager.setAdapter(adapter);
+//        viewPager.setCurrentItem(1);
+//
+//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                viewPager.setCurrentItem(tab.getPosition());
+//            }
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//            }
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//            }
+//        });
+//
+//        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//            @Override
+//            public void onPageSelected(int position) {
+//                tabLayout.selectTab(tabLayout.getTabAt(position));
+//            }
+//        });
+
+        return binding.getRoot();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
         memberRoot.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.hasChild("allmembers")) {
@@ -66,7 +120,7 @@ public class RoomMainFragment extends Fragment {
                 else{
                     binding.roomActionBar.totalOnlineTv.setText("Loading");
                 }
-                    }
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d(TAG, "onCancelled: Error");
@@ -74,52 +128,14 @@ public class RoomMainFragment extends Fragment {
         });
 
 
-        tabLayout = binding.tabLayoutRooms;
-        viewPager = binding.viewpagerRooms;
-        tabLayout.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_down));
 
-//        binding.roomActionBar.roomBackBTN.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getActivity().getBaseContext(), MainHolder.class));
-//            }
-//        });
-        // constraintLayout = v.findViewById(R.id.custom_action_bar_consLay);
-        // constraintLayout.setElevation(0);
+        FragmentManager fragmentManager = getChildFragmentManager();
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.child_chat_frameLayout,new ChatsFrag()).addToBackStack(null)
+                .commit();
 
 
-        tabLayout.addTab(tabLayout.newTab().setText("Queue"));
-        tabLayout.addTab(tabLayout.newTab().setText("Chats"));
-        tabLayout.addTab(tabLayout.newTab().setText("Members"));
 
-        FragmentManager fm = getChildFragmentManager();
-        adapter = new Room_Tab_Adapter(fm , getLifecycle());
-        viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1);
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                tabLayout.selectTab(tabLayout.getTabAt(position));
-            }
-        });
-
-
-        return binding.getRoot();
     }
-
-
 }

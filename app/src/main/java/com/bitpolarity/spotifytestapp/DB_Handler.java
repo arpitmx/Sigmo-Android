@@ -39,6 +39,7 @@ public class DB_Handler {
         if (ref == null) {
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
             ref = firebaseDatabase.getReference();
+
         }
     }
 
@@ -59,7 +60,9 @@ public class DB_Handler {
         date = new Date();
         time = getTime(date);
 
+
         ref.child(usr_ROOT).child(username).child("STATUS").setValue(status);
+       // ref.child(usr_ROOT).child(username).child("STATUS").onDisconnect().setValue(0);
         ref.child(usr_ROOT).child(username).child("LA").setValue(time);
 
         if (status ==1)

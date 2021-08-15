@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -61,6 +62,7 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
     RecyclerView mRoomRV;
     RoomsListAdapter listAdapter;
      List<RoomsListModel> modelList;
+     TextView tx;
 
 
     CircularProgressIndicator progressBar;
@@ -78,7 +80,7 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 
         View v = inflater.inflate(R.layout.fragment_rooms, container, false);
         startRoomBTN = v.findViewById(R.id.startroomBTN);
-
+        tx = v.findViewById(R.id.noRoomtv);
         progressBar = v.findViewById(R.id.progress_room);
         lm = new LinearLayoutManager(getContext());
         mRoomRV = v.findViewById(R.id.rooms_listview);
@@ -100,39 +102,55 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
         mRoomRV.hasFixedSize();
 
 
-        mref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+        mref.addValueEventListener(new ValueEventListener() {
+
+
 
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
-                Map<String, Object> map1 = (Map<String, Object>) snapshot.getValue();
+                if(snapshot.exists()) {
 
-                Log.d(TAG, "onDataChange Map : " + map1);
+                    if(tx.getVisibility()== View.VISIBLE){
+                        tx.setVisibility(View.GONE);
+                    }
 
-                //assert map1 != null;
-                Set<String> keys = map1.keySet();
+                    Map<String, Object> map1 = (Map<String, Object>) snapshot.getValue();
 
-                if (modelList != null) {
-                    modelList.clear();
+                    Log.d(TAG, "onDataChange Map : " + map1);
+
+                    //assert map1 != null;
+                    Set<String> keys = map1.keySet();
+
+                    if (modelList != null) {
+                        modelList.clear();
+                    }
+
+                    for (String key : keys) {
+
+                        modelList.add(new RoomsListModel(key, "Host"));
+                        Log.d(TAG, "onDataChange key : " + key);
+                        Log.d(TAG, "onDataChange Value : " + map1.get(key));
+
+                    }
+
+                    Log.d(TAG, "onDataChange ModelList: " + modelList);
+
+
+                    listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this);
+
+
+                    mRoomRV.setAdapter(listAdapter);
+                    listAdapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
+
+                }else{
+                        tx.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+
                 }
-
-                for (String key : keys) {
-
-                    modelList.add(new RoomsListModel(key, "Host"));
-                    Log.d(TAG, "onDataChange key : " + key);
-                    Log.d(TAG, "onDataChange Value : " + map1.get(key));
-
-                }
-
-
-                Log.d(TAG, "onDataChange ModelList: " + modelList);
-
-
-                listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this);
-                mRoomRV.setAdapter(listAdapter);
-                listAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
-
 
             }
             @Override
