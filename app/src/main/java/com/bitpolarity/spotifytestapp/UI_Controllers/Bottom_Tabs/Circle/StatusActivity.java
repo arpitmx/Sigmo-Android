@@ -337,8 +337,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                 //Status
                 Log.d(TAG, "Status : "+ data.get(i).get("STATUS") );
                 int s = Integer.parseInt(String.valueOf(data.get(i).get("STATUS")));
-                if (s == 1) status[i] = ONLINE;
-                else status[i] = OFFLINE;
+                if (s == 1) status[i] = 1;
+                else status[i] = 0;
 
                 String now = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
                 Log.d(TAG, "Last active : "+ data.get(i).get("recKeyID") + ":" + findDifference(String.valueOf(data.get(i).get("LA")),now) );

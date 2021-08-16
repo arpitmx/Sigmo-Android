@@ -63,11 +63,12 @@ public class Login extends AppCompatActivity {
         }
 
         else{
-            if(prefs.getBoolean("isAuthed",false)) {
-                next.setEnabled(false);
-                startActivity(new Intent(this, SpotifyLoginVerifierActivity.class));
-                Toast.makeText(this, "Authenticate with Spotify", Toast.LENGTH_SHORT).show();
-            }else{
+//          //  if(prefs.getBoolean("isAuthed",false)) {
+//                next.setEnabled(false);
+//              //  startActivity(new Intent(this, SpotifyLoginVerifierActivity.class));
+//                startActivity(new Intent(this, MainHolder.class));
+//                Toast.makeText(this, "Authenticate with Spotify", Toast.LENGTH_SHORT).show();
+//         //   }else{
                 next.setEnabled(false);
                 startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
                 startActivity(new Intent(this, MainHolder.class));
@@ -83,7 +84,7 @@ public class Login extends AppCompatActivity {
 //            prefs.edit().putBoolean("firstrun", true).apply();
 //        }
 
-    }
+
 
     @Override
     protected void onPause() {

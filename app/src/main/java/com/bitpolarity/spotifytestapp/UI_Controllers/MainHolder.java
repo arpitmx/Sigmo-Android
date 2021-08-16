@@ -48,6 +48,7 @@ import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModel;
 import com.bitpolarity.spotifytestapp.databinding.ActivityMainHolderBinding;
 
+import com.bitpolarity.spotifytestapp.databinding.CustomActionBarBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.spotify.protocol.client.Subscription;
@@ -102,6 +103,7 @@ public class MainHolder extends AppCompatActivity {
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment1;
 
+    CustomActionBarBinding customActionBarBinding;
 
 
 
@@ -112,21 +114,6 @@ public class MainHolder extends AppCompatActivity {
 
 
     ////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +127,8 @@ public class MainHolder extends AppCompatActivity {
 
         binding = ActivityMainHolderBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        customActionBarBinding = binding.customAction;
 
 
         //////////////////////////////////////// Init5ializations ///////////////////////////////////////////////////
@@ -246,34 +235,37 @@ public class MainHolder extends AppCompatActivity {
             switch (item.getItemId()) {
 
                 case R.id.nav_circle:
+
                     fm.beginTransaction().replace(R.id.fragmentContainerView, fragment1).commit();
                     active = fragment1;
+                    customActionBarBinding.customActionBarConsLay.setVisibility(View.VISIBLE);
 
-                    if (sigmo_Title.getVisibility() == View.GONE) {
-//                binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
-                        sigmo_Title.setVisibility(View.VISIBLE);
-//                    binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left_to_right_fr));
-                        peacock_symbol.setVisibility(View.VISIBLE);
-//                    binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
-                        room.setVisibility(View.GONE);
+//                    if (sigmo_Title.getVisibility() == View.GONE) {
+//               // binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
+//                       // sigmo_Title.setVisibility(View.VISIBLE);
+//                //   binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left_to_right_fr));
+//
+//                       // binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
+//                        //room.setVisibility(View.GONE);
+//                    }
 
-
-
-
-                    }
+                    peacock_symbol.setVisibility(View.VISIBLE);
+                    customActionBarBinding.sigmoTitleBar.setText("Sigmo");
                     return true;
 
                 case R.id.nav_rooms:
                     fm.beginTransaction().replace(R.id.fragmentContainerView, fragment2).commit();
                     active = fragment2;
+                    customActionBarBinding.customActionBarConsLay.setVisibility(View.VISIBLE);
 
-//               binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
-                    sigmo_Title.setVisibility(View.GONE);
-//                binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right_to_left_fr));
+               //binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
+                    //sigmo_Title.setVisibility(View.GONE);
+                    customActionBarBinding.sigmoTitleBar.setText("Rooms");
+                    //binding.customAction.bitpSymbl.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right_to_left_fr));
                     peacock_symbol.setVisibility(View.GONE);
-//
-//                binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
-                    room.setVisibility(View.VISIBLE);
+
+                   // binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
+                    //room.setVisibility(View.VISIBLE);
 
                     return true;
 
@@ -281,6 +273,9 @@ public class MainHolder extends AppCompatActivity {
                 case R.id.nav_profile:
                     fm.beginTransaction().replace(R.id.fragmentContainerView, fragment3).commit();
                     active = fragment3;
+                    customActionBarBinding.customActionBarConsLay.setVisibility(View.GONE);
+                    //peacock_symbol.setVisibility(View.GONE);
+
                     return true;
             }
 

@@ -9,8 +9,7 @@
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
     android:layout_marginTop="7dp"
-
-
+    android:id="@+id/item_bg"
     >
 
     <LinearLayout
@@ -109,6 +108,7 @@
                 android:foregroundTint="@color/purple_200"
                 android:gravity="center"
                 android:layout_weight="3.5"
+                android:alpha="0.8"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:paddingStart="?android:attr/listPreferredItemPaddingStart"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
@@ -220,9 +220,10 @@
                     android:padding="5dp"
                     android:text="🎵 Higher Power"
                     android:ems="28"
+                    android:alpha="0.9"
                     android:singleLine="true"
                     android:textColor="@color/white200"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:layout_height="45dp"
                     android:layout_width="match_parent"
                     />
@@ -235,6 +236,7 @@
                     android:gravity="top|center"
                     android:text="💿 Coldplay"
                     android:textColor="#E8E8E8"
+                    android:alpha="0.8"
                     android:textAlignment="center"
                     android:textSize="12sp" />
             </LinearLayout>
