@@ -40,6 +40,7 @@
         android:text="Edit profile"
         android:fontFamily="@font/hmed"
         android:padding="10dp"
+        android:foreground="@drawable/ripple_effect"
         android:textAllCaps="false"
         android:layout_marginTop="15dp"
         android:textSize="9dp"
