@@ -4,40 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_bg"
     tools:context=".UI_Controllers.Login">
+
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="209dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="208dp"
-        android:background="#C4E5FF"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="372dp"
+        android:background="@drawable/editbox_bg"
         android:ems="10"
         android:gravity="center"
-        android:hint="Enter Name here"
+        android:textColor="@color/white200"
+        android:hint="Your name ? "
         android:inputType="textPersonName"
-        android:text=""
-        android:textColorHint="#707070"
+        android:textColorHint="#7E7E7E"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
         android:layout_marginTop="64dp"
-        android:text="Join the party!"
+        android:background="@drawable/four_side_send_btn"
+        android:fontFamily="@font/hb"
+        android:text="Join Sigmo!"
+        android:textSize="12dp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.354"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username"
         app:layout_constraintVertical_bias="0.0" />
 
-
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/sbluemainn"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.68" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

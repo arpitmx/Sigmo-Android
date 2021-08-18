@@ -85,7 +85,7 @@
             android:gravity="center"
             android:paddingStart="5dp"
             android:text="1 online"
-            android:textColor="@color/s_grey"
+            android:textColor="@color/s_blue200"
             android:paddingBottom="5dp"
             android:textSize="12sp"
             android:visibility="visible"

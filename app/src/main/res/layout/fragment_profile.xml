@@ -1,22 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/profile_bg"
    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+
+    >
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/personpic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Profile"
-        android:textColor="@color/s_blue"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:text="Arpit Maurya"
+    android:textColor="@color/white200"
+    android:fontFamily="@font/hb"
+    android:textSize="25dp"
+    android:layout_marginTop="15dp"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="110dp"
+        android:layout_height="35dp"
+        android:text="Edit profile"
+        android:fontFamily="@font/hmed"
+        android:padding="10dp"
+        android:foreground="@drawable/ripple_effect"
+        android:textAllCaps="false"
+        android:layout_marginTop="15dp"
+        android:textSize="9dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:textColor="@color/white"
+        android:background="@drawable/button_bg_white_borders"
+
+        />
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+

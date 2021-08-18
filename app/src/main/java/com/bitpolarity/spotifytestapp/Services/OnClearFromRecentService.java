@@ -18,14 +18,16 @@ import com.bitpolarity.spotifytestapp.SongDetails;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModel;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModelFactory;
+import com.bitpolarity.spotifytestapp.SpotifyLoginVerifierActivity;
 import com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder;
 
 public class OnClearFromRecentService extends Service {
 
     DB_Handler dbHolder = new DB_Handler();
     public static SharedPreferences prefs;
+    public static SharedPreferences.Editor editor;
     String USERNAME;
-    String LOG = "SERVICE";
+    String LOG = "onclearservice";
     SpotifyRepository spotifyRepository;
 
     @Override
@@ -38,7 +40,11 @@ public class OnClearFromRecentService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         prefs=  getSharedPreferences("com.bitpolarity.spotifytestapp",MODE_PRIVATE);
+        editor = prefs.edit();
         USERNAME = prefs.getString("Username","Error-1");
+
+
+
 
         SongDetails songDetails = new SongDetails();
         spotifyRepository = new SpotifyRepository(getApplicationContext());
@@ -47,7 +53,6 @@ public class OnClearFromRecentService extends Service {
         songDetails.init_br(USERNAME);
 
         spotifyRepository.onStart();
-
 
         dbHolder = new DB_Handler();
         dbHolder.setUsername(USERNAME);
@@ -61,9 +66,9 @@ public class OnClearFromRecentService extends Service {
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(SongDetails.receiver);
+        //unregisterReceiver(SongDetails.receiver);
         super.onDestroy();
-        Log.d(LOG, "Service Destroyed");
+        Log.d(LOG, "on Destroy called");
 
 
     }
@@ -72,10 +77,11 @@ public class OnClearFromRecentService extends Service {
     public void onTaskRemoved(Intent rootIntent) {
         //TODO BUG1 : ONLINE STATUS NOT CHANGING IN SOME MODELS
 
-        Log.e(LOG, "App closed completly!");
+        Log.e(LOG, "OnTaskRemoved Called!");
         spotifyRepository.onStop();
-        dbHolder.setStatus(0);
-        Toast.makeText(getBaseContext(), "Sigmo Closed forcefly", Toast.LENGTH_SHORT).show();
+        unregisterReceiver(SongDetails.receiver);
+        dbHolder.setStatusOffline();
+        Toast.makeText(getApplicationContext(), "Sigmo Closed forcefly", Toast.LENGTH_SHORT).show();
         stopSelf();
     }
 

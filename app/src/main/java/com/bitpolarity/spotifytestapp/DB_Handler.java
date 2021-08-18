@@ -24,7 +24,7 @@ public class DB_Handler {
 
     //Firebase
     DatabaseReference ref;
-    final String usr_ROOT = "Users";
+    final String usr_ROOT = "Users_DMode";
     final String room_ROOT = "Rooms";
     DatabaseReference ROOTPATH;
     SharedPreferences pref;
@@ -70,12 +70,21 @@ public class DB_Handler {
             Log.v(LOG, "User Status: Online");
             Log.v(LOG,"DB_STATUS > Session initiated at "+time);
         }
-        else{
-         Log.v(LOG, "User Status: Offline");
-         Log.v(LOG,"DB_STATUS > Session ended at "+time);
+        else {
+            Log.v(LOG, "User Status: Offline");
+            Log.v(LOG, "DB_STATUS > Session ended at " + time);
         }
+    }
 
 
+    public void setStatusOffline(){
+
+        date = new Date();
+        time = getTime(date);
+
+        ref.child(usr_ROOT).child(username).child("STATUS").onDisconnect().setValue(0);
+        ref.child(usr_ROOT).child(username).child("LA").onDisconnect().setValue(time);
+        ref.child(usr_ROOT).child(username).child("isPlaying").onDisconnect().setValue(false);
 
 
 
@@ -153,6 +162,9 @@ public class DB_Handler {
 
 
      }
+     
+     
+
 
     ////////////////////////////////// ROOOOOOOMS
 

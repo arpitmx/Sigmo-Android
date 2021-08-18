@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="10"
+    android:background="@drawable/om"
+
     android:orientation="vertical">
+
 
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +21,6 @@
         android:id="@+id/chats_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/chatbg"
         android:visibility="gone">
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -29,6 +31,7 @@
         android:layout_gravity="center"
         android:background="@drawable/chatbg"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

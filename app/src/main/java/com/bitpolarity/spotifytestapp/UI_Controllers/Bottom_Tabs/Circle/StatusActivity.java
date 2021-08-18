@@ -109,7 +109,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         dataHolder = new TempDataHolder();
-        ref =FirebaseDatabase.getInstance().getReference().child("Users");
+        ref =FirebaseDatabase.getInstance().getReference().child("Users_DMode");
         binding.shimmerFrameLayout.startShimmerAnimation();
 
 
@@ -309,6 +309,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         String[] isPlaying = new String[size]; //done
         String[] dateTime = new String[size];  //done
         String[] trackID = new String[size]; //done
+        String[] artistName = new String[size]; //done
+
 
 
 
@@ -320,8 +322,9 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                 JSONObject SD = reader.getJSONObject("SD");
 
                 // SONGDETAIL
-                Log.d(TAG, "Songdetail : " + SD.getString("trackName") + SD.getString("albumName"));
-                songDetail[i] = SD.getString("trackName") + " - " +SD.getString("albumName");
+                Log.d(TAG, "Songdetail : " + SD.getString("trackName") + SD.getString("artistName"));
+                songDetail[i] = SD.getString("trackName") ;
+                artistName[i] = SD.getString("artistName");
 
                 // TRACKID
                 Log.d(TAG, "TrackID : "+ SD.getString("trackID") );
@@ -334,13 +337,11 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                 //Status
                 Log.d(TAG, "Status : "+ data.get(i).get("STATUS") );
                 int s = Integer.parseInt(String.valueOf(data.get(i).get("STATUS")));
-                if (s == 1) status[i] = ONLINE;
-                else status[i] = OFFLINE;
+                if (s == 1) status[i] = 1;
+                else status[i] = 0;
 
                 String now = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
                 Log.d(TAG, "Last active : "+ data.get(i).get("recKeyID") + ":" + findDifference(String.valueOf(data.get(i).get("LA")),now) );
-
-
 
                 //isPlaying
                 Log.d(TAG, "IsPlaying : "+ data.get(i).get("isPlaying") );
@@ -375,7 +376,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         dataHolder.setTrackID(trackID);
 
         for (int i = 0; i < size; i++) {
-            modelList.add(new UserListModel(getContext(), dateTime[i], isPlaying[i], users[i], posterURL[i], status[i], songDetail[i]));
+            modelList.add(new UserListModel(getContext(), dateTime[i], isPlaying[i], users[i], posterURL[i], status[i], songDetail[i],artistName[i]));
         }
 
         return modelList;

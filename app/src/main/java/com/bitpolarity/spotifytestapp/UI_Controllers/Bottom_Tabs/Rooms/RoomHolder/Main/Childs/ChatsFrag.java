@@ -146,7 +146,7 @@ public class ChatsFrag extends Fragment {
                     isTyping = false;
                 }}
                else{
-                   binding.roomInput.istypingTV.setText("Hey, Sara here! let's listen together ;)<3 ");
+                   binding.roomInput.istypingTV.setText("Sara here! No messages here, send one! ;) ");
                }
             }
 
@@ -197,10 +197,12 @@ public class ChatsFrag extends Fragment {
 
        // Query msgQue = msgRoot.limitToLast(mCurrentPage*TOTAL_ELEMENT_TO_LOAD);
 
+
+
         msgRoot.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if(snapshot.exists()) {
+
                     //recyclerViewState = chatRV.getLayoutManager().onSaveInstanceState();
                     //int size = getModelList(snapshot).size();
 
@@ -213,9 +215,7 @@ public class ChatsFrag extends Fragment {
                     //swipeRefreshLayout.setRefreshing(false);
                     //chatRV.scrollToPosition(c.size()- 1);
 
-                }else{
-                    Toast.makeText(getContext(), "No messages yet , say hello!", Toast.LENGTH_LONG).show();
-                }
+
 
             }
 

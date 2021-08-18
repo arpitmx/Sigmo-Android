@@ -34,14 +34,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Uffff..No rooms right now, but you can make one!"
+            android:text="Uffff....\ngot not rooms, but you can always make one ;)"
             android:textColor="@color/white"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.563" />
+            app:layout_constraintVertical_bias="0.572" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
            android:id="@+id/progress_room"

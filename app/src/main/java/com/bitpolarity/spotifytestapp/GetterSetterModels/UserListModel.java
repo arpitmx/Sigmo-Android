@@ -11,7 +11,12 @@ public class UserListModel {
     public Context context;
     private String isPlaying;
     private String datetime;
+    private String artistName;
 
+
+    public String getArtistName() {
+        return artistName;
+    }
 
     public String getUsername() {
         return username;
@@ -46,7 +51,7 @@ public class UserListModel {
     }
 
 
-    public UserListModel(Context context , String datetime, String isPlaying, String username, String poster, Integer status, String SongDetail) {
+    public UserListModel(Context context , String datetime, String isPlaying, String username, String poster, Integer status, String SongDetail, String artistName) {
 
         this.context = context;
         this.username = username;
@@ -55,6 +60,7 @@ public class UserListModel {
         this.status = status;
         this.SongDetail = SongDetail;
         this.datetime = datetime;
+        this.artistName = artistName;
 
     }
 

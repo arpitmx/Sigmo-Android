@@ -1,5 +1,6 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle;
 
+import android.icu.lang.UCharacter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,8 +44,8 @@ public class Circle_Fragment extends Fragment {
         final FragmentManager fm = getChildFragmentManager();
         final Circle_Tab_Adapter adapter = new Circle_Tab_Adapter(fm, getLifecycle());
 
-        tabLayout.addTab(tabLayout.newTab().setText("Friends"));
-        tabLayout.addTab(tabLayout.newTab().setText("Status"));
+        tabLayout.addTab(tabLayout.newTab().setText("Friends \uD83D\uDC4B"));
+        tabLayout.addTab(tabLayout.newTab().setText("Stories ⚡"));
 
         viewPager.setAdapter(adapter);
 
@@ -62,6 +63,7 @@ public class Circle_Fragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition(),true);
+
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
