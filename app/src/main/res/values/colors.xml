@@ -45,9 +45,8 @@
 
     <color name="gpurple_start">@color/dark_bg</color>
     <color name="gpurple_end">@color/dark_bg</color>
-
-
-
+    <color name="outgoing_chat_bg">#4298ED</color>
+    <color name="edittext_hint_colo">#88BDBDBD</color>
 
 
 </resources>

@@ -13,20 +13,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
+
         />
 
-<androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        android:id="@+id/mini_player_room"
+        layout="@layout/room_mini_song_player"
+        android:elevation="5dp"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="8.8"
-    android:layout_above="@id/room_input"
     >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chats_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:clipToPadding="false"
+        android:paddingBottom="60dp"
+        android:paddingTop="60dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/room_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -35,7 +48,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
+        android:clickable="false"
+        android:focusable="false"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -51,7 +67,6 @@
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
         android:id="@+id/room_input"
@@ -59,6 +74,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        />
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 </RelativeLayout>

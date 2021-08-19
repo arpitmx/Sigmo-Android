@@ -79,7 +79,7 @@ public class ChatsFrag extends Fragment {
     ShimmerFrameLayout shimmerFrameLayout;
 
 
-    long delay = 1000; // 1 seconds after user stops typing
+    long delay = 500; // 1 seconds after user stops typing
     long last_text_edit = 0;
     Handler handler = new Handler();
 
@@ -99,7 +99,7 @@ public class ChatsFrag extends Fragment {
 
        msgRoot= firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("messages");
        isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("members");
-        bgRoot = firebaseDatabase.getReference().child("roomBG");
+       bgRoot = firebaseDatabase.getReference().child("roomBG");
 
 
        shimmerFrameLayout = binding.shimmerFrameLayoutChatfrag;
@@ -144,11 +144,9 @@ public class ChatsFrag extends Fragment {
             }
         });
 
-
-
-
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         layoutManager.setStackFromEnd(true);
+
         chatRV.hasFixedSize();
         chatRV.setLayoutManager(layoutManager);
         chatRV.setNestedScrollingEnabled(false);
@@ -168,7 +166,7 @@ public class ChatsFrag extends Fragment {
                     binding.roomInput.istypingTV.setText(dataSnapshot.child("typingNow").getValue()+ " is typing...");
                 }else{
                        // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_down));
-                    binding.roomInput.istypingTV.setVisibility(View.INVISIBLE);
+                    binding.roomInput.istypingTV.setVisibility(View.GONE);
                     isTyping = false;
                 }}
                else{
