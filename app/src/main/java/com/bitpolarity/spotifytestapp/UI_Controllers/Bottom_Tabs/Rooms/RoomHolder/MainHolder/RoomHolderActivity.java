@@ -44,8 +44,8 @@ public class RoomHolderActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         supporterClass = new ViewModelProvider(this, new SupporterViewModelFactory(roomName)).get(SupporterClass.class);
-        supporterClass.updateStatus();
-        supporterClass.checkIfUserDisconnected();
+
+
        // supporterClass.getOnlineCount();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -60,7 +60,20 @@ public class RoomHolderActivity extends AppCompatActivity {
         supporterClass.decreaseCount();
         finish();
 
-
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        supporterClass.decreaseCount();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        supporterClass.updateStatus();
+        supporterClass.checkIfUserDisconnected();
+
+    }
 }

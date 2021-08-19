@@ -128,14 +128,11 @@ public class RoomMainFragment extends Fragment {
         });
 
 
-
         FragmentManager fragmentManager = getChildFragmentManager();
 
         fragmentManager.beginTransaction()
                 .replace(R.id.child_chat_frameLayout,new ChatsFrag()).addToBackStack(null)
                 .commit();
-
-
 
     }
 }

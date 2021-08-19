@@ -16,7 +16,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -29,10 +31,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.ChatsAdapter;
 import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.MultiViewChatAdapter;
+import com.bitpolarity.spotifytestapp.Adapters.RoomsListAdapters.RoomsListAdapter;
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
 import com.bitpolarity.spotifytestapp.R;
+import com.bitpolarity.spotifytestapp.RecyclerScrollManager;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
 import com.bitpolarity.spotifytestapp.databinding.RoomActionBarBinding;
 import com.bumptech.glide.Glide;
@@ -53,6 +57,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+
 
 
 public class ChatsFrag extends Fragment {
@@ -82,6 +87,10 @@ public class ChatsFrag extends Fragment {
     long delay = 500; // 1 seconds after user stops typing
     long last_text_edit = 0;
     Handler handler = new Handler();
+    int listSize= 0;
+
+
+    private int lastFirstVisiblePosition;
 
 
     private Runnable input_finish_checker = () -> {
@@ -125,31 +134,14 @@ public class ChatsFrag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-        bgRoot.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String url = snapshot.child("url").getValue().toString();
-
-                Glide.with(getActivity().getApplicationContext())
-                        .load(url)
-                        .into(binding.roomBackgroundWallpaper);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         layoutManager.setStackFromEnd(true);
 
         chatRV.hasFixedSize();
         chatRV.setLayoutManager(layoutManager);
         chatRV.setNestedScrollingEnabled(false);
+        loadmessages();
+
 
         //getTypingMembers();
 
@@ -185,7 +177,6 @@ public class ChatsFrag extends Fragment {
         binding.roomInput.sendBtn.setOnClickListener(v -> {
             sendMessage();
         });
-        loadmessages();
 
         binding.roomInput.msgEditBox.addTextChangedListener(new TextWatcher() {
             @Override
@@ -217,11 +208,86 @@ public class ChatsFrag extends Fragment {
 //         });
 
     }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+
+        binding.jumpToEndFAB.setOnClickListener(view -> {
+            onClickFab();
+        });
+
+
+        chatRV.addOnScrollListener(new RecyclerScrollManager.FabScroll() {
+
+            @Override
+            public void show() {
+                binding.jumpToEndFAB.setVisibility(View.VISIBLE);
+                binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
+                binding.jumpToEndFAB.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+            }
+
+            @Override
+            public void hide() {
+                //binding.jumpToEndFAB.setVisibility(View.VISIBLE);
+               // binding.jumpToEndFAB.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+                binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
+            }
+        });
+
+
+        try {
+            bgRoot.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    String url = snapshot.child("url").getValue().toString();
+                    setChatWall(url);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }catch (Exception e ){
+            Log.d(TAG, "onResume: Error setting chat wallpaper");
+        }
+
+
+
+    }
+
+
+    void onClickFab(){
+        chatRV.smoothScrollToPosition(listSize-1);
+        binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
+        //RecyclerScrollManager.FabScroll.setScrollDist();
+        RecyclerScrollManager.FabScroll.scrollDist = 0;
+
+
+    }
+
+
+    void setChatWall(String url){
+
+        Glide.with(getContext())
+                .load(url)
+                .into(binding.roomBackgroundWallpaper);
+    }
+
     void loadmessages(){
 
        // Query msgQue = msgRoot.limitToLast(mCurrentPage*TOTAL_ELEMENT_TO_LOAD);
-
-
 
         msgRoot.addChildEventListener(new ChildEventListener() {
             @Override
@@ -230,14 +296,23 @@ public class ChatsFrag extends Fragment {
                     //recyclerViewState = chatRV.getLayoutManager().onSaveInstanceState();
                     //int size = getModelList(snapshot).size();
 
-                    adapter = new MultiViewChatAdapter(getModelList(snapshot));
+
+                adapter = new MultiViewChatAdapter(getModelList(snapshot));
                     chatRV.setVisibility(View.VISIBLE);
                     chatRV.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+
+                    if(binding.jumpToEndFAB.getVisibility()==View.VISIBLE) {
+                        binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_out));
+                        binding.jumpToEndFAB.setVisibility(View.GONE);
+                    }
+
+
+
                     //chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
 
                     //swipeRefreshLayout.setRefreshing(false);
-                    //chatRV.scrollToPosition(c.size()- 1);
+                    //chatRV.scrollToPosition(listSize- 1);
 
 
 
@@ -296,6 +371,7 @@ public class ChatsFrag extends Fragment {
             if (userName.equals(DB_Handler.getUsername())){
                 chatList.add(new ChatListModel_Multi(userName,msg,2));
                 Log.d(TAG, "getModelList: TYPE 1"+msg);
+
             }else{
                 chatList.add(new ChatListModel_Multi(userName,msg,1));
                 Log.d(TAG, "getModelList: TYPE 2"+msg);
@@ -305,6 +381,7 @@ public class ChatsFrag extends Fragment {
         }
         shimmerFrameLayout.stopShimmerAnimation();
         shimmerFrameLayout.setVisibility(View.GONE);
+        listSize = chatList.size();
 
         return chatList;
     }
@@ -329,7 +406,6 @@ public class ChatsFrag extends Fragment {
             if (usrname!=null) {
                 map2.put("sender", usrname);
                 in_msg.updateChildren(map2);
-                Toast.makeText(getContext(),"Sent",Toast.LENGTH_SHORT).show();
                 binding.roomInput.msgEditBox.setText("");
                 mpSent.start();
 
