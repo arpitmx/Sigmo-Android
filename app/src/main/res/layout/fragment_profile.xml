@@ -23,10 +23,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/uname"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:text="Arpit Maurya"
+    android:text="Username"
     android:textColor="@color/white200"
     android:fontFamily="@font/hb"
     android:textSize="25dp"

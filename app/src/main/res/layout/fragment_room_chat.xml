@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="10"
-    android:background="@drawable/om"
-
     android:orientation="vertical">
 
 
+    <ImageView
+        android:id="@+id/room_background_wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        />
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="8.8"
+    android:layout_above="@id/room_input"
     >
 
     <androidx.recyclerview.widget.RecyclerView
@@ -29,37 +34,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="@drawable/chatbg"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:animationCache="true"
             android:layout_gravity="center"
             android:orientation="vertical">
-
             <include layout="@layout/shimmer_placeholder_layout_chats_frag" />
 
-
-
         </LinearLayout>
+
     </com.facebook.shimmer.ShimmerFrameLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
         android:id="@+id/room_input"
-        android:layout_weight="1.2"
         layout="@layout/room_message_input_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_alignParentBottom="true"
         />
 
-</LinearLayout>
+</RelativeLayout>

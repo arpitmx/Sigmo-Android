@@ -221,9 +221,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
             bottomSheet.show(getChildFragmentManager(),"ModalBottomSheet");
         }).start();
 
-
-
-
     }
 
     void loadData(){

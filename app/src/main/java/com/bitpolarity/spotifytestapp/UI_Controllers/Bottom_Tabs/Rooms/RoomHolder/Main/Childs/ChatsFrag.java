@@ -35,6 +35,8 @@ import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
 import com.bitpolarity.spotifytestapp.databinding.RoomActionBarBinding;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -57,7 +59,7 @@ public class ChatsFrag extends Fragment {
 
     FragmentRoomChatBinding binding;
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference msgRoot, isTypingRoot;
+    DatabaseReference msgRoot, isTypingRoot, bgRoot;
     private String temp_key;
     MediaPlayer mpSent, mpClick ;
 
@@ -97,6 +99,8 @@ public class ChatsFrag extends Fragment {
 
        msgRoot= firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("messages");
        isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("members");
+        bgRoot = firebaseDatabase.getReference().child("roomBG");
+
 
        shimmerFrameLayout = binding.shimmerFrameLayoutChatfrag;
        shimmerFrameLayout.startShimmerAnimation();
@@ -120,6 +124,28 @@ public class ChatsFrag extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        bgRoot.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String url = snapshot.child("url").getValue().toString();
+
+                Glide.with(getActivity().getApplicationContext())
+                        .load(url)
+                        .into(binding.roomBackgroundWallpaper);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
 
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         layoutManager.setStackFromEnd(true);

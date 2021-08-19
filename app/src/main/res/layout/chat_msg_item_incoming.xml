@@ -14,20 +14,21 @@
         android:id="@+id/profie_display_picture_chat"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginBottom="3dp"
         android:src="@drawable/poster"
         android:layout_gravity="bottom"
-        android:layout_margin = "5dp"
-
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_gchat_message_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="10dp"
        >
 
         <LinearLayout
@@ -70,16 +71,8 @@
                 android:textColor="@color/white200"
                 android:textSize="17sp" />
 
-
-
-
-
-</LinearLayout>
         </LinearLayout>
-
-
-
-
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 
