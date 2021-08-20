@@ -61,6 +61,10 @@
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintVertical_bias="0.0"
     >
+
+
+
+
         <TextView
             android:id="@+id/roomTitleBar"
             android:layout_width="wrap_content"
@@ -76,22 +80,53 @@
             android:visibility="visible"
             />
 
+
+
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+             android:orientation="horizontal"
+         android:layout_marginStart="10dp"
+         android:paddingStart="5dp"
+         android:gravity="center"
+
+         >
         <TextView
             android:id="@+id/totalOnline_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
             android:fontFamily="@font/hmed"
-            android:gravity="center"
-            android:paddingStart="5dp"
             android:text="1 online"
-            android:textColor="@color/s_blue200"
+            android:textColor="#89BCE6"
             android:paddingBottom="5dp"
-            android:textSize="12sp"
-            android:visibility="visible"
+            android:textSize="12dp"
+            android:visibility = "visible"
             />
 
+             <TextView
+                 android:id="@+id/istypingTV"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="@null"
+                 android:fontFamily="@font/hmed"
+                 android:gravity="start"
+                 android:text="Sara is typing..."
+                 android:paddingBottom="5dp"
+                 android:textColor="@color/s_blue200"
+                 android:textSize="12dp"
+                 android:visibility="gone"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintVertical_bias="1.0" />
+
+
+     </LinearLayout>
+
 </LinearLayout>
+
+
 
         <ImageButton
             android:id="@+id/search_button"

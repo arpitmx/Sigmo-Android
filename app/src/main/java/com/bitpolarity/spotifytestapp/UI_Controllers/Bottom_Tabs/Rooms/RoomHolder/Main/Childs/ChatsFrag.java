@@ -107,11 +107,12 @@ public class ChatsFrag extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
        msgRoot= firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("messages");
-       isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("members");
        bgRoot = firebaseDatabase.getReference().child("roomBG");
+       isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("members");
 
 
-       shimmerFrameLayout = binding.shimmerFrameLayoutChatfrag;
+
+        shimmerFrameLayout = binding.shimmerFrameLayoutChatfrag;
        shimmerFrameLayout.startShimmerAnimation();
 
        mpSent = MediaPlayer.create(getContext(), R.raw.hs_bg_message_sent2);
@@ -143,40 +144,11 @@ public class ChatsFrag extends Fragment {
         loadmessages();
 
 
-        //getTypingMembers();
-
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-               if(dataSnapshot.hasChild("typingNow")){
-                   String s = dataSnapshot.child("typingNow").getValue().toString();
-                if(!s.equals("") && !s.equals(DB_Handler.getUsername()) ){
-                    binding.roomInput.istypingTV.setVisibility(View.VISIBLE);
-                    isTyping = true;
-                   // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_up));
-                    binding.roomInput.istypingTV.setText(dataSnapshot.child("typingNow").getValue()+ " is typing...");
-                }else{
-                       // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_down));
-                    binding.roomInput.istypingTV.setVisibility(View.GONE);
-                    isTyping = false;
-                }}
-               else{
-                   binding.roomInput.istypingTV.setText("Sara here! No messages here, send one! ;) ");
-               }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-
-        isTypingRoot.addValueEventListener(postListener);
         binding.roomInput.sendBtn.setOnClickListener(v -> {
             sendMessage();
         });
+
+
 
         binding.roomInput.msgEditBox.addTextChangedListener(new TextWatcher() {
             @Override
