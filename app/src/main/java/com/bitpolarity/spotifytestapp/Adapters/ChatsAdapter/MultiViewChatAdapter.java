@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemIncomingBinding;
+import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemIncomingSameUsrBinding;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemOutgoingBinding;
 
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
     ArrayList<ChatListModel_Multi> list;
     public static final int MESSAGE_TYPE_IN = 1;
     public static final int MESSAGE_TYPE_OUT = 2;
+    public static final int MESSAGE_TYPE_OUT_SAME = 3;
+
 
 
     public MultiViewChatAdapter(ArrayList<ChatListModel_Multi> list){
@@ -63,6 +66,23 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
          }
      }
 
+
+    class ViewHolderIncoming_SameUsr extends RecyclerView.ViewHolder{
+
+        ChatMsgItemIncomingSameUsrBinding binding_outgoing_sameusr;
+
+        public ViewHolderIncoming_SameUsr(ChatMsgItemIncomingSameUsrBinding binding) {
+            super(binding.getRoot());
+
+            this.binding_outgoing_sameusr = binding;
+        }
+
+        void bind(int position) {
+            ChatListModel_Multi  messageModel = list.get(position);
+            binding_outgoing_sameusr.textMessage.setText(messageModel.getMessage());
+        }
+    }
+
      @Override
     public int getItemViewType(int position) {
         return list.get(position).getMessageType();
@@ -75,11 +95,15 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
            View view_incoming = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_incoming, parent, false);
            return new ViewHolderIncoming(ChatMsgItemIncomingBinding.bind(view_incoming));
 
-       }else {
+       }else if(viewType == 2) {
 
           View view_outgoing = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_outgoing,parent,false);
           return new ViewHolderOutgoing(ChatMsgItemOutgoingBinding.bind(view_outgoing));
 
+       }
+       else{
+           View view_outgoing_same_usr = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_incoming_same_usr,parent,false);
+           return new ViewHolderIncoming_SameUsr(ChatMsgItemIncomingSameUsrBinding.bind(view_outgoing_same_usr));
        }
     }
 
@@ -89,9 +113,11 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (list.get(position).getMessageType() == MESSAGE_TYPE_IN) {
             ((ViewHolderIncoming) holder).bind(position);
 
-        } else {
+        } else if (list.get(position).getMessageType() == MESSAGE_TYPE_OUT) {
             ((ViewHolderOutgoing) holder).bind(position);
-
+        }
+        else if(list.get(position).getMessageType() == MESSAGE_TYPE_OUT_SAME) {
+            ((ViewHolderIncoming_SameUsr) holder).bind(position);
         }
 
 

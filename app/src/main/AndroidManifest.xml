@@ -6,6 +6,7 @@
 
 
     <application
+        android:name=".application.Sigmo"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/s1"

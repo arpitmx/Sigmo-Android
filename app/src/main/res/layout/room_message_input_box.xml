@@ -8,15 +8,12 @@
     android:background="@drawable/gradient_overlay_minip"
     >
 
-
-
-
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="10"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,19 +21,28 @@
         app:layout_constraintStart_toStartOf="parent"
       >
 
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+            android:orientation="horizontal"
+             >
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="10"
+            app:startIconDrawable="@drawable/ic_baseline_emoji_emotions_24"
+            app:startIconTint="@color/s_grey"
             android:layout_margin="5dp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:hintEnabled="false"
             app:endIconTint="@color/white87"
             app:counterMaxLength="300"
-            app:endIconMode="clear_text">
+            android:id="@+id/til"
+            app:endIconMode="clear_text"
+            >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.aghajari.emojiview.view.AXEmojiEditText
                 android:id="@+id/msgEditBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,30 +59,33 @@
                 android:textSize="18sp"
                 android:textStyle="normal"
 
+
                 />
+
+
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
+            <ImageButton
+                android:id="@+id/send_btn"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/four_side_send_btn"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:scaleX="1"
+                android:scaleY="1"
+                android:src="@drawable/ic_baseline_send_24" />
 
-
-        <ImageButton
-            android:id="@+id/send_btn"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/four_side_send_btn"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:scaleX="1"
-            android:scaleY="1"
-            android:src="@drawable/ic_baseline_send_24" />
-
+        </LinearLayout>
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

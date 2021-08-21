@@ -43,8 +43,9 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/activity_status.xml" value="0.23055555555555557" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/activity_testing.xml" value="0.264" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item.xml" value="0.2" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_incoming.xml" value="0.7732558139534884" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_outgoing.xml" value="0.6" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_incoming.xml" value="0.2" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_incoming_same_usr.xml" value="0.4" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_outgoing.xml" value="0.176" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_recieve.xml" value="0.8" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_send.xml" value="0.4" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/circle_friend_activity_list_item.xml" value="0.264" />
@@ -64,8 +65,8 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/mini_song_player.xml" value="0.4" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/public_rooms_item.xml" value="0.4103942652329749" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_action_bar.xml" value="0.8366336633663366" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_message_input_box.xml" value="0.264" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_mini_song_player.xml" value="0.2823779193205945" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_message_input_box.xml" value="0.2" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_mini_song_player.xml" value="0.264" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/shimmer_placeholder_layout.xml" value="0.264" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/shimmer_placeholder_layout_bottom_sheet.xml" value="0.21574074074074073" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/shimmer_placeholder_layout_chats_frag.xml" value="0.264" />
@@ -73,11 +74,13 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/chatbg.xml" value="0.2310185185185185" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/chatitembg.xml" value="0.2415525114155251" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/chatitembg_incoming.xml" value="0.136" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/chatitembg_incoming_same.xml" value="0.15648148148148147" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/chatitembg_outgoing.xml" value="0.2415525114155251" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/chatitembg_outgoint.xml" value="0.2310185185185185" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_arrow_back_24.xml" value="0.2310185185185185" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_check_24.xml" value="0.2449074074074074" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_dehaze_24.xml" value="0.2449074074074074" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_emoji_emotions_24.xml" value="0.19814814814814816" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.16574074074074074" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_send_24.xml" value="0.2310185185185185" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_musicmeet.xml" value="0.2449074074074074" />

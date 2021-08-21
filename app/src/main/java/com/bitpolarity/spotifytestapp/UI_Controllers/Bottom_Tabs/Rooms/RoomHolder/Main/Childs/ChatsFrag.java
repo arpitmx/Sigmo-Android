@@ -1,11 +1,7 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Main.Childs;
 
-import static android.view.WindowManager.LayoutParams.ANIMATION_CHANGED;
-import static android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
-import static androidx.core.content.ContextCompat.getSystemService;
 
-import android.content.Context;
-import android.inputmethodservice.InputMethodService;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,8 +15,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,38 +23,37 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.ChatsAdapter;
+import com.aghajari.emojiview.AXEmojiManager;
+import com.aghajari.emojiview.view.AXEmojiPopup;
+import com.aghajari.emojiview.view.AXEmojiView;
+import com.aghajari.emojiview.view.AXSingleEmojiView;
 import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.MultiViewChatAdapter;
-import com.bitpolarity.spotifytestapp.Adapters.RoomsListAdapters.RoomsListAdapter;
 import com.bitpolarity.spotifytestapp.DB_Handler;
-import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.RecyclerScrollManager;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
-import com.bitpolarity.spotifytestapp.databinding.RoomActionBarBinding;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.vanniktech.emoji.EmojiEditText;
+import com.vanniktech.emoji.EmojiPopup;
+import com.vanniktech.emoji.RecentEmoji;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 
 
-public class ChatsFrag extends Fragment {
+public class ChatsFrag extends Fragment  {
 
     FragmentRoomChatBinding binding;
     FirebaseDatabase firebaseDatabase;
@@ -82,6 +75,9 @@ public class ChatsFrag extends Fragment {
     private final int mCurrentPage = 1;
     static boolean isTyping = false;
     ShimmerFrameLayout shimmerFrameLayout;
+    List<String> temp = new ArrayList();
+
+
 
 
     long delay = 500; // 1 seconds after user stops typing
@@ -135,6 +131,9 @@ public class ChatsFrag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
+
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         layoutManager.setStackFromEnd(true);
 
@@ -142,7 +141,6 @@ public class ChatsFrag extends Fragment {
         chatRV.setLayoutManager(layoutManager);
         chatRV.setNestedScrollingEnabled(false);
         loadmessages();
-
 
         binding.roomInput.sendBtn.setOnClickListener(v -> {
             sendMessage();
@@ -192,12 +190,16 @@ public class ChatsFrag extends Fragment {
     public void onResume() {
         super.onResume();
 
+        ///////////////////////////////////////////////////////Emoji
+
+        initEmojiBoard();
+
+        //////////////////////////////////////////////////////Emoji
 
 
         binding.jumpToEndFAB.setOnClickListener(view -> {
             onClickFab();
         });
-
 
         chatRV.addOnScrollListener(new RecyclerScrollManager.FabScroll() {
 
@@ -215,6 +217,43 @@ public class ChatsFrag extends Fragment {
                 binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
             }
         });
+
+
+        chatRV.addOnScrollListener(new RecyclerScrollManager.MiniplayerScroll() {
+
+            @Override
+            public void show() {
+                binding.miniPlayerRoom.jumpToTop.setVisibility(View.VISIBLE);
+                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
+                binding.miniPlayerRoom.getRoot().animate().translationY(-binding.miniPlayerRoom.getRoot().getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
+
+
+            }
+
+            @Override
+            public void hide() {
+                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_out));
+                binding.miniPlayerRoom.jumpToTop.setVisibility(View.GONE);
+                binding.miniPlayerRoom.getRoot().animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+
+            }
+        });
+
+
+        binding.miniPlayerRoom.jumpToTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chatRV.smoothScrollToPosition(0);
+                binding.miniPlayerRoom.getRoot().animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+                binding.miniPlayerRoom.jumpToTop.setVisibility(View.GONE);
+                RecyclerScrollManager.MiniplayerScroll.setScrollDist();
+            }
+        });
+
+
+
+
+
 
 
         try {
@@ -239,16 +278,79 @@ public class ChatsFrag extends Fragment {
 
     }
 
+    private void initEmojiBoard() {
 
-    void onClickFab(){
-        chatRV.smoothScrollToPosition(listSize-1);
-        binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
-        //RecyclerScrollManager.FabScroll.setScrollDist();
-        RecyclerScrollManager.FabScroll.scrollDist = 0;
+        //final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(binding.getRoot()).build(binding.roomInput.msgEditBox);
+
+        AXSingleEmojiView emojiView = new AXSingleEmojiView(getContext());
+        emojiView.setEditText(binding.roomInput.msgEditBox);
+
+        AXEmojiPopup emojiPopup = new AXEmojiPopup(emojiView);
+        setTheme();
+        binding.roomInput.til.setStartIconOnClickListener(view -> {
+            emojiPopup.toggle();
+
+            binding.roomInput.msgEditBox.setOnClickListener(view1 -> emojiPopup.dismiss());
+
+        });
 
 
     }
 
+    void setTheme(){
+
+        AXEmojiManager.getEmojiViewTheme().setFooterEnabled(true);
+        AXEmojiManager.getEmojiViewTheme().setSelectionColor(Color.TRANSPARENT);
+        AXEmojiManager.getEmojiViewTheme().setSelectedColor(0xff82ADD9);
+        AXEmojiManager.getEmojiViewTheme().setFooterSelectedItemColor(0xff82ADD9);
+        AXEmojiManager.getEmojiViewTheme().setBackgroundColor(0xFF1E2632);
+        AXEmojiManager.getEmojiViewTheme().setCategoryColor(0xFF232D3A);
+        AXEmojiManager.getEmojiViewTheme().setFooterBackgroundColor(0xFF232D3A);
+        AXEmojiManager.getEmojiViewTheme().setVariantPopupBackgroundColor(0xFF232D3A);
+        AXEmojiManager.getEmojiViewTheme().setVariantDividerEnabled(false);
+        AXEmojiManager.getEmojiViewTheme().setDividerColor(0xFF1B242D);
+        AXEmojiManager.getEmojiViewTheme().setDefaultColor(0xFF677382);
+        AXEmojiManager.getEmojiViewTheme().setTitleColor(0xFF677382);
+        AXEmojiManager.getEmojiViewTheme().setAlwaysShowDivider(true);
+
+    }
+
+    void onClickFab(){
+        chatRV.smoothScrollToPosition(listSize-1);
+        binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
+        RecyclerScrollManager.FabScroll.setScrollDist();
+
+
+    }
+
+    void handleEmojiView(){
+
+
+
+//        if(!layout.isShowing()) {
+//            layout.show();
+//            layout.setVisibility(View.VISIBLE);
+//
+//            binding.roomInput.msgEditBox.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    layout.hideAndOpenKeyboard();
+//                    layout.toggle();
+//                    layout.setVisibility(View.GONE);
+//
+//
+//                }
+//            });
+//
+//        }
+//
+//        else {
+//            //layout.setVisibility(View.GONE);
+//            layout.hideAndOpenKeyboard();
+//            //layout.dismiss();
+//        }
+
+    }
 
     void setChatWall(String url){
 
@@ -336,21 +438,43 @@ public class ChatsFrag extends Fragment {
 
         Iterator i = dataSnapshot.getChildren().iterator();
 
+
         while (i.hasNext()){
+
             msg = String.valueOf(((DataSnapshot)i.next()).getValue());
             userName = String.valueOf(((DataSnapshot)i.next()).getValue());
+            temp.add(userName);
 
             if (userName.equals(DB_Handler.getUsername())){
                 chatList.add(new ChatListModel_Multi(userName,msg,2));
-                Log.d(TAG, "getModelList: TYPE 1"+msg);
+                Log.d(TAG, "OUTGOING: TYPE 2"+msg);
 
             }else{
-                chatList.add(new ChatListModel_Multi(userName,msg,1));
-                Log.d(TAG, "getModelList: TYPE 2"+msg);
 
+                if(temp.size()>1) {
+
+                    if(temp.get(temp.size() - 2).equals(userName)){
+                        chatList.add(new ChatListModel_Multi(userName, msg, 3));
+                        Log.d(TAG, "INCOMING_SAME_USER: TYPE 3" + msg);
+
+                    }else {
+                        chatList.add(new ChatListModel_Multi(userName, msg, 1));
+                        Log.d(TAG, "INCOMING: TYPE 1" + msg);
+                    }
+
+                }else{
+                    chatList.add(new ChatListModel_Multi(userName, msg, 1));
+                    Log.d(TAG, "INCOMING: TYPE 1" + msg);
+                }
             }
 
+
+
         }
+
+
+        Log.d(TAG, "TEMP "+ temp);
+
         shimmerFrameLayout.stopShimmerAnimation();
         shimmerFrameLayout.setVisibility(View.GONE);
         listSize = chatList.size();
