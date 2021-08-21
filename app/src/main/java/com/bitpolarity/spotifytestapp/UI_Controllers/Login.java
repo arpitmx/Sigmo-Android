@@ -73,6 +73,7 @@ public class Login extends AppCompatActivity {
                 startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
                 startActivity(new Intent(this, MainHolder.class));
                 Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
 

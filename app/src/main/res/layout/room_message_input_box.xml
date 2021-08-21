@@ -4,24 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:elevation="5dp"
+    android:background="@drawable/gradient_overlay_minip"
     >
 
-    <TextView
-        android:id="@+id/istypingTV"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_weight="1"
-        android:background="@null"
-        android:fontFamily="@font/hregular"
-        android:gravity="center_vertical"
-        android:paddingStart="12dp"
-        android:paddingBottom="5dp"
-        android:text="Sara is typing..."
-        android:textColor="@color/s_blue200"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 
     <LinearLayout
@@ -29,20 +16,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:elevation="5dp"
-        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
         android:weightSum="10"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/istypingTV">
+      >
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:layout_margin="8dp"
+            android:layout_margin="5dp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:hintEnabled="false"
@@ -54,18 +40,18 @@
                 android:id="@+id/msgEditBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="1dp"
-                android:maxHeight="80dp"
-                android:inputType="textMultiLine"
-                android:minHeight="45dp"
-                android:fontFamily="@font/hmed"
-                android:textStyle="normal"
-                android:textSize="18sp"
-                android:gravity="center_vertical"
-                android:hint="Type you message here"
-                android:textColorHint="#88BDBDBD"
                 android:background="@drawable/editbox_bg"
+                android:fontFamily="@font/hregular"
+                android:gravity="center_vertical"
+                android:hint="Type your message here"
+                android:inputType="textMultiLine"
+                android:maxHeight="80dp"
+                android:minHeight="45dp"
+                android:padding="1dp"
                 android:textColor="@color/white200"
+                android:textColorHint="#E8BFBFBF"
+                android:textSize="18sp"
+                android:textStyle="normal"
 
                 />
 
@@ -78,12 +64,9 @@
             android:id="@+id/send_btn"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="2dp"
-
-            android:layout_marginEnd="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/four_side_send_btn"
             android:clickable="true"
             android:focusable="true"

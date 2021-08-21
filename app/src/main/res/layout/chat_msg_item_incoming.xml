@@ -8,46 +8,41 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/ripple_effect"
-    android:layout_marginTop="8dp">
+   >
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profie_display_picture_chat"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/poster"
+        android:src="@drawable/personpic"
         android:layout_gravity="bottom"
-        android:layout_margin = "5dp"
-
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="1dp"
         />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_gchat_message_me"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="true"
-       >
+
 
         <LinearLayout
             android:id="@+id/layout_gchat_container_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/chatitembg"
+            android:layout_margin="2dp"
+            android:background="@drawable/chatitembg_incoming"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/username_chatroom"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="18dp"
+                android:minWidth="40dp"
+                android:layout_marginTop="3dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:text="Arpit!"
                 android:textColor="@color/s_blue100"
                 android:fontFamily="@font/hb"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -55,7 +50,7 @@
                 android:orientation="horizontal"
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="4dp"
                 >
 
             <TextView
@@ -63,24 +58,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="textStart"
-                android:fontFamily="@font/hmed"
+                android:fontFamily="@font/hregular"
                 android:maxWidth="260dp"
-                android:minWidth="60dp"
+                android:minWidth="50dp"
                 android:text="Hi!"
                 android:textColor="@color/white200"
-                android:textSize="17sp" />
+                android:textSize="@dimen/chat_incoming_outgoing_font_size" />
 
-
-
-
-
-</LinearLayout>
         </LinearLayout>
-
-
-
-
-    </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
 
 

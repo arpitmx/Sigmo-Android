@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">@color/dark_bg</color>
-    <color name="purple_500">@color/dark_bg</color>
-    <color name="purple_700">@color/dark_bg</color>
+    <color name="purple_200">@color/s_blue200</color>
+    <color name="purple_500">@color/s_blue200</color>
+    <color name="purple_700">@color/s_blue200</color>
     <color name="teal_200">#FFFFFF</color>
     <color name="teal_700">#ECECEC</color>
     <color name="black">#121212</color>
@@ -45,9 +45,10 @@
 
     <color name="gpurple_start">@color/dark_bg</color>
     <color name="gpurple_end">@color/dark_bg</color>
-
-
-
+    <color name="outgoing_chat_bg">#4298ED</color>
+    <color name="edittext_hint_colo">#88BDBDBD</color>
+    <color name="messagebg">#FA232323</color>
+    <color name="editboxbg">#9A4C4C4C</color>
 
 
 </resources>

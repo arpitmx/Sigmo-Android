@@ -19,7 +19,9 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Main.Childs.ChatsFrag;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Room_Tab_Adapter;
@@ -44,7 +46,7 @@ public class RoomMainFragment extends Fragment {
     Room_Tab_Adapter adapter;
     FragmentRoomMainholderBinding binding;
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference memberRoot;
+    DatabaseReference memberRoot, isTypingRoot;
     final static String TAG = "RoomHolderActivity";
     ConstraintLayout constraintLayout;
 
@@ -54,51 +56,56 @@ public class RoomMainFragment extends Fragment {
 
         binding = FragmentRoomMainholderBinding.inflate(inflater, container, false);
         binding.roomActionBar.roomTitleBar.setText(roomName);
-
         firebaseDatabase = FirebaseDatabase.getInstance();
-        memberRoot = firebaseDatabase.getReference().child("Rooms").child(roomName).child("members");
 
-//
-//        tabLayout = binding.tabLayoutRooms;
-//        viewPager = binding.viewpagerRooms;
-//        tabLayout.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_down));
+        isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("members");
+        memberRoot = firebaseDatabase.getReference().child("Rooms").child(roomName).child("members");
 
         binding.roomActionBar.roomBackBTN.setOnClickListener(view -> getActivity().onBackPressed());
 
+        //getTypingMembers();
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.hasChild("typingNow")){
+                    String s = dataSnapshot.child("typingNow").getValue().toString();
+                    if(!s.equals("") && !s.equals(DB_Handler.getUsername()) ){
+                        binding.roomActionBar.istypingTV.setVisibility(View.VISIBLE);
+                        // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_up));
+                        binding.roomActionBar.istypingTV.setText(dataSnapshot.child("typingNow").getValue()+ " is typing...");
+                        binding.roomActionBar.totalOnlineTv.setVisibility(View.GONE);
+
+                    }else{
+                        // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_down));
+                        binding.roomActionBar.istypingTV.setVisibility(View.GONE);
+                        binding.roomActionBar.totalOnlineTv.setVisibility(View.VISIBLE);
+
+                    }}
+                else{
+                    Toast.makeText(getContext(), "No messages , send one! ;)", Toast.LENGTH_SHORT).show();
+                }
 
 
-//         constraintLayout =  binding.roomActionBar.customActionBarConsLay;
-//         constraintLayout.setElevation(0);
+            }
 
-//
-//        tabLayout.addTab(tabLayout.newTab().setText("Queue"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Chats"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Members"));
-//
-//        FragmentManager fm = getChildFragmentManager();
-//        adapter = new Room_Tab_Adapter(fm , getLifecycle());
-//        viewPager.setAdapter(adapter);
-//        viewPager.setCurrentItem(1);
-//
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                viewPager.setCurrentItem(tab.getPosition());
-//            }
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//            }
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//            }
-//        });
-//
-//        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageSelected(int position) {
-//                tabLayout.selectTab(tabLayout.getTabAt(position));
-//            }
-//        });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+
+        isTypingRoot.addValueEventListener(postListener);
+
+
+
+
+
+
+
+
 
         return binding.getRoot();
     }
@@ -128,14 +135,11 @@ public class RoomMainFragment extends Fragment {
         });
 
 
-
         FragmentManager fragmentManager = getChildFragmentManager();
 
         fragmentManager.beginTransaction()
                 .replace(R.id.child_chat_frameLayout,new ChatsFrag()).addToBackStack(null)
                 .commit();
-
-
 
     }
 }

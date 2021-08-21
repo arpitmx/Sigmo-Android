@@ -1,65 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="10"
-    android:background="@drawable/om"
-
     android:orientation="vertical">
 
 
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="8.8"
-    >
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chats_layout"
+    <ImageView
+        android:id="@+id/room_background_wallpaper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerFrameLayout_chatfrag"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@drawable/chatbg"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animationCache="true"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-
-            <include layout="@layout/shimmer_placeholder_layout_chats_frag" />
-
-
-
-        </LinearLayout>
-    </com.facebook.shimmer.ShimmerFrameLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-    <include
-        android:id="@+id/room_input"
-        android:layout_weight="1.2"
-        layout="@layout/room_message_input_box"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
 
         />
 
-</LinearLayout>
+
+
+    <include
+        android:id="@+id/mini_player_room"
+        layout="@layout/room_mini_song_player"
+        android:elevation="5dp"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/room_input"
+
+        >
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chats_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="50dp"
+            android:paddingBottom="10dp"
+            android:visibility="visible"
+            android:scrollbars="vertical"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerFrameLayout_chatfrag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:visibility="gone"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:animationCache="true"
+                android:orientation="vertical">
+
+                <include layout="@layout/shimmer_placeholder_layout_chats_frag" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/jumpToEnd_FAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#202020"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:visibility="gone"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.952"
+            app:layout_constraintStart_toStartOf="@+id/chats_layout"
+            app:layout_constraintTop_toTopOf="@+id/chats_layout"
+            app:layout_constraintVertical_bias="0.975"
+            app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <include
+        android:id="@+id/room_input"
+        layout="@layout/room_message_input_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</RelativeLayout>

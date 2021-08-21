@@ -12,10 +12,6 @@
         layout="@layout/room_action_bar"
         />
 
-    <include
-        android:id="@+id/mini_player_room"
-        layout="@layout/room_mini_song_player"
-        />
 
 
         <com.discord.panels.OverlappingPanelsLayout
