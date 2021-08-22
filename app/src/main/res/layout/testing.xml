@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/editbox_bg_reference_up"
+
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="\@ Shaurya"
+            android:layout_margin="8dp"
+            android:textColor="@color/s_blue200"
+            android:fontFamily="@font/hxtrabold"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="15dp"
+            android:text="Ha to maeko ja tak call nhi aaoiewjwta main bhi shayad na uth pau"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/hregular"
+            android:singleLine="true"
+            android:background="@drawable/dark_four_side_borders_post_grey"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
+
+            />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

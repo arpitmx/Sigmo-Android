@@ -11,16 +11,27 @@
     android:foreground="@drawable/ripple_effect"
    >
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profie_display_picture_chat"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_down"
+        android:scaleX="-1"
+        android:scaleY="1"
+        android:rotation="-90"
+        android:layout_gravity="top|center_vertical"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginBottom="1dp"
+        />
 
 
-
-
-        <LinearLayout
+    <LinearLayout
             android:id="@+id/layout_gchat_container_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="35dp"
-            android:layout_marginStart="45dp"
+
             android:background="@drawable/chatitembg_incoming_same"
             android:orientation="vertical">
 
@@ -68,6 +79,7 @@
 
 
         </LinearLayout>
+
 
 
 

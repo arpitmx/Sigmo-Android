@@ -31,19 +31,35 @@
             android:background="@drawable/chatitembg_incoming"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                >
+
             <TextView
                 android:id="@+id/username_chatroom"
                 android:layout_width="wrap_content"
                 android:layout_height="18dp"
                 android:minWidth="40dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:text="Arpit!"
                 android:textColor="@color/s_blue100"
                 android:fontFamily="@font/hb"
                 android:textSize="12sp" />
 
+
+               <ImageView
+                   android:layout_width="20dp"
+                   android:layout_gravity="center_vertical"
+                   android:layout_height="match_parent"
+                   android:src="@drawable/ic_new_joiner_batch"
+                   />
+
+            </LinearLayout>
 
 
 
@@ -64,7 +80,7 @@
                 android:textAlignment="textStart"
                 android:fontFamily="@font/hregular"
                 android:maxWidth="200dp"
-                android:text="Hi!"
+                android:text="Hi hey how are you, nice to meet you!"
                 android:textColor="@color/white200"
                 android:textSize="@dimen/chat_incoming_outgoing_font_size" />
 
