@@ -5,5 +5,5 @@
         android:topLeftRadius="15dp"
         android:bottomLeftRadius="15dp"
         />
-    <solid android:color="@color/outgoing_chat_bg"  />
+    <solid android:color="#5A87FD"  />
 </shape>

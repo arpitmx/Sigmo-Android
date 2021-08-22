@@ -55,6 +55,7 @@ public class RecyclerScrollManager {
         boolean isVisible = false;
         final float MINIMUM_SHOW = 5500;
         final float MINIMUM_HIDE = 300;
+        final long HIDING_DELAY = 3000;
 
 
         @Override
@@ -79,19 +80,13 @@ public class RecyclerScrollManager {
                         scrollDist = 0;
                         isVisible = true;
 
+                                new Handler().postDelayed(() -> {
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+                                    hide();
+                                    scrollDist = 0;
+                                    isVisible = false;
 
-                        hide();
-                        scrollDist = 0;
-                        isVisible = false;
-
-                    }
-                },5000);
-
-
+                                },  HIDING_DELAY);
 
             }
 

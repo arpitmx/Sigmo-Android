@@ -144,7 +144,7 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:background="@color/purple_200"
+            android:background="@color/sigmo_dark_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

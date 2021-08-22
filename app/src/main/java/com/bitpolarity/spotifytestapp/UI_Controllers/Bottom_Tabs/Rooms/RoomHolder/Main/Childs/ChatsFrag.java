@@ -32,6 +32,7 @@ import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
 import com.bitpolarity.spotifytestapp.LinearLayoutManagers.SigmoLinearLayoutManager;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.RecyclerScrollManager;
+import com.bitpolarity.spotifytestapp.Singletons.TimeSystem;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
 import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -54,7 +55,9 @@ public class ChatsFrag extends Fragment  {
 
     FragmentRoomChatBinding binding;
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference msgRoot, isTypingRoot, bgRoot;
+   public static DatabaseReference msgRoot;
+    static DatabaseReference isTypingRoot;
+    static DatabaseReference bgRoot;
     private String temp_key;
     MediaPlayer mpSent, mpClick ;
 
@@ -64,10 +67,12 @@ public class ChatsFrag extends Fragment  {
     SigmoLinearLayoutManager speedyLinearLayoutManager;
     SwipeRefreshLayout swipeRefreshLayout;
     private String userName , msg;
+    private String TYPE, TIME;
     ArrayList<ChatListModel_Multi> chatList;
-
+    public static DatabaseReference in_msg;
     final static String TAG = "ChatsFrag";
     private Parcelable recyclerViewState;
+    TimeSystem timeSystem;
 
     static final int TOTAL_ELEMENT_TO_LOAD = 20;
     private final int mCurrentPage = 1;
@@ -84,6 +89,12 @@ public class ChatsFrag extends Fragment  {
     int listSize= 0;
 
 
+
+
+
+    private static final String TYPE_MSG = "1";
+    private static final String TYPE_JOIN = "2";
+    private static final int TYPE_LEFT = R.dimen.TYPE_LEFT;
     private int lastFirstVisiblePosition;
 
 
@@ -99,6 +110,7 @@ public class ChatsFrag extends Fragment  {
 
         binding = FragmentRoomChatBinding.inflate(inflater, container , false);
         firebaseDatabase = FirebaseDatabase.getInstance();
+        timeSystem = TimeSystem.getInstance();
 
        msgRoot= firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("messages");
        bgRoot = firebaseDatabase.getReference().child("roomBG");
@@ -121,9 +133,16 @@ public class ChatsFrag extends Fragment  {
        speedyLinearLayoutManager = new SigmoLinearLayoutManager(getContext());
        chatList = new ArrayList<>();
 
+
+
        return binding.getRoot();
 
     }
+
+
+
+
+
 
 
     @Override
@@ -134,6 +153,10 @@ public class ChatsFrag extends Fragment  {
 
 //        layoutManager.setOrientation(RecyclerView.VERTICAL);
 //        layoutManager.setStackFromEnd(true);
+
+
+        initOnScroll_UP_JUMP_TO_TOP();
+
 
         speedyLinearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         speedyLinearLayoutManager.setStackFromEnd(true);
@@ -218,50 +241,6 @@ public class ChatsFrag extends Fragment  {
                 binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
             }
         });
-
-
-        chatRV.addOnScrollListener(new RecyclerScrollManager.MiniplayerScroll() {
-
-            //Move Miniplayer up and show jump to top tab
-
-            @Override
-            public void show() {
-                binding.miniPlayerRoom.jumpToTop.setVisibility(View.VISIBLE);
-                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in_jump_to_top));
-                binding.miniPlayerRoom.getRoot().animate().translationY(-binding.miniPlayerRoom.getRoot().getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
-
-
-            }
-
-
-
-            //show Miniplayer up and hide jump to top tab
-
-
-            @Override
-            public void hide() {
-                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_out));
-                binding.miniPlayerRoom.jumpToTop.setVisibility(View.GONE);
-                binding.miniPlayerRoom.getRoot().animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-
-            }
-        });
-
-
-        binding.miniPlayerRoom.jumpToTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chatRV.smoothScrollToPosition(0);
-                binding.miniPlayerRoom.getRoot().animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-                binding.miniPlayerRoom.jumpToTop.setVisibility(View.GONE);
-                RecyclerScrollManager.MiniplayerScroll.setScrollDist();
-            }
-        });
-
-
-
-
-
 
 
         try {
@@ -386,7 +365,7 @@ public class ChatsFrag extends Fragment  {
                     adapter.notifyDataSetChanged();
 
                     if(binding.jumpToEndFAB.getVisibility()==View.VISIBLE) {
-                        binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_out));
+                       // binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_out));
                         binding.jumpToEndFAB.setVisibility(View.GONE);
                     }
 
@@ -448,31 +427,50 @@ public class ChatsFrag extends Fragment  {
 
         while (i.hasNext()){
 
+
+            TIME = String.valueOf(((DataSnapshot) i.next()).getValue());
+            Log.d(TAG, " TIME "+TIME);
+
+            TYPE = String.valueOf(((DataSnapshot) i.next()).getValue());
+            Log.d(TAG, " TYPE - MSG "+TYPE);
+
             msg = String.valueOf(((DataSnapshot)i.next()).getValue());
+            Log.d(TAG, " MSG-rec "+msg);
+
             userName = String.valueOf(((DataSnapshot)i.next()).getValue());
-            temp.add(userName);
+            Log.d(TAG, " USRNAME "+userName);
 
-            if (userName.equals(DB_Handler.getUsername())){
-                chatList.add(new ChatListModel_Multi(userName,msg,2));
-                Log.d(TAG, "OUTGOING: TYPE 2"+msg);
+            if(!TYPE.equals(TYPE_JOIN)) {
+                temp.add(userName);
+            }
 
-            }else{
+            if (TYPE.equals(TYPE_MSG)) {
+                if (userName.equals(DB_Handler.getUsername())) {
+                    chatList.add(new ChatListModel_Multi(userName, msg, 2,TIME));
+                    Log.d(TAG, "OUTGOING: TYPE 2" + msg);
 
-                if(temp.size()>1) {
+                } else {
 
-                    if(temp.get(temp.size() - 2).equals(userName)){
-                        chatList.add(new ChatListModel_Multi(userName, msg, 3));
-                        Log.d(TAG, "INCOMING_SAME_USER: TYPE 3" + msg);
+                    if (temp.size() > 1) {
 
-                    }else {
-                        chatList.add(new ChatListModel_Multi(userName, msg, 1));
+                        if (temp.get(temp.size() - 2).equals(userName)) {
+                            chatList.add(new ChatListModel_Multi(userName, msg, 3,TIME));
+                            Log.d(TAG, "INCOMING_SAME_USER: TYPE 3" + msg);
+
+                        } else {
+                            chatList.add(new ChatListModel_Multi(userName, msg, 1, TIME));
+                            Log.d(TAG, "INCOMING: TYPE 1" + msg);
+                        }
+
+                    } else {
+                        chatList.add(new ChatListModel_Multi(userName, msg, 1, TIME));
                         Log.d(TAG, "INCOMING: TYPE 1" + msg);
                     }
-
-                }else{
-                    chatList.add(new ChatListModel_Multi(userName, msg, 1));
-                    Log.d(TAG, "INCOMING: TYPE 1" + msg);
                 }
+
+            } else  {
+                chatList.add(new ChatListModel_Multi(userName, msg, 4, TIME));
+                Log.d(TAG, "JOINING/LEAVING : TYPE 4" + msg);
             }
 
 
@@ -494,20 +492,25 @@ public class ChatsFrag extends Fragment  {
         binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
         String msg = binding.roomInput.msgEditBox.getText().toString();
         String usrname = DB_Handler.getUsername();
+        String time = timeSystem.getTime_format_12h();
+
 
         Map<String, Object> map = new HashMap<>();
-        temp_key = msgRoot.push().getKey();
+        String temp_key = msgRoot.push().getKey();
         msgRoot.updateChildren(map);
 
         DatabaseReference in_msg = msgRoot.child(temp_key);
         Map<String, Object> map2 = new HashMap<>();
 
+
         if (filterText(msg)){
 
             map2.put("msg",msg);
+            map2.put("TYPE",TYPE_MSG);
 
             if (usrname!=null) {
                 map2.put("sender", usrname);
+                map2.put("TIME",time);
                 in_msg.updateChildren(map2);
                 binding.roomInput.msgEditBox.setText("");
                 mpSent.start();
@@ -548,6 +551,52 @@ public class ChatsFrag extends Fragment  {
             }
         });
     }
+
+
+
+    private void initOnScroll_UP_JUMP_TO_TOP() {
+
+        chatRV.addOnScrollListener(new RecyclerScrollManager.MiniplayerScroll() {
+
+            //Move Miniplayer up and show jump to top tab
+
+            @Override
+            public void show() {
+                binding.miniPlayerRoom.jumpToTop.setVisibility(View.VISIBLE);
+                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in_jump_to_top));
+                binding.miniPlayerRoom.getRoot().animate().translationY(-binding.miniPlayerRoom.getRoot().getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
+
+
+            }
+
+
+
+            //show Miniplayer up and hide jump to top tab
+
+
+            @Override
+            public void hide() {
+                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_out));
+                binding.miniPlayerRoom.jumpToTop.setVisibility(View.GONE);
+                binding.miniPlayerRoom.getRoot().animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+
+            }
+        });
+
+
+        binding.miniPlayerRoom.jumpToTop.setOnClickListener(view -> {
+            chatRV.smoothScrollToPosition(0);
+            binding.miniPlayerRoom.getRoot().animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+            binding.miniPlayerRoom.jumpToTop.setVisibility(View.GONE);
+            RecyclerScrollManager.MiniplayerScroll.setScrollDist();
+        });
+
+
+
+
+    }
+
+
 
 
 }

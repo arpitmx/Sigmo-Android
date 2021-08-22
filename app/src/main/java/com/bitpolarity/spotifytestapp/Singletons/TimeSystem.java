@@ -3,11 +3,10 @@ package com.bitpolarity.spotifytestapp.Singletons;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class TimeSystem {
+public class TimeSystem {
 
     private static TimeSystem single_instance = null;
-    Date date = new Date();
-    SimpleDateFormat formatTime = new SimpleDateFormat("hh.mm aa");
+
 
 
     public static TimeSystem getInstance() {
@@ -15,8 +14,10 @@ class TimeSystem {
         return single_instance;
     }
 
-    String getTime_format_12h(){
-        return formatTime.format(date);
+    public String getTime_format_12h(){
+        Date date = new Date();
+        SimpleDateFormat formatTime = new SimpleDateFormat("hh.mm aa");
+        return formatTime.format(date).replace(".",":");
     }
 
 }
