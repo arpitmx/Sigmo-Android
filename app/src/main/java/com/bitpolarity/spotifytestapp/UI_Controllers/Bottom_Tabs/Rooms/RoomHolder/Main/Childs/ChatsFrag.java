@@ -25,11 +25,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.aghajari.emojiview.AXEmojiManager;
 import com.aghajari.emojiview.view.AXEmojiPopup;
-import com.aghajari.emojiview.view.AXEmojiView;
 import com.aghajari.emojiview.view.AXSingleEmojiView;
 import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.MultiViewChatAdapter;
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
+import com.bitpolarity.spotifytestapp.LinearLayoutManagers.SigmoLinearLayoutManager;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.RecyclerScrollManager;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
@@ -41,9 +41,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.vanniktech.emoji.EmojiEditText;
-import com.vanniktech.emoji.EmojiPopup;
-import com.vanniktech.emoji.RecentEmoji;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +61,7 @@ public class ChatsFrag extends Fragment  {
     RecyclerView chatRV;
     MultiViewChatAdapter adapter;
     LinearLayoutManager layoutManager;
+    SigmoLinearLayoutManager speedyLinearLayoutManager;
     SwipeRefreshLayout swipeRefreshLayout;
     private String userName , msg;
     ArrayList<ChatListModel_Multi> chatList;
@@ -108,18 +106,19 @@ public class ChatsFrag extends Fragment  {
 
 
 
-        shimmerFrameLayout = binding.shimmerFrameLayoutChatfrag;
+       shimmerFrameLayout = binding.shimmerFrameLayoutChatfrag;
        shimmerFrameLayout.startShimmerAnimation();
 
        mpSent = MediaPlayer.create(getContext(), R.raw.hs_bg_message_sent2);
        mpClick = MediaPlayer.create(getContext(), R.raw.know);
 
-      // getActivity().getWindow().setSoftInputMode(SOFT_INPUT_ADJUST_PAN);
+      //getActivity().getWindow().setSoftInputMode(SOFT_INPUT_ADJUST_PAN);
        //swipeRefreshLayout = binding.swipeRefresh;
        //swipeRefreshLayout.setEnabled(false);
 
        chatRV = binding.chatsLayout;
-       layoutManager = new LinearLayoutManager(getContext());
+       //layoutManager = new LinearLayoutManager(getContext());
+       speedyLinearLayoutManager = new SigmoLinearLayoutManager(getContext());
        chatList = new ArrayList<>();
 
        return binding.getRoot();
@@ -133,12 +132,14 @@ public class ChatsFrag extends Fragment  {
 
 
 
+//        layoutManager.setOrientation(RecyclerView.VERTICAL);
+//        layoutManager.setStackFromEnd(true);
 
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        layoutManager.setStackFromEnd(true);
+        speedyLinearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        speedyLinearLayoutManager.setStackFromEnd(true);
 
         chatRV.hasFixedSize();
-        chatRV.setLayoutManager(layoutManager);
+        chatRV.setLayoutManager(speedyLinearLayoutManager);
         chatRV.setNestedScrollingEnabled(false);
         loadmessages();
 
@@ -226,10 +227,13 @@ public class ChatsFrag extends Fragment  {
             @Override
             public void show() {
                 binding.miniPlayerRoom.jumpToTop.setVisibility(View.VISIBLE);
-                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
+                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in_jump_to_top));
                 binding.miniPlayerRoom.getRoot().animate().translationY(-binding.miniPlayerRoom.getRoot().getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
 
+
             }
+
+
 
             //show Miniplayer up and hide jump to top tab
 
@@ -320,10 +324,10 @@ public class ChatsFrag extends Fragment  {
     }
 
     void onClickFab(){
-        chatRV.smoothScrollToPosition(listSize-1);
-        binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
+        speedyLinearLayoutManager.smoothScrollToPosition(chatRV, (RecyclerView.State) recyclerViewState,listSize-1);
+        //chatRV.smoothScrollToPosition(listSize-1);
+        binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(5)).start();
         RecyclerScrollManager.FabScroll.setScrollDist();
-
 
     }
 
@@ -376,7 +380,8 @@ public class ChatsFrag extends Fragment  {
 
 
                 adapter = new MultiViewChatAdapter(getModelList(snapshot));
-                    chatRV.setVisibility(View.VISIBLE);
+
+                chatRV.setVisibility(View.VISIBLE);
                     chatRV.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
@@ -384,8 +389,6 @@ public class ChatsFrag extends Fragment  {
                         binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_out));
                         binding.jumpToEndFAB.setVisibility(View.GONE);
                     }
-
-
 
                     //chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
 

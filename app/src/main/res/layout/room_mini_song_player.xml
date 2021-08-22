@@ -5,9 +5,9 @@
     android:id="@+id/mini_lin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="5dp"
     android:orientation="vertical"
     android:background="#252525"
+    android:elevation="1dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
 

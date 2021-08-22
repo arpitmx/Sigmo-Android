@@ -1,5 +1,7 @@
 package com.bitpolarity.spotifytestapp;
 
+import android.os.Handler;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,7 +53,7 @@ public class RecyclerScrollManager {
 
         public static int scrollDist = 0;
         boolean isVisible = false;
-        final float MINIMUM_SHOW = 3500;
+        final float MINIMUM_SHOW = 5500;
         final float MINIMUM_HIDE = 300;
 
 
@@ -61,14 +63,36 @@ public class RecyclerScrollManager {
 
 
             if (isVisible && scrollDist > MINIMUM_HIDE) {
+
+
                 hide();
                 scrollDist = 0;
                 isVisible = false;
+
+
+
+
+
             }
             else if (!isVisible && scrollDist < -MINIMUM_SHOW) {
-                show();
-                scrollDist = 0;
-                isVisible = true;
+                        show();
+                        scrollDist = 0;
+                        isVisible = true;
+
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        hide();
+                        scrollDist = 0;
+                        isVisible = false;
+
+                    }
+                },5000);
+
+
+
             }
 
             if ((isVisible && dy > 0) || (!isVisible && dy < 0)) {
