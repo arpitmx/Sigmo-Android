@@ -51,7 +51,8 @@ public class RecyclerScrollManager {
 
         public static int scrollDist = 0;
         boolean isVisible = false;
-        final float MINIMUM = 400;
+        final float MINIMUM_SHOW = 3500;
+        final float MINIMUM_HIDE = 300;
 
 
         @Override
@@ -59,12 +60,12 @@ public class RecyclerScrollManager {
             super.onScrolled(recyclerView, dx, dy);
 
 
-            if (isVisible && scrollDist > MINIMUM) {
+            if (isVisible && scrollDist > MINIMUM_HIDE) {
                 hide();
                 scrollDist = 0;
                 isVisible = false;
             }
-            else if (!isVisible && scrollDist < -MINIMUM) {
+            else if (!isVisible && scrollDist < -MINIMUM_SHOW) {
                 show();
                 scrollDist = 0;
                 isVisible = true;

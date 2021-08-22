@@ -221,14 +221,18 @@ public class ChatsFrag extends Fragment  {
 
         chatRV.addOnScrollListener(new RecyclerScrollManager.MiniplayerScroll() {
 
+            //Move Miniplayer up and show jump to top tab
+
             @Override
             public void show() {
                 binding.miniPlayerRoom.jumpToTop.setVisibility(View.VISIBLE);
                 binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
                 binding.miniPlayerRoom.getRoot().animate().translationY(-binding.miniPlayerRoom.getRoot().getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
 
-
             }
+
+            //show Miniplayer up and hide jump to top tab
+
 
             @Override
             public void hide() {
