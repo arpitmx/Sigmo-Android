@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:foreground="@drawable/ripple_effect"
+   >
+
+
+            <LinearLayout
+                android:id="@+id/lin_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="6dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@drawable/chatitembg_joined_room"
+                >
+
+            <TextView
+                android:id="@+id/notification_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/hmed"
+                android:maxWidth="200dp"
+
+                android:gravity="center_vertical"
+                android:text="Arpit! joined the room!"
+                android:textColor="@color/white200"
+                android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/time_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/hmed"
+                    android:text="9:20 AM"
+                    android:textColor="#D690CAF9"
+                    android:textSize="10dp" />
+
+
+            </LinearLayout>
+
+
+</LinearLayout>

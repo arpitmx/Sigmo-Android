@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">@color/s_blue200</color>
+    <color name="purple_200">#7C4DFF</color>
     <color name="purple_500">@color/s_blue200</color>
     <color name="purple_700">@color/s_blue200</color>
     <color name="teal_200">#FFFFFF</color>
@@ -9,12 +9,16 @@
     <color name="white">#FFFFFFFF</color>
     <color name="s_blue">#0D82FF</color>
     <color name="s_blue200">#90CAF9</color>
-    <color name="s_blue100">#C2DFF6</color>
+    <color name="s_blue100">#E490CAF9</color>
 
 
     <color name="s_green">#69DB22</color>
     <color name="s_grey">#CACACA</color>
+    <color name="s_message_time_bg">#F390CAF9</color>
+
     <color name="s_red">#E53935</color>
+    <color name="s_red_200">#EF9A9A</color>
+
     <color name="s_grey_Dark">#D36E93</color>
     <color name="s_yellow">@color/s_blue</color>
     <color name= "s_readable_black">#5D5D5D</color>
@@ -49,6 +53,7 @@
     <color name="edittext_hint_colo">#88BDBDBD</color>
     <color name="messagebg">#FA232323</color>
     <color name="editboxbg">#9A4C4C4C</color>
+    <color name="sigmo_dark_blue">#536DFE</color>
 
 
 </resources>

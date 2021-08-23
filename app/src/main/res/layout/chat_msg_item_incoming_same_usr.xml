@@ -3,23 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="2dp"
     android:id="@+id/linearLayout_chat"
     android:clickable="true"
     android:focusable="true"
-    android:layout_marginTop="6dp"
     android:foreground="@drawable/ripple_effect"
    >
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profie_display_picture_chat"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/personpic"
-        android:layout_gravity="bottom"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="1dp"
-        />
+
 
 
 
@@ -27,25 +19,10 @@
             android:id="@+id/layout_gchat_container_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:background="@drawable/chatitembg_incoming"
+            android:layout_marginEnd="35dp"
+            android:layout_marginStart="45dp"
+            android:background="@drawable/chatitembg_incoming_same"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/username_chatroom"
-                android:layout_width="wrap_content"
-                android:layout_height="18dp"
-                android:minWidth="40dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="Arpit!"
-                android:textColor="@color/s_blue100"
-                android:fontFamily="@font/hb"
-                android:textSize="12sp" />
-
-
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -54,7 +31,7 @@
                 android:paddingRight="5dp"
                 android:paddingLeft="10dp"
                 android:paddingBottom="2dp"
-                android:layout_marginBottom="2dp"
+                android:layout_margin="5dp"
                 >
 
             <TextView
@@ -64,7 +41,8 @@
                 android:textAlignment="textStart"
                 android:fontFamily="@font/hregular"
                 android:maxWidth="200dp"
-                android:text="Hi!"
+                android:text="Hi hey how are yoOEIRJGOEIRJGEOIRJGOIJOIOIJOIJOJOIJOJOIJOIJOIIOIJOIJOIJ
+                u !"
                 android:textColor="@color/white200"
                 android:textSize="@dimen/chat_incoming_outgoing_font_size" />
 
@@ -74,9 +52,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="4dp"
                     android:fontFamily="@font/hmed"
+                    android:maxLines="1"
                     android:text="9:20 AM"
                     android:textColor="@color/s_grey"
                     android:textSize="10dp" />

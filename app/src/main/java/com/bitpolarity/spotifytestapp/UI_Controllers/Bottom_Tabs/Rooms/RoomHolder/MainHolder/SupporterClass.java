@@ -1,18 +1,20 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.MainHolder;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.bitpolarity.spotifytestapp.DB_Handler;
+import com.bitpolarity.spotifytestapp.Singletons.TimeSystem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SupporterClass extends ViewModel {
 
@@ -23,9 +25,8 @@ public class SupporterClass extends ViewModel {
     boolean countIncreased = false;
     boolean countDecreased = false;
     int count = 0;
-    boolean isConnected = true;
-    static MutableLiveData<Integer> Ocount;
-    DatabaseReference connectRef;
+    TimeSystem timeSystem;
+    DatabaseReference connectRef,msgRoot;
 
 
     SupporterClass(String roomName){
@@ -35,16 +36,16 @@ public class SupporterClass extends ViewModel {
         firebaseDatabase = FirebaseDatabase.getInstance();
         memberRoot = firebaseDatabase.getReference().child("Rooms").child(roomName).child("members");
         connectRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        timeSystem = TimeSystem.getInstance();
+        msgRoot= firebaseDatabase.getReference().child("Rooms").child(roomName).child("messages");
 
-
-        countDecreased = false;
-        countIncreased = false;
 
     }
 
            void increaseCount(){
 
-                memberRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+
+               memberRoot.addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -62,7 +63,18 @@ public class SupporterClass extends ViewModel {
 
             void checkIfUserDisconnected(){
 
+
+
                 memberRoot.child("allmembers").child(DB_Handler.getUsername()).onDisconnect().removeValue();
+
+//                DatabaseReference inMsg = getMap();
+//                Map<String, Object> map2 = new HashMap<>();
+//
+//                map2.put("msg","left");
+//                map2.put("sender", DB_Handler.getUsername());
+//                map2.put("TYPE", "2" );
+//
+//               inMsg.onDisconnect().updateChildren(map2);
 
             }
 
@@ -71,6 +83,10 @@ public class SupporterClass extends ViewModel {
                 memberRoot.child("allmembers").child(DB_Handler.getUsername()).removeValue();
                 countDecreased = true;
             }
+
+
+
+
 
             void getOnlineCount(){
 
@@ -101,8 +117,10 @@ public class SupporterClass extends ViewModel {
 
                         if (connected) {
                             increaseCount();
+
+
                         } else {
-                          decreaseCount();
+                            decreaseCount();
                         }
                     }
 
@@ -114,6 +132,62 @@ public class SupporterClass extends ViewModel {
 
 
             }
+
+
+            void sendJoiningNotif(){
+
+                Map<String, Object> map = new HashMap<>();
+                String temp_key = msgRoot.push().getKey();
+                msgRoot.updateChildren(map);
+                String time = timeSystem.getTime_format_12h();
+
+
+                DatabaseReference in_msg = msgRoot.child(temp_key);
+                Map<String, Object> map2 = new HashMap<>();
+
+
+                map2.put("msg","joined");
+                map2.put("sender", DB_Handler.getUsername());
+                map2.put("TYPE", "2");
+                map2.put("TIME", time);
+
+
+                    in_msg.updateChildren(map2);
+
+
+            }
+
+
+    void sendLeavingNotif(){
+
+        Map<String, Object> map = new HashMap<>();
+        String temp_key = msgRoot.push().getKey();
+        msgRoot.updateChildren(map);
+        String time = timeSystem.getTime_format_12h();
+
+        DatabaseReference in_msg = msgRoot.child(temp_key);
+        Map<String, Object> map2 = new HashMap<>();
+
+
+        map2.put("msg","left");
+        map2.put("sender", DB_Handler.getUsername());
+        map2.put("TYPE", "2" );
+        map2.put("TIME", time);
+
+
+        in_msg.updateChildren(map2);
+
+    }
+
+
+    DatabaseReference getMap(){
+
+        Map<String, Object> map = new HashMap<>();
+        String temp_key = msgRoot.push().getKey();
+        msgRoot.updateChildren(map);
+
+        return msgRoot.child(temp_key);
+    }
 
 
 }

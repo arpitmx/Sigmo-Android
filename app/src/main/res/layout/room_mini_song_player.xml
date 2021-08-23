@@ -4,28 +4,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mini_lin"
     android:layout_width="match_parent"
-    android:layout_height="45dp"
-    android:elevation="5dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#252525"
+    android:elevation="1dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
 
     <LinearLayout
 
         android:id="@+id/linearLayout_ROOM"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="10"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+       >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cir_ROOM"
@@ -120,6 +127,33 @@
             android:scaleX="1"
             android:scaleY="1.2"
             android:src="@drawable/ic_pause_eq" />
+
+    </LinearLayout>
+
+        <TextView
+            android:id="@+id/jumpToTop"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:fontFamily="@font/hmed"
+            android:gravity="center"
+            android:visibility="gone"
+            android:minHeight="?android:attr/listPreferredItemHeightSmall"
+            android:paddingStart="10dp"
+            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+            android:text="Tap to jump to top chat"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:background="@color/sigmo_dark_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+
 
     </LinearLayout>
 

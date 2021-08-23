@@ -39,7 +39,7 @@ public class RoomHolderActivity extends AppCompatActivity {
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         roomName  = getIntent().getStringExtra("room_name");
-       // onlineCurrent = roomActionBarBinding.totalOnlineTv;
+
         binding = ActivityRoomHolderBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -52,12 +52,16 @@ public class RoomHolderActivity extends AppCompatActivity {
                 .replace(R.id.room_parent_container,new RoomMainFragment()).addToBackStack(null)
                 .commit();
 
+
+        supporterClass.sendJoiningNotif();
+
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         supporterClass.decreaseCount();
+        supporterClass.sendLeavingNotif();
         finish();
 
     }
@@ -71,7 +75,6 @@ public class RoomHolderActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         supporterClass.updateStatus();
         supporterClass.checkIfUserDisconnected();
 
