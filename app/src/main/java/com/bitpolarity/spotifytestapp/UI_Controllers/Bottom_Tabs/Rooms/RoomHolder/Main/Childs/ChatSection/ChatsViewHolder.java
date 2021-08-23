@@ -4,17 +4,25 @@ package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHold
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class ChatsViewHolder  extends ViewModel {
@@ -28,9 +36,7 @@ public class ChatsViewHolder  extends ViewModel {
     private  final String TYPE_JOIN = "2";
     ArrayList temp = new ArrayList();
     ArrayList<ChatListModel_Multi> chatList;
-
-
-
+    private MutableLiveData<ArrayList<ChatListModel_Multi>> chatListLD;
 
     // Responses
     private  final int success_sent = 1;
@@ -174,6 +180,128 @@ public class ChatsViewHolder  extends ViewModel {
     public int getListSize() {
         return chatList.size();
     }
+
+
+    // This gets into adapter
+    private void setChatListLD(ArrayList<ChatListModel_Multi> chatArrayList){
+        chatListLD.postValue(chatArrayList);
+    }
+
+    public LiveData<ArrayList<ChatListModel_Multi>> getChatListLD(){
+        if (chatListLD==null) chatListLD = new MutableLiveData<>();
+        return chatListLD;
+    }
+
+
+    void postMessages(){
+        msgRoot.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                setChatListLD(getModelList(snapshot));
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+    ArrayList<String> getBoldStrings(String s){
+
+        s = s.trim();
+        StringBuilder tBold = new StringBuilder();
+        ArrayList<String> boldList = new ArrayList<>();
+        String[] arr = s.split("");
+        ArrayList<List> e;
+
+
+
+        if (s.contains("*")) {
+            if(isBalanced(arr)){
+                for (int i = 0; i < arr.length; i++) {
+                    if (arr[i].equals("*")) {
+                        for (int j = i + 1; j < arr.length; j++) {
+                            if (!arr[j].equals("*")) {
+                                tBold.append(arr[j]);
+                            } else {
+                                boldList.add(String.valueOf(tBold));
+                                tBold.setLength(0);
+                                i = j + 1;
+                                break;
+                            }
+                        }
+                    }
+
+                }
+
+                return boldList;
+
+            }else{
+                return null;
+            }
+
+        } else {
+            return null;
+        }
+    }
+
+   public ArrayList<Integer> getBoldsIndexes(String s){
+
+        s = s.trim();
+        ArrayList<Integer> boldList = new ArrayList<>();
+        String[] arr = s.split("");
+
+        if (s.contains("*")) {
+            if(isBalanced(arr)){
+                for (int i = 0; i < arr.length; i++) {
+                    if (arr[i].equals("*")) {
+                        boldList.add(i+1);
+                        for (int j = i + 1; j < arr.length; j++) {
+                            if (arr[j].equals("*")) {
+                                boldList.add(j-1);
+                                i = j + 1;
+                                break;
+                            }}}}
+
+                return boldList;
+
+            }else{ return null;
+            }
+        }
+        else{ return null;
+        }
+    }
+
+
+    private boolean isBalanced(String[] arr){
+        int count = 0;
+        for (String i : arr){
+            if(i.equals("*")) count++;
+        }
+        return count % 2 == 0;
+    }
+
+
+
 
 
 

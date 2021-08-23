@@ -70,15 +70,15 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             if(messageModel.getMessage().equals("joined")){
             binding_joining.notificationTxt.setText(messageModel.getSenderName()+" "+messageModel.getMessage()+" the room! \uD83C\uDF7A " );
-            binding_joining.linMain.setBackgroundResource(R.drawable.chatitembg_joined_room);
-                binding_joining.timeTxt.setTextColor(Color.parseColor("#F390CAF9"));
+         //   binding_joining.linMain.setBackgroundResource(R.drawable.chatitembg_joined_room);
+          //      binding_joining.timeTxt.setTextColor(Color.parseColor("#F390CAF9"));
 
 
 
             }else{
                 binding_joining.notificationTxt.setText(messageModel.getSenderName()+" "+messageModel.getMessage()+" the room! \uD83D\uDEB6 " );
-                binding_joining.linMain.setBackgroundResource(R.drawable.chatitembg_leaved_room);
-                binding_joining.timeTxt.setTextColor(Color.parseColor("#EF9A9A"));
+        //        binding_joining.linMain.setBackgroundResource(R.drawable.chatitembg_leaved_room);
+          //      binding_joining.timeTxt.setTextColor(Color.parseColor("#EF9A9A"));
 
 
 

@@ -1,5 +1,6 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Main.Childs.ChatSection;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.animation.DecelerateInterpolator;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -50,7 +52,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Observable;
 
 
 public class ChatsFrag extends Fragment  {
@@ -75,16 +77,9 @@ public class ChatsFrag extends Fragment  {
     ShimmerFrameLayout shimmerFrameLayout;
     ChatsViewHolder chatsViewHolder;
 
-
-
-
     long delay = 500; // 1 seconds after user stops typing
     long last_text_edit = 0;
     Handler handler = new Handler();
-
-
-
-
 
 
     private  final String TYPE_MSG = "1";
@@ -98,12 +93,21 @@ public class ChatsFrag extends Fragment  {
     private  final int failed_invalid_message = 0;
     private  final int failed_internal_error = 404;
 
+    Context context;
+
+
     private Runnable input_finish_checker = () -> {
         if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
                 updateTyping();
         }
     };
 
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -236,7 +240,7 @@ public class ChatsFrag extends Fragment  {
             @Override
             public void show() {
                 binding.jumpToEndFAB.setVisibility(View.VISIBLE);
-                binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
+                binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_in));
                 binding.jumpToEndFAB.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
             }
 
@@ -249,7 +253,7 @@ public class ChatsFrag extends Fragment  {
         });
 
 
-        try {
+
             bgRoot.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -263,11 +267,6 @@ public class ChatsFrag extends Fragment  {
 
                 }
             });
-        }catch (Exception e ){
-            Log.d(TAG, "onResume: Error setting chat wallpaper");
-        }
-
-
 
     }
 
@@ -349,64 +348,34 @@ public class ChatsFrag extends Fragment  {
 
     void setChatWall(String url){
 
-        Glide.with(getContext())
+        Glide.with(context)
                 .load(url)
                 .into(binding.roomBackgroundWallpaper);
     }
 
+
     void loadmessages(){
 
-       // Query msgQue = msgRoot.limitToLast(mCurrentPage*TOTAL_ELEMENT_TO_LOAD);
+                chatsViewHolder.postMessages();
 
-        msgRoot.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                   chatsViewHolder.getChatListLD().observe(getViewLifecycleOwner(), chatListModel_multis -> {
 
-                    //recyclerViewState = chatRV.getLayoutManager().onSaveInstanceState();
-                    //int size = getModelList(snapshot).size();
+                       adapter = new MultiViewChatAdapter(chatListModel_multis);
 
-                adapter = new MultiViewChatAdapter(chatsViewHolder.getModelList(snapshot));
+                       chatRV.setVisibility(View.VISIBLE);
+                       chatRV.setAdapter(adapter);
+                       adapter.notifyDataSetChanged();
 
-                    chatRV.setVisibility(View.VISIBLE);
-                    chatRV.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    shimmerFrameLayout.stopShimmerAnimation();
-                    shimmerFrameLayout.setVisibility(View.GONE);
+                       shimmerFrameLayout.stopShimmerAnimation();
+                       shimmerFrameLayout.setVisibility(View.GONE);
 
-                    if(binding.jumpToEndFAB.getVisibility()==View.VISIBLE) {
-                       // binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_out));
-                        binding.jumpToEndFAB.setVisibility(View.GONE);
-                    }
+                       if(binding.jumpToEndFAB.getVisibility()==View.VISIBLE) {
+                            binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out));
+                           binding.jumpToEndFAB.setVisibility(View.GONE);
+                       }
 
-                    //chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+                   });
 
-                    //swipeRefreshLayout.setRefreshing(false);
-                    //chatRV.scrollToPosition(listSize- 1);
-
-
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
 
@@ -414,7 +383,7 @@ public class ChatsFrag extends Fragment  {
 
     void sendMessage(){
 
-        binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
+        binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_in));
         String msg = binding.roomInput.msgEditBox.getText().toString();
         String usrname = DB_Handler.getUsername();
         String time = timeSystem.getTime_format_12h();
@@ -436,7 +405,7 @@ public class ChatsFrag extends Fragment  {
            case failed_invalid_message:
 
                binding.roomInput.msgEditBox.setError("Message invalid!");
-               binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_out));
+               binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_out));
                break;
 
            default:
@@ -481,7 +450,7 @@ public class ChatsFrag extends Fragment  {
             @Override
             public void show() {
                 binding.miniPlayerRoom.jumpToTop.setVisibility(View.VISIBLE);
-                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in_jump_to_top));
+                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_in_jump_to_top));
                 binding.miniPlayerRoom.getRoot().animate().translationY(-binding.miniPlayerRoom.getRoot().getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
 
 
@@ -491,7 +460,7 @@ public class ChatsFrag extends Fragment  {
 
             @Override
             public void hide() {
-                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_out));
+                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_out));
                 binding.miniPlayerRoom.jumpToTop.setVisibility(View.GONE);
                 binding.miniPlayerRoom.getRoot().animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
 
@@ -509,6 +478,22 @@ public class ChatsFrag extends Fragment  {
     }
 
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
 
-
+    }
 }
+
+
+// Query msgQue = msgRoot.limitToLast(mCurrentPage*TOTAL_ELEMENT_TO_LOAD);
+
+
+//recyclerViewState = chatRV.getLayoutManager().onSaveInstanceState();
+//int size = getModelList(snapshot).size();
+
+
+//chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+
+//swipeRefreshLayout.setRefreshing(false);
+//chatRV.scrollToPosition(listSize- 1);
