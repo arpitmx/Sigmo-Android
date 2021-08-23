@@ -43,25 +43,7 @@ Issues are open in the issues section.
 
 --------------------------------------------------------------------------------------------------------------------------
 
-### Logic Improvements :
-
-1. When updates occurs to the database whole list is reloaded with content for example everytime a new songs loads  ✅
-2. Initiate the apis and services during the splash screen 👷‍ - 4 () ✅
-3. Implement MVVM and seperate UI and business logics from activities and fragments 👷‍♀️ - L
-3. Use dependency injections like dagger2 for more flexibility 👷‍♀️ - L
-
-### Database and Backend Related :
-
-1. Fetch only nodes which are updated , not the whole base.
-2. Used Spotify api to extract details from the trackIDs instead of whole details of the track , so that less data is fetched , therefore faster embedding.
-
------------
-
-### UX/UI Improvements :
-
---
-4. Make bottom navigation hidable when scrolled down.
 
 ![photo_2021-07-19_21-14-25](https://user-images.githubusercontent.com/59350776/126188448-f30fe6ab-319f-4b70-ae58-3e00b8fe734f.jpg)
 
--arpitrmaurya, bitpolarity!
+- arpitrmaurya, bitpolarity!
