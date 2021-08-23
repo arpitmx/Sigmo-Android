@@ -43,7 +43,7 @@
                 app:endIconTint="@color/white87"
                 app:hintEnabled="false"
                 app:startIconDrawable="@drawable/ic_baseline_emoji_emotions_24"
-                app:startIconTint="@color/s_grey">
+                app:startIconTint="#E9FFC200">
 
                 <com.aghajari.emojiview.view.AXEmojiEditText
                     android:id="@+id/msgEditBox"

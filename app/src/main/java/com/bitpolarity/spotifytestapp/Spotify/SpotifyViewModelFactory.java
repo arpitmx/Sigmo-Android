@@ -19,5 +19,6 @@ public class SpotifyViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         return (T) new SpotifyViewModel(context);
+
     }
 }

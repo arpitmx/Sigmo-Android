@@ -17,15 +17,39 @@
         android:background="@drawable/editbox_bg_reference_up"
 
         >
-        <TextView
+
+        <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:text="\@ Shaurya"
             android:layout_margin="8dp"
             android:textColor="@color/s_blue200"
+            android:layout_alignParentStart="true"
+
             android:fontFamily="@font/hxtrabold"
             />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:src="@drawable/ic_baseline_close_24" />
+
+
+        </RelativeLayout>
+
 
         <TextView
             android:layout_width="match_parent"
