@@ -26,7 +26,9 @@
             >
 
             <include
+                android:id="@+id/reference_layout"
                 layout="@layout/testing"
+
                 />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -37,6 +39,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginStart="5dp"
                 app:boxStrokeWidth="0dp"
+                android:layout_marginTop="3dp"
                 app:boxStrokeWidthFocused="0dp"
                 app:counterMaxLength="300"
                 app:endIconMode="clear_text"
@@ -49,10 +52,10 @@
                     android:id="@+id/msgEditBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/editbox_bg_reference"
+                    android:background="@drawable/editbox_bg"
                     android:fontFamily="@font/hregular"
                     android:gravity="center_vertical"
-                    android:hint="Type your message here"
+                    android:hint="Message"
                     android:inputType="textMultiLine"
                     android:maxHeight="80dp"
                     android:minHeight="50dp"
@@ -72,10 +75,9 @@
 
         <ImageButton
             android:id="@+id/send_btn"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
             android:layout_gravity="bottom"
-            android:layout_marginStart="2dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/four_side_send_btn"

@@ -47,10 +47,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
     private int lastPosition = -1;
     static final float MINIMUM = 25;
 
-
-
-
-
     public UserListAdapter(List<UserListModel> categoryModelList, ULEventListner mULEventListner) {
         this.userModelList = categoryModelList;
         this.mULEventlisnter = mULEventListner;
@@ -62,23 +58,18 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
         super.onViewAttachedToWindow(holder);
 
         //holder.binding.artwork.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
-
-
-
     }
 
     @NotNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.circle_friend_activity_list_item, parent, false);
         return new myViewHolder(CircleFriendActivityListItemBinding.bind(view), mULEventlisnter);
 
     }
 
-
     public static class myViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-
 
         CircleFriendActivityListItemBinding binding;
         ULEventListner ulEventListner;
@@ -96,10 +87,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
 
         @Override
         public void onClick(View view) {
-            ulEventListner.onClick(getAdapterPosition());
+            ulEventListner.onClick(getAbsoluteAdapterPosition());
         }
     }
-
 
 
     @Override
@@ -108,7 +98,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
         link = userModelList.get(position); //Making a link to save multiple calls
 
         ////////////Setting Values /////////////////////////////////////////////
-
 
         holder.binding.username.setText(link.getUsername());
         holder.binding.songname.setText("\uD83C\uDFB5 "+link.getSongDetail());
@@ -155,9 +144,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
 
         }
 
-
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     }
 
@@ -206,7 +193,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
                 }
             }
         });
-
     }
 
     public static Bitmap getBitmapFromURL(String src) {

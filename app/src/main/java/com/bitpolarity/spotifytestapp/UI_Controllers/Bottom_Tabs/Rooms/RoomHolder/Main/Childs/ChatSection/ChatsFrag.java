@@ -1,13 +1,22 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Main.Childs.ChatSection;
 
+import static android.graphics.Typeface.BOLD;
+
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +24,8 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,8 +50,6 @@ import com.bitpolarity.spotifytestapp.Singletons.TimeSystem;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
 import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.api.LogDescriptor;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +64,7 @@ import java.util.Map;
 import java.util.Observable;
 
 
-public class ChatsFrag extends Fragment  {
+public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickListner {
 
     FragmentRoomChatBinding binding;
     FirebaseDatabase firebaseDatabase;
@@ -70,6 +79,7 @@ public class ChatsFrag extends Fragment  {
     final static String TAG = "ChatsFrag";
     private Parcelable recyclerViewState;
     TimeSystem timeSystem;
+    InputMethodManager imm;
 
     static final int TOTAL_ELEMENT_TO_LOAD = 20;
     private final int mCurrentPage = 1;
@@ -80,6 +90,8 @@ public class ChatsFrag extends Fragment  {
     long delay = 500; // 1 seconds after user stops typing
     long last_text_edit = 0;
     Handler handler = new Handler();
+    StyleSpan boldSpan;
+    GradientDrawable shapeHiddenReference , shapeShownReference;
 
 
     private  final String TYPE_MSG = "1";
@@ -116,12 +128,13 @@ public class ChatsFrag extends Fragment  {
         firebaseDatabase = FirebaseDatabase.getInstance();
         timeSystem = TimeSystem.getInstance();
 
-        String roomName =getActivity().getIntent().getStringExtra("room_name");
+        String roomName = getActivity().getIntent().getStringExtra("room_name");
 
         bgRoot = firebaseDatabase.getReference().child("roomBG");
         isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(roomName).child("members");
         msgRoot= firebaseDatabase.getReference().child("Rooms").child(roomName).child("messages");
 
+        imm= (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
        chatsViewHolder = new ViewModelProvider(this, new ChatsViewHolderFactory(getActivity().getIntent().getStringExtra("room_name"))).get(ChatsViewHolder.class);
 
@@ -140,17 +153,9 @@ public class ChatsFrag extends Fragment  {
        //layoutManager = new LinearLayoutManager(getContext());
        speedyLinearLayoutManager = new SigmoLinearLayoutManager(getContext());
 
-
-
        return binding.getRoot();
 
     }
-
-
-
-
-
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -161,8 +166,13 @@ public class ChatsFrag extends Fragment  {
 //        layoutManager.setOrientation(RecyclerView.VERTICAL);
 //        layoutManager.setStackFromEnd(true);
 
+         boldSpan = new StyleSpan(Typeface.BOLD);
+         initOnScroll_UP_JUMP_TO_TOP();
 
-        initOnScroll_UP_JUMP_TO_TOP();
+         shapeHiddenReference =  new GradientDrawable();
+         shapeHiddenReference.setCornerRadius( 70 );
+         shapeHiddenReference.setColor(Color.parseColor("#AD303030"));
+
 
 
         speedyLinearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -180,12 +190,16 @@ public class ChatsFrag extends Fragment  {
 
 
         binding.roomInput.msgEditBox.addTextChangedListener(new TextWatcher() {
+
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
                 handler.removeCallbacks(input_finish_checker);
                 isTypingRoot.child("typingNow").setValue(DB_Handler.getUsername()) ;
 
@@ -227,9 +241,9 @@ public class ChatsFrag extends Fragment  {
         ///////////////////////////////////////////////////////Emoji
 
         initEmojiBoard();
-
         //////////////////////////////////////////////////////Emoji
 
+        handleReferenceEditBox();
 
         binding.jumpToEndFAB.setOnClickListener(view -> {
             onClickFab();
@@ -317,11 +331,54 @@ public class ChatsFrag extends Fragment  {
 
     }
 
+
+
+    void handleReferenceEditBox(){
+
+        binding.roomInput.referenceLayout.cancelReference.setOnClickListener(view -> {
+                reference_onCancel();
+        });
+    }
+
+    void reference_onCancel(){
+        //binding.roomInput.referenceLayout.referenceView.animate().translationY(binding.roomInput.referenceLayout.referenceView.getHeight()+30).setInterpolator(new AccelerateInterpolator(2)).start();
+        binding.roomInput.referenceLayout.referenceView.setVisibility(View.GONE);
+        binding.roomInput.msgEditBox.setBackground(shapeHiddenReference);
+
+        //new Handler().postDelayed(() -> binding.roomInput.referenceLayout.referenceView.setVisibility(View.GONE),100);
+        //  binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
+
+    }
+
+    void showReference(ArrayList<ChatListModel_Multi> chatlist , int pos){
+       // binding.roomInput.referenceLayout.referenceView.animate().translationY(-binding.roomInput.referenceLayout.referenceView.getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
+
+        String reference_user = chatlist.get(pos).getSenderName();
+        String msg = chatlist.get(pos).getMessage();
+
+        binding.roomInput.referenceLayout.referenceView.setVisibility(View.VISIBLE);
+        binding.roomInput.msgEditBox.setBackgroundResource(R.drawable.editbox_bg_reference);
+        binding.roomInput.referenceLayout.referenceText.setText(msg);
+        binding.roomInput.referenceLayout.referenceToUsername.setText("@ "+reference_user);
+
+        binding.roomInput.msgEditBox.requestFocus();
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+
+       // binding.roomInput.referenceLayout.referenceToUsername.setOncli
+
+
+
+    }
+
     void handleEmojiView(){
 
 
 
 //        if(!layout.isShowing()) {
+
+
+
+
 //            layout.show();
 //            layout.setVisibility(View.VISIBLE);
 //
@@ -360,7 +417,7 @@ public class ChatsFrag extends Fragment  {
 
                    chatsViewHolder.getChatListLD().observe(getViewLifecycleOwner(), chatListModel_multis -> {
 
-                       adapter = new MultiViewChatAdapter(chatListModel_multis);
+                       adapter = new MultiViewChatAdapter(chatListModel_multis, ChatsFrag.this);
 
                        chatRV.setVisibility(View.VISIBLE);
                        chatRV.setAdapter(adapter);
@@ -483,7 +540,17 @@ public class ChatsFrag extends Fragment  {
         super.onDetach();
 
     }
+
+
+    @Override
+    public void onClick(int position) {
+        //Toast.makeText(context, "Touched  :"+position, Toast.LENGTH_SHORT).show();
+
+        showReference(chatsViewHolder.getChatList(), position);
+    }
 }
+
+
 
 
 // Query msgQue = msgRoot.limitToLast(mCurrentPage*TOTAL_ELEMENT_TO_LOAD);

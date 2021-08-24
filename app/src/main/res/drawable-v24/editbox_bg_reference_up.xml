@@ -13,7 +13,7 @@
 
 
            <solid
-           android:color="#AD303030"
+           android:color="@color/reference_box_bg"
                />
 
 

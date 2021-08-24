@@ -3,6 +3,7 @@ package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHold
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,6 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.MultiViewChatAdapter;
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
 import com.google.firebase.database.ChildEventListener;
@@ -89,11 +91,9 @@ public class ChatsViewHolder  extends ViewModel {
 
     }
 
-
-
         // Filter message
 
-        private boolean filterText (String msg){
+    private boolean filterText (String msg){
 
             boolean sendable = false;
 
@@ -109,9 +109,6 @@ public class ChatsViewHolder  extends ViewModel {
 
             return sendable;
         }
-
-
-
 
     ArrayList<ChatListModel_Multi> getModelList(DataSnapshot dataSnapshot){
 
@@ -148,6 +145,7 @@ public class ChatsViewHolder  extends ViewModel {
                     if (temp.size() > 1) {
 
                         if (temp.get(temp.size() - 2).equals(userName)) {
+
                             chatList.add(new ChatListModel_Multi(userName, msg, 3,TIME));
                             Log.d(TAG, "INCOMING_SAME_USER: TYPE 3" + msg);
 
@@ -300,8 +298,16 @@ public class ChatsViewHolder  extends ViewModel {
         return count % 2 == 0;
     }
 
+    public ArrayList<ChatListModel_Multi> getChatList(){
 
+        if(chatList!=null){
 
+            return  chatList;
+        }
+        else{
+            return null;
+        }
+    }
 
 
 
