@@ -26,9 +26,7 @@
             >
 
             <include
-                android:id="@+id/reference_layout"
                 layout="@layout/testing"
-
                 />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -39,23 +37,22 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginStart="5dp"
                 app:boxStrokeWidth="0dp"
-                android:layout_marginTop="3dp"
                 app:boxStrokeWidthFocused="0dp"
                 app:counterMaxLength="300"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/white87"
                 app:hintEnabled="false"
                 app:startIconDrawable="@drawable/ic_baseline_emoji_emotions_24"
-                app:startIconTint="@color/s_grey">
+                app:startIconTint="#E9FFC200">
 
                 <com.aghajari.emojiview.view.AXEmojiEditText
                     android:id="@+id/msgEditBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/editbox_bg"
+                    android:background="@drawable/editbox_bg_reference"
                     android:fontFamily="@font/hregular"
                     android:gravity="center_vertical"
-                    android:hint="Message"
+                    android:hint="Type your message here"
                     android:inputType="textMultiLine"
                     android:maxHeight="80dp"
                     android:minHeight="50dp"
@@ -75,11 +72,11 @@
 
         <ImageButton
             android:id="@+id/send_btn"
-            android:layout_width="47dp"
-            android:layout_height="47dp"
-            android:layout_gravity="bottom"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="2dp"
             android:layout_marginEnd="4dp"
-            android:layout_marginBottom="5dp"
             android:background="@drawable/four_side_send_btn"
             android:clickable="true"
             android:focusable="true"
@@ -98,37 +95,37 @@
 
 
 
-    <!--<com.google.android.material.textfield.TextInputLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="8.7"-->
-    <!--android:layout_marginStart="10dp"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:layout_marginEnd="5dp"-->
-    <!--android:layout_marginBottom="5dp"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:hint="Vala baba dub dub!"-->
-    <!--android:padding="10dp"-->
-    <!--android:textColor="@color/white"-->
-    <!--app:endIconMode="clear_text">-->
+<!--<com.google.android.material.textfield.TextInputLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_weight="8.7"-->
+<!--android:layout_marginStart="10dp"-->
+<!--android:layout_marginTop="5dp"-->
+<!--android:layout_marginEnd="5dp"-->
+<!--android:layout_marginBottom="5dp"-->
+<!--android:gravity="center_vertical"-->
+<!--android:hint="Vala baba dub dub!"-->
+<!--android:padding="10dp"-->
+<!--android:textColor="@color/white"-->
+<!--app:endIconMode="clear_text">-->
 
 
-    <!--<com.google.android.material.textfield.TextInputEditText-->
-    <!--    android:id="@+id/msgEditBox"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="match_parent"-->
-    <!--    android:layout_gravity="center"-->
-    <!--    android:maxHeight="90dp"-->
-    <!--    android:minHeight="50dp"-->
-    <!--    android:cursorVisible="true"-->
-    <!--    android:focusable="true"-->
-    <!--    android:background="@drawable/editbox_bg"-->
+<!--<com.google.android.material.textfield.TextInputEditText-->
+<!--    android:id="@+id/msgEditBox"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:layout_gravity="center"-->
+<!--    android:maxHeight="90dp"-->
+<!--    android:minHeight="50dp"-->
+<!--    android:cursorVisible="true"-->
+<!--    android:focusable="true"-->
+<!--    android:background="@drawable/editbox_bg"-->
 
-    <!--    android:textColorHint="#88838383">-->
-
-
+<!--    android:textColorHint="#88838383">-->
 
 
-    <!--</com.google.android.material.textfield.TextInputEditText>-->
 
-    <!--</com.google.android.material.textfield.TextInputLayout>-->
+
+<!--</com.google.android.material.textfield.TextInputEditText>-->
+
+<!--</com.google.android.material.textfield.TextInputLayout>-->

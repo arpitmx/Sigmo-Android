@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+
+    <LinearLayout
+        android:id="@+id/reference_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        android:background="@drawable/editbox_bg_reference_up"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/reference_to_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/hxtrabold"
+                android:text="\@ Shaurya"
+                android:textColor="@color/s_blue200"
+                android:textSize="15dp" />
+
+            <ImageView
+                android:id="@+id/cancel_reference"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:src="@drawable/ic_baseline_close_24" />
+
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/reference_text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="16dp"
+            android:text="Ha to maeko ja tak call nhi aaoiewjwta main bhi shayad na uth pau"
+            android:layout_marginStart="10dp"
+            android:textColor="#CD202020"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/hmed"
+            android:singleLine="true"
+            android:background="@drawable/dark_four_side_borders_post_grey"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
+
+            />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

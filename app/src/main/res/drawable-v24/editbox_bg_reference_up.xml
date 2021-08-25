@@ -6,12 +6,14 @@
         <shape
             android:shape="rectangle"
             >
-            <corners android:radius="60dp"
+            <corners 
+                android:topLeftRadius="10dp"
+                android:topRightRadius="10dp"
                 />
 
 
            <solid
-           android:color="#AD303030"
+           android:color="@color/reference_box_bg"
                />
 
 

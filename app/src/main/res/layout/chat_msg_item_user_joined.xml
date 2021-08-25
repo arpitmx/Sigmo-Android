@@ -32,7 +32,7 @@
 
                 android:gravity="center_vertical"
                 android:text="Arpit! joined the room!"
-                android:textColor="@color/white200"
+                android:textColor="#CBFFFFFF"
                 android:textSize="13dp" />
 
                 <TextView
@@ -43,7 +43,7 @@
                     android:gravity="center_vertical"
                     android:fontFamily="@font/hmed"
                     android:text="9:20 AM"
-                    android:textColor="#D690CAF9"
+                    android:textColor="#D2FFFFFF"
                     android:textSize="10dp" />
 
 

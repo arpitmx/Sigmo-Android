@@ -53,7 +53,7 @@ public class RecyclerScrollManager {
 
         public static int scrollDist = 0;
         boolean isVisible = false;
-        final float MINIMUM_SHOW = 5500;
+        final float MINIMUM_SHOW = 3500;
         final float MINIMUM_HIDE = 300;
         final long HIDING_DELAY = 3000;
 

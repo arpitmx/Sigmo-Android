@@ -1,13 +1,22 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Main.Childs;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Main.Childs.ChatSection;
 
+import static android.graphics.Typeface.BOLD;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +24,15 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -36,7 +50,6 @@ import com.bitpolarity.spotifytestapp.Singletons.TimeSystem;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
 import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,54 +61,51 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 
-
-public class ChatsFrag extends Fragment  {
+public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickListner {
 
     FragmentRoomChatBinding binding;
     FirebaseDatabase firebaseDatabase;
-   public static DatabaseReference msgRoot;
-    static DatabaseReference isTypingRoot;
-    static DatabaseReference bgRoot;
-    private String temp_key;
+    DatabaseReference msgRoot , isTypingRoot , bgRoot;
     MediaPlayer mpSent, mpClick ;
 
     RecyclerView chatRV;
     MultiViewChatAdapter adapter;
-    LinearLayoutManager layoutManager;
     SigmoLinearLayoutManager speedyLinearLayoutManager;
-    SwipeRefreshLayout swipeRefreshLayout;
-    private String userName , msg;
-    private String TYPE, TIME;
-    ArrayList<ChatListModel_Multi> chatList;
+
     public static DatabaseReference in_msg;
     final static String TAG = "ChatsFrag";
     private Parcelable recyclerViewState;
     TimeSystem timeSystem;
+    InputMethodManager imm;
 
     static final int TOTAL_ELEMENT_TO_LOAD = 20;
     private final int mCurrentPage = 1;
     static boolean isTyping = false;
     ShimmerFrameLayout shimmerFrameLayout;
-    List<String> temp = new ArrayList();
-
-
-
+    ChatsViewHolder chatsViewHolder;
 
     long delay = 500; // 1 seconds after user stops typing
     long last_text_edit = 0;
     Handler handler = new Handler();
-    int listSize= 0;
+    StyleSpan boldSpan;
+    GradientDrawable shapeHiddenReference , shapeShownReference;
 
 
-
-
-
-    private static final String TYPE_MSG = "1";
-    private static final String TYPE_JOIN = "2";
+    private  final String TYPE_MSG = "1";
+    private  final String TYPE_JOIN = "2";
     private static final int TYPE_LEFT = R.dimen.TYPE_LEFT;
     private int lastFirstVisiblePosition;
+
+
+    // Responses
+    private  final int success_sent = 1;
+    private  final int failed_invalid_message = 0;
+    private  final int failed_internal_error = 404;
+
+    Context context;
 
 
     private Runnable input_finish_checker = () -> {
@@ -106,16 +116,27 @@ public class ChatsFrag extends Fragment  {
 
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentRoomChatBinding.inflate(inflater, container , false);
         firebaseDatabase = FirebaseDatabase.getInstance();
         timeSystem = TimeSystem.getInstance();
 
-       msgRoot= firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("messages");
-       bgRoot = firebaseDatabase.getReference().child("roomBG");
-       isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("members");
+        String roomName = getActivity().getIntent().getStringExtra("room_name");
 
+        bgRoot = firebaseDatabase.getReference().child("roomBG");
+        isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(roomName).child("members");
+        msgRoot= firebaseDatabase.getReference().child("Rooms").child(roomName).child("messages");
+
+        imm= (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+       chatsViewHolder = new ViewModelProvider(this, new ChatsViewHolderFactory(getActivity().getIntent().getStringExtra("room_name"))).get(ChatsViewHolder.class);
 
 
        shimmerFrameLayout = binding.shimmerFrameLayoutChatfrag;
@@ -131,19 +152,10 @@ public class ChatsFrag extends Fragment  {
        chatRV = binding.chatsLayout;
        //layoutManager = new LinearLayoutManager(getContext());
        speedyLinearLayoutManager = new SigmoLinearLayoutManager(getContext());
-       chatList = new ArrayList<>();
-
-
 
        return binding.getRoot();
 
     }
-
-
-
-
-
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -154,8 +166,13 @@ public class ChatsFrag extends Fragment  {
 //        layoutManager.setOrientation(RecyclerView.VERTICAL);
 //        layoutManager.setStackFromEnd(true);
 
+         boldSpan = new StyleSpan(Typeface.BOLD);
+         initOnScroll_UP_JUMP_TO_TOP();
 
-        initOnScroll_UP_JUMP_TO_TOP();
+         shapeHiddenReference =  new GradientDrawable();
+         shapeHiddenReference.setCornerRadius( 70 );
+         shapeHiddenReference.setColor(Color.parseColor("#AD303030"));
+
 
 
         speedyLinearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -173,12 +190,16 @@ public class ChatsFrag extends Fragment  {
 
 
         binding.roomInput.msgEditBox.addTextChangedListener(new TextWatcher() {
+
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
                 handler.removeCallbacks(input_finish_checker);
                 isTypingRoot.child("typingNow").setValue(DB_Handler.getUsername()) ;
 
@@ -208,6 +229,9 @@ public class ChatsFrag extends Fragment  {
     public void onPause() {
         super.onPause();
 
+
+
+
     }
 
     @Override
@@ -217,9 +241,9 @@ public class ChatsFrag extends Fragment  {
         ///////////////////////////////////////////////////////Emoji
 
         initEmojiBoard();
-
         //////////////////////////////////////////////////////Emoji
 
+        handleReferenceEditBox();
 
         binding.jumpToEndFAB.setOnClickListener(view -> {
             onClickFab();
@@ -230,7 +254,7 @@ public class ChatsFrag extends Fragment  {
             @Override
             public void show() {
                 binding.jumpToEndFAB.setVisibility(View.VISIBLE);
-                binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
+                binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_in));
                 binding.jumpToEndFAB.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
             }
 
@@ -243,7 +267,7 @@ public class ChatsFrag extends Fragment  {
         });
 
 
-        try {
+
             bgRoot.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -257,11 +281,6 @@ public class ChatsFrag extends Fragment  {
 
                 }
             });
-        }catch (Exception e ){
-            Log.d(TAG, "onResume: Error setting chat wallpaper");
-        }
-
-
 
     }
 
@@ -273,7 +292,7 @@ public class ChatsFrag extends Fragment  {
         emojiView.setEditText(binding.roomInput.msgEditBox);
 
         AXEmojiPopup emojiPopup = new AXEmojiPopup(emojiView);
-        setTheme();
+        //setTheme();
         binding.roomInput.til.setStartIconOnClickListener(view -> {
             emojiPopup.toggle();
 
@@ -303,10 +322,51 @@ public class ChatsFrag extends Fragment  {
     }
 
     void onClickFab(){
-        speedyLinearLayoutManager.smoothScrollToPosition(chatRV, (RecyclerView.State) recyclerViewState,listSize-1);
+        int pos = chatsViewHolder.getListSize();
+        Log.d(TAG, "onClickFab: POSITION "+pos);
+        speedyLinearLayoutManager.smoothScrollToPosition(chatRV, (RecyclerView.State) recyclerViewState,pos-1);
         //chatRV.smoothScrollToPosition(listSize-1);
         binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(5)).start();
         RecyclerScrollManager.FabScroll.setScrollDist();
+
+    }
+
+
+
+    void handleReferenceEditBox(){
+
+        binding.roomInput.referenceLayout.cancelReference.setOnClickListener(view -> {
+                reference_onCancel();
+        });
+    }
+
+    void reference_onCancel(){
+        //binding.roomInput.referenceLayout.referenceView.animate().translationY(binding.roomInput.referenceLayout.referenceView.getHeight()+30).setInterpolator(new AccelerateInterpolator(2)).start();
+        binding.roomInput.referenceLayout.referenceView.setVisibility(View.GONE);
+        binding.roomInput.msgEditBox.setBackground(shapeHiddenReference);
+
+        //new Handler().postDelayed(() -> binding.roomInput.referenceLayout.referenceView.setVisibility(View.GONE),100);
+        //  binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
+
+    }
+
+    void showReference(ArrayList<ChatListModel_Multi> chatlist , int pos){
+       // binding.roomInput.referenceLayout.referenceView.animate().translationY(-binding.roomInput.referenceLayout.referenceView.getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
+
+        String reference_user = chatlist.get(pos).getSenderName();
+        String msg = chatlist.get(pos).getMessage();
+
+        binding.roomInput.referenceLayout.referenceView.setVisibility(View.VISIBLE);
+        binding.roomInput.msgEditBox.setBackgroundResource(R.drawable.editbox_bg_reference);
+        binding.roomInput.referenceLayout.referenceText.setText(msg);
+        binding.roomInput.referenceLayout.referenceToUsername.setText("@ "+reference_user);
+
+        binding.roomInput.msgEditBox.requestFocus();
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+
+       // binding.roomInput.referenceLayout.referenceToUsername.setOncli
+
+
 
     }
 
@@ -315,6 +375,10 @@ public class ChatsFrag extends Fragment  {
 
 
 //        if(!layout.isShowing()) {
+
+
+
+
 //            layout.show();
 //            layout.setVisibility(View.VISIBLE);
 //
@@ -341,189 +405,71 @@ public class ChatsFrag extends Fragment  {
 
     void setChatWall(String url){
 
-        Glide.with(getContext())
+        Glide.with(context)
                 .load(url)
                 .into(binding.roomBackgroundWallpaper);
     }
 
+
     void loadmessages(){
 
-       // Query msgQue = msgRoot.limitToLast(mCurrentPage*TOTAL_ELEMENT_TO_LOAD);
+                chatsViewHolder.postMessages();
 
-        msgRoot.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                   chatsViewHolder.getChatListLD().observe(getViewLifecycleOwner(), chatListModel_multis -> {
 
-                    //recyclerViewState = chatRV.getLayoutManager().onSaveInstanceState();
-                    //int size = getModelList(snapshot).size();
+                       adapter = new MultiViewChatAdapter(chatListModel_multis, ChatsFrag.this);
 
+                       chatRV.setVisibility(View.VISIBLE);
+                       chatRV.setAdapter(adapter);
+                       adapter.notifyDataSetChanged();
 
-                adapter = new MultiViewChatAdapter(getModelList(snapshot));
+                       shimmerFrameLayout.stopShimmerAnimation();
+                       shimmerFrameLayout.setVisibility(View.GONE);
 
-                chatRV.setVisibility(View.VISIBLE);
-                    chatRV.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                       if(binding.jumpToEndFAB.getVisibility()==View.VISIBLE) {
+                            binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out));
+                           binding.jumpToEndFAB.setVisibility(View.GONE);
+                       }
 
-                    if(binding.jumpToEndFAB.getVisibility()==View.VISIBLE) {
-                       // binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_out));
-                        binding.jumpToEndFAB.setVisibility(View.GONE);
-                    }
-
-                    //chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
-
-                    //swipeRefreshLayout.setRefreshing(false);
-                    //chatRV.scrollToPosition(listSize- 1);
+                   });
 
 
 
-            }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-    }
-
-    boolean filterText(String msg){
-
-        boolean sendable = false;
-
-        if(!msg.equals("") && msg.length()!=0){
-            if(msg.length()<300){
-             if(!msg.trim().isEmpty()){
-                 if (!msg.matches("[\\n\\r]+")) {
-                     sendable = true;
-                 }
-             }
-            }
-        }
-
-        return sendable;
-    }
-
-    ArrayList<ChatListModel_Multi> getModelList(DataSnapshot dataSnapshot){
-
-        Iterator i = dataSnapshot.getChildren().iterator();
-
-
-        while (i.hasNext()){
-
-
-            TIME = String.valueOf(((DataSnapshot) i.next()).getValue());
-            Log.d(TAG, " TIME "+TIME);
-
-            TYPE = String.valueOf(((DataSnapshot) i.next()).getValue());
-            Log.d(TAG, " TYPE - MSG "+TYPE);
-
-            msg = String.valueOf(((DataSnapshot)i.next()).getValue());
-            Log.d(TAG, " MSG-rec "+msg);
-
-            userName = String.valueOf(((DataSnapshot)i.next()).getValue());
-            Log.d(TAG, " USRNAME "+userName);
-
-            if(!TYPE.equals(TYPE_JOIN)) {
-                temp.add(userName);
-            }
-
-            if (TYPE.equals(TYPE_MSG)) {
-                if (userName.equals(DB_Handler.getUsername())) {
-                    chatList.add(new ChatListModel_Multi(userName, msg, 2,TIME));
-                    Log.d(TAG, "OUTGOING: TYPE 2" + msg);
-
-                } else {
-
-                    if (temp.size() > 1) {
-
-                        if (temp.get(temp.size() - 2).equals(userName)) {
-                            chatList.add(new ChatListModel_Multi(userName, msg, 3,TIME));
-                            Log.d(TAG, "INCOMING_SAME_USER: TYPE 3" + msg);
-
-                        } else {
-                            chatList.add(new ChatListModel_Multi(userName, msg, 1, TIME));
-                            Log.d(TAG, "INCOMING: TYPE 1" + msg);
-                        }
-
-                    } else {
-                        chatList.add(new ChatListModel_Multi(userName, msg, 1, TIME));
-                        Log.d(TAG, "INCOMING: TYPE 1" + msg);
-                    }
-                }
-
-            } else  {
-                chatList.add(new ChatListModel_Multi(userName, msg, 4, TIME));
-                Log.d(TAG, "JOINING/LEAVING : TYPE 4" + msg);
-            }
-
-
-
-        }
-
-
-        Log.d(TAG, "TEMP "+ temp);
-
-        shimmerFrameLayout.stopShimmerAnimation();
-        shimmerFrameLayout.setVisibility(View.GONE);
-        listSize = chatList.size();
-
-        return chatList;
     }
 
     void sendMessage(){
 
-        binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in));
+        binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_in));
         String msg = binding.roomInput.msgEditBox.getText().toString();
         String usrname = DB_Handler.getUsername();
         String time = timeSystem.getTime_format_12h();
 
 
-        Map<String, Object> map = new HashMap<>();
-        String temp_key = msgRoot.push().getKey();
-        msgRoot.updateChildren(map);
+       int response =  chatsViewHolder.sendMessage(msg,usrname,time);
 
-        DatabaseReference in_msg = msgRoot.child(temp_key);
-        Map<String, Object> map2 = new HashMap<>();
+       switch (response){
+
+           case success_sent:
+                 binding.roomInput.msgEditBox.setText("");
+                 mpSent.start();
+                 break;
+
+           case failed_internal_error:
+               binding.roomInput.msgEditBox.setError("Internal error , restart sigmo!");
+               break;
+
+           case failed_invalid_message:
+
+               binding.roomInput.msgEditBox.setError("Message invalid!");
+               binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_out));
+               break;
+
+           default:
+               binding.roomInput.msgEditBox.setError("Unknow error, retry!");
 
 
-        if (filterText(msg)){
-
-            map2.put("msg",msg);
-            map2.put("TYPE",TYPE_MSG);
-
-            if (usrname!=null) {
-                map2.put("sender", usrname);
-                map2.put("TIME",time);
-                in_msg.updateChildren(map2);
-                binding.roomInput.msgEditBox.setText("");
-                mpSent.start();
-
-            }else{
-                binding.roomInput.msgEditBox.setError("Internal error , restart sigmo!");
-            }
-        }
-        else{
-            binding.roomInput.msgEditBox.setError("Message invalid!");
-            binding.roomInput.sendBtn.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_out));
-
-        }
+       }
 
     }
 
@@ -552,8 +498,6 @@ public class ChatsFrag extends Fragment  {
         });
     }
 
-
-
     private void initOnScroll_UP_JUMP_TO_TOP() {
 
         chatRV.addOnScrollListener(new RecyclerScrollManager.MiniplayerScroll() {
@@ -563,20 +507,17 @@ public class ChatsFrag extends Fragment  {
             @Override
             public void show() {
                 binding.miniPlayerRoom.jumpToTop.setVisibility(View.VISIBLE);
-                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.pop_in_jump_to_top));
+                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_in_jump_to_top));
                 binding.miniPlayerRoom.getRoot().animate().translationY(-binding.miniPlayerRoom.getRoot().getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
 
 
             }
 
-
-
             //show Miniplayer up and hide jump to top tab
-
 
             @Override
             public void hide() {
-                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.fade_out));
+                binding.miniPlayerRoom.jumpToTop.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_out));
                 binding.miniPlayerRoom.jumpToTop.setVisibility(View.GONE);
                 binding.miniPlayerRoom.getRoot().animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
 
@@ -591,12 +532,35 @@ public class ChatsFrag extends Fragment  {
             RecyclerScrollManager.MiniplayerScroll.setScrollDist();
         });
 
+    }
 
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
 
     }
 
 
+    @Override
+    public void onClick(int position) {
+        //Toast.makeText(context, "Touched  :"+position, Toast.LENGTH_SHORT).show();
 
-
+        showReference(chatsViewHolder.getChatList(), position);
+    }
 }
+
+
+
+
+// Query msgQue = msgRoot.limitToLast(mCurrentPage*TOTAL_ELEMENT_TO_LOAD);
+
+
+//recyclerViewState = chatRV.getLayoutManager().onSaveInstanceState();
+//int size = getModelList(snapshot).size();
+
+
+//chatRV.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+
+//swipeRefreshLayout.setRefreshing(false);
+//chatRV.scrollToPosition(listSize- 1);

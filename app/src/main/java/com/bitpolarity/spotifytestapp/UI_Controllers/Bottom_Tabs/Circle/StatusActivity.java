@@ -160,7 +160,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         Log.v(LOG, "Status : Background");
         state = layoutManager.onSaveInstanceState();
 
-
     }
 
     private void someMethod(RecyclerView rv, UserListAdapter adapter) {
@@ -278,7 +277,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
    void getMyData(DataSnapshot snapshot){
 
-
         userListAdapter = new UserListAdapter(getDataFaster(snapshot), StatusActivity.this);
         //userRecyclerView.setAdapter(userListAdapter);
         someMethod(userRecyclerView, userListAdapter);
@@ -338,7 +336,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
                 else status[i] = 0;
 
                 String now = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
-                Log.d(TAG, "Last active : "+ data.get(i).get("recKeyID") + ":" + findDifference(String.valueOf(data.get(i).get("LA")),now) );
+                //Log.d(TAG, "Last active : "+ data.get(i).get("recKeyID") + ":" + findDifference(String.valueOf(data.get(i).get("LA")),now) );
 
                 //isPlaying
                 Log.d(TAG, "IsPlaying : "+ data.get(i).get("isPlaying") );

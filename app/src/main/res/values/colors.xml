@@ -54,6 +54,9 @@
     <color name="messagebg">#FA232323</color>
     <color name="editboxbg">#9A4C4C4C</color>
     <color name="sigmo_dark_blue">#536DFE</color>
+    <color name="sigmo_blue_200">#D6536DFE</color>
+    <color name="sigmo_blue_250">#D9536DFE</color>
+    <color name="reference_box_bg">#AD303030</color>
 
 
 </resources>
