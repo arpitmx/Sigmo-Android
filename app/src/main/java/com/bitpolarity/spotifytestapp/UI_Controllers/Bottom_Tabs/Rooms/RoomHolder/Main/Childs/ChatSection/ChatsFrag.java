@@ -41,6 +41,7 @@ import com.aghajari.emojiview.AXEmojiManager;
 import com.aghajari.emojiview.view.AXEmojiPopup;
 import com.aghajari.emojiview.view.AXSingleEmojiView;
 import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.MultiViewChatAdapter;
+import com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter.UserListAdapter;
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
 import com.bitpolarity.spotifytestapp.LinearLayoutManagers.SigmoLinearLayoutManager;
@@ -342,8 +343,10 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
 
     void reference_onCancel(){
         //binding.roomInput.referenceLayout.referenceView.animate().translationY(binding.roomInput.referenceLayout.referenceView.getHeight()+30).setInterpolator(new AccelerateInterpolator(2)).start();
-        binding.roomInput.referenceLayout.referenceView.setVisibility(View.GONE);
         binding.roomInput.msgEditBox.setBackground(shapeHiddenReference);
+        //
+        // binding.roomInput.referenceLayout.referenceView.setAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_down));
+        binding.roomInput.referenceLayout.referenceView.setVisibility(View.GONE);
 
         //new Handler().postDelayed(() -> binding.roomInput.referenceLayout.referenceView.setVisibility(View.GONE),100);
         //  binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
@@ -360,11 +363,19 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
         binding.roomInput.msgEditBox.setBackgroundResource(R.drawable.editbox_bg_reference);
         binding.roomInput.referenceLayout.referenceText.setText(msg);
         binding.roomInput.referenceLayout.referenceToUsername.setText("@ "+reference_user);
+        binding.roomInput.referenceLayout.referenceView.setAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_up));
+        binding.roomInput.referenceLayout.referenceText.setAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_up_slo));
+        binding.roomInput.referenceLayout.referenceToUsername.setAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_up_slower));
 
         binding.roomInput.msgEditBox.requestFocus();
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
 
-       // binding.roomInput.referenceLayout.referenceToUsername.setOncli
+        binding.roomInput.referenceLayout.referenceText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                speedyLinearLayoutManager.smoothScrollToPosition(chatRV, (RecyclerView.State) recyclerViewState,pos);
+            }
+        });
 
 
 
