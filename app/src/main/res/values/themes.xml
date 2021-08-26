@@ -23,8 +23,7 @@
 
         <!-- Customize your theme here. -->
 
-<!--        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>-->
-<!--        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>-->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
 
 
     </style>
@@ -32,9 +31,6 @@
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
-
-
-
 
         <style name="Theme.Transparent" parent="android:Theme">
             <item name="android:windowIsTranslucent">true</item>
@@ -44,6 +40,17 @@
             <item name="android:windowIsFloating">true</item>
             <item name="android:backgroundDimEnabled">false</item>
         </style>
+
+
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/borders_light</item>
+    </style>
 
 
 

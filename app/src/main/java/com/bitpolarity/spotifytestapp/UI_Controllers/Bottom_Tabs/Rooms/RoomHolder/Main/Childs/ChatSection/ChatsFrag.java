@@ -1,20 +1,14 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Main.Childs.ChatSection;
 
-import static android.graphics.Typeface.BOLD;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.text.Editable;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
 import android.util.Log;
@@ -24,16 +18,13 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -41,9 +32,8 @@ import com.aghajari.emojiview.AXEmojiManager;
 import com.aghajari.emojiview.view.AXEmojiPopup;
 import com.aghajari.emojiview.view.AXSingleEmojiView;
 import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.MultiViewChatAdapter;
-import com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter.UserListAdapter;
 import com.bitpolarity.spotifytestapp.DB_Handler;
-import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
+import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModel;
 import com.bitpolarity.spotifytestapp.LinearLayoutManagers.SigmoLinearLayoutManager;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.RecyclerScrollManager;
@@ -58,11 +48,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 
 public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickListner {
@@ -84,7 +70,8 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
 
     static final int TOTAL_ELEMENT_TO_LOAD = 20;
     private final int mCurrentPage = 1;
-    static boolean isTyping = false;
+    SwipeRefreshLayout swipeRefreshLayout;
+
     ShimmerFrameLayout shimmerFrameLayout;
     ChatsViewHolder chatsViewHolder;
 
@@ -93,13 +80,7 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
     Handler handler = new Handler();
     StyleSpan boldSpan;
     GradientDrawable shapeHiddenReference , shapeShownReference;
-
-
-    private  final String TYPE_MSG = "1";
-    private  final String TYPE_JOIN = "2";
-    private static final int TYPE_LEFT = R.dimen.TYPE_LEFT;
-    private int lastFirstVisiblePosition;
-
+    LayoutAnimationController layoutAnimationController;
 
     // Responses
     private  final int success_sent = 1;
@@ -146,8 +127,7 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
        mpSent = MediaPlayer.create(getContext(), R.raw.hs_bg_message_sent2);
        mpClick = MediaPlayer.create(getContext(), R.raw.know);
 
-      //getActivity().getWindow().setSoftInputMode(SOFT_INPUT_ADJUST_PAN);
-       //swipeRefreshLayout = binding.swipeRefresh;
+       swipeRefreshLayout = binding.swipeRefresh;
        //swipeRefreshLayout.setEnabled(false);
 
        chatRV = binding.chatsLayout;
@@ -179,9 +159,13 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
         speedyLinearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         speedyLinearLayoutManager.setStackFromEnd(true);
 
+        //layoutAnimationController = AnimationUtils.loadLayoutAnimation(context, R.anim.fade_in_rv);
+
         chatRV.hasFixedSize();
         chatRV.setLayoutManager(speedyLinearLayoutManager);
         chatRV.setNestedScrollingEnabled(false);
+        //chatRV.setLayoutAnimation(layoutAnimationController);
+
         loadmessages();
 
         binding.roomInput.sendBtn.setOnClickListener(v -> {
@@ -217,11 +201,11 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
             }
         });
 
-//         swipeRefreshLayout.setOnRefreshListener(() -> {
-//             mCurrentPage++;
-//             chatList.clear();
-//             loadmessages();
-//         });
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+             chatsViewHolder.onRefresh();
+             loadmessages();
+
+         });
 
     }
 
@@ -353,7 +337,7 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
 
     }
 
-    void showReference(ArrayList<ChatListModel_Multi> chatlist , int pos){
+    void showReference(ArrayList<MessageModel> chatlist , int pos){
        // binding.roomInput.referenceLayout.referenceView.animate().translationY(-binding.roomInput.referenceLayout.referenceView.getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
 
         String reference_user = chatlist.get(pos).getSenderName();
@@ -429,10 +413,10 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
                    chatsViewHolder.getChatListLD().observe(getViewLifecycleOwner(), chatListModel_multis -> {
 
                        adapter = new MultiViewChatAdapter(chatListModel_multis, ChatsFrag.this);
-
                        chatRV.setVisibility(View.VISIBLE);
                        chatRV.setAdapter(adapter);
                        adapter.notifyDataSetChanged();
+                       swipeRefreshLayout.setRefreshing(false);
 
                        shimmerFrameLayout.stopShimmerAnimation();
                        shimmerFrameLayout.setVisibility(View.GONE);

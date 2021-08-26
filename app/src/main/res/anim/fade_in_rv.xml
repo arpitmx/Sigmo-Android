@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ripple
+<layoutAnimation
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="#72E6ECF4"
-    >
-
-
-</ripple>
-
+    android:animation="@anim/pop_in"
+    android:animationOrder="normal"
+    />

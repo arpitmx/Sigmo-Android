@@ -11,24 +11,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
 
+    app:layout_constraintVertical_bias="0.265"
+    >
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rooms_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/dark_fg_border"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-
-            app:layout_constraintVertical_bias="0.265">
+>
 
 
         </androidx.recyclerview.widget.RecyclerView>
-
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         <TextView
             android:id="@+id/noRoomtv"
             android:layout_width="wrap_content"
@@ -47,7 +51,7 @@
            android:id="@+id/progress_room"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:layout_constraintBottom_toBottomOf="@+id/rooms_listview"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

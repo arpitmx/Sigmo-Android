@@ -70,6 +70,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
     FR_Adapter fr_adapter;
     TabLayout tabLayout;
     DatabaseReference ref;
+    mBottomSheetDialog bottomSheet;
 
     TempDataHolder dataHolder;
     final int ONLINE = R.drawable.ongreen;
@@ -96,10 +97,8 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         userRecyclerView = binding.listview;
         fr_rv = binding.frRv;
 
-
         layoutManager = new LinearLayoutManager(getContext());
         layoutManagerFR = new LinearLayoutManager(getContext());
-
         return binding.getRoot();
 
 
@@ -216,17 +215,16 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
             Log.d(TAG, "onClick: POS:"+position+"  Details : "+details);
             Log.d(TAG, "onClick: POS:"+position+"  Details : "+trackID);
 
-            mBottomSheetDialog bottomSheet = new mBottomSheetDialog(details,trackID);
+            bottomSheet = new mBottomSheetDialog(details,trackID);
             bottomSheet.show(getChildFragmentManager(),"ModalBottomSheet");
+
         }).start();
 
     }
 
     void loadData(){
 
-
         new Thread(() -> {
-
 
             Log.d(TAG, "Thread Name :" + Thread.currentThread().getName());
 
@@ -265,14 +263,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
 
         }).start();
-
-
-
     }
-
-
-
-
 
 
    void getMyData(DataSnapshot snapshot){
@@ -281,11 +272,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         //userRecyclerView.setAdapter(userListAdapter);
         someMethod(userRecyclerView, userListAdapter);
         userListAdapter.notifyDataSetChanged();
-
     }
-
-
-
 
     List<UserListModel> getDataFaster(DataSnapshot snapshot){
 
@@ -364,7 +351,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         Log.d(TAG, "songDetail array : " + Arrays.toString(songDetail));
         Log.d(TAG, "trackID array : " + Arrays.toString(trackID));
         Log.d(TAG, "Status array: " + Arrays.toString(status));
-
 
 
         dataHolder.setSongDetails(songDetail);

@@ -31,7 +31,15 @@
 
         >
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/swipeRefresh"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
+            >
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chats_layout"
             android:layout_width="match_parent"
@@ -41,12 +49,13 @@
             android:paddingBottom="10dp"
             android:scrollbars="vertical"
             android:visibility="visible"
+            android:layoutAnimation="@anim/fade_in_rv"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+           >
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerFrameLayout_chatfrag"
@@ -89,8 +98,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.952"
-            app:layout_constraintStart_toStartOf="@+id/chats_layout"
-            app:layout_constraintTop_toTopOf="@+id/chats_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.975"
             app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
 

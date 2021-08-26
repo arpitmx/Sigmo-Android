@@ -1,20 +1,14 @@
 package com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
+import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModel;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemIncomingBinding;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemIncomingSameUsrBinding;
@@ -25,7 +19,7 @@ import java.util.ArrayList;
 
 public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    ArrayList<ChatListModel_Multi> list;
+    ArrayList<MessageModel> list;
     public static final int MESSAGE_TYPE_IN = 1;
     public static final int MESSAGE_TYPE_OUT = 2;
     public static final int MESSAGE_TYPE_OUT_SAME = 3;
@@ -36,7 +30,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
 
-    public MultiViewChatAdapter(ArrayList<ChatListModel_Multi> list, ClickListner mClicklistner){
+    public MultiViewChatAdapter(ArrayList<MessageModel> list, ClickListner mClicklistner){
         this.list = list;
         this.mClicklistner = mClicklistner;
     }
@@ -71,7 +65,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
          void bind(int position) {
-            ChatListModel_Multi  messageModel = list.get(position);
+            MessageModel messageModel = list.get(position);
              binding_incoming.usernameChatroom.setText(messageModel.getSenderName());
              binding_incoming.textMessage.setText(messageModel.getMessage());
              binding_incoming.timeTxt.setText(messageModel.getTime());
@@ -133,7 +127,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
         void bind(int position) {
-            ChatListModel_Multi  messageModel = list.get(position);
+            MessageModel messageModel = list.get(position);
             binding_joining.timeTxt.setText(messageModel.getTime());
 
             if(messageModel.getMessage().equals("joined")){
@@ -190,15 +184,17 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
          }
 
          void bind(int position) {
-             ChatListModel_Multi  messageModel = list.get(position);
+             MessageModel messageModel = list.get(position);
 
-             String html = getHTMLString(messageModel.getMessage());
+//             String html = getHTMLString(messageModel.getMessage());
+//
+//             if(html!=null) {
+//                 binding_outgoing.textMessage.setText(Html.fromHtml(html));
+//             }else{
+//             }
 
-             if(html!=null) {
-                 binding_outgoing.textMessage.setText(Html.fromHtml(html));
-             }else{
-                 binding_outgoing.textMessage.setText(messageModel.getMessage());
-             }
+
+             binding_outgoing.textMessage.setText(messageModel.getMessage());
 
 
              binding_outgoing.timeTxt.setText(messageModel.getTime());
@@ -269,7 +265,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
         void bind(int position) {
-            ChatListModel_Multi  messageModel = list.get(position);
+            MessageModel messageModel = list.get(position);
             binding_outgoing_sameusr.textMessage.setText(messageModel.getMessage());
             binding_outgoing_sameusr.timeTxt.setText(messageModel.getTime());
 
@@ -390,55 +386,55 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 //        }
 //
 
-
-
-   String getHTMLString(String s){
-
-        String[] arr = s.split("");
-        StringBuilder stringBuilder = new StringBuilder();
-
-        if (s.contains("*")) {
-            if(isBalanced(arr)){
-                for (int i = 0; i < arr.length; i++) {
-                    if (arr[i].equals("*")) {
-                        arr[i] = "<strong>";
-                        for (int j = i + 1; j < arr.length; j++) {
-                            if (arr[j].equals("*")) {
-                                arr[j] = "</strong>";
-                                i = j + 1;
-                                break; }
-                        }
-                    }
-
-                }
-
-                for (String x : arr) {
-                    stringBuilder.append(x);
-                }
-
-                return stringBuilder.toString();
-
-            }else{
-                return null;
-            }
-
-
-        } else {
-            return null;        }
-
-    }
-
-
-
-    private boolean isBalanced(String[] arr){
-        int count = 0;
-        for (String i : arr){
-            if(i.equals("*")) count++;
-        }
-        return count % 2 == 0;
-    }
-
-
+//
+//
+//   String getHTMLString(String s){
+//
+//        String[] arr = s.split("");
+//        StringBuilder stringBuilder = new StringBuilder();
+//
+//        if (s.contains("*")) {
+//            if(isBalanced(arr)){
+//                for (int i = 0; i < arr.length; i++) {
+//                    if (arr[i].equals("*")) {
+//                        arr[i] = "<strong>";
+//                        for (int j = i + 1; j < arr.length; j++) {
+//                            if (arr[j].equals("*")) {
+//                                arr[j] = "</strong>";
+//                                i = j + 1;
+//                                break; }
+//                        }
+//                    }
+//
+//                }
+//
+//                for (String x : arr) {
+//                    stringBuilder.append(x);
+//                }
+//
+//                return stringBuilder.toString();
+//
+//            }else{
+//                return null;
+//            }
+//
+//
+//        } else {
+//            return null;        }
+//
+//    }
+//
+//
+//
+//    private boolean isBalanced(String[] arr){
+//        int count = 0;
+//        for (String i : arr){
+//            if(i.equals("*")) count++;
+//        }
+//        return count % 2 == 0;
+//    }
+//
+//
 
 
 

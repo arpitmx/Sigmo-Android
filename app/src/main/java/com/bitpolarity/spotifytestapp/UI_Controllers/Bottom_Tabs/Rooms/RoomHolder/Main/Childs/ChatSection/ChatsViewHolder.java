@@ -2,8 +2,6 @@ package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHold
 
 
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,16 +9,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.MultiViewChatAdapter;
 import com.bitpolarity.spotifytestapp.DB_Handler;
-import com.bitpolarity.spotifytestapp.GetterSetterModels.ChatListModel_Multi;
+import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModel;
+import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModelTest;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,8 +35,8 @@ public class ChatsViewHolder  extends ViewModel {
     private  final String TYPE_MSG = "1";
     private  final String TYPE_JOIN = "2";
     ArrayList temp = new ArrayList();
-    ArrayList<ChatListModel_Multi> chatList;
-    private MutableLiveData<ArrayList<ChatListModel_Multi>> chatListLD;
+    ArrayList<MessageModel> chatList;
+    private MutableLiveData<ArrayList<MessageModel>> chatListLD;
 
     // Responses
     private  final int success_sent = 1;
@@ -46,6 +44,9 @@ public class ChatsViewHolder  extends ViewModel {
     private  final int failed_internal_error = 404;
     int listSize;
 
+    // Pagination
+    static final int TOTAL_ELEMENT_TO_LOAD = 20;
+    private int mCurrentPage = 1;
 
     ChatsViewHolder(String roomName){
 
@@ -110,14 +111,13 @@ public class ChatsViewHolder  extends ViewModel {
             return sendable;
         }
 
-    ArrayList<ChatListModel_Multi> getModelList(DataSnapshot dataSnapshot){
+    ArrayList<MessageModel> getModelList(DataSnapshot dataSnapshot){
 
         Iterator i = dataSnapshot.getChildren().iterator();
          String userName , msg;
          String TYPE, TIME;
 
         while (i.hasNext()){
-
 
             TIME = String.valueOf(((DataSnapshot) i.next()).getValue());
             Log.d(TAG, " TIME "+TIME);
@@ -137,7 +137,7 @@ public class ChatsViewHolder  extends ViewModel {
 
             if (TYPE.equals(TYPE_MSG)) {
                 if (userName.equals(DB_Handler.getUsername())) {
-                    chatList.add(new ChatListModel_Multi(userName, msg, 2,TIME));
+                    chatList.add(new MessageModel(userName, msg, 2,TIME));
                     Log.d(TAG, "OUTGOING: TYPE 2" + msg);
 
                 } else {
@@ -146,22 +146,22 @@ public class ChatsViewHolder  extends ViewModel {
 
                         if (temp.get(temp.size() - 2).equals(userName)) {
 
-                            chatList.add(new ChatListModel_Multi(userName, msg, 3,TIME));
+                            chatList.add(new MessageModel(userName, msg, 3,TIME));
                             Log.d(TAG, "INCOMING_SAME_USER: TYPE 3" + msg);
 
                         } else {
-                            chatList.add(new ChatListModel_Multi(userName, msg, 1, TIME));
+                            chatList.add(new MessageModel(userName, msg, 1, TIME));
                             Log.d(TAG, "INCOMING: TYPE 1" + msg);
                         }
 
                     } else {
-                        chatList.add(new ChatListModel_Multi(userName, msg, 1, TIME));
+                        chatList.add(new MessageModel(userName, msg, 1, TIME));
                         Log.d(TAG, "INCOMING: TYPE 1" + msg);
                     }
                 }
 
             } else  {
-                chatList.add(new ChatListModel_Multi(userName, msg, 4, TIME));
+                chatList.add(new MessageModel(userName, msg, 4, TIME));
                 Log.d(TAG, "JOINING/LEAVING : TYPE 4" + msg);
             }
 
@@ -181,22 +181,29 @@ public class ChatsViewHolder  extends ViewModel {
 
 
     // This gets into adapter
-    private void setChatListLD(ArrayList<ChatListModel_Multi> chatArrayList){
+    private void setChatListLD(ArrayList<MessageModel> chatArrayList){
         chatListLD.postValue(chatArrayList);
     }
 
-    public LiveData<ArrayList<ChatListModel_Multi>> getChatListLD(){
+    public LiveData<ArrayList<MessageModel>> getChatListLD(){
         if (chatListLD==null) chatListLD = new MutableLiveData<>();
         return chatListLD;
     }
 
 
     void postMessages(){
-        msgRoot.addChildEventListener(new ChildEventListener() {
+
+        Query mMessageQuery = msgRoot.limitToLast(mCurrentPage*TOTAL_ELEMENT_TO_LOAD);
+
+        mMessageQuery.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 setChatListLD(getModelList(snapshot));
+                MessageModelTest messageModel = snapshot.getValue(MessageModelTest.class);
+                Log.d(TAG, "MessageModel "+messageModel.getMsg());
+
+
 
             }
 
@@ -262,6 +269,12 @@ public class ChatsViewHolder  extends ViewModel {
         }
     }
 
+
+    public void onRefresh(){
+        mCurrentPage++;
+        chatList.clear();
+    }
+
    public ArrayList<Integer> getBoldsIndexes(String s){
 
         s = s.trim();
@@ -298,7 +311,7 @@ public class ChatsViewHolder  extends ViewModel {
         return count % 2 == 0;
     }
 
-    public ArrayList<ChatListModel_Multi> getChatList(){
+    public ArrayList<MessageModel> getChatList(){
 
         if(chatList!=null){
 
