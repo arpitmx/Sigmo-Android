@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.bitpolarity.spotifytestapp.DB_Related.fbase_bundle;
+import com.bitpolarity.spotifytestapp.Singletons.TimeSystem;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,11 +24,13 @@ public class DB_Handler {
     final String LOG = "db_handler";
 
     //Firebase
-    DatabaseReference ref;
+    DatabaseReference Main_ref,RoomBase_ref;
     final String usr_ROOT = "Users_DMode";
-    final String room_ROOT = "Rooms";
+    final static String room_ROOT = "Rooms";
+    final static String room_BASE = "RoomBase";
     DatabaseReference ROOTPATH;
     SharedPreferences pref;
+    TimeSystem timeSystem;
 
    // static SharedPreferences prefs;
 
@@ -36,10 +39,10 @@ public class DB_Handler {
     public DB_Handler(){
         formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-        if (ref == null) {
+        if (Main_ref == null) {
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-            ref = firebaseDatabase.getReference();
-
+            Main_ref = firebaseDatabase.getReference();
+            RoomBase_ref = firebaseDatabase.getReference().child(room_BASE);
         }
     }
 
@@ -61,9 +64,9 @@ public class DB_Handler {
         time = getTime(date);
 
 
-        ref.child(usr_ROOT).child(username).child("STATUS").setValue(status);
+        Main_ref.child(usr_ROOT).child(username).child("STATUS").setValue(status);
        // ref.child(usr_ROOT).child(username).child("STATUS").onDisconnect().setValue(0);
-        ref.child(usr_ROOT).child(username).child("LA").setValue(time);
+        Main_ref.child(usr_ROOT).child(username).child("LA").setValue(time);
 
         if (status ==1)
         {
@@ -82,17 +85,17 @@ public class DB_Handler {
         date = new Date();
         time = getTime(date);
 
-        ref.child(usr_ROOT).child(username).child("STATUS").onDisconnect().setValue(0);
-        ref.child(usr_ROOT).child(username).child("LA").onDisconnect().setValue(time);
-        ref.child(usr_ROOT).child(username).child("isPlaying").onDisconnect().setValue(false);
-
+        Main_ref.child(usr_ROOT).child(username).child("STATUS").onDisconnect().setValue(0);
+        Main_ref.child(usr_ROOT).child(username).child("LA").onDisconnect().setValue(time);
+        Main_ref.child(usr_ROOT).child(username).child("isPlaying").onDisconnect().setValue(false);
 
 
     }
 
+
    public void setUsername(String username){
         this.username = username;
-       ROOTPATH =ref.child(usr_ROOT).child(username);
+       ROOTPATH = Main_ref.child(usr_ROOT).child(username);
 
    }
 
@@ -133,9 +136,9 @@ public class DB_Handler {
      public DatabaseReference getRef(int TYPE){
          DatabaseReference f = null;
         if (TYPE == 0){
-           f =  ref.child("Users");
+           f =  Main_ref.child("Users");
         }else if (TYPE ==1){
-            f =  ref.child("Rooms");
+            f =  Main_ref.child("Rooms");
         }
 
          return f;
@@ -148,16 +151,18 @@ public class DB_Handler {
 
 
         // RoomDetails
-
-         ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("roomName").setValue(mRoomName);
-         ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("hostDetails").child("userName").setValue(username);
-        ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("isPublic").setValue("true");
-        ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("size").child("total").setValue("30");
-        date = new Date();
-        ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("startedAt").setValue(getTime(date));
+         timeSystem = TimeSystem.getInstance();
 
 
-        //Member Structure
+         Main_ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("roomName").setValue(mRoomName);
+         RoomBase_ref.child(mRoomName).child("roomDetails").child("roomName").setValue(mRoomName);
+
+
+         RoomBase_ref.child(mRoomName).child("roomDetails").child("hostDetails").child("userName").setValue(username);
+         RoomBase_ref.child(mRoomName).child("roomDetails").child("isPublic").setValue("true");
+         RoomBase_ref.child(mRoomName).child("roomDetails").child("size").child("total").setValue("30");
+
+         RoomBase_ref.child(mRoomName).child("roomDetails").child("startedAt").setValue(timeSystem.get_date_day_time_12h());
 
 
 

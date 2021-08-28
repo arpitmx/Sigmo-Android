@@ -35,9 +35,7 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
 
     WebView spotifyWebView;
     final int height = 250;
-    TextView linkToSpotify ;
     Animation anim;
-    TextView songD;
 
     public mBottomSheetDialog(String details,String trackID){
         this.details = details;
@@ -49,7 +47,6 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-
         //View v = inflater.inflate(R.layout.song_detail_bottom_sheet,container, false);
         binding = SongDetailBottomSheetBinding.inflate(inflater);
 
@@ -59,7 +56,6 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
         spotifyWebView = binding.spotifyWebView;
 
         anim = AnimationUtils.loadAnimation(getContext(), R.anim.pop_in);
-        String mTrackID = trackID.replace("spotify","").replace(":","").replace("track","").trim();
 
         WebSettings webViewSettings = binding.spotifyWebView.getSettings();
         webViewSettings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -68,19 +64,24 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
         webViewSettings.setBuiltInZoomControls(false);
         webViewSettings.setPluginState(WebSettings.PluginState.ON);
 
+        return binding.getRoot();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        String mTrackID = trackID.replace("spotify","").replace(":","").replace("track","").trim();
         String data = "<iframe src=\"https://open.spotify.com/embed/track/"+mTrackID+"\"" +
                 " width=\"320\" height=\""+height+"\" frameborder=\"0\" allowtransparency=\"true\" allow=\"encrypted-media\"></iframe>";
-        Log.d("mBottomSheetDialog", "trackID: "+mTrackID);
+
 
         spotifyWebView.loadData(data,"text/html","UTF-8");
 
-
-
         spotifyWebView.setWebViewClient(new WebViewClient() {
             @Override
-            public void onPageCommitVisible (WebView view,
-                                             String url){
-
+            public void onPageCommitVisible (WebView view, String url){
             }
         });
 
@@ -90,7 +91,7 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
         Runnable runnable = () -> {
 
 
-           // binding.shimmerFrameLayout.stopShimmerAnimation();
+            // binding.shimmerFrameLayout.stopShimmerAnimation();
             //binding.shimmerFrameLayout.setVisibility(View.GONE);
 
             spotifyWebView.setAnimation(anim);
@@ -102,15 +103,10 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
 
 
         binding.songD.setText(details);
-
-
-        binding.linkTospotifyBTN.setOnClickListener(view -> {
+        binding.linkTospotifyBTN.setOnClickListener(view1 -> {
             Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(trackID) );
             startActivity(launcher);
         });
 
-        return binding.getRoot();
     }
-
-
 }

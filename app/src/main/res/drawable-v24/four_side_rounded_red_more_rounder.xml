@@ -9,8 +9,9 @@
             <corners android:radius="30dp"
                 />
 
+
            <solid
-           android:color="@color/sigmo_blue_200"
+           android:color="#FFFFFF"
                />
 
 

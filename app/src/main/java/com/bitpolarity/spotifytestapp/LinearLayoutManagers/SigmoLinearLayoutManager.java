@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SigmoLinearLayoutManager extends LinearLayoutManager {
 
-    private static  float MILLISECONDS_PER_INCH = 23f; //default is 25f (bigger = slower)
+    private static final float MILLISECONDS_PER_INCH = 5f; //default is 25f (bigger = slower)
 
     public SigmoLinearLayoutManager(Context context) {
         super(context);

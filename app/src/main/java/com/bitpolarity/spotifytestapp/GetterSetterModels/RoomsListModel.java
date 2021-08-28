@@ -3,25 +3,22 @@ package com.bitpolarity.spotifytestapp.GetterSetterModels;
 public class RoomsListModel {
     String mRoomName;
     String mHostName;
+    String mTime;
 
-    public RoomsListModel(String mRoomName, String mHostName) {
+    public RoomsListModel(String mRoomName, String mHostName,String mTime) {
         this.mRoomName = mRoomName;
         this.mHostName = mHostName;
+        this.mTime = mTime;
     }
 
     public String getmRoomName() {
         return mRoomName;
     }
-
-    public void setmRoomName(String mRoomName) {
-        this.mRoomName = mRoomName;
-    }
-
     public String getmHostName() {
         return mHostName;
     }
-
-    public void setmHostName(String mHostName) {
-        this.mHostName = mHostName;
+    public String getmTime() {
+        return mTime;
     }
+
 }

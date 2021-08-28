@@ -16,7 +16,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="120dp"
                 android:orientation="horizontal"
                 android:weightSum="10"
                 android:background="@drawable/dark_four_side_borders_post"
@@ -65,12 +65,12 @@
         android:layout_gravity="start"
         android:fontFamily="@font/hxtrabold"
         android:gravity="start"
-        android:paddingTop="10dp"
+        android:paddingTop="15dp"
         android:paddingStart="6dp"
         android:layout_marginTop="10dp"
         android:text="Room"
-        android:textColor="@color/s_blue200"
-        android:textSize="25sp"
+        android:textColor="@color/purple_700"
+        android:textSize="30sp"
         android:visibility="visible" />
 
     <TextView
@@ -80,15 +80,15 @@
         android:layout_gravity="center_vertical"
         android:fontFamily="@font/hmed"
         android:gravity="start"
-        android:layout_marginTop="10dp"
-        android:paddingTop="4dp"
+        android:layout_marginTop="5dp"
         android:paddingStart="6dp"
-        android:text="Hosted by @arpitmaurya"
-        android:textColor="@color/s_blue100"
+        android:text="Hosted by "
+        android:textColor="#C190CAF9"
         android:textSize="15sp"
-
         android:visibility="visible"
         />
+
+
 </LinearLayout>
 
 

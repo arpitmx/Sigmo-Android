@@ -1,12 +1,13 @@
 package com.bitpolarity.spotifytestapp.GetterSetterModels;
 
-public class ChatListModel_Multi {
+public class MessageModel {
+
     String mSenderName;
     String mMsg;
     int messageType;
     String time;
 
-    public ChatListModel_Multi(String mSenderName, String msg, int messageType, String time) {
+    public MessageModel(String mSenderName, String msg, int messageType, String time) {
         this.mSenderName = mSenderName;
         this.mMsg = msg;
         this.messageType = messageType;

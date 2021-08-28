@@ -58,6 +58,7 @@ public class RoomMainFragment extends Fragment {
 
         //getTypingMembers();
 
+
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -77,7 +78,8 @@ public class RoomMainFragment extends Fragment {
 
                     }}
                 else{
-                    Toast.makeText(getContext(), "No messages , send one! ;)", Toast.LENGTH_SHORT).show();
+                    binding.roomActionBar.istypingTV.setText( "No messages here,  send one!");
+
                 }
 
 
@@ -91,14 +93,6 @@ public class RoomMainFragment extends Fragment {
         };
 
         isTypingRoot.addValueEventListener(postListener);
-
-
-
-
-
-
-
-
 
         return binding.getRoot();
     }
@@ -118,7 +112,7 @@ public class RoomMainFragment extends Fragment {
                     binding.roomActionBar.totalOnlineTv.setText(map.size()+" online");
                 }
                 else{
-                    binding.roomActionBar.totalOnlineTv.setText("Loading");
+                    binding.roomActionBar.totalOnlineTv.setText("Connecting...");
                 }
             }
             @Override

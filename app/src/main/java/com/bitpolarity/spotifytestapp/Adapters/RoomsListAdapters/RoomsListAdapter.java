@@ -22,11 +22,8 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
 
     private final List<RoomsListModel> userModelList;
     private final ULEventListner_Room mULEventlisnter;
-    Animation animation;
     static final float MINIMUM = 20;
     int lastPosition = -1;
-
-
 
     public RoomsListAdapter(List<RoomsListModel> categoryModelList, ULEventListner_Room mULEventListner) {
 
@@ -34,9 +31,7 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
         this.mULEventlisnter =mULEventListner;
     }
 
-
     @Override
-
     public RoomsListAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.public_rooms_item,parent,false);
         return new ViewHolder(view, mULEventlisnter);
@@ -50,9 +45,8 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
         ////////////Setting Values /////////////////////////////////////////////
 
         holder.mRoomName.setText(link.getmRoomName());
-        holder.mHostName.setText(link.getmHostName());
+        holder.mHostName.setText("Hosted by "+link.getmHostName());
         setAnimation(holder.itemView,position);
-
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -64,24 +58,22 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-
-        TextView mRoomName, mHostName ;
+        TextView mRoomName, mHostName , mTime;
         ULEventListner_Room ulEventListner;
 
         public ViewHolder(@NonNull View itemView, ULEventListner_Room ulEventListner) {
             super(itemView);
 
-
             this.ulEventListner = ulEventListner;
             mRoomName = (TextView) itemView.findViewById(R.id.mRoomName);
             mHostName = (TextView) itemView.findViewById(R.id.mHostName);
+
             itemView.setOnClickListener(this);
         }
 
-
         @Override
         public void onClick(View view) {
-            ulEventListner.onClick(getAdapterPosition());
+            ulEventListner.onClick(getAbsoluteAdapterPosition());
         }
     }
 
@@ -118,7 +110,6 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
             }
 
         }
-
 
         public abstract void show();
         public abstract void hide();
