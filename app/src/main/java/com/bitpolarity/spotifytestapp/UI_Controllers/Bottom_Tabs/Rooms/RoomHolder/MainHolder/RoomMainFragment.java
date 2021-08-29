@@ -43,6 +43,58 @@ public class RoomMainFragment extends Fragment {
     final static String TAG = "RoomHolderActivity";
     ConstraintLayout constraintLayout;
 
+
+    protected ValueEventListener allMember_Listner = new ValueEventListener() {
+
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if(snapshot.hasChild("allmembers")) {
+                Map<String, Object> map = (Map<String, Object>) snapshot.child("allmembers").getValue();
+                binding.roomActionBar.totalOnlineTv.setText(map.size()+" online");
+            }
+            else{
+                binding.roomActionBar.totalOnlineTv.setText("Connecting...");
+            }
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Log.d(TAG, "onCancelled: Error");
+        }
+    };
+    protected ValueEventListener postListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            if(dataSnapshot.hasChild("typingNow")){
+                String s = dataSnapshot.child("typingNow").getValue().toString();
+                if(!s.equals("") && !s.equals(DB_Handler.getUsername()) ){
+                    binding.roomActionBar.istypingTV.setVisibility(View.VISIBLE);
+                    // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_up));
+                    binding.roomActionBar.istypingTV.setText(dataSnapshot.child("typingNow").getValue()+ " is typing...");
+                    binding.roomActionBar.totalOnlineTv.setVisibility(View.GONE);
+
+                }else{
+                    // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_down));
+                    binding.roomActionBar.istypingTV.setVisibility(View.GONE);
+                    binding.roomActionBar.totalOnlineTv.setVisibility(View.VISIBLE);
+
+                }}
+            else{
+                binding.roomActionBar.istypingTV.setText( "No messages here,  send one!");
+
+            }
+
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            // Getting Post failed, log a message
+            Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+        }
+    };
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,42 +110,6 @@ public class RoomMainFragment extends Fragment {
 
         //getTypingMembers();
 
-
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.hasChild("typingNow")){
-                    String s = dataSnapshot.child("typingNow").getValue().toString();
-                    if(!s.equals("") && !s.equals(DB_Handler.getUsername()) ){
-                        binding.roomActionBar.istypingTV.setVisibility(View.VISIBLE);
-                        // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_up));
-                        binding.roomActionBar.istypingTV.setText(dataSnapshot.child("typingNow").getValue()+ " is typing...");
-                        binding.roomActionBar.totalOnlineTv.setVisibility(View.GONE);
-
-                    }else{
-                        // binding.roomInput.istypingTV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_down));
-                        binding.roomActionBar.istypingTV.setVisibility(View.GONE);
-                        binding.roomActionBar.totalOnlineTv.setVisibility(View.VISIBLE);
-
-                    }}
-                else{
-                    binding.roomActionBar.istypingTV.setText( "No messages here,  send one!");
-
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-
-        isTypingRoot.addValueEventListener(postListener);
-
         return binding.getRoot();
     }
 
@@ -102,25 +118,8 @@ public class RoomMainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-        memberRoot.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChild("allmembers")) {
-                    Map<String, Object> map = (Map<String, Object>) snapshot.child("allmembers").getValue();
-                    binding.roomActionBar.totalOnlineTv.setText(map.size()+" online");
-                }
-                else{
-                    binding.roomActionBar.totalOnlineTv.setText("Connecting...");
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d(TAG, "onCancelled: Error");
-            }
-        });
-
+        isTypingRoot.addValueEventListener(postListener);
+        memberRoot.addValueEventListener(allMember_Listner);
 
         FragmentManager fragmentManager = getChildFragmentManager();
 

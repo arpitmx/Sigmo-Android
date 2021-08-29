@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
 >
 
     <include
@@ -33,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appCompatButton">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/room_display"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:src="@drawable/ppl"
@@ -52,13 +53,28 @@
             android:gravity="center"
             android:alpha="0.9"
             android:clickable="true"
+            android:visibility="visible"
             android:focusable="true"
             android:foreground="@drawable/ripple_effect"
             android:background="@drawable/ic_baseline_camera_alt_24"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintBottom_toBottomOf="@+id/room_display"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            app:layout_constraintStart_toStartOf="@+id/room_display"
+            app:layout_constraintTop_toTopOf="@+id/room_display" />
+
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/progress"
+            android:indeterminate="false"
+            android:indeterminateDrawable="@drawable/progress_bg"
+            android:progressTint="@color/s_purple_light"
+            app:layout_constraintBottom_toBottomOf="@+id/room_display"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -72,7 +88,6 @@
         android:hint="Room Title"
         app:hintTextColor="@color/s_blue"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
         android:paddingBottom="5dp"
         app:helperTextEnabled="true"
         app:helperTextTextColor="@color/s_blue"
@@ -105,9 +120,12 @@
         android:layout_gravity="center"
        android:background="@drawable/four_side_rounded_blue_more_rounder_blue"
         android:textColor="@color/white"
-        android:layout_margin="20dp"
-        android:textAllCaps="false"
-        android:text="@string/start_the_party" />
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/hmed"
+        android:textSize="15dp"
+        android:text="Start the party!" />
 
     <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:orientation="vertical"-->
