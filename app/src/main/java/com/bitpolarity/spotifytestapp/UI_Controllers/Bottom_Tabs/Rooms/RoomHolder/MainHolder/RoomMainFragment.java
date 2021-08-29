@@ -22,26 +22,27 @@ import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Main.Childs.ChatSection.ChatsFrag;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.Room_Tab_Adapter;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomMainholderBinding;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.Map;
 
 
 public class RoomMainFragment extends Fragment {
 
-    TabLayout tabLayout;
-    ViewPager2 viewPager;
-    Room_Tab_Adapter adapter;
     FragmentRoomMainholderBinding binding;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference memberRoot, isTypingRoot;
     final static String TAG = "RoomHolderActivity";
-    ConstraintLayout constraintLayout;
+
+    DatabaseReference RoomBase_ref = FirebaseDatabase.getInstance().getReference().child("RoomBase");
 
 
     protected ValueEventListener allMember_Listner = new ValueEventListener() {
@@ -117,6 +118,12 @@ public class RoomMainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Glide.with(getContext())
+                .load(getActivity().getIntent().getStringExtra("room_profile_url"))
+                .apply(new RequestOptions().override(80, 80))
+                .placeholder(R.drawable.ic_baseline_group_work_24)
+                .into(binding.roomActionBar.profileImage);
 
         isTypingRoot.addValueEventListener(postListener);
         memberRoot.addValueEventListener(allMember_Listner);

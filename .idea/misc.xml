@@ -72,7 +72,7 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_rooms.xml" value="0.152" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/friend_recommendation_itemview.xml" value="1.2" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/mini_song_player.xml" value="0.4" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/public_rooms_item.xml" value="0.4180327868852459" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/public_rooms_item.xml" value="0.4" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_action_bar.xml" value="0.8366336633663366" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_join_bottom_sheet.xml" value="0.266384778012685" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_message_input_box.xml" value="0.264" />
@@ -97,6 +97,7 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_close_24.xml" value="0.22362869198312235" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_dehaze_24.xml" value="0.2449074074074074" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_emoji_emotions_24.xml" value="0.19814814814814816" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_group_work_24.xml" value="0.22362869198312235" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.16574074074074074" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_send_24.xml" value="0.2310185185185185" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/ic_baseline_subdirectory_arrow_right_24.xml" value="0.23148148148148148" />

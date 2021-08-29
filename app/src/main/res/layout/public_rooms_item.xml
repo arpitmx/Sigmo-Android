@@ -27,14 +27,23 @@
 
 
 
+                <ProgressBar
+                    android:id="@+id/progress_room_item"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center"
+                    android:indeterminateDrawable="@drawable/progress_bg"
+                    />
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/artwork"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:id="@+id/room_display_item"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:padding="3dp"
                         android:scaleX="1"
                         android:scaleY="1"
+                        android:visibility="gone"
                         app:civ_circle_background_color="@color/dark_fg"
                         android:layout_marginStart="10dp"
                         android:layout_gravity="center"

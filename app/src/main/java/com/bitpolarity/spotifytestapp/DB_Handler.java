@@ -14,8 +14,11 @@ import com.bitpolarity.spotifytestapp.DB_Related.fbase_bundle;
 import com.bitpolarity.spotifytestapp.Singletons.TimeSystem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -33,7 +36,7 @@ public class DB_Handler  {
 
     SimpleDateFormat formatter;
     final String LOG = "db_handler";
-
+    String url = "";
     //Firebase
     DatabaseReference Main_ref,RoomBase_ref  ;
     final String usr_ROOT = "Users_DMode";
@@ -167,8 +170,6 @@ public class DB_Handler  {
 
         // RoomDetails
          timeSystem = TimeSystem.getInstance();
-
-
          Main_ref.child(room_ROOT).child(mRoomName).child("roomDetails").child("roomName").setValue(mRoomName);
          RoomBase_ref.child(mRoomName).child("roomDetails").child("roomName").setValue(mRoomName);
 
@@ -179,11 +180,6 @@ public class DB_Handler  {
          RoomBase_ref.child(mRoomName).child("roomDetails").child("startedAt").setValue(timeSystem.get_date_day_time_12h());
 
      }
-
-
-
-     
-
 
     ////////////////////////////////// ROOOOOOOMS
 

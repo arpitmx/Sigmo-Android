@@ -147,84 +147,44 @@ public class mCreateRoomBottomSheet extends BottomSheetDialogFragment {
     }
 
 
-    void uploadRoomData(String url, String roomName) {
+    void uploadRoomData(String url, String roomName, int sizeKB) {
 
 
-        db_handler.CreateRoom(roomName, url);
 
-        Toast.makeText(getContext(), "Room created", Toast.LENGTH_SHORT).show();
-        Log.d("Bottom", "onCreateView: " + "Room created");
-        Intent i = new Intent(getContext(), RoomHolderActivity.class);
-        i.putExtra("room_name", roomName);
+            db_handler.CreateRoom(roomName, url);
 
-        dismiss();
-        startActivity(i);
+            Toast.makeText(getContext(), "Room created", Toast.LENGTH_SHORT).show();
+            Log.d("Bottom", "onCreateView: " + "Room created");
+            Intent i = new Intent(getContext(), RoomHolderActivity.class);
+            i.putExtra("room_name", roomName);
 
+            dismiss();
+            startActivity(i);
 
     }
-
-
-    private void getImageSize(Uri choosen)  {
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), choosen);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] imageInByte = stream.toByteArray();
-        long lengthbmp = imageInByte.length;
-        Toast.makeText(getContext(),Long.toString(lengthbmp/1024)+" kb",Toast.LENGTH_SHORT).show();
-    }
-
-    public float getImageSizee(Uri uri) {
-        File file = new File(uri.getPath());
-        Toast.makeText(getContext(), file.length()+" b",Toast.LENGTH_SHORT).show();
-        return file.length(); // returns size in bytes
-    }
-
-    public int calculateFileSize(Uri filepath) {
-        //String filepathstr=filepath.toString();
-        File file = new File(filepath.getPath());
-        long fileSizeInBytes = file.length();
-        int fileSizeInKB = (int) (fileSizeInBytes / 1024);
-
-        getImageSizee(filepath);
-        Log.d("IMAGE SIZE", "calculateFileSize: "+fileSizeInKB);
-
-        return fileSizeInKB;
-    }
-
-
-//    public long calculateFileSize(Uri filepath) {
-//        File file = new File(filepath.getPath());
-//        long fileSizeInKB = file.length() / 1024;
-//        Log.d("IMAGE SIZE", "calculateFileSize: "+fileSizeInKB);
-//        return fileSizeInKB;
-//    }
 
     void uploadDP(Uri imgURI) {
 
-
         String roomName = mRoomNameEditText.getText().toString();
+        StorageReference fileRef = mstorageRef.child("ROOMS").child(roomName).child("DP").child("roomDP." + getFileExtension(imgURI));
+
+        int sizekb = (int)fileRef.putFile(imgURI).getSnapshot().getTotalByteCount()/1024;
 
         if (roomName.length() > 0 && roomName.length() < 15) {
 
             if (imgURI != null) {
 
-                if ((int)calculateFileSize(imgURI) <= 500) {
-
-                    StorageReference fileRef = mstorageRef.child("ROOMS").child(roomName).child("DP").child("roomDP." + getFileExtension(imgURI));
+                if (sizekb <= 1024) {
 
                     fileRef.putFile(imgURI).addOnSuccessListener((UploadTask.TaskSnapshot taskSnapshot) -> {
-
                         fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+
                             String URL = uri.toString();
                             Toast.makeText(getContext(), "Url " + URL, Toast.LENGTH_SHORT).show();
-                            uploadRoomData(URL, roomName);
+                            uploadRoomData(URL, roomName, sizekb);
+
                             binding.progress.setVisibility(View.GONE);
+
                         }).addOnFailureListener(e -> {
                             binding.progress.setVisibility(View.GONE);
                             Toast.makeText(getContext(), "Url Fetching failed!", Toast.LENGTH_SHORT).show();
@@ -245,7 +205,8 @@ public class mCreateRoomBottomSheet extends BottomSheetDialogFragment {
 
                 }
                 else{
-                    Toast.makeText(getContext(), "Select photos lesser than 500kb in size!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Select photos lesser than 1 mb", Toast.LENGTH_SHORT).show();
+                    binding.selectPhoto.setVisibility(View.VISIBLE);
                 }
             }
             else {

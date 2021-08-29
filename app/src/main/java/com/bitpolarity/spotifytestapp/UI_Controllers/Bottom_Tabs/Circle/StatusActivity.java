@@ -268,7 +268,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
    void getMyData(DataSnapshot snapshot){
 
-        userListAdapter = new UserListAdapter(getDataFaster(snapshot), StatusActivity.this);
+        userListAdapter = new UserListAdapter(getDataFaster(snapshot), StatusActivity.this, getContext());
         //userRecyclerView.setAdapter(userListAdapter);
         someMethod(userRecyclerView, userListAdapter);
         userListAdapter.notifyDataSetChanged();
@@ -357,7 +357,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
         dataHolder.setTrackID(trackID);
 
         for (int i = 0; i < size; i++) {
-            modelList.add(new UserListModel(getContext(), dateTime[i], isPlaying[i], users[i], posterURL[i], status[i], songDetail[i],artistName[i]));
+            modelList.add(new UserListModel(dateTime[i], isPlaying[i], users[i], posterURL[i], status[i], songDetail[i],artistName[i]));
         }
 
         return modelList;

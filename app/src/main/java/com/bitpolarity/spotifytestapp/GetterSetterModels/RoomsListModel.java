@@ -4,11 +4,13 @@ public class RoomsListModel {
     String mRoomName;
     String mHostName;
     String mTime;
+    String mUrl;
 
-    public RoomsListModel(String mRoomName, String mHostName,String mTime) {
+    public RoomsListModel(String mRoomName, String mHostName,String mTime, String mUrl) {
         this.mRoomName = mRoomName;
         this.mHostName = mHostName;
         this.mTime = mTime;
+        this.mUrl =  mUrl;
     }
 
     public String getmRoomName() {
@@ -21,4 +23,7 @@ public class RoomsListModel {
         return mTime;
     }
 
+    public String getmUrl() {
+        return mUrl;
+    }
 }
