@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center_horizontal"
     android:elevation="10dp"
-    android:orientation="vertical"
-    >
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"
+
+        >
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/room_dp"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:fontFamily="@font/hb"
-        android:text="Song Detail"
-        android:gravity="center"
-        android:elevation="5dp"
         android:layout_margin="15dp"
+        android:elevation="5dp"
+        android:fontFamily="@font/hb"
         android:src="@drawable/personpic"
+        android:text="Song Detail"
         android:textColor="@color/s_blue"
-        app:civ_border_width="4dp"
+        android:textSize="22sp"
         app:civ_border_color="@color/sigmo_dark_blue"
 
-        android:textSize="22sp" />
+        app:civ_border_width="4dp" />
 
     <TextView
         android:id="@+id/roomName_bs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/hxtrabold"
-        android:text="Room Name"
-        android:gravity="center"
         android:elevation="5dp"
+        android:fontFamily="@font/hxtrabold"
+        android:gravity="center"
+        android:text="Room Name"
         android:textColor="@color/sigmo_blue_250"
         android:textSize="22sp" />
 
@@ -39,10 +45,10 @@
         android:id="@+id/hostName_bs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/hb"
-        android:text="Room hosted by Arpit!"
-        android:gravity="center"
         android:elevation="5dp"
+        android:fontFamily="@font/hb"
+        android:gravity="center"
+        android:text="Room hosted by Arpit!"
         android:textColor="#C1536DFE"
         android:textSize="12sp" />
 
@@ -50,11 +56,11 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/hmed"
         android:layout_marginTop="10dp"
-        android:text="Started on 26 August at 12:56 PM, Thurday ⌚"
-        android:gravity="center"
         android:elevation="5dp"
+        android:fontFamily="@font/hmed"
+        android:gravity="center"
+        android:text="Started on 26 August at 12:56 PM, Thurday ⌚"
         android:textColor="#C95E5E5E"
         android:textSize="13sp" />
 
@@ -62,29 +68,30 @@
         android:id="@+id/totalMembers_bs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/hb"
         android:layout_marginTop="10dp"
-        android:text="32 / 50 members 🧑‍🤝‍🧑"
-        android:gravity="center"
         android:elevation="5dp"
+        android:fontFamily="@font/hb"
+        android:gravity="center"
+        android:text="32 / 50 members 🧑‍🤝‍🧑"
         android:textColor="#DD5E5E5E"
         android:textSize="12sp" />
+    </LinearLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-         android:layout_height="2dp"
-        android:background="?android:attr/horizontalDivider"
-        android:layout_marginTop="5dp"
-        />
+<View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:background="@drawable/four_side_round_grey"
+    />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="end"
-        android:layout_margin="5dp"
-
+        android:layout_margin="1dp"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
         >
 
 
@@ -92,43 +99,38 @@
             android:id="@+id/cancel_button"
             android:layout_width="80dp"
             android:layout_height="45dp"
-            android:fontFamily="@font/hmed"
-            android:textSize="16sp"
             android:layout_marginEnd="10dp"
-            android:padding="10dp"
-
-            android:textAllCaps="false"
+            android:background="#00FFFFFF"
             android:clickable="true"
             android:focusable="true"
-            android:background="#00FFFFFF"
-            android:textColor="#9EFF0E0E"
+            android:fontFamily="@font/hmed"
             android:gravity="center"
+            android:padding="10dp"
             android:text="Cancel"
-            />
+            android:textAllCaps="false"
+            android:textColor="#AEF00000"
+            android:textSize="16sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/linkTospotifyBTN"
-        android:layout_width="90dp"
-        android:layout_height="45dp"
-        android:fontFamily="@font/hmed"
-        android:textSize="15sp"
-        android:textAllCaps="false"
-        android:clickable="true"
-        android:padding="10dp"
-        android:focusable="true"
-        android:foreground="@drawable/ripple_effect"
-        android:textColor="#EEFFFFFF"
-        android:gravity="center"
-        android:background="@drawable/four_side_rounded_blue_more_rounder"
-        android:text="Join 🥂"
+            android:id="@+id/enterRoomBTN"
+            android:layout_width="90dp"
+            android:layout_height="45dp"
+            android:background="@drawable/four_side_rounded_blue_more_rounder"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/hmed"
+            android:foreground="@drawable/ripple_effect"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Join 🥂"
+            android:textAllCaps="false"
+            android:textColor="#EEFFFFFF"
+            android:textSize="15sp"
 
-        />
-
+            />
 
 
     </LinearLayout>
-
-
 
 
 </LinearLayout>

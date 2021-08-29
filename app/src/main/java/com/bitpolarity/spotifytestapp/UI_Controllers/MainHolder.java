@@ -269,7 +269,6 @@ public class MainHolder extends AppCompatActivity {
 
                     return true;
 
-
                 case R.id.nav_profile:
                     fm.beginTransaction().replace(R.id.fragmentContainerView, fragment3).commit();
                     active = fragment3;

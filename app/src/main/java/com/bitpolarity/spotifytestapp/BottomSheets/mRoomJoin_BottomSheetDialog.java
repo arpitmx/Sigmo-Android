@@ -1,5 +1,6 @@
 package com.bitpolarity.spotifytestapp.BottomSheets;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +18,9 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter.UserListAdapter;
 import com.bitpolarity.spotifytestapp.R;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.MainHolder.RoomHolderActivity;
 import com.bitpolarity.spotifytestapp.databinding.RoomJoinBottomSheetBinding;
 import com.bitpolarity.spotifytestapp.databinding.SongDetailBottomSheetBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -36,10 +39,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
-            ViewGroup container, @Nullable Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        binding = RoomJoinBottomSheetBinding.inflate(inflater,container,false);
+        binding = RoomJoinBottomSheetBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -51,6 +53,21 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
         binding.hostNameBs.setText("Hosted by "+HOSTNAME);
         binding.time.setText(TIME+" ⌚");
         binding.totalMembersBs.setText("23/50 members " +" \uD83D\uDC4B");
+
+
+        binding.enterRoomBTN.setOnClickListener(view12 -> {
+            Intent i = new Intent(getContext(), RoomHolderActivity.class);
+            i.putExtra("room_name",roomNAME);
+            startActivity(i);
+            dismiss();
+        });
+
+        binding.cancelButton.setOnClickListener(view1 -> {
+
+            dismiss();
+        });
+
+
 
     }
 

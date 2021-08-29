@@ -41,6 +41,7 @@ public class mCreateRoomBottomSheet extends BottomSheetDialogFragment {
     mRoomNameEditText = binding.editTextROOM;
     return binding.getRoot();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -55,17 +56,21 @@ public class mCreateRoomBottomSheet extends BottomSheetDialogFragment {
                     Log.d("Bottom", "onCreateView: " + "Room created");
                     Intent i = new Intent(getContext(), RoomHolderActivity.class);
                     i.putExtra("room_name", roomName);
+                    dismiss();
                     startActivity(i);
 
                 }else{
-                    mRoomNameEditText.setError("Halt right there speedy , make it concise!");
+                    mRoomNameEditText.setError("Halt right there speedy , make it shorter!");
                 }
             }else{
                 mRoomNameEditText.setError("Com'mon! give it a dope name!");
             }
         });
-    }
 
+        binding.include.cancelRoomCreation.setOnClickListener(view12 -> {
+           dismiss();
+        });
+    }
 
     @Override
     public void onResume() {

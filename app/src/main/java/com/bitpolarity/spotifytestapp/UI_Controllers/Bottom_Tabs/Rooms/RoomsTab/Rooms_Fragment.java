@@ -152,7 +152,6 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
                         Log.d(TAG, "onDataChange key : " + key);
                         Log.d(TAG, "onDataChange Value : " + map1.get(key));
                     }
-
                     Log.d(TAG, "onDataChange ModelList: " + modelList);
 
                     listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this);
@@ -189,6 +188,7 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
         String time = modelList.get(position).getmTime();
         mbottomsheet = new mRoomJoin_BottomSheetDialog(roomName,hostName,"0",time);
         mbottomsheet.show(getChildFragmentManager(),"Shown bottomsheet");
+
 
     }
 

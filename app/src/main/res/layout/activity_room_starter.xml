@@ -7,7 +7,6 @@
     android:orientation="vertical"
 >
 
-
     <include
         android:id="@+id/include"
         layout="@layout/custom_secondary_action_bar"
@@ -23,16 +22,44 @@
 <!--      >-->
 <!--    </androidx.recyclerview.widget.RecyclerView>-->
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageView2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:civ_border_width="3dp"
-        app:civ_border_color="@color/s_blue"
-        android:src="@drawable/poster"
-        />
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/appCompatButton"
+        app:layout_constraintEnd_toEndOf="@+id/appCompatButton"
+        app:layout_constraintStart_toEndOf="@+id/appCompatButton"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatButton">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView2"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/ppl"
+            app:civ_border_color="@color/s_blue"
+            app:civ_border_width="3dp"
+            app:civ_circle_background_color="#131313"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/select_photo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:alpha="0.9"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_effect"
+            android:background="@drawable/ic_baseline_camera_alt_24"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textField"
@@ -43,7 +70,7 @@
         app:endIconMode="clear_text"
         android:layout_gravity="center"
         android:hint="Room Title"
-
+        app:hintTextColor="@color/s_blue"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:paddingBottom="5dp"
@@ -64,7 +91,7 @@
             android:fontFamily="@font/hb"
             android:background="#EBF9FF"
             android:focusedByDefault="true"
-            android:textColor="@color/black"
+            android:textColor="#E6121212"
             android:maxLines="1"
             android:saveEnabled="true"
             />
@@ -76,9 +103,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-       android:background="@drawable/four_side_rounded_blue_more_rounder"
+       android:background="@drawable/four_side_rounded_blue_more_rounder_blue"
         android:textColor="@color/white"
         android:layout_margin="20dp"
+        android:textAllCaps="false"
         android:text="@string/start_the_party" />
 
     <!--    <androidx.recyclerview.widget.RecyclerView-->

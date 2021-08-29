@@ -5,22 +5,19 @@
     android:id="@+id/custom_action_bar_consLay"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="@color/white200"
-
+    android:background="#303030"
    >
-
 
         <LinearLayout
             android:id="@+id/linearLayout4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-
+            android:background="@color/s_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
 
                 <TextView
                     android:id="@+id/participantCountTXTV"
@@ -30,8 +27,8 @@
                     android:fontFamily="@font/hxtrabold"
                     android:gravity="start"
                     android:paddingTop="6dp"
-                    android:text="New Room"
-                    android:textColor="@color/black"
+                    android:text="+ Create a Room"
+                    android:textColor="@color/white200"
                     android:textSize="22sp"
                     android:visibility="visible" />
 
@@ -39,17 +36,25 @@
                     android:id="@+id/txtView"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/hmed"
-                    android:gravity="start"
                     android:paddingTop="4dp"
                     android:text="Add details and start!"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white200"
                     android:textSize="13sp"
-
                     android:visibility="visible" />
 
         </LinearLayout>
 
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="25dp"
+            android:id="@+id/cancel_room_creation"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_baseline_cancel_24"
+            android:layout_margin="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
