@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:state_pressed="false" android:drawable="@drawable/dark_four_side_borders_post" />
+    <item android:state_focused="true" android:state_pressed="true" android:drawable="@drawable/dark_four_side_borders_post" />
+    <item android:state_focused="false" android:state_pressed="true" android:drawable="@drawable/dark_four_side_borders_post_dimmer" />
+    <item android:drawable="@drawable/dark_four_side_borders_post" />
+</selector>

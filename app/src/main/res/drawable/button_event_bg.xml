@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:state_pressed="false" android:drawable="@drawable/four_side_rounded_blue_more_rounder_blue" />
+    <item android:state_focused="true" android:state_pressed="true" android:drawable="@drawable/four_side_rounded_blue_more_rounder" />
+    <item android:state_focused="false" android:state_pressed="true" android:drawable="@drawable/four_side_rounded_blue_more_rounder_blue_dimmer" />
+    <item android:drawable="@drawable/four_side_rounded_blue_more_rounder_blue" />
+</selector>

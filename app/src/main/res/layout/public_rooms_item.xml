@@ -19,7 +19,7 @@
                 android:layout_height="120dp"
                 android:orientation="horizontal"
                 android:weightSum="10"
-                android:background="@drawable/dark_four_side_borders_post"
+                android:background="@drawable/dark_item_event_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

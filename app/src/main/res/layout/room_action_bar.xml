@@ -34,10 +34,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/room_dp_IMGV"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-
-            app:cardCornerRadius="10dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            app:cardCornerRadius="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/room_back_BTN"
             app:layout_constraintTop_toTopOf="parent">

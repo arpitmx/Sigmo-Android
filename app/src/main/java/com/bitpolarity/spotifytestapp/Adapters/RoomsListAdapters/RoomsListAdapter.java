@@ -77,6 +77,7 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                        holder.progressBar.setVisibility(View.GONE);
+                        holder.room_display_item.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_in));
                         holder.room_display_item.setVisibility(View.VISIBLE);
                         return false;
                     }
@@ -99,7 +100,6 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
     public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
 
-        holder.room_display_item.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_in));
 
     }
 

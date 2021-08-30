@@ -86,9 +86,6 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
     ////// Firebase specific
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){

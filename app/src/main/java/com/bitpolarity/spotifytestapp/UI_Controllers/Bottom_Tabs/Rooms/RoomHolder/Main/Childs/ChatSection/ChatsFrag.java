@@ -3,6 +3,7 @@ package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHold
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -40,6 +41,11 @@ import com.bitpolarity.spotifytestapp.RecyclerScrollManager;
 import com.bitpolarity.spotifytestapp.Singletons.TimeSystem;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,7 +57,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickListner {
+public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickListner {
 
     FragmentRoomChatBinding binding;
     FirebaseDatabase firebaseDatabase;
@@ -106,6 +112,7 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
         binding = FragmentRoomChatBinding.inflate(inflater, container , false);
         firebaseDatabase = FirebaseDatabase.getInstance();
         timeSystem = TimeSystem.getInstance();
@@ -142,7 +149,48 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ///////////////////////////////////////////////////////Emoji
+        initEmojiBoard();
+        //////////////////////////////////////////////////////Emoji
 
+        handleReferenceEditBox();
+
+        binding.jumpToEndFAB.setOnClickListener(view1 -> {
+            onClickFab();
+        });
+
+        chatRV.addOnScrollListener(new RecyclerScrollManager.FabScroll() {
+
+            @Override
+            public void show() {
+                binding.jumpToEndFAB.setVisibility(View.VISIBLE);
+                binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_in));
+                binding.jumpToEndFAB.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+            }
+
+            @Override
+            public void hide() {
+                //binding.jumpToEndFAB.setVisibility(View.VISIBLE);
+                // binding.jumpToEndFAB.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+                binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
+            }
+        });
+
+
+
+        bgRoot.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String url = snapshot.child("url").getValue().toString();
+                setChatWall(url);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 //        layoutManager.setOrientation(RecyclerView.VERTICAL);
 //        layoutManager.setStackFromEnd(true);
@@ -171,6 +219,7 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
         binding.roomInput.sendBtn.setOnClickListener(v -> {
             sendMessage();
         });
+
 
 
 
@@ -213,60 +262,11 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
     @Override
     public void onPause() {
         super.onPause();
-
-
-
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        ///////////////////////////////////////////////////////Emoji
-
-        initEmojiBoard();
-        //////////////////////////////////////////////////////Emoji
-
-        handleReferenceEditBox();
-
-        binding.jumpToEndFAB.setOnClickListener(view -> {
-            onClickFab();
-        });
-
-        chatRV.addOnScrollListener(new RecyclerScrollManager.FabScroll() {
-
-            @Override
-            public void show() {
-                binding.jumpToEndFAB.setVisibility(View.VISIBLE);
-                binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_in));
-                binding.jumpToEndFAB.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-            }
-
-            @Override
-            public void hide() {
-                //binding.jumpToEndFAB.setVisibility(View.VISIBLE);
-               // binding.jumpToEndFAB.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-                binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
-            }
-        });
-
-
-
-            bgRoot.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    String url = snapshot.child("url").getValue().toString();
-                    setChatWall(url);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
     }
 
     private void initEmojiBoard() {
@@ -400,9 +400,25 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
 
     void setChatWall(String url){
 
-        Glide.with(context)
+
+        binding.roomBackgroundWallpaper.setVisibility(View.VISIBLE);
+        Glide.with(context.getApplicationContext())
                 .load(url)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+
+                        binding.roomBackgroundWallpaper.setAnimation(AnimationUtils.loadAnimation(context,R.anim.pop_in_slower));
+                        return false;
+                    }
+                })
                 .into(binding.roomBackgroundWallpaper);
+
     }
 
 
@@ -425,6 +441,8 @@ public class ChatsFrag extends Fragment implements MultiViewChatAdapter.ClickLis
                             binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out));
                            binding.jumpToEndFAB.setVisibility(View.GONE);
                        }
+
+
 
                    });
 

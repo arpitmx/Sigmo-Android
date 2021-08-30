@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="10"
+    android:background="@color/black"
     android:orientation="vertical">
 
 
@@ -12,9 +13,8 @@
         android:id="@+id/room_background_wallpaper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-
-        />
+        android:background="@color/black"
+        android:scaleType="centerCrop" />
 
 
 
