@@ -24,11 +24,18 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/dark_four_side_borders_post_active.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/dark_four_side_borders_post_dimmer.xml" value="0.22362869198312235" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/dark_four_side_borders_post_grey.xml" value="0.22362869198312235" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/dark_four_side_borders_post_grey_reg.xml" value="0.13760683760683762" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/dark_four_side_borders_post_inactive.xml" value="0.15833333333333333" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/dark_item_event_bg.xml" value="0.22362869198312235" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/four_side_round_grey.xml" value="0.2109704641350211" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/gradient_four.xml" value="0.19615384615384615" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/gradient_one.xml" value="0.2264957264957265" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/gradient_overlay.xml" value="0.2439814814814815" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/gradient_overlay_minip.xml" value="0.2449074074074074" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/gradient_progress.xml" value="0.2264957264957265" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/gradient_three.xml" value="0.2264957264957265" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/gradient_two.xml" value="0.2264957264957265" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/miniplayer_gradient.xml" value="0.2264957264957265" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/offline.xml" value="0.15601851851851853" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/online.xml" value="0.15601851851851853" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/online2.xml" value="0.15601851851851853" />
@@ -56,10 +63,11 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item.xml" value="0.2" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_incoming.xml" value="0.523517382413088" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_incoming_same_usr.xml" value="0.39445300462249616" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_outgoing.xml" value="0.72" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_outgoing.xml" value="0.536" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_recieve.xml" value="0.8" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_send.xml" value="0.4" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_item_user_joined.xml" value="0.536" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_outgoing_reference_item.xml" value="1.0" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/circle_friend_activity_list_item.xml" value="0.264" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/custom_action_bar.xml" value="0.15601851851851853" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/custom_secondary_action_bar.xml" value="0.264" />
@@ -69,24 +77,25 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_home.xml" value="0.23055555555555557" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_room_chat.xml" value="0.2" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_room_mainholder.xml" value="0.12" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_room_mainholder.xml" value="0.17109826589595376" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_room_members.xml" value="0.2136986301369863" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_room_squeue.xml" value="0.23055555555555557" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_rooms.xml" value="0.152" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/friend_recommendation_itemview.xml" value="1.2" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/mini_song_player.xml" value="0.4" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/process_gradient.xml" value="0.21324786324786324" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/public_rooms_item.xml" value="0.2" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_action_bar.xml" value="0.8366336633663366" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_join_bottom_sheet.xml" value="0.266384778012685" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_join_bottom_sheet.xml" value="0.4" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_message_input_box.xml" value="0.264" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_message_input_box_reference.xml" value="0.3896499238964992" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_message_input_box_reference.xml" value="0.264" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_message_input_box_reference_up.xml" value="0.21324786324786324" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/room_mini_song_player.xml" value="0.264" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/shimmer_placeholder_layout.xml" value="0.264" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/shimmer_placeholder_layout_bottom_sheet.xml" value="0.21574074074074073" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/shimmer_placeholder_layout_chats_frag.xml" value="0.264" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/song_detail_bottom_sheet.xml" value="0.176" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/testing.xml" value="0.37517433751743373" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/testing.xml" value="0.5112262521588946" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/chatbg.xml" value="0.2310185185185185" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/chatitembg.xml" value="0.2415525114155251" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layouts/fragments/layout/drawable/chatitembg_incoming.xml" value="0.136" />

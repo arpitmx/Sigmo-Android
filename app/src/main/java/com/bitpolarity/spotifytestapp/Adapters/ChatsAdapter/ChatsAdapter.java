@@ -53,7 +53,6 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatsViewHol
             holder.binding.usernameChatroom.setText(chatList.get(position).getSenderName());
             holder.binding.textMessage.setText(chatList.get(position).getMessage());
 
-
     }
 
     @Override

@@ -157,6 +157,7 @@ public class mCreateRoomBottomSheet extends BottomSheetDialogFragment {
             Log.d("Bottom", "onCreateView: " + "Room created");
             Intent i = new Intent(getContext(), RoomHolderActivity.class);
             i.putExtra("room_name", roomName);
+        i.putExtra("room_profile_url",url);
 
             dismiss();
             startActivity(i);

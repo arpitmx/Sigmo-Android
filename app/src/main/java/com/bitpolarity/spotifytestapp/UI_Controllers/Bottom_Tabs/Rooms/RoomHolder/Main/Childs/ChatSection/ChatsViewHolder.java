@@ -10,8 +10,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.bitpolarity.spotifytestapp.DB_Handler;
-import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModel;
-import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModelTest;
+import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModelHolder;
+import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModelMain;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +21,6 @@ import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +31,14 @@ public class ChatsViewHolder  extends ViewModel {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference msgRoot;
     String roomName, userName;
+
     private  final String TYPE_MSG = "1";
     private  final String TYPE_JOIN = "2";
-    ArrayList temp = new ArrayList();
-    ArrayList<MessageModel> chatList;
-    private MutableLiveData<ArrayList<MessageModel>> chatListLD;
+    private  final String TYPE_REFERENCE = "3";
+
+    ArrayList<String> temp = new ArrayList<>();
+    ArrayList<MessageModelHolder> chatList;
+    private MutableLiveData<ArrayList<MessageModelHolder>> chatListLD;
 
     // Responses
     private  final int success_sent = 1;
@@ -45,7 +47,7 @@ public class ChatsViewHolder  extends ViewModel {
     int listSize;
 
     // Pagination
-    static final int TOTAL_ELEMENT_TO_LOAD = 20;
+    static final int TOTAL_ELEMENT_TO_LOAD = 400;
     private int mCurrentPage = 1;
 
     ChatsViewHolder(String roomName){
@@ -60,7 +62,7 @@ public class ChatsViewHolder  extends ViewModel {
 
     }
 
-    public int sendMessage(String msg, String username , String time ) {
+    public int sendMessage(String msg, String username , String time, String Refpos) {
 
         Map<String, Object> map = new HashMap<>();
         String temp_key = msgRoot.push().getKey();
@@ -71,15 +73,21 @@ public class ChatsViewHolder  extends ViewModel {
 
         if (filterText(msg)) {
 
-            map2.put("msg", msg);
-            map2.put("TYPE", TYPE_MSG);
-
             if (username != null) {
 
+                map2.put("msg", msg);
                 map2.put("sender", username);
                 map2.put("TIME", time);
-                in_msg.updateChildren(map2);
 
+                if(Integer.parseInt(Refpos)==-1) {
+                    map2.put("TYPE", TYPE_MSG);
+                    in_msg.updateChildren(map2);
+                }else{
+                    map2.put("TYPE", TYPE_REFERENCE);
+                    map2.put("REFPOS", Refpos);
+                    in_msg.updateChildren(map2);
+
+                }
                 return success_sent;
 
             } else {
@@ -111,59 +119,98 @@ public class ChatsViewHolder  extends ViewModel {
             return sendable;
         }
 
-    ArrayList<MessageModel> getModelList(DataSnapshot dataSnapshot){
+    ArrayList<MessageModelHolder> getModelList(DataSnapshot dataSnapshot){
 
-        Iterator i = dataSnapshot.getChildren().iterator();
          String userName , msg;
-         String TYPE, TIME;
+         String TYPE, TIME, REFPOS;
 
-        while (i.hasNext()){
 
-            TIME = String.valueOf(((DataSnapshot) i.next()).getValue());
-            Log.d(TAG, " TIME "+TIME);
+//       for (DataSnapshot snapshot : dataSnapshot.getChildren()){
 
-            TYPE = String.valueOf(((DataSnapshot) i.next()).getValue());
+//            TIME = String.valueOf(((DataSnapshot) i.next()).getValue());
+//            Log.d(TAG, " TIME "+TIME);
+//
+//            TYPE = String.valueOf(((DataSnapshot) i.next()).getValue());
+//            Log.d(TAG, " TYPE - MSG "+TYPE);
+//
+//            msg = String.valueOf(((DataSnapshot)i.next()).getValue());
+//            Log.d(TAG, " MSG-rec "+msg);
+//
+//            userName = String.valueOf(((DataSnapshot)i.next()).getValue());
+//            Log.d(TAG, " USRNAME "+userName);
+
+
+            MessageModelMain messageModel = dataSnapshot.getValue(MessageModelMain.class);
+
+            TIME = messageModel.getTIME();
+            TYPE = messageModel.getTYPE();
+            msg  = messageModel.getMsg();
+            userName = messageModel.getSender();
+
+
+        Log.d(TAG, " TIME "+TIME);
             Log.d(TAG, " TYPE - MSG "+TYPE);
-
-            msg = String.valueOf(((DataSnapshot)i.next()).getValue());
             Log.d(TAG, " MSG-rec "+msg);
-
-            userName = String.valueOf(((DataSnapshot)i.next()).getValue());
             Log.d(TAG, " USRNAME "+userName);
 
-            if(!TYPE.equals(TYPE_JOIN)) {
+
+        if(!TYPE.equals(TYPE_JOIN)) {
                 temp.add(userName);
             }
 
-            if (TYPE.equals(TYPE_MSG)) {
-                if (userName.equals(DB_Handler.getUsername())) {
-                    chatList.add(new MessageModel(userName, msg, 2,TIME));
-                    Log.d(TAG, "OUTGOING: TYPE 2" + msg);
 
-                } else {
+            /* Message TYPES >
 
-                    if (temp.size() > 1) {
+            Type 1 : Incoming messages from the sender
+            Type 2 : Outgoing messages to the recievers
+            Type 3 : Incoming from the same sender
+            Type 4 : Joining/Leaving messages from members
+            Type 5 : Referred message outgoing
 
-                        if (temp.get(temp.size() - 2).equals(userName)) {
+            */
 
-                            chatList.add(new MessageModel(userName, msg, 3,TIME));
-                            Log.d(TAG, "INCOMING_SAME_USER: TYPE 3" + msg);
 
-                        } else {
-                            chatList.add(new MessageModel(userName, msg, 1, TIME));
-                            Log.d(TAG, "INCOMING: TYPE 1" + msg);
-                        }
+            switch (TYPE){
+
+
+                case TYPE_MSG:
+
+                    if (userName.equals(DB_Handler.getUsername())) {
+                        chatList.add(new MessageModelHolder(userName, msg, 2, TIME));
+                        //Log.d(TAG, "OUTGOING: TYPE 2" + msg);
 
                     } else {
-                        chatList.add(new MessageModel(userName, msg, 1, TIME));
-                        Log.d(TAG, "INCOMING: TYPE 1" + msg);
-                    }
-                }
 
-            } else  {
-                chatList.add(new MessageModel(userName, msg, 4, TIME));
-                Log.d(TAG, "JOINING/LEAVING : TYPE 4" + msg);
-            }
+                        if (temp.size() > 1) {
+
+                            if (temp.get(temp.size() - 2).equals(userName)) {
+
+                                chatList.add(new MessageModelHolder(userName, msg, 3,TIME));
+                                //Log.d(TAG, "INCOMING_SAME_USER: TYPE 3" + msg);
+
+                            } else {
+                                chatList.add(new MessageModelHolder(userName, msg, 1, TIME));
+                                //Log.d(TAG, "INCOMING: TYPE 1" + msg);
+                            }
+
+                        } else {
+                            chatList.add(new MessageModelHolder(userName, msg, 1, TIME));
+                           // Log.d(TAG, "INCOMING: TYPE 1" + msg);
+                        }
+                    }
+                    break;
+
+                case TYPE_JOIN:
+                    chatList.add(new MessageModelHolder(userName, msg, 4, TIME));
+                    //Log.d(TAG, "JOINING/LEAVING : TYPE 4" + msg);
+                    break;
+
+                case TYPE_REFERENCE:
+                    REFPOS = messageModel.getRefpos();
+                    Log.d(TAG, " REFPOS "+ REFPOS);
+                    chatList.add(new MessageModelHolder(userName, msg, 5, TIME,REFPOS));
+                  //  Log.d(TAG, "REFERED MESSAGE OUTGOING : TYPE 5  pos : " + REFPOS);
+                    break;
 
         }
 
@@ -181,11 +228,11 @@ public class ChatsViewHolder  extends ViewModel {
 
 
     // This gets into adapter
-    private void setChatListLD(ArrayList<MessageModel> chatArrayList){
+    private void setChatListLD(ArrayList<MessageModelHolder> chatArrayList){
         chatListLD.postValue(chatArrayList);
     }
 
-    public LiveData<ArrayList<MessageModel>> getChatListLD(){
+    public LiveData<ArrayList<MessageModelHolder>> getChatListLD(){
         if (chatListLD==null) chatListLD = new MutableLiveData<>();
         return chatListLD;
     }
@@ -200,10 +247,6 @@ public class ChatsViewHolder  extends ViewModel {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 setChatListLD(getModelList(snapshot));
-                MessageModelTest messageModel = snapshot.getValue(MessageModelTest.class);
-                Log.d(TAG, "MessageModel "+messageModel.getMsg());
-
-
 
             }
 
@@ -311,7 +354,7 @@ public class ChatsViewHolder  extends ViewModel {
         return count % 2 == 0;
     }
 
-    public ArrayList<MessageModel> getChatList(){
+    public ArrayList<MessageModelHolder> getChatList(){
 
         if(chatList!=null){
 

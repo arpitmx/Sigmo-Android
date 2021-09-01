@@ -15,6 +15,7 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:focusable="true"
+
             android:foreground="@drawable/ripple_effect"
             android:background="#00FFFFFF"
             android:paddingTop="3dp"
@@ -37,6 +38,7 @@
             android:layout_width="38dp"
             android:layout_height="38dp"
             app:cardCornerRadius="12dp"
+            app:cardElevation="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/room_back_BTN"
             app:layout_constraintTop_toTopOf="parent">
