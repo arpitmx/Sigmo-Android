@@ -3,6 +3,7 @@ package com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter;
 import static com.bitpolarity.spotifytestapp.R.drawable.dark_four_side_borders_post_active;
 import static com.bitpolarity.spotifytestapp.R.drawable.dark_four_side_borders_post_inactive;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -46,10 +47,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
     public Boolean playing = false;
     private int lastPosition = -1;
     static final float MINIMUM = 25;
+    Context context;
 
-    public UserListAdapter(List<UserListModel> categoryModelList, ULEventListner mULEventListner) {
+    public UserListAdapter(List<UserListModel> categoryModelList, ULEventListner mULEventListner, Context context) {
         this.userModelList = categoryModelList;
         this.mULEventlisnter = mULEventListner;
+        this.context = context;
 
     }
 
@@ -106,14 +109,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
 
         // Poster /////////////////////////////////////////////////////////////////
 
-        Glide.with(userModelList.get(position).getContext())
+        Glide.with(context)
                 .load(link.getPoster())
                 .apply(new RequestOptions().override(80, 80))
                 .into(holder.binding.artwork);
 
        // setAnimation(holder.binding.artwork, position);
 
-        Glide.with(userModelList.get(position).getContext())
+        Glide.with(context)
                 .load("https://picsum.photos/100/100")
                 .apply(new RequestOptions().override(50, 50))
                 .into(holder.binding.profileImage);
@@ -161,7 +164,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.myView
 
 
     void startAnim(CircleImageView poster){
-        poster.startAnimation(AnimationUtils.loadAnimation(link.getContext(), R.anim.song_rotate));
+        poster.startAnimation(AnimationUtils.loadAnimation(context, R.anim.song_rotate));
     }
 
 //    private void setAnimation(View viewToAnimate, int position)

@@ -1,14 +1,17 @@
 package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.MainHolder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.core.Tag;
+import com.squareup.picasso.Picasso;
 
 public class RoomHolderActivity extends AppCompatActivity {
 
@@ -35,6 +39,7 @@ public class RoomHolderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         super.onCreate(savedInstanceState);
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -52,10 +57,14 @@ public class RoomHolderActivity extends AppCompatActivity {
                 .replace(R.id.room_parent_container,new RoomMainFragment()).addToBackStack(null)
                 .commit();
 
-
         supporterClass.sendJoiningNotif();
 
+
+
+
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -63,7 +72,6 @@ public class RoomHolderActivity extends AppCompatActivity {
         supporterClass.decreaseCount();
         supporterClass.sendLeavingNotif();
         finish();
-
     }
 
     @Override
@@ -79,4 +87,8 @@ public class RoomHolderActivity extends AppCompatActivity {
         supporterClass.checkIfUserDisconnected();
 
     }
+
+
+
+
 }

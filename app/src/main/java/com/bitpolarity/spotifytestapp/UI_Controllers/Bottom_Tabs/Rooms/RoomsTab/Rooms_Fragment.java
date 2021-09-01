@@ -122,6 +122,8 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
     }
 
     void loadRooms(){
+
+
         mref.get().addOnCompleteListener(task -> {
 
             if(task.isSuccessful()){
@@ -146,16 +148,19 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
 
                     for (String key : keys) {
 
-                        String hostname = snapshot.child(key).child(getString(R.string.ROOM_DETAILS)).child(getString(R.string.HOST_DETAILS)).child(getString(R.string.RoomBase_USERNAME)).getValue().toString();
-                        String time =  snapshot.child(key).child(getString(R.string.ROOM_DETAILS)).child(getString(R.string.RoomBase_STARTED_AT)).getValue().toString();
-                        modelList.add(new RoomsListModel(key, hostname,time));
+                        DataSnapshot snap =  snapshot.child(key).child(getString(R.string.ROOM_DETAILS));
+
+                        String hostname = snap.child(getString(R.string.HOST_DETAILS)).child(getString(R.string.RoomBase_USERNAME)).getValue().toString();
+                        String time =  snap.child(getString(R.string.RoomBase_STARTED_AT)).getValue().toString();
+                        String dp_url = snap.child("dpURL").getValue().toString();
+
+                        modelList.add(new RoomsListModel(key, hostname,time , dp_url));
                         Log.d(TAG, "onDataChange key : " + key);
                         Log.d(TAG, "onDataChange Value : " + map1.get(key));
                     }
-
                     Log.d(TAG, "onDataChange ModelList: " + modelList);
 
-                    listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this);
+                    listAdapter = new RoomsListAdapter(modelList, Rooms_Fragment.this, getContext());
                     mRoomRV.setAdapter(listAdapter);
                     listAdapter.notifyDataSetChanged();
                     progressBar.setVisibility(View.GONE);
@@ -187,8 +192,10 @@ public class Rooms_Fragment extends Fragment implements RoomsListAdapter.ULEvent
         String roomName = modelList.get(position).getmRoomName();
         String hostName = modelList.get(position).getmHostName();
         String time = modelList.get(position).getmTime();
-        mbottomsheet = new mRoomJoin_BottomSheetDialog(roomName,hostName,"0",time);
+        String url = modelList.get(position).getmUrl();
+        mbottomsheet = new mRoomJoin_BottomSheetDialog(roomName,hostName,"0",time, url);
         mbottomsheet.show(getChildFragmentManager(),"Shown bottomsheet");
+
 
     }
 

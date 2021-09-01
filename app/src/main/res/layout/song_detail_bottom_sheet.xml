@@ -60,10 +60,9 @@
         android:textSize="20sp"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="@drawable/ripple_effect"
         android:textColor="@color/white"
         android:gravity="center"
-        android:background="@drawable/four_side_rounded_blue_more_rounder"
+        android:background="@drawable/button_event_bg"
         android:text="Play on Spotify"
 
         />

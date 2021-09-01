@@ -4,6 +4,7 @@ import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.compressI
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.mSpotifyAppRemote;
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
 
+import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -236,7 +237,7 @@ public class MainHolder extends AppCompatActivity {
 
                 case R.id.nav_circle:
 
-                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment1).commit();
+                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment1).addToBackStack(null).commit();
                     active = fragment1;
                     customActionBarBinding.customActionBarConsLay.setVisibility(View.VISIBLE);
 
@@ -254,7 +255,7 @@ public class MainHolder extends AppCompatActivity {
                     return true;
 
                 case R.id.nav_rooms:
-                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment2).commit();
+                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment2).addToBackStack(null).commit();
                     active = fragment2;
                     customActionBarBinding.customActionBarConsLay.setVisibility(View.VISIBLE);
 
@@ -267,11 +268,12 @@ public class MainHolder extends AppCompatActivity {
                    // binding.customAction.Rooms.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
                     //room.setVisibility(View.VISIBLE);
 
+
+
                     return true;
 
-
                 case R.id.nav_profile:
-                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment3).commit();
+                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment3).addToBackStack(null).commit();
                     active = fragment3;
                     customActionBarBinding.customActionBarConsLay.setVisibility(View.GONE);
                     //peacock_symbol.setVisibility(View.GONE);

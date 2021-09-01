@@ -20,6 +20,7 @@ import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModel;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModelFactory;
 import com.bitpolarity.spotifytestapp.SpotifyLoginVerifierActivity;
 import com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder;
+import com.bitpolarity.spotifytestapp.application.Sigmo;
 
 public class OnClearFromRecentService extends Service {
 
@@ -64,14 +65,13 @@ public class OnClearFromRecentService extends Service {
     }
 
 
+
     @Override
     public void onDestroy() {
-        //unregisterReceiver(SongDetails.receiver);
         super.onDestroy();
         Log.d(LOG, "on Destroy called");
-
-
     }
+
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
@@ -79,7 +79,7 @@ public class OnClearFromRecentService extends Service {
 
         Log.e(LOG, "OnTaskRemoved Called!");
         spotifyRepository.onStop();
-        unregisterReceiver(SongDetails.receiver);
+        //unregisterReceiver(SongDetails.receiver);
         dbHolder.setStatusOffline();
         Toast.makeText(getApplicationContext(), "Sigmo Closed forcefly", Toast.LENGTH_SHORT).show();
         stopSelf();
