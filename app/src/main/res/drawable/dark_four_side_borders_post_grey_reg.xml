@@ -5,15 +5,15 @@
         >
         <shape
             android:shape="rectangle"
-           >
+            >
+            <corners
+                android:topRightRadius="5dp"
+                android:topLeftRadius="5dp"
+                />
 
-           <gradient
-               android:startColor="#FA45F7"
-               android:endColor="#5BF8E0"
-
-
-               />
-            <!-- android:centerColor="#203A43" -->
+            <solid
+                android:color="#BAFFFFFF"
+                />
 
 
         </shape>

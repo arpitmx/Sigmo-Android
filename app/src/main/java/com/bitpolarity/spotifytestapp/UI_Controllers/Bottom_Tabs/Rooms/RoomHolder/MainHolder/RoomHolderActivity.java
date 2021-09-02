@@ -59,9 +59,6 @@ public class RoomHolderActivity extends AppCompatActivity {
 
         supporterClass.sendJoiningNotif();
 
-
-
-
     }
 
 

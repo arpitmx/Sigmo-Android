@@ -21,8 +21,6 @@
         android:layout_marginBottom="1dp"
         />
 
-
-
         <LinearLayout
             android:id="@+id/layout_gchat_container_me"
             android:layout_width="wrap_content"

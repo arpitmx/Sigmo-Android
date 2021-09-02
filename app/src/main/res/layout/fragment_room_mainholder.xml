@@ -6,13 +6,18 @@
     android:orientation="vertical"
     >
 
-
     <include
         android:id="@+id/room_action_bar"
         layout="@layout/room_action_bar"
         />
 
-
+    <View
+        android:id="@+id/process_loader"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/gradient_progress"
+        android:visibility="gone"
+        />
 
         <com.discord.panels.OverlappingPanelsLayout
         android:id="@+id/overLappingLayout"
@@ -72,6 +77,8 @@
         </LinearLayout>
 
         </com.discord.panels.OverlappingPanelsLayout>
+
+
 
 </LinearLayout>
 

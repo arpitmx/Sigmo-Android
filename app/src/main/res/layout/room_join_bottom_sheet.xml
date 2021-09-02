@@ -5,76 +5,79 @@
     android:layout_height="match_parent"
     android:elevation="10dp"
     android:gravity="center_horizontal"
+
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:orientation="vertical"
 
         >
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/room_dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="15dp"
-        android:elevation="5dp"
-        android:fontFamily="@font/hb"
-        android:src="@drawable/personpic"
-        android:text="Song Detail"
-        android:textColor="@color/s_blue"
-        android:textSize="22sp"
-        app:civ_border_color="@color/sigmo_dark_blue"
 
-        app:civ_border_width="4dp" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/room_dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="15dp"
+            android:elevation="5dp"
+            android:fontFamily="@font/hb"
+            android:src="@drawable/personpic"
+            android:text="Song Detail"
+            android:textColor="@color/s_blue"
+            android:textSize="22sp"
+            app:civ_border_color="@color/sigmo_dark_blue"
 
-    <TextView
-        android:id="@+id/roomName_bs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="5dp"
-        android:fontFamily="@font/hxtrabold"
-        android:gravity="center"
-        android:text="Room Name"
-        android:textColor="@color/sigmo_blue_250"
-        android:textSize="22sp" />
+            app:civ_border_width="4dp" />
 
-    <TextView
-        android:id="@+id/hostName_bs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="5dp"
-        android:fontFamily="@font/hb"
-        android:gravity="center"
-        android:text="Room hosted by Arpit!"
-        android:textColor="#C1536DFE"
-        android:textSize="12sp" />
+        <TextView
+            android:id="@+id/roomName_bs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:elevation="5dp"
+            android:fontFamily="@font/hxtrabold"
+            android:gravity="center"
+            android:text="Room Name"
+            android:textColor="@color/sigmo_blue_250"
+            android:textSize="22sp" />
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:elevation="5dp"
-        android:fontFamily="@font/hmed"
-        android:gravity="center"
-        android:text="Started on 26 August at 12:56 PM, Thurday ⌚"
-        android:textColor="#C95E5E5E"
-        android:textSize="13sp" />
+        <TextView
+            android:id="@+id/hostName_bs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:fontFamily="@font/hb"
+            android:gravity="center"
+            android:text="Room hosted by Arpit!"
+            android:textColor="#C1536DFE"
+            android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/totalMembers_bs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:elevation="5dp"
-        android:fontFamily="@font/hb"
-        android:gravity="center"
-        android:text="32 / 50 members 🧑‍🤝‍🧑"
-        android:textColor="#DD5E5E5E"
-        android:textSize="12sp" />
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:elevation="5dp"
+            android:fontFamily="@font/hmed"
+            android:gravity="center"
+            android:text="Started on 26 August at 12:56 PM, Thurday ⌚"
+            android:textColor="#C95E5E5E"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/totalMembers_bs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:elevation="5dp"
+            android:fontFamily="@font/hb"
+            android:gravity="center"
+            android:text="32 / 50 members 🧑‍🤝‍🧑"
+            android:textColor="#DD5E5E5E"
+            android:textSize="12sp" />
     </LinearLayout>
 
 

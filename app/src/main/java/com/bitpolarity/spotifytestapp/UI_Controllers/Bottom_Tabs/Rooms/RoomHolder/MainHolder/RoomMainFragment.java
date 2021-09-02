@@ -2,6 +2,7 @@ package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHold
 
 import static com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHolder.MainHolder.RoomHolderActivity.roomName;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class RoomMainFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference memberRoot, isTypingRoot;
     final static String TAG = "RoomHolderActivity";
+    private AnimationDrawable processLoaderDrawable;
 
     DatabaseReference RoomBase_ref = FirebaseDatabase.getInstance().getReference().child("RoomBase");
 
@@ -50,11 +52,26 @@ public class RoomMainFragment extends Fragment {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if(snapshot.hasChild("allmembers")) {
+
                 Map<String, Object> map = (Map<String, Object>) snapshot.child("allmembers").getValue();
                 binding.roomActionBar.totalOnlineTv.setText(map.size()+" online");
+
+                if (processLoaderDrawable != null && processLoaderDrawable.isRunning() ) {
+                    processLoaderDrawable.stop();
+                    binding.processLoader.setVisibility(View.GONE);
+
+                    //&& binding.processLoader.getVisibility()==View.VISIBLE
+                }
+
             }
             else{
                 binding.roomActionBar.totalOnlineTv.setText("Connecting...");
+
+                if (processLoaderDrawable != null && !processLoaderDrawable.isRunning()) {
+                    processLoaderDrawable.start();
+                    binding.processLoader.setVisibility(View.VISIBLE);
+
+                }
             }
         }
         @Override
@@ -103,6 +120,9 @@ public class RoomMainFragment extends Fragment {
         binding = FragmentRoomMainholderBinding.inflate(inflater, container, false);
         binding.roomActionBar.roomTitleBar.setText(roomName);
         firebaseDatabase = FirebaseDatabase.getInstance();
+        processLoaderDrawable = (AnimationDrawable) binding.processLoader.getBackground();
+        processLoaderDrawable.setEnterFadeDuration(2000);
+        processLoaderDrawable.setExitFadeDuration(2000);
 
         isTypingRoot = firebaseDatabase.getReference().child("Rooms").child(getActivity().getIntent().getStringExtra("room_name")).child("members");
         memberRoot = firebaseDatabase.getReference().child("Rooms").child(roomName).child("members");

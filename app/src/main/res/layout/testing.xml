@@ -6,7 +6,6 @@
     android:orientation="vertical"
     >
 
-
     <LinearLayout
         android:id="@+id/reference_view"
         android:layout_width="match_parent"
@@ -78,7 +77,15 @@
 
 
     </LinearLayout>
-
+    <View
+        android:id="@+id/process_loader"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/gradient_progress"
+        android:visibility="gone"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        />
 
 
 </LinearLayout>
