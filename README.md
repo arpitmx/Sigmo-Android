@@ -7,10 +7,10 @@ Sigmo is an android app made for music aggregation and synced music on top of sp
 
 #### Features 
 
-> See which songs your friends are listening! 
-> Connect with friends and listen together in 1to1 sync or in rooms together with max 30 people , 
-> Make room, invite , listen , chat n have fun together! 
-> Monthly analysis of listened songs and features like timeline and playbacktime of songs at a given day!
+>See which songs your friends are listening! 
+>Connect with friends and listen together in 1to1 sync or in rooms together with max 30 people , 
+>Make room, invite , listen , chat n have fun together! 
+>Monthly analysis of listened songs and features like timeline and playbacktime of songs at a given day!
 
 
 
