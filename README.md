@@ -15,6 +15,8 @@ Sigmo is an android app made for music aggregation and synced music on top of sp
 
 >Monthly analysis of listened songs and features like timeline and playbacktime of songs at a given day!
 
+>Full fledge chatting system
+
 
 
 # In-app walkthrough :
