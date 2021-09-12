@@ -11,13 +11,13 @@
             </shape>
         </rotate>
     </item>
-    <item android:right="5dp">
+    <item android:right="10dp">
         <shape android:shape="rectangle" >
             <solid android:color="@color/outgoing_msg_bg" />
             <corners
                 android:topLeftRadius="16dp"
                 android:bottomLeftRadius="16dp"
-                android:bottomRightRadius="16dp"
+                android:bottomRightRadius="8dp"
                 />
         </shape>
     </item>

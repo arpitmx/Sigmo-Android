@@ -29,7 +29,9 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
     //////////////////////////////////////////////////////
 
     public static final int MESSAGE_TYPE_OUT = 2;
-    public static final int MESSAGE_TYPE_OUT_SAME_USER = 6;
+    public static final int MESSAGE_TYPE_OUT_SAME_USER_MIDDLE_ITEM = 6;
+    public static final int MESSAGE_TYPE_OUT_SAME_USER_END_ITEM = 7;
+
 
     //////////////////////////////////////////////////////////////////
 
@@ -168,18 +170,27 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
         private boolean isRunning = false;
         private final int resetInTime = 500;
         private int counter = 0;
-        public ViewHolderOutgoing_Same(ChatMsgItemOutgoingBinding binding, ClickListner clickListner) {
+        private final int messgType ;
+
+        public ViewHolderOutgoing_Same(ChatMsgItemOutgoingBinding binding, ClickListner clickListner, int messgType) {
             super(binding.getRoot());
 
             this.binding_outgoing = binding;
             this.clickListner = clickListner;
             itemView.setOnClickListener(this);
+            this.messgType = messgType;
 
         }
 
         void bind(int position) {
+
+            if(messgType==6){
+                binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.chatitembg_outgoing_middle_item);
+            }else{
+                binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.chatitembg_outgoing_end_item);
+            }
+
             MessageModelHolder messageModelHolder = list.get(position);
-            binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.chatitembg_outgoing);
 
             if(messageModelHolder.getMessage().length()<26){
                 //Single Line
@@ -248,17 +259,28 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
         private boolean isRunning = false;
         private final int resetInTime = 500;
         private int counter = 0;
-        public ViewHolderOutgoing(ChatMsgItemOutgoingBinding binding, ClickListner clickListner) {
+        private int msgType ;
+
+        public ViewHolderOutgoing(ChatMsgItemOutgoingBinding binding, ClickListner clickListner, int msgType ) {
             super(binding.getRoot());
 
             this.binding_outgoing = binding;
             this.clickListner = clickListner;
             itemView.setOnClickListener(this);
+            this.msgType = msgType;
 
         }
 
         void bind(int position) {
             MessageModelHolder messageModelHolder = list.get(position);
+
+            if(msgType==2) {
+                binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.outgoing_messg_bubble);
+            }else if(msgType == 6){
+                binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.chatitembg_outgoing_middle_item);
+            }else{
+                binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.chatitembg_outgoing_end_item);
+            }
 
             if(messageModelHolder.getMessage().length()<26){
             //Single Line
@@ -482,7 +504,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
          case 2:
              View view_outgoing = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_outgoing,parent,false);
-             return new ViewHolderOutgoing(ChatMsgItemOutgoingBinding.bind(view_outgoing),mClicklistner);
+             return new ViewHolderOutgoing(ChatMsgItemOutgoingBinding.bind(view_outgoing),mClicklistner, viewType);
 
 
          case 3:
@@ -495,9 +517,12 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
          case 6:
-             View view_outgoing_same = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_outgoing,parent,false);
-             return new ViewHolderOutgoing_Same(ChatMsgItemOutgoingBinding.bind(view_outgoing_same),mClicklistner);
+             View view_outgoing_same_middle = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_outgoing,parent,false);
+             return new ViewHolderOutgoing(ChatMsgItemOutgoingBinding.bind(view_outgoing_same_middle),mClicklistner, viewType);
 
+         case 7:
+             View view_outgoing_same_end = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_outgoing,parent,false);
+             return new ViewHolderOutgoing(ChatMsgItemOutgoingBinding.bind(view_outgoing_same_end),mClicklistner, viewType);
 
          default:
              View view_joining = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_user_joined,parent,false);
@@ -546,11 +571,15 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 break;
 
-            case MESSAGE_TYPE_OUT_SAME_USER:
-                ((ViewHolderOutgoing_Same) holder).bind(position);
+            case MESSAGE_TYPE_OUT_SAME_USER_MIDDLE_ITEM:
+                ((ViewHolderOutgoing) holder).bind(position);
                 setAnimation(holder.itemView,position,R.anim.pop_in);
                 break;
 
+            case MESSAGE_TYPE_OUT_SAME_USER_END_ITEM:
+                ((ViewHolderOutgoing) holder).bind(position);
+                setAnimation(holder.itemView,position,R.anim.pop_in);
+                break;
 
     }
 
