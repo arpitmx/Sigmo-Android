@@ -43,6 +43,7 @@ import com.bitpolarity.spotifytestapp.Singletons.TimeSystem;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -224,7 +225,7 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
 
 
         speedyLinearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        speedyLinearLayoutManager.setStackFromEnd(true);
+        //speedyLinearLayoutManager.setStackFromEnd(true);
 
         //layoutAnimationController = AnimationUtils.loadLayoutAnimation(context, R.anim.fade_in_rv);
 
@@ -446,6 +447,8 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
                        swipeRefreshLayout.setRefreshing(false);
                        shimmerFrameLayout.stopShimmerAnimation();
                        shimmerFrameLayout.setVisibility(View.GONE);
+                      chatRV.smoothScrollToPosition(adapter.getItemCount());
+
 
                        if(binding.jumpToEndFAB.getVisibility()==View.VISIBLE) {
                             binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out));
@@ -471,7 +474,6 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
                  }
                  binding.roomInput.msgEditBox.setText("");
                  mpSent.start();
-                 chatRV.smoothScrollToPosition(adapter.getItemCount());
                  break;
 
            case failed_internal_error:

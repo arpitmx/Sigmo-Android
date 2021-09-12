@@ -14,7 +14,7 @@
         android:id="@+id/layout_gchat_container_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/chatitembg_outgoing"
+        android:background="@drawable/chatitembg_outgoing_reference"
         android:orientation="vertical"
         android:padding="2dp">
 

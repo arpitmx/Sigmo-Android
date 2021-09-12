@@ -176,8 +176,26 @@ public class ChatsViewHolder  extends ViewModel {
                 case TYPE_MSG:
 
                     if (userName.equals(DB_Handler.getUsername())) {
-                        chatList.add(new MessageModelHolder(userName, msg, 2, TIME));
-                        //Log.d(TAG, "OUTGOING: TYPE 2" + msg);
+
+                        if (temp.size() > 1) {
+
+                            if (temp.get(temp.size() - 2).equals(userName)) {
+
+                                chatList.add(new MessageModelHolder(userName, msg, 6,TIME));
+                                //Log.d(TAG, "OUTGOING_SAME_USER: TYPE 3" + msg);
+
+                            } else {
+                                chatList.add(new MessageModelHolder(userName, msg, 2, TIME));
+                                //Log.d(TAG, "OUTGOING: TYPE 2" + msg);
+                            }
+
+                        } else {
+                            chatList.add(new MessageModelHolder(userName, msg, 2, TIME));
+                            //Log.d(TAG, "OUTGOING: TYPE 2" + msg);
+                        }
+
+
+
 
                     } else {
 

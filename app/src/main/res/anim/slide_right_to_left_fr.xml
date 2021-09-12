@@ -3,24 +3,24 @@
 
     <alpha
         android:duration="250"
-        android:fromAlpha="1.0"
-        android:toAlpha="0.0" >
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0" >
     </alpha>
 
-    <rotate
-        android:duration="300"
-        android:fromDegrees="0"
-        android:interpolator="@android:anim/linear_interpolator"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:repeatCount="1"
-        android:toDegrees="360" />
+<!--    <rotate-->
+<!--        android:duration="300"-->
+<!--        android:fromDegrees="0"-->
+<!--        android:interpolator="@android:anim/linear_interpolator"-->
+<!--        android:pivotX="50%"-->
+<!--        android:pivotY="50%"-->
+<!--        android:repeatCount="1"-->
+<!--        android:toDegrees="360" />-->
 
     <translate
         android:duration="@android:integer/config_mediumAnimTime"
-        android:fromXDelta="0%"
+        android:fromXDelta="100%"
         android:fromYDelta="0%"
         android:interpolator="@android:anim/decelerate_interpolator"
-        android:toXDelta="-100%"
+        android:toXDelta="0%"
         android:toYDelta="0%" />
 </set>

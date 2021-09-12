@@ -58,6 +58,8 @@
     <color name="sigmo_blue_250">#D9536DFE</color>
     <color name="reference_box_bg">#AD303030</color>
     <color name="blue50">#D1EBFD</color>
+    <color name="incoming_msg_bg">#292929</color>
+    <color name="outgoing_msg_bg">#5A87FD</color>
 
 
 </resources>
