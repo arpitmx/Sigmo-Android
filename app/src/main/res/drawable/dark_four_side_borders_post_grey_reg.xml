@@ -7,12 +7,14 @@
             android:shape="rectangle"
             >
             <corners
-                android:topRightRadius="5dp"
-                android:topLeftRadius="5dp"
+                android:topLeftRadius="70dp"
+                android:bottomLeftRadius="70dp"
                 />
 
-            <solid
-                android:color="#BAFFFFFF"
+            <gradient
+                android:startColor="#77C1FF"
+                android:endColor="#B3E5FC"
+                android:angle="90"
                 />
 
 

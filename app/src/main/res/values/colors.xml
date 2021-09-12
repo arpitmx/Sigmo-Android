@@ -57,6 +57,7 @@
     <color name="sigmo_blue_200">#D6536DFE</color>
     <color name="sigmo_blue_250">#D9536DFE</color>
     <color name="reference_box_bg">#AD303030</color>
+    <color name="blue50">#D1EBFD</color>
 
 
 </resources>

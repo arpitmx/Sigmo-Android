@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout_chat"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/linearLayout_chat"
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="2dp"
     android:clickable="true"
     android:focusable="true"
-    android:gravity="end"
-    android:layout_margin="5dp"
     android:foreground="@drawable/ripple_effect"
-    >
+    android:gravity="end">
+
+    <LinearLayout
+        android:id="@+id/layout_gchat_container_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chatitembg_outgoing"
+        android:baselineAligned="false"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/layout_gchat_container_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/chatitembg_outgoing"
-            android:orientation="vertical"
-            >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingRight="5dp"
-                android:paddingLeft="5dp"
-                >
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
 
             <TextView
                 android:id="@+id/text_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="textStart"
+                android:layout_margin="5dp"
                 android:fontFamily="@font/hregular"
                 android:maxWidth="210dp"
                 android:minWidth="25dp"
-                android:layout_margin="5dp"
                 android:text="are"
+                android:textAlignment="textStart"
                 android:textColor="@color/white200"
                 android:textSize="@dimen/chat_incoming_outgoing_font_size" />
 
 
-
-                <TextView
-                    android:id="@+id/time_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="2dp"
-                    android:fontFamily="@font/hmed"
-                    android:text="9:20 AM"
-                    android:textColor="@color/s_message_time_bg"
-                    android:textSize="10dp" />
-
+            <TextView
+                android:id="@+id/time_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginEnd="2dp"
+                android:fontFamily="@font/hmed"
+                android:text="9:20 AM"
+                android:textColor="@color/s_message_time_bg"
+                android:textSize="10dp" />
 
 
             <ImageView
@@ -67,17 +67,8 @@
                 />
 
 
-
-
-
-            </LinearLayout>
         </LinearLayout>
-
-
-
-
-
-
+    </LinearLayout>
 
 
 </LinearLayout>

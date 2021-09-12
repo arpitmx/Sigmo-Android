@@ -5,7 +5,10 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModelHolder;
@@ -14,7 +17,7 @@ import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemIncomingBinding;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemIncomingSameUsrBinding;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemOutgoingBinding;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemUserJoinedBinding;
-import com.bitpolarity.spotifytestapp.databinding.ChatMsgOutgoingReferenceItemBinding;
+import com.bitpolarity.spotifytestapp.databinding.ChatMsgOutgoingReferenceItemOutgoingBinding;
 
 import java.util.ArrayList;
 
@@ -27,6 +30,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
     public static final int MESSAGE_TYPE_JOING_LEAVING = 4;
     public static final int MESSAGE_TYPE_REFFERED_MSG = 5;
 
+    int lastPosition = -1;
     StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
     ClickListner mClicklistner;
 
@@ -43,8 +47,6 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void setModelList(ArrayList<MessageModelHolder> list){
         this.list = list;
     }
-
-
 
 
     @Override
@@ -67,7 +69,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
          ClickListner clickListner;
 
          private boolean isRunning= false;
-         private int resetInTime =500;
+         private final int resetInTime =500;
          private int counter=0;
 
         public ViewHolderIncoming(ChatMsgItemIncomingBinding binding , ClickListner clickListner) {
@@ -83,6 +85,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
              binding_incoming.usernameChatroom.setText(messageModelHolder.getSenderName());
              binding_incoming.textMessage.setText(messageModelHolder.getMessage());
              binding_incoming.timeTxt.setText(messageModelHolder.getTime());
+
 
          }
 
@@ -202,6 +205,8 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
              binding_outgoing.timeTxt.setText(messageModelHolder.getTime());
 
+
+
          }
 
 
@@ -299,13 +304,13 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     class ViewHolderRefferedMessage extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        ChatMsgOutgoingReferenceItemBinding referenceItemBinding;
+        ChatMsgOutgoingReferenceItemOutgoingBinding referenceItemBinding;
         ClickListner clickListner;
         private boolean isRunning= false;
         private final int resetInTime =500;
         private int counter=0;
 
-        public ViewHolderRefferedMessage(ChatMsgOutgoingReferenceItemBinding binding, ClickListner clickListner) {
+        public ViewHolderRefferedMessage(ChatMsgOutgoingReferenceItemOutgoingBinding binding, ClickListner clickListner) {
 
             super(binding.getRoot());
             this.referenceItemBinding = binding;
@@ -404,8 +409,8 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
              return new ViewHolderIncoming_SameUsr(ChatMsgItemIncomingSameUsrBinding.bind(view_outgoing_same_usr),mClicklistner);
 
          case 5:
-             View view_ref_outgoing = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_outgoing_reference_item,parent,false);
-             return new ViewHolderRefferedMessage(ChatMsgOutgoingReferenceItemBinding.bind(view_ref_outgoing), mClicklistner);
+             View view_ref_outgoing = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_outgoing_reference_item_outgoing,parent,false);
+             return new ViewHolderRefferedMessage(ChatMsgOutgoingReferenceItemOutgoingBinding.bind(view_ref_outgoing), mClicklistner);
 
 
          default:
@@ -426,23 +431,31 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             case MESSAGE_TYPE_IN  :
                 ((ViewHolderIncoming) holder).bind(position);
+                setAnimation(((ViewHolderIncoming) holder).binding_incoming.layoutGchatContainerMe,position);
                 break;
 
             case MESSAGE_TYPE_OUT :
                 ((ViewHolderOutgoing) holder).bind(position);
+
                 break;
 
             case MESSAGE_TYPE_OUT_SAME:
                 ((ViewHolderIncoming_SameUsr) holder).bind(position);
+
                 break;
 
             case MESSAGE_TYPE_JOING_LEAVING:
                 ((ViewHolderJoining_Leaving) holder).bind(position);
+
                 break;
 
             case MESSAGE_TYPE_REFFERED_MSG:
                 ((ViewHolderRefferedMessage) holder).bind(position);
+                setAnimation(((ViewHolderRefferedMessage) holder).referenceItemBinding.layoutGchatContainerMe,position);
+
+
                 break;
+
 
     }
 
@@ -531,6 +544,18 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
     public interface ClickListner{
         void onClick(int position);
     }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.pop_in);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
 
 }
 

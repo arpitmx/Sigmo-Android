@@ -57,7 +57,7 @@ public class mBottomSheetDialog extends BottomSheetDialogFragment {
 
         anim = AnimationUtils.loadAnimation(getContext(), R.anim.pop_in);
 
-        WebSettings webViewSettings = binding.spotifyWebView.getSettings();
+        WebSettings webViewSettings = spotifyWebView.getSettings();
         webViewSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webViewSettings.setJavaScriptEnabled(true);
         webViewSettings.getLoadsImagesAutomatically();
