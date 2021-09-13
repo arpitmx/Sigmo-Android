@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.MultiViewChatAdapter;
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModelHolder;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModelMain;
@@ -35,6 +36,7 @@ public class ChatsViewHolder  extends ViewModel {
     private  final String TYPE_MSG = "1";
     private  final String TYPE_JOIN = "2";
     private  final String TYPE_REFERENCE = "3";
+    int count =0;
 
     ArrayList<String> temp = new ArrayList<>();
     ArrayList<MessageModelHolder> chatList;
@@ -124,7 +126,6 @@ public class ChatsViewHolder  extends ViewModel {
          String userName , msg;
          String TYPE, TIME, REFPOS;
 
-
 //       for (DataSnapshot snapshot : dataSnapshot.getChildren()){
 
 //            TIME = String.valueOf(((DataSnapshot) i.next()).getValue());
@@ -156,7 +157,9 @@ public class ChatsViewHolder  extends ViewModel {
 
         if(!TYPE.equals(TYPE_JOIN)) {
                 temp.add(userName);
-            }
+            }else{
+            temp.add("JOIN");
+        }
 
 
             /* Message TYPES >
@@ -176,19 +179,49 @@ public class ChatsViewHolder  extends ViewModel {
                 case TYPE_MSG:
 
                     if (userName.equals(DB_Handler.getUsername())) {
-                        chatList.add(new MessageModelHolder(userName, msg, 2, TIME));
-                        //Log.d(TAG, "OUTGOING: TYPE 2" + msg);
-
-                    } else {
 
                         if (temp.size() > 1) {
 
-                            if (temp.get(temp.size() - 2).equals(userName)) {
+                            if (temp.get(temp.size() - 2).equals(DB_Handler.getUsername())) {
+
+                                if(count>1){
+                                    chatList.add(new MessageModelHolder(userName, msg, 7, TIME));
+                                    replacePrev();
+                                }else{
+                                    chatList.add(new MessageModelHolder(userName, msg, 7, TIME));
+                                }
+
+                                count++;
+                                //Log.d(TAG, "OUTGOING_SAME_USER: TYPE 3" + msg);
+
+
+                            } else {
+
+                                chatList.add(new MessageModelHolder(userName, msg, 2, TIME));
+                                count++;
+
+                                //Log.d(TAG, "OUTGOING: TYPE 2" + msg);
+                            }
+
+                        } else {
+                            chatList.add(new MessageModelHolder(userName, msg, 2, TIME));
+                            count++;
+                            //Log.d(TAG, "OUTGOING: TYPE 2" + msg);
+                        }
+
+                    } else {
+
+                        count=0;
+
+                        if (temp.size() > 1) {
+
+                            if (  temp.get(temp.size() - 2).equals(userName)) {
 
                                 chatList.add(new MessageModelHolder(userName, msg, 3,TIME));
                                 //Log.d(TAG, "INCOMING_SAME_USER: TYPE 3" + msg);
 
                             } else {
+
                                 chatList.add(new MessageModelHolder(userName, msg, 1, TIME));
                                 //Log.d(TAG, "INCOMING: TYPE 1" + msg);
                             }
@@ -198,14 +231,24 @@ public class ChatsViewHolder  extends ViewModel {
                            // Log.d(TAG, "INCOMING: TYPE 1" + msg);
                         }
                     }
+
                     break;
 
                 case TYPE_JOIN:
+                    count=0;
+
+                    //replacePrev();
+
                     chatList.add(new MessageModelHolder(userName, msg, 4, TIME));
                     //Log.d(TAG, "JOINING/LEAVING : TYPE 4" + msg);
                     break;
 
                 case TYPE_REFERENCE:
+
+
+
+                    // replacePrev();
+
                     REFPOS = messageModel.getRefpos();
                     Log.d(TAG, " REFPOS "+ REFPOS);
                     chatList.add(new MessageModelHolder(userName, msg, 5, TIME,REFPOS));
@@ -219,6 +262,18 @@ public class ChatsViewHolder  extends ViewModel {
         listSize = chatList.size();
 
         return chatList;
+    }
+
+
+    private void replacePrev(){
+        if(chatList.size()>2) {
+            String prevSender = chatList.get(getListSize() - 2).getSenderName();
+            String prevMsg = chatList.get(getListSize() - 2).getMessage();
+            String prevTime = chatList.get(getListSize() - 2).getTime();
+            int prevPos = getListSize() - 2;
+
+            chatList.set(prevPos, new MessageModelHolder(prevSender, prevMsg, 6, prevTime));
+        }
     }
 
 
@@ -246,8 +301,11 @@ public class ChatsViewHolder  extends ViewModel {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                setChatListLD(getModelList(snapshot));
+              //  ArrayList<MessageModelHolder> list = getModelList(snapshot);
 
+                setChatListLD(getModelList(snapshot));
+//                adapter.setModelList(list);
+//                adapter.notifyItemInserted(list.size()-1);
             }
 
             @Override

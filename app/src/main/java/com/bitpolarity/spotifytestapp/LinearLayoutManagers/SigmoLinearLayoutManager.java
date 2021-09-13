@@ -2,6 +2,7 @@ package com.bitpolarity.spotifytestapp.LinearLayoutManagers;
 
 import android.content.Context;
 import android.graphics.PointF;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 
@@ -11,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SigmoLinearLayoutManager extends LinearLayoutManager {
 
-    private static final float MILLISECONDS_PER_INCH = 20f; //default is 25f (bigger = slower)
+    private static float MILLISECONDS_PER_INCH = 15f; //default is 25f (bigger = slower)
+    Handler handler = new Handler();
 
     public SigmoLinearLayoutManager(Context context) {
         super(context);
@@ -30,6 +32,9 @@ public class SigmoLinearLayoutManager extends LinearLayoutManager {
 
         final LinearSmoothScroller linearSmoothScroller = new LinearSmoothScroller(recyclerView.getContext()) {
 
+
+
+
             @Override
             public PointF computeScrollVectorForPosition(int targetPosition) {
                 return super.computeScrollVectorForPosition(targetPosition);
@@ -37,12 +42,23 @@ public class SigmoLinearLayoutManager extends LinearLayoutManager {
 
             @Override
             protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
+
                 return MILLISECONDS_PER_INCH / displayMetrics.densityDpi;
             }
         };
 
         linearSmoothScroller.setTargetPosition(position);
         startSmoothScroll(linearSmoothScroller);
+
+        handler.postDelayed(() -> {
+            scrollToPosition(position);
+        },500);
+
+
+
+
+
+
 
 
 

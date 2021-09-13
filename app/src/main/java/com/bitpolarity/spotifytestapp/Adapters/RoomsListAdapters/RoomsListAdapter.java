@@ -172,9 +172,6 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomsListAdapter.View
         public abstract void hide();
     }
 
-
-
-
         private void setAnimation(View viewToAnimate, int position)
     {
         // If the bound view wasn't previously displayed on screen, it's animated

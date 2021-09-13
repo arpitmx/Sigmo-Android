@@ -43,6 +43,7 @@ import com.bitpolarity.spotifytestapp.Singletons.TimeSystem;
 import com.bitpolarity.spotifytestapp.databinding.FragmentRoomChatBinding;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -146,6 +147,8 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
        chatRV = binding.chatsLayout;
        //layoutManager = new LinearLayoutManager(getContext());
        speedyLinearLayoutManager = new SigmoLinearLayoutManager(getContext());
+       speedyLinearLayoutManager.getStackFromEnd();
+
 
 
         processLoaderDrawable = (AnimationDrawable) binding.roomInput.referenceLayout.processLoader.getBackground();
@@ -167,6 +170,7 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
         adapter.initiateAdapter(this);
         adapter.setModelList(chatsViewHolder.chatList);
         chatRV.setAdapter(adapter);
+
 
         ///////////////////////////////////////////////////////Emoji
         initEmojiBoard();
@@ -224,13 +228,14 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
 
 
         speedyLinearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        speedyLinearLayoutManager.setStackFromEnd(true);
+        //speedyLinearLayoutManager.setStackFromEnd(true);
 
         //layoutAnimationController = AnimationUtils.loadLayoutAnimation(context, R.anim.fade_in_rv);
 
         chatRV.hasFixedSize();
         chatRV.setLayoutManager(speedyLinearLayoutManager);
         chatRV.setNestedScrollingEnabled(false);
+        speedyLinearLayoutManager.setStackFromEnd(true);
         //chatRV.setLayoutAnimation(layoutAnimationController);
 
         loadmessages();
@@ -438,14 +443,18 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
     void loadmessages(){
 
                    chatsViewHolder.postMessages();
+
                    chatsViewHolder.getChatListLD().observe(getViewLifecycleOwner(), chatListModel_multis -> {
                        adapter.setModelList(chatListModel_multis);
                        chatRV.setVisibility(View.VISIBLE);
                        adapter.notifyDataSetChanged();
+
                        //speedyLinearLayoutManager.smoothScrollToPosition(chatRV, (RecyclerView.State) recyclerViewState,chatsViewHolder.getListSize()-1);
                        swipeRefreshLayout.setRefreshing(false);
                        shimmerFrameLayout.stopShimmerAnimation();
                        shimmerFrameLayout.setVisibility(View.GONE);
+                      chatRV.smoothScrollToPosition(adapter.getItemCount());
+
 
                        if(binding.jumpToEndFAB.getVisibility()==View.VISIBLE) {
                             binding.jumpToEndFAB.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out));
@@ -471,7 +480,6 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
                  }
                  binding.roomInput.msgEditBox.setText("");
                  mpSent.start();
-                 chatRV.smoothScrollToPosition(adapter.getItemCount());
                  break;
 
            case failed_internal_error:

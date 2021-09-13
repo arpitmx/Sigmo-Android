@@ -1,83 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout_chat"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/linearLayout_chat"
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="1.5dp"
+
+    android:layout_marginBottom="1dp"
     android:clickable="true"
     android:focusable="true"
-    android:gravity="end"
-    android:layout_margin="5dp"
     android:foreground="@drawable/ripple_effect"
-    >
+    android:gravity="end">
+
+    <LinearLayout
+        android:id="@+id/layout_gchat_container_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:minWidth="100dp"
+        android:background="@drawable/chatitembg_outgoing_end_item"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/layout_gchat_container_me"
+            android:id="@+id/inside_lin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/chatitembg_outgoing"
-            android:orientation="vertical"
-            >
+            android:orientation="horizontal"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingRight="5dp"
-                android:paddingLeft="5dp"
-                >
+           >
+
 
             <TextView
                 android:id="@+id/text_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="textStart"
                 android:fontFamily="@font/hregular"
                 android:maxWidth="210dp"
                 android:minWidth="25dp"
-                android:layout_margin="5dp"
-                android:text="are"
+                android:layout_marginEnd="10dp"
+                android:text="eoeroiejrgoeijrgeoeorirwefwjgeoi"
+                android:textAlignment="textStart"
                 android:textColor="@color/white200"
                 android:textSize="@dimen/chat_incoming_outgoing_font_size" />
 
-
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/secondary_sinlgeline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                >
 
                 <TextView
-                    android:id="@+id/time_txt"
+                    android:id="@+id/time_txt_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="2dp"
                     android:fontFamily="@font/hmed"
                     android:text="9:20 AM"
                     android:textColor="@color/s_message_time_bg"
-                    android:textSize="10dp" />
+                    android:textSize="10dp"
+                    />
+
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:scaleX="1"
+                    android:scaleY="1"
+                    android:layout_marginStart="2dp"
+                    android:src="@drawable/ic_baseline_check_24"
+
+                    />
 
 
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:scaleX="0.6"
-                android:scaleY="0.6"
-                android:src="@drawable/ic_baseline_check_24"
-
-                />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
-
-
-            </LinearLayout>
         </LinearLayout>
 
+        <View
+            android:id="@+id/spaceView"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+        />
+
+       <LinearLayout
+           android:id="@+id/secondary_multiline"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="horizontal"
+         android:gravity="end"
+           android:visibility="visible"
+           android:layout_marginEnd="20dp"
+
+           >
+           <TextView
+               android:id="@+id/time_txt"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="bottom|end"
+               android:layout_marginStart="5dp"
+               android:layout_marginBottom="2dp"
+               android:layout_marginEnd="2dp"
+               android:fontFamily="@font/hmed"
+               android:text="9:20 AM"
+               android:textColor="@color/s_message_time_bg"
+               android:textSize="11dp" />
 
 
+           <ImageView
+               android:layout_width="15dp"
+               android:layout_height="15dp"
+               android:layout_gravity="bottom|end"
+               android:scaleX="1"
+               android:scaleY="1"
+               android:layout_marginBottom="5dp"
+               android:src="@drawable/ic_baseline_check_24"
+
+               />
+       </LinearLayout>
 
 
-
+    </LinearLayout>
 
 
 </LinearLayout>
