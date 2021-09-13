@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.bitpolarity.spotifytestapp.Adapters.ChatsAdapter.MultiViewChatAdapter;
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModelHolder;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModelMain;
@@ -244,7 +245,7 @@ public class ChatsViewHolder  extends ViewModel {
 
                 case TYPE_REFERENCE:
 
-                    count=0;
+
 
                     // replacePrev();
 
@@ -300,8 +301,11 @@ public class ChatsViewHolder  extends ViewModel {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                setChatListLD(getModelList(snapshot));
+              //  ArrayList<MessageModelHolder> list = getModelList(snapshot);
 
+                setChatListLD(getModelList(snapshot));
+//                adapter.setModelList(list);
+//                adapter.notifyItemInserted(list.size()-1);
             }
 
             @Override

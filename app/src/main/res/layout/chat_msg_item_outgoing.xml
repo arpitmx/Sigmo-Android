@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="5dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginEnd="5dp"
-    android:layout_marginBottom="2dp"
+    android:layout_marginTop="1.5dp"
+
+    android:layout_marginBottom="1dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/ripple_effect"
@@ -42,6 +42,7 @@
                 android:fontFamily="@font/hregular"
                 android:maxWidth="210dp"
                 android:minWidth="25dp"
+                android:layout_marginEnd="10dp"
                 android:text="eoeroiejrgoeijrgeoeorirwefwjgeoi"
                 android:textAlignment="textStart"
                 android:textColor="@color/white200"
@@ -55,6 +56,7 @@
                 android:layout_gravity="bottom|end"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="8dp"
+                android:visibility="gone"
                 >
 
                 <TextView
@@ -98,7 +100,7 @@
            android:orientation="horizontal"
          android:gravity="end"
            android:visibility="visible"
-           android:layout_marginEnd="12dp"
+           android:layout_marginEnd="20dp"
 
            >
            <TextView

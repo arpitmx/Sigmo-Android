@@ -147,6 +147,8 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
        chatRV = binding.chatsLayout;
        //layoutManager = new LinearLayoutManager(getContext());
        speedyLinearLayoutManager = new SigmoLinearLayoutManager(getContext());
+       speedyLinearLayoutManager.getStackFromEnd();
+
 
 
         processLoaderDrawable = (AnimationDrawable) binding.roomInput.referenceLayout.processLoader.getBackground();
@@ -168,6 +170,7 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
         adapter.initiateAdapter(this);
         adapter.setModelList(chatsViewHolder.chatList);
         chatRV.setAdapter(adapter);
+
 
         ///////////////////////////////////////////////////////Emoji
         initEmojiBoard();
@@ -232,6 +235,7 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
         chatRV.hasFixedSize();
         chatRV.setLayoutManager(speedyLinearLayoutManager);
         chatRV.setNestedScrollingEnabled(false);
+        speedyLinearLayoutManager.setStackFromEnd(true);
         //chatRV.setLayoutAnimation(layoutAnimationController);
 
         loadmessages();
@@ -439,10 +443,12 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
     void loadmessages(){
 
                    chatsViewHolder.postMessages();
+
                    chatsViewHolder.getChatListLD().observe(getViewLifecycleOwner(), chatListModel_multis -> {
                        adapter.setModelList(chatListModel_multis);
                        chatRV.setVisibility(View.VISIBLE);
                        adapter.notifyDataSetChanged();
+
                        //speedyLinearLayoutManager.smoothScrollToPosition(chatRV, (RecyclerView.State) recyclerViewState,chatsViewHolder.getListSize()-1);
                        swipeRefreshLayout.setRefreshing(false);
                        shimmerFrameLayout.stopShimmerAnimation();

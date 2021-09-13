@@ -39,7 +39,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
     public static final int MESSAGE_TYPE_JOING_LEAVING = 4;
     public static final int MESSAGE_TYPE_REFFERED_MSG = 5;
 
-    int lastPosition = -1;
+    int lastPosition = 500;
     StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
     ClickListner mClicklistner;
 
@@ -65,6 +65,10 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
     //////////////////////////////////////////////////////////// VIEWHOLDERS /////////////////////////////////////////////////////////
 
 
+
+
+
+
     ///////////////////////////////////////// INCOMING  /////////////////////////////////////////////////////////
 
 
@@ -81,7 +85,6 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
             super(binding.getRoot());
             this.binding_incoming = binding;
             this.clickListner = clickListner;
-
             itemView.setOnClickListener(this);
         }
 
@@ -91,8 +94,9 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
             binding_incoming.textMessage.setText(messageModelHolder.getMessage());
             binding_incoming.timeTxt.setText(messageModelHolder.getTime());
 
-
         }
+
+
 
         @Override
         public void onClick(View view) {
@@ -100,6 +104,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
             if (isRunning) {
                 if (counter == 1) //<-- makes sure that the callback is triggered on double click
                     clickListner.onClick(getAbsoluteAdapterPosition());
+
             }
 
             counter++;
@@ -116,11 +121,18 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 }).start();
             }
+
         }
     }
 
 
     ///////////////////////////////////////// INCOMING /////////////////////////////////////////////////////////
+
+
+
+
+
+
 
 
     ///////////////////////////////////////// JOINING/LEAVING ////////////////////////////////////////////////
@@ -134,6 +146,8 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
             super(binding.getRoot());
             this.binding_joining = binding;
         }
+
+
 
         void bind(int position) {
             MessageModelHolder messageModelHolder = list.get(position);
@@ -149,8 +163,6 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
                 binding_joining.notificationTxt.setText(messageModelHolder.getSenderName() + " " + messageModelHolder.getMessage() + " the room! \uD83D\uDEB6 ");
                 //        binding_joining.linMain.setBackgroundResource(R.drawable.chatitembg_leaved_room);
                 //      binding_joining.timeTxt.setTextColor(Color.parseColor("#EF9A9A"));
-
-
             }
 
         }
@@ -159,97 +171,14 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
     ///////////////////////////////////////// JOINING/LEAVING ////////////////////////////////////////////////
 
 
+
+
+
+
+
+
     ///////////////////////////////////////// OUTGOING ////////////////////////////////////////////////
 
-
-
-    class ViewHolderOutgoing_Same extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        ChatMsgItemOutgoingBinding binding_outgoing;
-        ClickListner clickListner;
-        private boolean isRunning = false;
-        private final int resetInTime = 500;
-        private int counter = 0;
-        private final int messgType ;
-
-        public ViewHolderOutgoing_Same(ChatMsgItemOutgoingBinding binding, ClickListner clickListner, int messgType) {
-            super(binding.getRoot());
-
-            this.binding_outgoing = binding;
-            this.clickListner = clickListner;
-            itemView.setOnClickListener(this);
-            this.messgType = messgType;
-
-        }
-
-        void bind(int position) {
-
-            if(messgType==6){
-                binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.chatitembg_outgoing_middle_item);
-            }else{
-                binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.chatitembg_outgoing_end_item);
-            }
-
-            MessageModelHolder messageModelHolder = list.get(position);
-
-            if(messageModelHolder.getMessage().length()<26){
-                //Single Line
-
-                binding_outgoing.secondaryMultiline.setVisibility(View.GONE);
-                binding_outgoing.secondarySinlgeline.setVisibility(View.VISIBLE);
-                binding_outgoing.spaceView.setVisibility(View.VISIBLE);
-
-                binding_outgoing.textMessage.setText(messageModelHolder.getMessage());
-                binding_outgoing.timeTxt2.setText(messageModelHolder.getTime());
-            }
-
-            else{
-
-                //Multi Line
-
-                binding_outgoing.secondaryMultiline.setVisibility(View.VISIBLE);
-                binding_outgoing.secondarySinlgeline.setVisibility(View.GONE);
-                binding_outgoing.spaceView.setVisibility(View.GONE);
-
-                binding_outgoing.textMessage.setText(messageModelHolder.getMessage());
-                binding_outgoing.timeTxt.setText(messageModelHolder.getTime());
-
-            }
-        }
-
-
-        //             String html = getHTMLString(messageModel.getMessage());
-//
-//             if(html!=null) {
-//                 binding_outgoing.textMessage.setText(Html.fromHtml(html));
-//             }else{
-//             }
-
-
-        @Override
-        public void onClick(View view) {
-
-            if (isRunning) {
-                if (counter == 1) //<-- makes sure that the callback is triggered on double click
-                    clickListner.onClick(getAbsoluteAdapterPosition());
-            }
-
-            counter++;
-
-            if (!isRunning) {
-                isRunning = true;
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(resetInTime);
-                        isRunning = false;
-                        counter = 0;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }).start();
-            }
-        }
-    }
 
 
     class ViewHolderOutgoing extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -259,7 +188,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
         private boolean isRunning = false;
         private final int resetInTime = 500;
         private int counter = 0;
-        private int msgType ;
+        private final int msgType ;
 
         public ViewHolderOutgoing(ChatMsgItemOutgoingBinding binding, ClickListner clickListner, int msgType ) {
             super(binding.getRoot());
@@ -270,6 +199,8 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
             this.msgType = msgType;
 
         }
+
+
 
         void bind(int position) {
             MessageModelHolder messageModelHolder = list.get(position);
@@ -344,11 +275,16 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
     ///////////////////////////////////////// OUTGOING  ////////////////////////////////////////////////
 
 
+
+
+
+
+
     ///////////////////////////////////////// SAME USER INCOMING //////////////////////////////////////////////
 
      class ViewHolderIncoming_SameUsr extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        ChatMsgItemIncomingSameUsrBinding binding_outgoing_sameusr;
+        ChatMsgItemIncomingSameUsrBinding binding_incoming_sameusr;
         ClickListner clickListner;
          private boolean isRunning= false;
          private int resetInTime =500;
@@ -357,17 +293,21 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
         public ViewHolderIncoming_SameUsr(ChatMsgItemIncomingSameUsrBinding binding, ClickListner clickListner) {
             super(binding.getRoot());
 
-            this.binding_outgoing_sameusr = binding;
+            this.binding_incoming_sameusr = binding;
             this.clickListner = clickListner;
 
             itemView.setOnClickListener(this);
 
         }
+         public void clearAnimation()
+         {
+             binding_incoming_sameusr.getRoot().clearAnimation();
+         }
 
         void bind(int position) {
             MessageModelHolder messageModelHolder = list.get(position);
-            binding_outgoing_sameusr.textMessage.setText(messageModelHolder.getMessage());
-            binding_outgoing_sameusr.timeTxt.setText(messageModelHolder.getTime());
+            binding_incoming_sameusr.textMessage.setText(messageModelHolder.getMessage());
+            binding_incoming_sameusr.timeTxt.setText(messageModelHolder.getTime());
 
         }
 
@@ -422,7 +362,6 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
             itemView.setOnClickListener(this);
 
         }
-
 
         void bind(int position) {
             MessageModelHolder messageModelHolder = list.get(position);
@@ -482,11 +421,6 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
     //////////////////////////////////////////////////////  VIEWHOLDERS  /////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-
-
     @Override
     public int getItemViewType(int position) {
         return list.get(position).getMessageType();
@@ -542,20 +476,21 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
             case MESSAGE_TYPE_IN  :
 
                      ((ViewHolderIncoming) holder).bind(position);
-                     setAnimation(holder.itemView,position,R.anim.pop_in);
+                     setAnimation(holder.itemView,position,R.anim.pop_in_slide);
 
                 break;
 
             case MESSAGE_TYPE_OUT :
 
                     ((ViewHolderOutgoing) holder).bind(position);
-                    setAnimation(holder.itemView, position, R.anim.pop_in);
+                    setAnimation(holder.itemView, position, R.anim.pop_in_slide);
+
 
                 break;
 
             case MESSAGE_TYPE_IN_SAME:
                 ((ViewHolderIncoming_SameUsr) holder).bind(position);
-                setAnimation(holder.itemView,position,R.anim.pop_in);
+                setAnimation(holder.itemView,position,R.anim.pop_in_slide);
 
 
                 break;
@@ -567,18 +502,18 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             case MESSAGE_TYPE_REFFERED_MSG:
                 ((ViewHolderRefferedMessage) holder).bind(position);
-                setAnimation(holder.itemView,position,R.anim.pop_in);
+                setAnimation(holder.itemView,position,R.anim.popin_right_to_left);
 
                 break;
 
             case MESSAGE_TYPE_OUT_SAME_USER_MIDDLE_ITEM:
                 ((ViewHolderOutgoing) holder).bind(position);
-                setAnimation(holder.itemView,position,R.anim.pop_in);
+                setAnimation(holder.itemView,position,R.anim.popin_right_to_left);
                 break;
 
             case MESSAGE_TYPE_OUT_SAME_USER_END_ITEM:
                 ((ViewHolderOutgoing) holder).bind(position);
-                setAnimation(holder.itemView,position,R.anim.pop_in);
+                setAnimation(holder.itemView,position,R.anim.popin_right_to_left);
                 break;
 
     }
@@ -672,14 +607,19 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
     private void setAnimation(View viewToAnimate, int position, int anim)
     {
         // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition)
+        if (position < lastPosition)
         {
-            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), anim);
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.pop_in_slide);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
     }
 
+    @Override
+    public void onViewDetachedFromWindow(final RecyclerView.ViewHolder holder)
+    {
+            holder.itemView.clearAnimation();
+    }
 
 
 }

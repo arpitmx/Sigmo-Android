@@ -53,9 +53,9 @@ public class RecyclerScrollManager {
 
         public static int scrollDist = 0;
         boolean isVisible = false;
-        final float MINIMUM_SHOW = 3500;
+        final float MINIMUM_SHOW = 15000;
         final float MINIMUM_HIDE = 300;
-        final long HIDING_DELAY = 3000;
+        final long HIDING_DELAY = 8000;
 
 
         @Override
@@ -65,14 +65,9 @@ public class RecyclerScrollManager {
 
             if (isVisible && scrollDist > MINIMUM_HIDE) {
 
-
                 hide();
                 scrollDist = 0;
                 isVisible = false;
-
-
-
-
 
             }
             else if (!isVisible && scrollDist < -MINIMUM_SHOW) {
