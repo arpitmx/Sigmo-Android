@@ -3,8 +3,8 @@
     package="com.bitpolarity.spotifytestapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".application.Sigmo"
@@ -15,6 +15,9 @@
         android:roundIcon="@drawable/s1"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpotifyTestApp">
+        <activity
+            android:name=".MainHolderActivity"
+            android:exported="true" />
         <activity
             android:name=".SpotifyLoginVerifierActivity"
             android:exported="true" />
@@ -39,7 +42,7 @@
         </activity>
         <activity android:name=".UI_Controllers.Login" />
         <activity
-            android:name=".UI_Controllers.MainHolder"
+            android:name=".TopLevelTabs.MainHolderFragment"
             android:launchMode="singleTop" />
         <activity android:name=".UI_Controllers.MainActivity" />
 

@@ -13,7 +13,7 @@
    <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI_Controllers.MainHolder">
+    tools:context=".TopLevelTabs.MainHolderFragment">
 
     <include
         android:id="@+id/custom_action"
@@ -71,10 +71,6 @@
 
            </FrameLayout>
 
-
-
-
-
        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
@@ -94,12 +90,12 @@
 
         </RelativeLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/bottom_navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/side_navigation_drawer_menu" />
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/bottom_navigation_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        app:menu="@menu/side_navigation_drawer_menu" />-->
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

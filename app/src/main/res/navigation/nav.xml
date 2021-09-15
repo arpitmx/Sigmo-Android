@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/Circle">
+    app:startDestination="@id/Posts">
 
 
 
     <fragment
-        android:id="@+id/Circle"
-        android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Circle_Fragment"
+        android:id="@+id/Posts"
+        android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Posts_Fragment"
         android:label="Circle"
-        tools:layout="@layout/activity_status" />
+        tools:layout="@layout/fragment_posts" />
     <fragment
         android:id="@+id/Rooms"
         android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment"

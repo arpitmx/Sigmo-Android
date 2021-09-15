@@ -1,6 +1,5 @@
 package com.bitpolarity.spotifytestapp.Services;
 
-import android.app.Application;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,17 +9,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.SongDetails;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
-import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModel;
-import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModelFactory;
-import com.bitpolarity.spotifytestapp.SpotifyLoginVerifierActivity;
-import com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder;
-import com.bitpolarity.spotifytestapp.application.Sigmo;
 
 public class OnClearFromRecentService extends Service {
 

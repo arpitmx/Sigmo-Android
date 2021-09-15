@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle;
+package com.bitpolarity.spotifytestapp.TopLevelTabs;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,13 +50,10 @@ public class StatusFragment extends Fragment implements UserListAdapter.ULEventL
     RecyclerView fr_rv;
     UserListAdapter userListAdapter;
     FR_Adapter fr_adapter;
-    TabLayout tabLayout;
     DatabaseReference ref;
     mBottomSheetDialog bottomSheet;
 
     TempDataHolder dataHolder;
-    final int ONLINE = R.drawable.ongreen;
-    final int OFFLINE = R.drawable.ored;
     Parcelable state;
 
     LinearLayoutManager layoutManager ;
@@ -87,10 +84,9 @@ public class StatusFragment extends Fragment implements UserListAdapter.ULEventL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         dataHolder = new TempDataHolder();
+
         ref =FirebaseDatabase.getInstance().getReference().child("Users_DMode");
         binding.shimmerFrameLayout.startShimmerAnimation();
-
-
 
         layoutManagerFR.setOrientation(RecyclerView.HORIZONTAL);
         fr_rv.setLayoutManager(layoutManagerFR);

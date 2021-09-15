@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import com.bitpolarity.spotifytestapp.R;
 
 
-public class Circle_Search_Fragment extends Fragment {
+public class Posts_Fragment extends Fragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_circle_search, container, false);
+        View v = inflater.inflate(R.layout.fragment_posts, container, false);
 
         // TextView tv = (TextView) v.findViewById(R.id.t1);
         //  tv.setText(getArguments().getString("msg"));
@@ -24,9 +24,9 @@ public class Circle_Search_Fragment extends Fragment {
         return v;
     }
 
-    public static Circle_Search_Fragment newInstance(String text) {
+    public static Posts_Fragment newInstance(String text) {
 
-        Circle_Search_Fragment f = new Circle_Search_Fragment();
+        Posts_Fragment f = new Posts_Fragment();
         Bundle b = new Bundle();
         b.putString("msg", text);
 
