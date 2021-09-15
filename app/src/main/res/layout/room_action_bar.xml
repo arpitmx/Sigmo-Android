@@ -89,16 +89,16 @@
              android:orientation="horizontal"
          android:layout_marginStart="10dp"
          android:paddingStart="5dp"
-         android:gravity="center"
+         android:gravity="center">
 
-         >
-        <TextView
+
+         <TextView
             android:id="@+id/totalOnline_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/hmed"
             android:text="1 online"
-            android:textColor="#89BCE6"
+            android:textColor="@color/room_actionbar_online_color"
             android:paddingBottom="5dp"
             android:textSize="12dp"
             android:visibility = "visible"

@@ -7,9 +7,12 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
@@ -25,6 +28,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -102,8 +106,11 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
     Context context;
     AnimationDrawable processLoaderDrawable;
 
+    Vibrator replyVibrator;
 
-    private Runnable input_finish_checker = () -> {
+
+
+    private final Runnable input_finish_checker = () -> {
         if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
                 updateTyping();
         }
@@ -117,7 +124,7 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
         binding = FragmentRoomChatBinding.inflate(inflater, container , false);
@@ -147,7 +154,6 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
        chatRV = binding.chatsLayout;
        //layoutManager = new LinearLayoutManager(getContext());
        speedyLinearLayoutManager = new SigmoLinearLayoutManager(getContext());
-       speedyLinearLayoutManager.getStackFromEnd();
 
 
 
@@ -155,6 +161,7 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
         processLoaderDrawable.setEnterFadeDuration(2000);
         processLoaderDrawable.setExitFadeDuration(2000);
 
+        replyVibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
        return binding.getRoot();
 
@@ -353,19 +360,28 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
         // binding.roomInput.referenceLayout.referenceView.setAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_down));
         processLoaderDrawable.stop();
         binding.roomInput.referenceLayout.processLoader.setVisibility(View.GONE);
-
         binding.roomInput.msgEditBox.setBackground(shapeHiddenReference);
         binding.roomInput.referenceLayout.referenceView.setVisibility(View.GONE);
+
         referenceTabUp = false;
         referenceTabPointingTo = String.valueOf(-1);
+
 
         //new Handler().postDelayed(() -> binding.roomInput.referenceLayout.referenceView.setVisibility(View.GONE),100);
         //  binding.jumpToEndFAB.animate().translationY(binding.jumpToEndFAB.getHeight() +30).setInterpolator(new AccelerateInterpolator(2)).start();
 
     }
 
+
     void showReferenceTab(ArrayList<MessageModelHolder> chatlist , int pos){
        // binding.roomInput.referenceLayout.referenceView.animate().translationY(-binding.roomInput.referenceLayout.referenceView.getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            replyVibrator.vibrate(VibrationEffect.createOneShot(5, VibrationEffect.DEFAULT_AMPLITUDE));
+        }else{
+            replyVibrator.vibrate(5);
+        }
+
         processLoaderDrawable.start();
         binding.roomInput.referenceLayout.processLoader.setVisibility(View.VISIBLE);
         String reference_user = chatlist.get(pos).getSenderName();

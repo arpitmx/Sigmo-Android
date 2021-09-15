@@ -5,23 +5,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bitpolarity.spotifytestapp.Adapters.FR_Adapter;
-import com.bitpolarity.spotifytestapp.Adapters.RoomsListAdapters.RoomsListAdapter;
 import com.bitpolarity.spotifytestapp.BottomSheets.mBottomSheetDialog;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.FR_Model;
 import com.bitpolarity.spotifytestapp.GetterSetterModels.UserListModel;
@@ -29,18 +22,12 @@ import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter.UserListAdapter;
 import com.bitpolarity.spotifytestapp.DB_Related.TempDataHolder;
 import com.bitpolarity.spotifytestapp.databinding.ActivityStatusBinding;
-import com.bitpolarity.spotifytestapp.databinding.FragmentCircleBinding;
-import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.crashlytics.internal.model.CrashlyticsReport;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,18 +37,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 import static android.content.ContentValues.TAG;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.xml.transform.Result;
-
-public class StatusActivity extends Fragment implements UserListAdapter.ULEventListner {
+public class StatusFragment extends Fragment implements UserListAdapter.ULEventListner {
 
     final String LOG = "StatusActivity";
     RecyclerView userRecyclerView;
@@ -265,7 +247,7 @@ public class StatusActivity extends Fragment implements UserListAdapter.ULEventL
 
    void getMyData(DataSnapshot snapshot){
 
-        userListAdapter = new UserListAdapter(getDataFaster(snapshot), StatusActivity.this, getContext());
+        userListAdapter = new UserListAdapter(getDataFaster(snapshot), StatusFragment.this, getContext());
         //userRecyclerView.setAdapter(userListAdapter);
         someMethod(userRecyclerView, userListAdapter);
         userListAdapter.notifyDataSetChanged();

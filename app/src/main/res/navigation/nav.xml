@@ -11,7 +11,7 @@
         android:id="@+id/Circle"
         android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Circle_Fragment"
         android:label="Circle"
-        tools:layout="@layout/fragment_circle" />
+        tools:layout="@layout/activity_status" />
     <fragment
         android:id="@+id/Rooms"
         android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment"

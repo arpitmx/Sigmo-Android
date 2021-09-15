@@ -60,6 +60,7 @@
     <color name="blue50">#D1EBFD</color>
     <color name="incoming_msg_bg">#292929</color>
     <color name="outgoing_msg_bg">#5A87FD</color>
+    <color name="room_actionbar_online_color">#89BCE6</color>
 
 
 </resources>

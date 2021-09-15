@@ -95,6 +95,7 @@ public class SupporterClass extends ViewModel {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         count = Integer.parseInt(snapshot.child("currentOnline").getValue().toString());
+
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {

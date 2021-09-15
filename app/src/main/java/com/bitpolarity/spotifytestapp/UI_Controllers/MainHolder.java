@@ -41,6 +41,7 @@ import com.bitpolarity.spotifytestapp.Spotify.SongModel;
 import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
 
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Circle_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.StatusFragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Profile_Fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment;
 import com.bitpolarity.spotifytestapp.R;
@@ -77,7 +78,6 @@ public class MainHolder extends AppCompatActivity {
    //ViewBinidings
     ActivityMainHolderBinding binding;
 
-
     ImageButton playback;
     ImageButton side_navigation_button;
     ImageView miniPlayer_bg;
@@ -98,7 +98,7 @@ public class MainHolder extends AppCompatActivity {
 
 
     //Fragments
-    final Fragment fragment1 = new Circle_Fragment();
+    final Fragment fragment1 = new StatusFragment();
     final Fragment fragment2 = new Rooms_Fragment();
     final Fragment fragment3 = new Profile_Fragment();
     final FragmentManager fm = getSupportFragmentManager();
@@ -155,9 +155,6 @@ public class MainHolder extends AppCompatActivity {
         //System services
 
 
-
-
-
         //Object types
 
 
@@ -171,9 +168,6 @@ public class MainHolder extends AppCompatActivity {
 //                .diskCacheStrategy(DiskCacheStrategy.NONE)
 //                .skipMemoryCache(true)
 //                .into(miniPlayer_bg);
-
-
-
 
 
 //        playerSeekbar.setEnabled(true);
@@ -213,8 +207,6 @@ public class MainHolder extends AppCompatActivity {
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-
-
 
 
         /////////////////////////// OnClick Listeners

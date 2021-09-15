@@ -45,7 +45,7 @@ public class Circle_Fragment extends Fragment {
         final Circle_Tab_Adapter adapter = new Circle_Tab_Adapter(fm, getLifecycle());
 
         tabLayout.addTab(tabLayout.newTab().setText("Friends \uD83D\uDC4B"));
-        tabLayout.addTab(tabLayout.newTab().setText("Stories ⚡"));
+        //tabLayout.addTab(tabLayout.newTab().setText("Stories ⚡"));
 
         viewPager.setAdapter(adapter);
 

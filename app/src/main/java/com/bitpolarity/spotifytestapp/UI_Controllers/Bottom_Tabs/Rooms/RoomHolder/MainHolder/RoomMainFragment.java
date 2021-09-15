@@ -13,10 +13,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.bitpolarity.spotifytestapp.DB_Handler;
 import com.bitpolarity.spotifytestapp.R;
@@ -43,6 +48,7 @@ public class RoomMainFragment extends Fragment {
     DatabaseReference memberRoot, isTypingRoot;
     final static String TAG = "RoomHolderActivity";
     private AnimationDrawable processLoaderDrawable;
+    TextView onlineTV;
 
     DatabaseReference RoomBase_ref = FirebaseDatabase.getInstance().getReference().child("RoomBase");
 
@@ -54,9 +60,11 @@ public class RoomMainFragment extends Fragment {
             if(snapshot.hasChild("allmembers")) {
 
                 Map<String, Object> map = (Map<String, Object>) snapshot.child("allmembers").getValue();
+              //  binding.roomActionBar.totalOnlineTv.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_up));
                 binding.roomActionBar.totalOnlineTv.setText(map.size()+" online");
 
                 if (processLoaderDrawable != null && processLoaderDrawable.isRunning() ) {
+
                     processLoaderDrawable.stop();
                     binding.processLoader.setVisibility(View.GONE);
 
@@ -74,6 +82,7 @@ public class RoomMainFragment extends Fragment {
                 }
             }
         }
+
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
             Log.d(TAG, "onCancelled: Error");
@@ -130,6 +139,20 @@ public class RoomMainFragment extends Fragment {
         binding.roomActionBar.roomBackBTN.setOnClickListener(view -> getActivity().onBackPressed());
 
         //getTypingMembers();
+
+
+//        binding.roomActionBar.totalOnlineTv.setFactory(new ViewSwitcher.ViewFactory() {
+//            @Override
+//            public View makeView() {
+//              onlineTV = new TextView(getActivity().getBaseContext());
+//              onlineTV.setTextColor(getResources().getColor(R.color.room_actionbar_online_color));
+//              onlineTV.setTextSize(12);
+//              onlineTV.setGravity(Gravity.CENTER_VERTICAL);
+//                return onlineTV;
+//            }
+//        });
+//
+//        binding.roomActionBar.totalOnlineTv.setText("...");
 
         return binding.getRoot();
     }

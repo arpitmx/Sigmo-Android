@@ -7,11 +7,11 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Circle_Search_Fragment;
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.StatusActivity;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.StatusFragment;
 
 public class Circle_Tab_Adapter extends FragmentStateAdapter
 {
-    final Fragment friendFragment = new StatusActivity();
+    final Fragment friendFragment = new StatusFragment();
     final Fragment circleSearchFragment = new Circle_Search_Fragment();
 
     public Circle_Tab_Adapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
