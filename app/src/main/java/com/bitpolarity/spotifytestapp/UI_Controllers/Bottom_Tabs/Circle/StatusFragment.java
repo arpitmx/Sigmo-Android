@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.TopLevelTabs;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +22,6 @@ import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.Adapters.CircleFriendActivityAdapter.UserListAdapter;
 import com.bitpolarity.spotifytestapp.DB_Related.TempDataHolder;
 import com.bitpolarity.spotifytestapp.databinding.ActivityStatusBinding;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

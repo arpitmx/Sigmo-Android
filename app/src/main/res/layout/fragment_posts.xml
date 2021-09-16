@@ -5,18 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background = "@color/dark_fg_border"
-    tools:context=".UI_Controllers.Bottom_Tabs.Circle.Posts_Fragment">
+    tools:context=".UI_Controllers.Bottom_Tabs.Music_fragment">
 
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="345dp"
         android:layout_height="wrap_content"
-        android:text="Posts"
-        android:textSize="30dp"
+
+        android:text="The music you and your friends love :) , curated at one place!"
+        android:textAlignment="center"
         android:textColor="@color/sigmo_dark_blue"
+        android:textSize="25dp"
+        android:fontFamily="@font/hb"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.452" />
 </androidx.constraintlayout.widget.ConstraintLayout>

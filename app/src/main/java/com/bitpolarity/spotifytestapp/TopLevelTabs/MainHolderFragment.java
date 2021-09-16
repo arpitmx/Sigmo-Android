@@ -32,8 +32,8 @@ import androidx.palette.graphics.Palette;
 
 import com.bitpolarity.spotifytestapp.Spotify.SongModel;
 
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Posts_Fragment;
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Profile_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.StatusFragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Music_fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
@@ -85,9 +85,9 @@ public class MainHolderFragment extends Fragment {
     public static SeekBar playerSeekbar;
 
     //Fragments
-    final Fragment fragment1 = new Posts_Fragment();
+    final Fragment fragment1 = new StatusFragment();
     final Fragment fragment2 = new Rooms_Fragment();
-    final Fragment fragment3 = new Profile_Fragment();
+    final Fragment fragment3 = new Music_fragment();
     FragmentManager fm ;
     Fragment active = fragment1;
 

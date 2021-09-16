@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle;
+package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs;
 
 import android.os.Bundle;
 
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.bitpolarity.spotifytestapp.R;
 
 
-public class Posts_Fragment extends Fragment {
+public class Music_fragment extends Fragment {
 
 
     @Override
@@ -24,14 +24,5 @@ public class Posts_Fragment extends Fragment {
         return v;
     }
 
-    public static Posts_Fragment newInstance(String text) {
 
-        Posts_Fragment f = new Posts_Fragment();
-        Bundle b = new Bundle();
-        b.putString("msg", text);
-
-        f.setArguments(b);
-
-        return f;
-    }
 }

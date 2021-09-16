@@ -22,8 +22,12 @@ public class MainHolderActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         fragment = new TabManagerFragment();
         fm.beginTransaction().replace(R.id.fragmentcontainer_toplevel_tabholder, fragment).addToBackStack(null).commit();
+    }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
 
     }
 }

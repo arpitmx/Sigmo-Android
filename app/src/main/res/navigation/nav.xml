@@ -5,22 +5,20 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/Posts">
 
-
-
     <fragment
         android:id="@+id/Posts"
-        android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Posts_Fragment"
+        android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.StatusFragment"
         android:label="Circle"
-        tools:layout="@layout/fragment_posts" />
+        tools:layout="@layout/activity_status" />
     <fragment
         android:id="@+id/Rooms"
         android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment"
         android:label="Rooms"
         tools:layout="@layout/fragment_rooms" />
     <fragment
-        android:id="@+id/socialF"
-        android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Profile_Fragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        android:id="@+id/Music"
+        android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Music_fragment"
+        android:label="Music"
+        tools:layout="@layout/fragment_posts" />
 
 </navigation>

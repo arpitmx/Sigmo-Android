@@ -7,11 +7,11 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.bitpolarity.spotifytestapp.TopLevelTabs.MainHolderFragment;
-import com.bitpolarity.spotifytestapp.TopLevelTabs.StatusFragment;
+import com.bitpolarity.spotifytestapp.TopLevelTabs.Profile_Fragment;
 
 public class TopLevelTabAdapter extends FragmentStateAdapter
 {
-    final Fragment statusFragment = new StatusFragment();
+    final Fragment profile_fragment = new Profile_Fragment();
     final Fragment mainHolderFragment = new MainHolderFragment();
 
     public TopLevelTabAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
@@ -23,7 +23,7 @@ public class TopLevelTabAdapter extends FragmentStateAdapter
     public Fragment createFragment(int position) {
         if (position == 0) {
 
-            return  statusFragment;
+            return  profile_fragment;
         }
         return mainHolderFragment;
     }
