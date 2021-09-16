@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="textsize">30sp</dimen>
-    <dimen name="chat_incoming_outgoing_font_size">17dp</dimen>
+    <dimen name="chat_incoming_outgoing_font_size">17.2dp</dimen>
     <dimen name="chat_incoming_outgoing_font_size_16dp">16dp</dimen>
     <dimen name="TYPE_MSG">001</dimen>
     <dimen name="TYPE_JOIN">002</dimen>

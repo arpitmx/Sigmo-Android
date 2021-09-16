@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_bg"
     >
 
 
@@ -12,17 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@color/dark_bg"
-                app:tabTextColor="#979797"
-                app:tabSelectedTextColor="@color/white"
-                app:tabIndicatorColor="@color/s_yellow"
-                android:visibility="visible"
-                app:tabIndicatorHeight="2.8dp"
-                    />
+
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewpager"

@@ -6,17 +6,17 @@
     <item
         android:id="@+id/nav_circle"
         android:icon="@drawable/ic_baseline_people_alt_24"
-        android:title="Circle"
+        android:title="@string/circle"
         />
     <item
         android:id="@+id/nav_rooms"
         android:icon="@drawable/ic_baseline_group_work_24"
-        android:title="Rooms"
+        android:title="@string/rooms"
         />
     <item
-        android:id="@+id/nav_profile"
+        android:id="@+id/nav_music"
         android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="Me"
+        android:title="@string/music"
         />
 
 

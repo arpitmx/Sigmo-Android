@@ -5,14 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bitpolarity.spotifytestapp.MainHolderActivity;
 import com.bitpolarity.spotifytestapp.Services.OnClearFromRecentService;
 import com.bitpolarity.spotifytestapp.R;
-import com.bitpolarity.spotifytestapp.SpotifyLoginVerifierActivity;
+import com.bitpolarity.spotifytestapp.TopLevelTabs.MainHolderFragment;
 
 public class Login extends AppCompatActivity {
 
@@ -52,7 +52,7 @@ public class Login extends AppCompatActivity {
 
                     prefs.edit().putString("Username", username).apply();
                     startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
-                    startActivity(new Intent(Login.this, MainHolder.class));
+                    startActivity(new Intent(Login.this, MainHolderActivity.class));
                     Toast.makeText(this, "Welcome"+username, Toast.LENGTH_SHORT).show();
 
                 }else{
@@ -71,7 +71,7 @@ public class Login extends AppCompatActivity {
 //         //   }else{
                 next.setEnabled(false);
                 startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
-                startActivity(new Intent(this, MainHolder.class));
+                startActivity(new Intent(this, MainHolderActivity.class));
                 Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show();
                 finish();
             }

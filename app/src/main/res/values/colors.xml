@@ -24,11 +24,11 @@
     <color name= "s_readable_black">#5D5D5D</color>
     <color name= "s_readable_black_200">#373737</color>
 
-    <color name= "dark_bg">#F2121212</color>
+    <color name= "dark_bg">#1C1C1C</color>
     <color name= "dark_bg_toptab">#34121212</color>
 <!--    <color name= "dark_fg">#323232</color> -->
     <color name="dark_chat_bg">#9EB3C5</color>
-    <color name= "dark_fg">#D5323232</color>
+    <color name= "dark_fg">#323232</color>
     <color name= "dark_fg_darker">#2C2C2C</color>
     <color name= "dark_fg_border">#F2050505</color>
 
@@ -60,6 +60,7 @@
     <color name="blue50">#D1EBFD</color>
     <color name="incoming_msg_bg">#292929</color>
     <color name="outgoing_msg_bg">#5A87FD</color>
+    <color name="room_actionbar_online_color">#89BCE6</color>
 
 
 </resources>

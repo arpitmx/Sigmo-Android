@@ -2,7 +2,7 @@ package com.bitpolarity.spotifytestapp.Spotify;
 
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.mSpotifyAppRemote;
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
-import static com.bitpolarity.spotifytestapp.UI_Controllers.MainHolder.playerSeekbar;
+import static com.bitpolarity.spotifytestapp.TopLevelTabs.MainHolderFragment.playerSeekbar;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,8 +11,6 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.SeekBar;
-
-import androidx.palette.graphics.Palette;
 
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;

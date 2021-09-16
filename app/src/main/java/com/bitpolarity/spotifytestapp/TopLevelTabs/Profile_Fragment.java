@@ -1,4 +1,4 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs;
+package com.bitpolarity.spotifytestapp.TopLevelTabs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

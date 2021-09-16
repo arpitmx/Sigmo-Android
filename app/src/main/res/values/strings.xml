@@ -3,9 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
-    <string name="exercise">Exercise</string>
     <string name="post">Post</string>
-    <string name="social">Social</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
     <string name="rooms">Rooms</string>
@@ -16,5 +14,7 @@
     <string name="RoomBase_USERNAME">userName</string>
     <string name="ROOM_BASE_DB">RoomBase</string>
     <string name="RoomBase_STARTED_AT">startedAt</string>
+    <string name="circle">Circle</string>
+    <string name="music">Music</string>
 
 </resources>

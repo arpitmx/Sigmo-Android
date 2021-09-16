@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "75071470284",
+    "firebase_url": "https://sigmo-testapp-default-rtdb.firebaseio.com",
+    "project_id": "sigmo-testapp",
+    "storage_bucket": "sigmo-testapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75071470284:android:5f1239dbf831d2c0bb2069",
+        "android_client_info": {
+          "package_name": "com.bitpolarity.spotifytestapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "75071470284-gkd9eqidfuo3k5glo4q3aesac5fkc03p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bitpolarity.spotifytestapp",
+            "certificate_hash": "0f9b8231617ff9dadcf9c5b8e174e4904c853083"
+          }
+        },
+        {
+          "client_id": "75071470284-vhagplvs7b1lc16h4a2uo4oos732m1t7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHEBWCJbjQ1YiVfdGwKebp5mUSZnQVuSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "75071470284-vhagplvs7b1lc16h4a2uo4oos732m1t7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

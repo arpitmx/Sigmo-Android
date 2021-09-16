@@ -1,27 +1,24 @@
-package com.bitpolarity.spotifytestapp.UI_Controllers;
+package com.bitpolarity.spotifytestapp.TopLevelTabs;
 
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.compressImage;
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.mSpotifyAppRemote;
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
 
-import android.content.ContentResolver;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,31 +26,30 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.palette.graphics.Palette;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bitpolarity.spotifytestapp.Spotify.SongModel;
-import com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository;
 
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.Circle_Fragment;
-import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Profile_Fragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.StatusFragment;
+import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Music_fragment;
 import com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment;
 import com.bitpolarity.spotifytestapp.R;
 import com.bitpolarity.spotifytestapp.SpotifyHandler.mDetail_Holder;
 
-import com.bitpolarity.spotifytestapp.Spotify.SpotifyViewModel;
 import com.bitpolarity.spotifytestapp.databinding.ActivityMainHolderBinding;
 
 import com.bitpolarity.spotifytestapp.databinding.CustomActionBarBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import com.spotify.protocol.client.Subscription;
-import com.spotify.protocol.types.PlayerState;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -63,7 +59,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class MainHolder extends AppCompatActivity {
+public class MainHolderFragment extends Fragment {
 
 
     BottomNavigationView bottomNavigation; // Bottom navigation bar
@@ -75,12 +71,14 @@ public class MainHolder extends AppCompatActivity {
     boolean liked = false;
 
    //ViewBinidings
+
+
     ActivityMainHolderBinding binding;
-
-
     ImageButton playback;
     ImageButton side_navigation_button;
     ImageView miniPlayer_bg;
+    NavController navController;
+    AppBarConfiguration appBarConfiguration;
 
 
     TextView mSongName, mArtistName;
@@ -91,20 +89,21 @@ public class MainHolder extends AppCompatActivity {
     ImageView cir;
     ImageView Fav;
 
+    NavOptions navOptions ;
 
 
     public static SeekBar playerSeekbar;
 
-
-
     //Fragments
-    final Fragment fragment1 = new Circle_Fragment();
+    final Fragment fragment1 = new StatusFragment();
     final Fragment fragment2 = new Rooms_Fragment();
-    final Fragment fragment3 = new Profile_Fragment();
-    final FragmentManager fm = getSupportFragmentManager();
+    final Fragment fragment3 = new Music_fragment();
+    FragmentManager fm ;
     Fragment active = fragment1;
+    ViewPager2 viewPager2;
 
     CustomActionBarBinding customActionBarBinding;
+
 
 
 
@@ -117,7 +116,7 @@ public class MainHolder extends AppCompatActivity {
     ////////////////////////////////
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
@@ -125,15 +124,17 @@ public class MainHolder extends AppCompatActivity {
 //        fm.beginTransaction().add(R.id.fragmentContainerView, fragment2, "2").hide(fragment2).commit();
 //        fm.beginTransaction().add(R.id.fragmentContainerView,fragment1, "1").commit();
 
-
-        binding = ActivityMainHolderBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        customActionBarBinding = binding.customAction;
-
-
         //////////////////////////////////////// Init5ializations ///////////////////////////////////////////////////
 
+
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        binding = ActivityMainHolderBinding.inflate(getLayoutInflater());
 
 
         //Buttons
@@ -141,6 +142,8 @@ public class MainHolder extends AppCompatActivity {
         playback = binding.toolbar.playback;
         miniPlayer_bg = binding.toolbar.miniplayerBg;
         side_navigation_button = binding.customAction.imageButton;
+        customActionBarBinding = binding.customAction;
+        viewPager2 = getActivity().findViewById(R.id.viewpager);
 
         //TextViews
         mSongName = binding.toolbar.mSongName;
@@ -154,26 +157,19 @@ public class MainHolder extends AppCompatActivity {
 
         //System services
 
-
-
-
-
         //Object types
 
 
         bottomNavigation = binding.bottomNav;
         drawerLayout = binding.myDrawerLayout;
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
-
-//        Glide.with(MainHolder.this)
-//                .load("https://picsum.photos/900/700")
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                .skipMemoryCache(true)
-//                .into(miniPlayer_bg);
+      appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_circle, R.id.nav_rooms, R.id.nav_music )
+                .build();
 
 
 
+        //   actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
 
 //        playerSeekbar.setEnabled(true);
@@ -183,12 +179,42 @@ public class MainHolder extends AppCompatActivity {
         //////////////////////////////////////// Initializations//////////////////////////////////////////////
 
 
+        mSongName = binding.toolbar.mSongName;
+        mArtistName = binding.toolbar.mArtistName;
+        sigmo_Title = binding.customAction.sigmoTitleBar;
+        room = binding.customAction.Rooms;
+
+        //navController = Navigation.findNavController(getActivity(),R.id.nav_host_fragment);
+      //  NavigationUI.setupWithNavController(bottomNavigation,navController);
+
+//        navOptions= new NavOptions.Builder()
+//                .setLaunchSingleTop(true)
+//                .setEnterAnim(R.anim.fade_in)
+//                .setExitAnim(R.anim.fade_out)
+//                .setPopEnterAnim(R.anim.pop_in)
+//                .setPopExitAnim(R.anim.pop_out)
+//                .setPopUpTo(navController.getGraph().getStartDestination(), false)
+//                .build();
+
+        fm = getParentFragmentManager();
+        detail_holder = new mDetail_Holder();
+
+        return binding.getRoot();
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 
     @Override
     public void onStart() {
 
         super.onStart();
+        side_navigation_button.setOnClickListener(view -> viewPager2.setCurrentItem(0));
+
 
         //  standard.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
 
@@ -204,24 +230,17 @@ public class MainHolder extends AppCompatActivity {
 //        }).start();
 
 
-        mSongName = findViewById(R.id.m_song_name);
-        mArtistName = findViewById(R.id.mArtist_name);
-        sigmo_Title = findViewById(R.id.sigmoTitleBar);
-        room = findViewById(R.id.Rooms);
-
-        detail_holder = new mDetail_Holder();
-
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
 
 
+      //  drawerLayout.addDrawerListener(actionBarDrawerToggle);
+      //  actionBarDrawerToggle.syncState();
 
 
         /////////////////////////// OnClick Listeners
 
-        side_navigation_button.setOnClickListener(view -> drawerLayout.open());
-
-        bottomNavigation.setOnItemSelectedListener(item -> {
+       // side_navigation_button.setOnClickListener(view -> drawerLayout.open());
+//
+        bottomNavigation.setOnNavigationItemSelectedListener(item -> {
 
 //           if (item.getItemId()==R.id.nav_home){
 //
@@ -237,7 +256,9 @@ public class MainHolder extends AppCompatActivity {
 
                 case R.id.nav_circle:
 
-                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment1).addToBackStack(null).commit();
+                 //   navController.navigate(R.id.nav_circle,null,navOptions);
+
+                   fm.beginTransaction().replace(R.id.nav_host_fragment, fragment1).addToBackStack(null).commit();
                     active = fragment1;
                     customActionBarBinding.customActionBarConsLay.setVisibility(View.VISIBLE);
 
@@ -254,10 +275,14 @@ public class MainHolder extends AppCompatActivity {
                     customActionBarBinding.sigmoTitleBar.setText("Sigmo");
                     return true;
 
+
                 case R.id.nav_rooms:
-                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment2).addToBackStack(null).commit();
-                    active = fragment2;
-                    customActionBarBinding.customActionBarConsLay.setVisibility(View.VISIBLE);
+
+                    //navController.navigate(R.id.nav_rooms,null,navOptions);
+
+                   fm.beginTransaction().replace(R.id.nav_host_fragment, fragment2).addToBackStack(null).commit();
+                   active = fragment2;
+//                    customActionBarBinding.customActionBarConsLay.setVisibility(View.VISIBLE);
 
                //binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
                     //sigmo_Title.setVisibility(View.GONE);
@@ -272,8 +297,11 @@ public class MainHolder extends AppCompatActivity {
 
                     return true;
 
-                case R.id.nav_profile:
-                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment3).addToBackStack(null).commit();
+                case R.id.nav_music:
+
+                  //  navController.navigate(R.id.nav_music,null,navOptions);
+
+                   fm.beginTransaction().replace(R.id.nav_host_fragment, fragment3).addToBackStack(null).commit();
                     active = fragment3;
                     customActionBarBinding.customActionBarConsLay.setVisibility(View.GONE);
                     //peacock_symbol.setVisibility(View.GONE);
@@ -282,9 +310,13 @@ public class MainHolder extends AppCompatActivity {
             }
 
 
+
             return true;
         });
 
+//        bottomNavigation.setOnNavigationItemReselectedListener(item ->{
+//            return @setOnNavigationItemReselectedListener;
+//        }
         setMiniPlayerDetails();
         setPosterAndPallet();
         //setPalette();
@@ -340,7 +372,7 @@ public class MainHolder extends AppCompatActivity {
     void setMiniPlayerBGPicassio(){
     //"https://i.scdn.co/image/ab67616d00001e028155c99a241d4c57b2c3f88d"
 
-        Picasso.with(this)
+        Picasso.with(getContext())
                 .load("")
                 .resize(200, 100)
                 .into(new Target() {
@@ -366,7 +398,7 @@ public class MainHolder extends AppCompatActivity {
 
                     @Override
                     public void onBitmapFailed(Drawable errorDrawable) {
-                            Toast.makeText(MainHolder.this, "Error loading ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Error loading ", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -397,7 +429,7 @@ public class MainHolder extends AppCompatActivity {
             if(s.equals("Advertisement")){
 
                 //this.prevVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                Toast.makeText(MainHolder.this , "Muting ads",Toast.LENGTH_SHORT   ).show();
+                Toast.makeText(getContext() , "Muting ads",Toast.LENGTH_SHORT   ).show();
                 mSpotifyAppRemote.getConnectApi().connectSetVolume(0f);
 
             }
@@ -461,7 +493,7 @@ public class MainHolder extends AppCompatActivity {
             if(aBoolean){
                 Log.d(TAG, "connected: paused ");
                 playback.setImageResource(R.drawable.ic_play);
-                playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in));
+                playback.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_in));
 
                 playback.setScaleX(1f);
                 playback.setScaleY(1f);
@@ -470,7 +502,7 @@ public class MainHolder extends AppCompatActivity {
                 Log.d(TAG, "connected: playing ");
 
                 playback.setImageResource(R.drawable.ic_baseline_pause_24);
-                playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this, R.anim.fade_in_switch));
+                playback.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_switch));
 
                 playback.setScaleX(1.3f);
                 playback.setScaleY(1.6f);
@@ -484,7 +516,7 @@ public class MainHolder extends AppCompatActivity {
                 if(!aBoolean){
                     Log.d(TAG, "connected: playing ");
                     playback.setImageResource(R.drawable.ic_baseline_pause_24);
-                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
+                    playback.setAnimation(AnimationUtils.loadAnimation(getContext() , R.anim.fade_in_switch));
                     playback.setScaleX(1.3f);
                     playback.setScaleY(1.6f);
                     mSpotifyAppRemote.getPlayerApi().pause();
@@ -493,7 +525,7 @@ public class MainHolder extends AppCompatActivity {
                     playback.setImageResource(R.drawable.ic_play);
                     Log.d(TAG, "connected: paused ");
 
-                    playback.setAnimation(AnimationUtils.loadAnimation(MainHolder.this , R.anim.fade_in_switch));
+                    playback.setAnimation(AnimationUtils.loadAnimation(getContext() , R.anim.fade_in_switch));
 
                     playback.setScaleX(1f);
                     playback.setScaleY(1f);
@@ -515,18 +547,18 @@ public class MainHolder extends AppCompatActivity {
                     if (!liked) {
                         mSpotifyAppRemote.getUserApi().addToLibrary(track.uri);
                         Fav.setImageResource(R.drawable.ic_heart);
-                        Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_in));
+                        Fav.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.pop_in));
                         liked = true;
 
-                        Toast.makeText(this, "Added to library", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Added to library", Toast.LENGTH_SHORT).show();
 
                     } else {
                         mSpotifyAppRemote.getUserApi().removeFromLibrary(track.uri);
                         Fav.setImageResource(R.drawable.ic_fav);
-                        Fav.setAnimation(AnimationUtils.loadAnimation(this, R.anim.pop_out));
+                        Fav.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.pop_out));
 
                         liked = false;
-                        Toast.makeText(this, "Removed from library", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Removed from library", Toast.LENGTH_SHORT).show();
 
                     }
                     }
