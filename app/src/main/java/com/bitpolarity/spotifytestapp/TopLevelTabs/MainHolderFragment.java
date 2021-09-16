@@ -4,6 +4,7 @@ import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.compressI
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.mSpotifyAppRemote;
 import static com.bitpolarity.spotifytestapp.Spotify.SpotifyRepository.track;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,7 +29,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.palette.graphics.Palette;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bitpolarity.spotifytestapp.Spotify.SongModel;
 
@@ -70,6 +77,8 @@ public class MainHolderFragment extends Fragment {
     ImageButton playback;
     ImageButton side_navigation_button;
     ImageView miniPlayer_bg;
+    NavController navController;
+    AppBarConfiguration appBarConfiguration;
 
 
     TextView mSongName, mArtistName;
@@ -80,6 +89,7 @@ public class MainHolderFragment extends Fragment {
     ImageView cir;
     ImageView Fav;
 
+    NavOptions navOptions ;
 
 
     public static SeekBar playerSeekbar;
@@ -90,6 +100,7 @@ public class MainHolderFragment extends Fragment {
     final Fragment fragment3 = new Music_fragment();
     FragmentManager fm ;
     Fragment active = fragment1;
+    ViewPager2 viewPager2;
 
     CustomActionBarBinding customActionBarBinding;
 
@@ -113,12 +124,7 @@ public class MainHolderFragment extends Fragment {
 //        fm.beginTransaction().add(R.id.fragmentContainerView, fragment2, "2").hide(fragment2).commit();
 //        fm.beginTransaction().add(R.id.fragmentContainerView,fragment1, "1").commit();
 
-
-
-
         //////////////////////////////////////// Init5ializations ///////////////////////////////////////////////////
-
-
 
 
     }
@@ -136,9 +142,8 @@ public class MainHolderFragment extends Fragment {
         playback = binding.toolbar.playback;
         miniPlayer_bg = binding.toolbar.miniplayerBg;
         side_navigation_button = binding.customAction.imageButton;
-
         customActionBarBinding = binding.customAction;
-
+        viewPager2 = getActivity().findViewById(R.id.viewpager);
 
         //TextViews
         mSongName = binding.toolbar.mSongName;
@@ -152,20 +157,19 @@ public class MainHolderFragment extends Fragment {
 
         //System services
 
-
         //Object types
 
 
         bottomNavigation = binding.bottomNav;
         drawerLayout = binding.myDrawerLayout;
+
+      appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_circle, R.id.nav_rooms, R.id.nav_music )
+                .build();
+
+
+
         //   actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
-
-
-//        Glide.with(MainHolder.this)
-//                .load("https://picsum.photos/900/700")
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                .skipMemoryCache(true)
-//                .into(miniPlayer_bg);
 
 
 //        playerSeekbar.setEnabled(true);
@@ -179,8 +183,20 @@ public class MainHolderFragment extends Fragment {
         mArtistName = binding.toolbar.mArtistName;
         sigmo_Title = binding.customAction.sigmoTitleBar;
         room = binding.customAction.Rooms;
-        fm = getParentFragmentManager();
 
+        //navController = Navigation.findNavController(getActivity(),R.id.nav_host_fragment);
+      //  NavigationUI.setupWithNavController(bottomNavigation,navController);
+
+//        navOptions= new NavOptions.Builder()
+//                .setLaunchSingleTop(true)
+//                .setEnterAnim(R.anim.fade_in)
+//                .setExitAnim(R.anim.fade_out)
+//                .setPopEnterAnim(R.anim.pop_in)
+//                .setPopExitAnim(R.anim.pop_out)
+//                .setPopUpTo(navController.getGraph().getStartDestination(), false)
+//                .build();
+
+        fm = getParentFragmentManager();
         detail_holder = new mDetail_Holder();
 
         return binding.getRoot();
@@ -197,6 +213,8 @@ public class MainHolderFragment extends Fragment {
     public void onStart() {
 
         super.onStart();
+        side_navigation_button.setOnClickListener(view -> viewPager2.setCurrentItem(0));
+
 
         //  standard.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
 
@@ -221,8 +239,8 @@ public class MainHolderFragment extends Fragment {
         /////////////////////////// OnClick Listeners
 
        // side_navigation_button.setOnClickListener(view -> drawerLayout.open());
-
-        bottomNavigation.setOnItemSelectedListener(item -> {
+//
+        bottomNavigation.setOnNavigationItemSelectedListener(item -> {
 
 //           if (item.getItemId()==R.id.nav_home){
 //
@@ -238,7 +256,9 @@ public class MainHolderFragment extends Fragment {
 
                 case R.id.nav_circle:
 
-                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment1).addToBackStack(null).commit();
+                 //   navController.navigate(R.id.nav_circle,null,navOptions);
+
+                   fm.beginTransaction().replace(R.id.nav_host_fragment, fragment1).addToBackStack(null).commit();
                     active = fragment1;
                     customActionBarBinding.customActionBarConsLay.setVisibility(View.VISIBLE);
 
@@ -255,10 +275,14 @@ public class MainHolderFragment extends Fragment {
                     customActionBarBinding.sigmoTitleBar.setText("Sigmo");
                     return true;
 
+
                 case R.id.nav_rooms:
-                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment2).addToBackStack(null).commit();
-                    active = fragment2;
-                    customActionBarBinding.customActionBarConsLay.setVisibility(View.VISIBLE);
+
+                    //navController.navigate(R.id.nav_rooms,null,navOptions);
+
+                   fm.beginTransaction().replace(R.id.nav_host_fragment, fragment2).addToBackStack(null).commit();
+                   active = fragment2;
+//                    customActionBarBinding.customActionBarConsLay.setVisibility(View.VISIBLE);
 
                //binding.customAction.sigmoTitleBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
                     //sigmo_Title.setVisibility(View.GONE);
@@ -273,8 +297,11 @@ public class MainHolderFragment extends Fragment {
 
                     return true;
 
-                case R.id.nav_profile:
-                    fm.beginTransaction().replace(R.id.fragmentContainerView, fragment3).addToBackStack(null).commit();
+                case R.id.nav_music:
+
+                  //  navController.navigate(R.id.nav_music,null,navOptions);
+
+                   fm.beginTransaction().replace(R.id.nav_host_fragment, fragment3).addToBackStack(null).commit();
                     active = fragment3;
                     customActionBarBinding.customActionBarConsLay.setVisibility(View.GONE);
                     //peacock_symbol.setVisibility(View.GONE);
@@ -283,9 +310,13 @@ public class MainHolderFragment extends Fragment {
             }
 
 
+
             return true;
         });
 
+//        bottomNavigation.setOnNavigationItemReselectedListener(item ->{
+//            return @setOnNavigationItemReselectedListener;
+//        }
         setMiniPlayerDetails();
         setPosterAndPallet();
         //setPalette();

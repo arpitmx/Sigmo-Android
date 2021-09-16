@@ -9,12 +9,20 @@
         android:id="@+id/Posts"
         android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Circle.StatusFragment"
         android:label="Circle"
-        tools:layout="@layout/activity_status" />
+        tools:layout="@layout/activity_status" >
+        <action
+            android:id="@+id/action_Posts_to_Rooms"
+            app:destination="@id/Rooms" />
+    </fragment>
     <fragment
         android:id="@+id/Rooms"
         android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomsTab.Rooms_Fragment"
         android:label="Rooms"
-        tools:layout="@layout/fragment_rooms" />
+        tools:layout="@layout/fragment_rooms" >
+        <action
+            android:id="@+id/action_Rooms_to_Music"
+            app:destination="@id/Music" />
+    </fragment>
     <fragment
         android:id="@+id/Music"
         android:name="com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Music_fragment"

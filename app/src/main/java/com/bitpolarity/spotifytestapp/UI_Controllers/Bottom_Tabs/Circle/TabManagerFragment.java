@@ -40,8 +40,6 @@ public class TabManagerFragment extends Fragment {
         //tabLayout.addTab(tabLayout.newTab().setText("Stories ⚡"));
 
         viewPager.setAdapter(adapter);
-
-
         return binding.getRoot();
     }
 
