@@ -77,7 +77,7 @@ public class MainHolderFragment extends Fragment {
     ImageButton playback;
     ImageButton side_navigation_button;
     ImageView miniPlayer_bg;
-    NavController navController;
+
     AppBarConfiguration appBarConfiguration;
 
 

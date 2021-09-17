@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/dark_fg_darker"
+    >
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/edit_profile_action_bar"
+        />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+
+        app:layout_constraintBottom_toBottomOf="@+id/appCompatButton"
+        app:layout_constraintEnd_toEndOf="@+id/appCompatButton"
+        app:layout_constraintStart_toEndOf="@+id/appCompatButton"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatButton">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/room_display"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/ppl"
+            app:civ_border_color="@color/s_blue"
+            app:civ_border_width="3dp"
+
+            app:civ_circle_background_color="#131313"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/select_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_camera_alt_24"
+            android:background="@drawable/four_side_rounded_blue_more_rounder_blue_dimmer"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_effect"
+            android:gravity="end"
+            android:padding="5dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/room_display"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/room_display"
+            app:layout_constraintTop_toTopOf="@+id/room_display"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/progress"
+            android:indeterminate="false"
+            android:indeterminateDrawable="@drawable/progress_bg"
+            android:progressTint="@color/s_purple_light"
+            app:layout_constraintBottom_toBottomOf="@+id/room_display"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/textField"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="100dp"-->
+<!--        app:startIconContentDescription="Room"-->
+<!--        android:layout_margin="30dp"-->
+<!--        app:endIconMode="clear_text"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:hint="Room Title"-->
+<!--        app:hintTextColor="@color/s_blue"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:paddingBottom="5dp"-->
+<!--        app:helperTextEnabled="true"-->
+<!--        app:helperTextTextColor="@color/s_blue"-->
+<!--        app:counterTextColor="@color/s_blue"-->
+<!--        app:helperText="Write a catchy one!"-->
+<!--        app:counterEnabled="true"-->
+<!--        app:counterMaxLength="15"-->
+<!--        app:errorEnabled="true"-->
+<!--        >-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/editTextROOM"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="70dp"-->
+<!--            android:textSize="20sp"-->
+<!--            android:fontFamily="@font/hb"-->
+<!--            android:background="#EBF9FF"-->
+<!--            android:focusedByDefault="true"-->
+<!--            android:textColor="#E6121212"-->
+<!--            android:maxLines="1"-->
+<!--            android:saveEnabled="true"-->
+<!--            />-->
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/startMainRoomBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:background="@drawable/four_side_rounded_blue_more_rounder_blue_dimmer"
+        android:textColor="@color/white"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/hmed"
+        android:textSize="15dp"
+        android:text="Save" />
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:id="@+id/all_friends_list"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:background="@color/white"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/include"-->
+    <!--        app:layout_constraintVertical_bias="0.15">-->
+
+    <!--    </androidx.recyclerview.widget.RecyclerView>-->
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
