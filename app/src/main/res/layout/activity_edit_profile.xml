@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/dark_fg_darker"
+    android:background="@color/dark_bg"
     >
 
     <include
@@ -28,12 +28,11 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/room_display"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:src="@drawable/ppl"
-            app:civ_border_color="@color/s_blue"
+            app:civ_border_color="@color/white"
             app:civ_border_width="3dp"
-
             app:civ_circle_background_color="#131313"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,16 +112,16 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startMainRoomBTN"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
-        android:background="@drawable/four_side_rounded_blue_more_rounder_blue_dimmer"
+        android:background="@drawable/button_bg_white_borders"
         android:textColor="@color/white"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/hmed"
-        android:textSize="15dp"
+        android:textSize="13dp"
         android:text="Save" />
 
     <!--    <androidx.recyclerview.widget.RecyclerView-->

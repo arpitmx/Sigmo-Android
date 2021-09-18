@@ -42,6 +42,7 @@ public class RoomHolderActivity extends AppCompatActivity {
         //overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         super.onCreate(savedInstanceState);
 
+
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         roomName  = getIntent().getStringExtra("room_name");
 
