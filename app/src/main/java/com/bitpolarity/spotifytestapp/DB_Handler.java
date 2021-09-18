@@ -31,6 +31,7 @@ public class DB_Handler  {
 
     //////////////////////////////== INIT ==//////////////////////////////////////////////
     static String username;
+    static String userDP;
     Date date;
     String time ;
 
@@ -125,6 +126,16 @@ public class DB_Handler  {
             return username;
         }
    }
+
+    public static String getUserDP(){
+        if (userDP!=null) {
+            return userDP;
+        }else{
+            //prefs=  getSharedPreferences("com.bitpolarity.spotifytestapp",MODE_PRIVATE);
+            userDP = prefs.getString("UDP","Error-1");
+            return userDP;
+        }
+    }
 
     /////////////////////////////////////////-------BASIC IO--------/////////////////////////////////
 

@@ -170,6 +170,7 @@ public class Login extends AppCompatActivity {
 
         if(account!=null){
             signInButton.setEnabled(false);
+            signInButton.setVisibility(View.GONE);
             startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
             startActivity(new Intent(this, MainHolderActivity.class));
             Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show();
@@ -217,6 +218,7 @@ public class Login extends AppCompatActivity {
 
         private void firebaseAuthWithGoogle(String idToken) {
             AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+            binding.progressBar.setVisibility(View.VISIBLE);
             mAuth.signInWithCredential(credential)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -225,7 +227,6 @@ public class Login extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithCredential:success");
                                 FirebaseUser account = mAuth.getCurrentUser();
-
                                 assert account != null;
                                 prefs.edit().putString("Username", account.getDisplayName()).apply();
                                 prefs.edit().putString("UDP", String.valueOf(account.getPhotoUrl())).apply();
@@ -239,6 +240,9 @@ public class Login extends AppCompatActivity {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithCredential:failure", task.getException());
                                 updateUI(null);
+                                binding.progressBar.setVisibility(View.GONE);
+                                binding.signInbtn.setVisibility(View.VISIBLE);
+
                             }
                         }
                     });
