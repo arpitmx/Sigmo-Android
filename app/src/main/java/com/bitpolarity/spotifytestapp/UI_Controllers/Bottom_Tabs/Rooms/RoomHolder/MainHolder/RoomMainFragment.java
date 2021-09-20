@@ -88,6 +88,8 @@ public class RoomMainFragment extends Fragment {
             Log.d(TAG, "onCancelled: Error");
         }
     };
+
+
     protected ValueEventListener postListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -177,5 +179,10 @@ public class RoomMainFragment extends Fragment {
                 .replace(R.id.child_chat_frameLayout,new ChatsFrag()).addToBackStack(null)
                 .commit();
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 }

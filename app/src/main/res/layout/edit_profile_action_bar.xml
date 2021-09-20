@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/custom_action_bar_consLay"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/dark_fg"
+    android:orientation="horizontal"
+
+    >
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/arrow_back"
+        android:background="#00000000"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="20dp"
+        app:tint="@color/white200" />
+
+        <TextView
+            android:id="@+id/participantCountTXTV"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/hmed"
+            android:gravity="center_vertical"
+            android:text="Edit profile"
+            android:textColor="@color/white200"
+            android:textSize="20dp"
+            android:visibility="visible"
+            android:layout_marginStart="20dp"
+            android:layout_gravity="center_vertical"
+            />
+
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

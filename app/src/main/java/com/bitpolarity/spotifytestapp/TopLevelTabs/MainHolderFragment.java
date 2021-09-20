@@ -58,6 +58,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class MainHolderFragment extends Fragment {
 
@@ -75,9 +77,9 @@ public class MainHolderFragment extends Fragment {
 
     ActivityMainHolderBinding binding;
     ImageButton playback;
-    ImageButton side_navigation_button;
+    CircleImageView side_navigation_button;
     ImageView miniPlayer_bg;
-    NavController navController;
+
     AppBarConfiguration appBarConfiguration;
 
 

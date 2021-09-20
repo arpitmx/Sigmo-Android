@@ -50,7 +50,8 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/splash_bg.xml" value="0.2449074074074074" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/tabcolor.xml" value="0.2449074074074074" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/drawable/top_round_borders_chatbg.xml" value="0.2449074074074074" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/activity_login.xml" value="0.4626262626262626" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/activity_edit_profile.xml" value="0.264" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/activity_login.xml" value="0.176" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/activity_main.xml" value="0.22962962962962963" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/activity_main_holder.xml" value="0.152" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/activity_over_lap_testing.xml" value="0.21666666666666667" />
@@ -73,8 +74,9 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_outgoing_reference_item.xml" value="0.4" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/chat_msg_outgoing_reference_item_outgoing.xml" value="0.8" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/circle_friend_activity_list_item.xml" value="0.264" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/custom_action_bar.xml" value="0.15601851851851853" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/custom_action_bar.xml" value="0.4" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/custom_secondary_action_bar.xml" value="0.264" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/edit_profile_action_bar.xml" value="0.176" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_circle.xml" value="0.144" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_circle_friends.xml" value="0.23055555555555557" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/SpotifyTestApp/app/src/main/res/layout/fragment_circle_search.xml" value="0.23055555555555557" />

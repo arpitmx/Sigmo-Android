@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpotifyTestApp">
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainHolderActivity"
             android:exported="true" />
         <activity

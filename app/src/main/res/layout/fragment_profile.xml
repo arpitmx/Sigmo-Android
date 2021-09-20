@@ -7,20 +7,30 @@
     android:orientation="vertical"
     android:background="@drawable/profile_bg"
    >
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-
     >
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="50dp"
+        android:id="@+id/udp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/personpic"
+        android:background="@drawable/ic_baseline_person_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:visibility="visible"
+        />
 
     <TextView
         android:id="@+id/uname"
@@ -35,32 +45,40 @@
 
     />
 
+    <TextView
+        android:id="@+id/userBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Hey there i am using sigmo"
+        android:textColor="#D8FFFFFF"
+        android:fontFamily="@font/hmed"
+        android:textSize="15dp"
+
+        android:layout_marginTop="5dp"
+
+        />
+
+
     <androidx.appcompat.widget.AppCompatButton
+       android:id="@+id/edit_profile_btn"
         android:layout_width="110dp"
         android:layout_height="35dp"
-        android:text="Edit profile"
-        android:fontFamily="@font/hmed"
-        android:padding="10dp"
-        android:foreground="@drawable/ripple_effect"
-        android:textAllCaps="false"
         android:layout_marginTop="15dp"
-        android:textSize="9dp"
-        android:focusable="true"
+        android:background="@drawable/four_side_rounded_blue_more_rounder_blue_dimmer"
         android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/hmed"
+        android:foreground="@drawable/ripple_effect"
+
+        android:text="Edit profile"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:background="@drawable/button_bg_white_borders"
+        android:textSize="12dp"
 
         />
 
 </LinearLayout>
-
-
-
-
-
-
-
-
 
     </LinearLayout>
 
