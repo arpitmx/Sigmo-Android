@@ -14,7 +14,7 @@
 
     <color name="s_green">#69DB22</color>
     <color name="s_grey">#CACACA</color>
-    <color name="s_message_time_bg">#F390CAF9</color>
+    <color name="s_message_time_bg">#F3A7D8FF</color>
 
     <color name="s_red">#E53935</color>
     <color name="s_red_200">#EF9A9A</color>
@@ -58,8 +58,9 @@
     <color name="sigmo_blue_250">#D9536DFE</color>
     <color name="reference_box_bg">#AD303030</color>
     <color name="blue50">#D1EBFD</color>
-    <color name="incoming_msg_bg">#292929</color>
-    <color name="outgoing_msg_bg">#5A87FD</color>
+    <color name="incoming_msg_bg">#2B2B2B</color>
+    <color name="outgoing_msg_bg">#2B91FF</color>
+    <color name="outgoing_msg_bg_darker">#288FFF</color>
     <color name="room_actionbar_online_color">#89BCE6</color>
     <color name="simgo_dark_blue_200">#677EFF</color>
 

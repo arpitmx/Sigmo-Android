@@ -206,7 +206,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
             MessageModelHolder messageModelHolder = list.get(position);
 
             if(msgType==2) {
-                binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.outgoing_messg_bubble);
+                binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.outgoing_messg_top_bubble);
             }else if(msgType == 6){
                 binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.chatitembg_outgoing_middle_item);
             }else{

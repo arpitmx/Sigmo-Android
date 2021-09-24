@@ -7,16 +7,16 @@
             android:shape="rectangle"
             >
             <corners
-                android:topLeftRadius="70dp"
-                android:bottomLeftRadius="70dp"
-                android:bottomRightRadius="30dp"
-                android:topRightRadius="30dp"
 
+                android:topRightRadius="10dp"
+                android:topLeftRadius="10dp"
+                android:bottomLeftRadius="5dp"
+                android:bottomRightRadius="5dp"
                 />
 
-           <solid
-               android:color="@color/white200"
-               />
+            <solid
+                android:color="#A31D8AFF"
+                />
 
 
         </shape>
