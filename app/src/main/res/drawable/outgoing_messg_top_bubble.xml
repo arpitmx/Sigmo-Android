@@ -11,7 +11,10 @@
                 <corners
                     android:radius="10dp"
                     />
-                <solid android:color="@color/outgoing_msg_bg_darker" />
+               <gradient android:endColor="@color/outgoing_msg_bg_darker"
+android:startColor = "@color/outgoing_msg_bg"
+                   />
+
             </shape>
 
         </rotate>

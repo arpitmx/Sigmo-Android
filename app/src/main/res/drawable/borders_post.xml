@@ -10,7 +10,7 @@
                 android:bottomRightRadius="10dp"/>
 
             <solid
-                android:color="@color/dark_fg"
+                android:color="@color/dark_fg_a100"
                 />
 
 

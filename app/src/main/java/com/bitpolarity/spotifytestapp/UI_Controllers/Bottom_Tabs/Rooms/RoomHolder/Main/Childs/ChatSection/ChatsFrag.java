@@ -436,22 +436,22 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
 
     void setChatWall(String url){
 
-        Glide.with(context.getApplicationContext())
-                .load(url)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-
-                        binding.roomBackgroundWallpaper.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_in_slower));
-                        return false;
-                    }
-                })
-                .into(binding.roomBackgroundWallpaper);
+//        Glide.with(context.getApplicationContext())
+//                .load(url)
+//                .listener(new RequestListener<Drawable>() {
+//                    @Override
+//                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+//
+//                        binding.roomBackgroundWallpaper.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_in_slower));
+//                        return false;
+//                    }
+//                })
+//                .into(binding.roomBackgroundWallpaper);
 
     }
 

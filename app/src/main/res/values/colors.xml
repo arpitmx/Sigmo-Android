@@ -29,6 +29,7 @@
 <!--    <color name= "dark_fg">#323232</color> -->
     <color name="dark_chat_bg">#9EB3C5</color>
     <color name= "dark_fg">#323232</color>
+    <color name= "dark_fg_a100">#ED323232</color>
     <color name= "dark_fg_darker">#2C2C2C</color>
     <color name= "dark_fg_border">#F2050505</color>
 

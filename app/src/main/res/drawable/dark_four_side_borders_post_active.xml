@@ -9,8 +9,8 @@
             <corners android:radius="10dp"/>
 
             <gradient
-                android:startColor="#F2191919"
-                android:endColor="@color/dark_bg"
+                android:startColor="#F21C1C1C"
+                android:endColor="#004BFF"
 
                 />
 
