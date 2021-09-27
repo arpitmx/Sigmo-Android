@@ -9,13 +9,14 @@
             <corners
                 android:topLeftRadius="70dp"
                 android:bottomLeftRadius="70dp"
+                android:bottomRightRadius="30dp"
+                android:topRightRadius="30dp"
+
                 />
 
-            <gradient
-                android:startColor="#77C1FF"
-                android:endColor="#B3E5FC"
-                android:angle="90"
-                />
+           <solid
+               android:color="@color/white200"
+               />
 
 
         </shape>

@@ -52,12 +52,9 @@ public class Profile_Fragment extends Fragment {
 
         loadDP();
 
-        binding.editProfileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              Intent i =   new Intent(getContext(), EditProfileActivity.class);
-              startActivity(i);
-            }
+        binding.editProfileBtn.setOnClickListener(view1 -> {
+          Intent i =   new Intent(getContext(), EditProfileActivity.class);
+          startActivity(i);
         });
 
     }
