@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitpolarity.spotifytestapp.GetterSetterModels.MessageModelHolder;
 import com.bitpolarity.spotifytestapp.R;
+import com.bitpolarity.spotifytestapp.databinding.ChatMsgIncomingReferenceItemBinding;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemIncomingBinding;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemIncomingSameUsrBinding;
 import com.bitpolarity.spotifytestapp.databinding.ChatMsgItemOutgoingBinding;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     ArrayList<MessageModelHolder> list;
+    public static final int MESSAGE_TYPE_SENDING = -1;
     public static final int MESSAGE_TYPE_IN = 1;
 
     //////////////////////////////////////////////////////
@@ -37,7 +39,9 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public static final int MESSAGE_TYPE_IN_SAME = 3;
     public static final int MESSAGE_TYPE_JOING_LEAVING = 4;
-    public static final int MESSAGE_TYPE_REFFERED_MSG = 5;
+    public static final int MESSAGE_TYPE_REFFERED_MSG_INCOMING = 5;
+    public static final int MESSAGE_TYPE_REFFERED_MSG_OUTGOING = 8;
+
 
     int lastPosition = 500;
     StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
@@ -205,9 +209,15 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
         void bind(int position) {
             MessageModelHolder messageModelHolder = list.get(position);
 
-            if(msgType==2) {
+            if (msgType == -1) {
+                binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.chatitembg_outgoing_sending);
+                binding_outgoing.msgStatusIcon.setImageResource(R.drawable.ic_baseline_access_time_filled_24);
+                binding_outgoing.timeTxt2.setVisibility(View.GONE);
+                binding_outgoing.timeTxt.setVisibility(View.GONE);
+            }
+            else if(msgType==2) {
                 binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.outgoing_messg_top_bubble);
-            }else if(msgType == 6){
+            }else if(msgType == 6) {
                 binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.chatitembg_outgoing_middle_item);
             }else{
                 binding_outgoing.layoutGchatContainerMe.setBackgroundResource(R.drawable.chatitembg_outgoing_end_item);
@@ -346,7 +356,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     ///////////////////////////////////////// REFERRED MESSG //////////////////////////////////////////////////////
 
-    class ViewHolderRefferedMessage extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolderRefferedMessage_OUTGOING extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ChatMsgOutgoingReferenceItemOutgoingBinding referenceItemBinding;
         ClickListner clickListner;
@@ -354,7 +364,70 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
         private final int resetInTime =500;
         private int counter=0;
 
-        public ViewHolderRefferedMessage(ChatMsgOutgoingReferenceItemOutgoingBinding binding, ClickListner clickListner) {
+        public ViewHolderRefferedMessage_OUTGOING(ChatMsgOutgoingReferenceItemOutgoingBinding binding, ClickListner clickListner) {
+
+            super(binding.getRoot());
+            this.referenceItemBinding = binding;
+            this.clickListner = clickListner;
+            itemView.setOnClickListener(this);
+        }
+
+        void bind(int position) {
+            MessageModelHolder messageModelHolder = list.get(position);
+
+//             String html = getHTMLString(messageModel.getMessage());
+//
+//             if(html!=null) {
+//                 binding_outgoing.textMessage.setText(Html.fromHtml(html));
+//             }else{
+//             }
+
+
+            referenceItemBinding.textMessage.setText(messageModelHolder.getMessage());
+            referenceItemBinding.timeTxt.setText(messageModelHolder.getTime());
+            referenceItemBinding.referenceText.setText(list.get(Integer.parseInt(messageModelHolder.getRefPos())).getMessage());
+            referenceItemBinding.referenceToUsername.setText(list.get(Integer.parseInt(messageModelHolder.getRefPos())).getSenderName());
+
+        }
+
+
+        @Override
+        public void onClick(View view) {
+
+            if(isRunning)
+            {
+                if(counter==1) //<-- makes sure that the callback is triggered on double click
+                    clickListner.onClick(getAbsoluteAdapterPosition());
+            }
+
+            counter++;
+
+            if(!isRunning)
+            {
+                isRunning=true;
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(resetInTime);
+                        isRunning = false;
+                        counter=0;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            }
+        }
+    }
+
+
+    class ViewHolderRefferedMessage_INCOMING extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        ChatMsgIncomingReferenceItemBinding referenceItemBinding;
+        ClickListner clickListner;
+        private boolean isRunning= false;
+        private final int resetInTime =500;
+        private int counter=0;
+
+        public ViewHolderRefferedMessage_INCOMING(ChatMsgIncomingReferenceItemBinding binding, ClickListner clickListner) {
 
             super(binding.getRoot());
             this.referenceItemBinding = binding;
@@ -373,7 +446,7 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 //             }else{
 //             }
 
-
+            referenceItemBinding.username.setText(messageModelHolder.getSenderName());
             referenceItemBinding.textMessage.setText(messageModelHolder.getMessage());
             referenceItemBinding.timeTxt.setText(messageModelHolder.getTime());
             referenceItemBinding.referenceText.setText(list.get(Integer.parseInt(messageModelHolder.getRefPos())).getMessage());
@@ -431,6 +504,12 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
      switch (viewType){
+
+         case -1:
+             View view_outgoing_sending = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_outgoing,parent,false);
+             return new ViewHolderOutgoing(ChatMsgItemOutgoingBinding.bind(view_outgoing_sending),mClicklistner, viewType);
+
+
          case 1:
 
              View view_incoming = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_incoming, parent, false);
@@ -445,9 +524,9 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
              View view_outgoing_same_usr = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_incoming_same_usr,parent,false);
              return new ViewHolderIncoming_SameUsr(ChatMsgItemIncomingSameUsrBinding.bind(view_outgoing_same_usr),mClicklistner);
 
-         case 5:
+         case 8:
              View view_ref_outgoing = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_outgoing_reference_item_outgoing,parent,false);
-             return new ViewHolderRefferedMessage(ChatMsgOutgoingReferenceItemOutgoingBinding.bind(view_ref_outgoing), mClicklistner);
+             return new ViewHolderRefferedMessage_OUTGOING(ChatMsgOutgoingReferenceItemOutgoingBinding.bind(view_ref_outgoing), mClicklistner);
 
 
          case 6:
@@ -457,6 +536,12 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
          case 7:
              View view_outgoing_same_end = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_outgoing,parent,false);
              return new ViewHolderOutgoing(ChatMsgItemOutgoingBinding.bind(view_outgoing_same_end),mClicklistner, viewType);
+
+
+         case 5:
+             View view_ref_incoming = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_incoming_reference_item,parent,false);
+             return new ViewHolderRefferedMessage_INCOMING(ChatMsgIncomingReferenceItemBinding.bind(view_ref_incoming),mClicklistner);
+
 
          default:
              View view_joining = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item_user_joined,parent,false);
@@ -472,6 +557,12 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
         switch (list.get(position).getMessageType()){
+
+            case MESSAGE_TYPE_SENDING:
+                ((ViewHolderOutgoing) holder).bind(position);
+                setAnimation(holder.itemView,position,R.anim.pop_in_slide);
+                break;
+
 
             case MESSAGE_TYPE_IN  :
 
@@ -500,8 +591,15 @@ public class MultiViewChatAdapter extends RecyclerView.Adapter<RecyclerView.View
                 setAnimation(holder.itemView,position,R.anim.fade_in);
                 break;
 
-            case MESSAGE_TYPE_REFFERED_MSG:
-                ((ViewHolderRefferedMessage) holder).bind(position);
+            case MESSAGE_TYPE_REFFERED_MSG_INCOMING:
+                ((ViewHolderRefferedMessage_INCOMING) holder).bind(position);
+                setAnimation(holder.itemView,position,R.anim.popin_right_to_left);
+                break;
+
+
+
+            case MESSAGE_TYPE_REFFERED_MSG_OUTGOING:
+                ((ViewHolderRefferedMessage_OUTGOING) holder).bind(position);
                 setAnimation(holder.itemView,position,R.anim.popin_right_to_left);
 
                 break;

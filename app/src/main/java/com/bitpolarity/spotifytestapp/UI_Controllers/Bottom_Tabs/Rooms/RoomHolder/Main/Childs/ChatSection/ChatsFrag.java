@@ -25,6 +25,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,6 +53,8 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,6 +62,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -69,9 +73,18 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
     DatabaseReference msgRoot , isTypingRoot , bgRoot;
     MediaPlayer mpSent, mpClick ;
 
+    // Responses
+    private  final int sending = 2;
+    private  final int success_sent = 1;
+    private  final int failed_invalid_message = 0;
+    private  final int failed_internal_error = 404;
 
     boolean referenceTabUp = false;
     String referenceTabPointingTo = "-1";
+
+    private  final String TYPE_MSG = "1";
+    private  final String TYPE_JOIN = "2";
+    private  final String TYPE_REFERENCE = "3";
 
 
     RecyclerView chatRV;
@@ -98,10 +111,6 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
     GradientDrawable shapeHiddenReference , shapeShownReference;
     LayoutAnimationController layoutAnimationController;
 
-    // Responses
-    private  final int success_sent = 1;
-    private  final int failed_invalid_message = 0;
-    private  final int failed_internal_error = 404;
 
     Context context;
     AnimationDrawable processLoaderDrawable;
@@ -487,7 +496,7 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
         String usrname = DB_Handler.getUsername();
         String time = timeSystem.getTime_format_12h();
 
-       int response =  chatsViewHolder.sendMessage(msg,usrname,time, referenceTabPointingTo);
+       int response =  sendMessage(msg,usrname,time, referenceTabPointingTo);
        switch (response){
 
            case success_sent:
@@ -510,8 +519,6 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
 
            default:
                binding.roomInput.msgEditBox.setError("Unknow error, retry!");
-
-
        }
 
     }
@@ -522,6 +529,7 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
     }
 
     void getTypingMembers(){
+
 
         isTypingRoot.addValueEventListener(new ValueEventListener() {
             @Override
@@ -594,6 +602,62 @@ public class    ChatsFrag extends Fragment implements MultiViewChatAdapter.Click
         showReferenceTab(chatsViewHolder.getChatList(), position);
 
     }
+
+
+
+    public int sendMessage(String msg, String username , String time, String Refpos) {
+
+        Map<String, Object> map = new HashMap<>();
+        String temp_key = msgRoot.push().getKey();
+        msgRoot.updateChildren(map);
+
+        DatabaseReference in_msg = msgRoot.child(temp_key);
+        Map<String, Object> map2 = new HashMap<>();
+
+        if (chatsViewHolder.filterText(msg)) {
+
+            if (username != null) {
+
+                map2.put("msg", msg);
+                map2.put("sender", username);
+                map2.put("TIME", time);
+
+                if(Integer.parseInt(Refpos)==-1) {
+                    map2.put("TYPE", TYPE_MSG);
+                    in_msg.updateChildren(map2);
+
+                   // chatsViewHolder.chatList.add(new MessageModelHolder(username,msg,-1,time,Refpos));
+//                    in_msg.updateChildren(map2).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void unused) {
+//                            Toast.makeText(context, "Message sent", Toast.LENGTH_SHORT).show();
+//                            chatsViewHolder.chatList.remove(chatsViewHolder.getListSize()-1);
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(context, "Message sending failed", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+
+                }else{
+                    map2.put("TYPE", TYPE_REFERENCE);
+                    map2.put("REFPOS", Refpos);
+                    in_msg.updateChildren(map2);
+                }
+
+                return success_sent;
+
+            } else {
+                return failed_internal_error;
+            }
+
+        }else{
+            return failed_invalid_message;
+        }
+
+    }
+
 }
 
 

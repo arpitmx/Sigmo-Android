@@ -61,7 +61,7 @@
     <color name="blue50">#D1EBFD</color>
     <color name="incoming_msg_bg">#2B2B2B</color>
     <color name="outgoing_msg_bg">#2B91FF</color>
-    <color name="outgoing_msg_bg_darker">#288FFF</color>
+    <color name="outgoing_msg_bg_darker">#268FFF</color>
     <color name="room_actionbar_online_color">#89BCE6</color>
     <color name="simgo_dark_blue_200">#677EFF</color>
 
