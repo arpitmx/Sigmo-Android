@@ -2,6 +2,7 @@ package com.bitpolarity.spotifytestapp.UI_Controllers.Bottom_Tabs.Rooms.RoomHold
 
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +44,7 @@ public class ChatsViewHolder  extends ViewModel {
     private MutableLiveData<ArrayList<MessageModelHolder>> chatListLD;
 
     // Responses
+    private  final int sending = 2;
     private  final int success_sent = 1;
     private  final int failed_invalid_message = 0;
     private  final int failed_internal_error = 404;
@@ -84,12 +86,14 @@ public class ChatsViewHolder  extends ViewModel {
                 if(Integer.parseInt(Refpos)==-1) {
                     map2.put("TYPE", TYPE_MSG);
                     in_msg.updateChildren(map2);
+
                 }else{
                     map2.put("TYPE", TYPE_REFERENCE);
                     map2.put("REFPOS", Refpos);
                     in_msg.updateChildren(map2);
-
                 }
+
+
                 return success_sent;
 
             } else {
@@ -104,7 +108,7 @@ public class ChatsViewHolder  extends ViewModel {
 
         // Filter message
 
-    private boolean filterText (String msg){
+    public boolean filterText(String msg){
 
             boolean sendable = false;
 
@@ -120,6 +124,30 @@ public class ChatsViewHolder  extends ViewModel {
 
             return sendable;
         }
+
+
+
+        void filerandAddmessg(String TYPE, String userName,String msg, String TIME,String REFPOS){
+
+            switch (TYPE){
+
+
+                case TYPE_MSG:
+
+                    chatList.add(new MessageModelHolder(userName, msg, 2, TIME));
+                    //Log.d(TAG, "OUTGOING: TYPE 2" + msg);
+
+                    break;
+
+
+
+            }
+
+
+
+
+        }
+
 
     ArrayList<MessageModelHolder> getModelList(DataSnapshot dataSnapshot){
 
@@ -245,14 +273,20 @@ public class ChatsViewHolder  extends ViewModel {
 
                 case TYPE_REFERENCE:
 
-
-
                     // replacePrev();
+                    if (messageModel.getSender().equals(DB_Handler.getUsername())){
+                        REFPOS = messageModel.getRefpos();
+                        Log.d(TAG, " REFPOS "+ REFPOS);
+                        chatList.add(new MessageModelHolder(userName, msg, 8, TIME,REFPOS));
+                        //  Log.d(TAG, "REFERED MESSAGE OUTGOING : TYPE 5  pos : " + REFPOS);
 
-                    REFPOS = messageModel.getRefpos();
-                    Log.d(TAG, " REFPOS "+ REFPOS);
-                    chatList.add(new MessageModelHolder(userName, msg, 5, TIME,REFPOS));
-                  //  Log.d(TAG, "REFERED MESSAGE OUTGOING : TYPE 5  pos : " + REFPOS);
+                    }else{
+                        REFPOS = messageModel.getRefpos();
+                        Log.d(TAG, " REFPOS "+ REFPOS);
+                        chatList.add(new MessageModelHolder(userName, msg, 5, TIME,REFPOS));
+                        //  Log.d(TAG, "REFERED MESSAGE OUTGOING : TYPE 5  pos : " + REFPOS);
+
+                    }
                     break;
 
         }
@@ -273,6 +307,7 @@ public class ChatsViewHolder  extends ViewModel {
             int prevPos = getListSize() - 2;
 
             chatList.set(prevPos, new MessageModelHolder(prevSender, prevMsg, 6, prevTime));
+
         }
     }
 
