@@ -1,4 +1,8 @@
 # Sigmo-Music 📱 
+
+
+
+
 <img width="143" alt="sbluemain1" src="https://user-images.githubusercontent.com/59350776/126187919-736034f4-90fe-41bf-b375-1fec9db017c2.png">
 
 Status : Under Development ⚒
@@ -55,8 +59,4 @@ Issues are open in the issues section.
 
 --------------------------------------------------------------------------------------------------------------------------
 
-
-
 ![bitp](https://user-images.githubusercontent.com/59350776/141063516-98a98453-11f9-47c0-ace7-5028ebad4589.png)
-
-- arpitrmaurya, bitpolarity!
