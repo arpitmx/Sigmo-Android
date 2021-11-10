@@ -56,6 +56,7 @@ Issues are open in the issues section.
 --------------------------------------------------------------------------------------------------------------------------
 
 
-![photo_2021-07-19_21-14-25](https://user-images.githubusercontent.com/59350776/126188448-f30fe6ab-319f-4b70-ae58-3e00b8fe734f.jpg)
+
+![bitp](https://user-images.githubusercontent.com/59350776/141063516-98a98453-11f9-47c0-ace7-5028ebad4589.png)
 
 - arpitrmaurya, bitpolarity!
